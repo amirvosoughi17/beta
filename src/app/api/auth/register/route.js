@@ -1,30 +1,30 @@
 import { NextResponse } from "next/server";
-import connect from '@/config/DB'
-import User from '@/models/User';
 import bcrpyt from 'bcryptjs';
+import { connect } from "@/config/DB";
+import { User } from "@/models/User";
 
-export async function POST(request)  {
-    const { username, email, phoneNumber, password }  = request.json();
+connect();
 
-    const existUser = await User.findOne({email});
-    if(existUser)  {
-        return NextResponse.json({message : "user exist"} , {status : 400})
+export async function POST(request) {
+    const { username, email, phoneNumber, password } = await request.json();
+
+    const existUser = await User.findOne({ email: email });
+    if (existUser) {
+        return NextResponse.json({ message: "user exist" }, { status: 400 })
     }
 
-    await connect();
 
     const hashedPasss = await bcrpyt.hash(password, 10);
-
-    const newUser  = await new User ({
-        username,
-        email,
-        phoneNumber,
-        password : hashedPasss
-    })
     try {
-        await newUser.save();
-        return NextResponse.json({message : "register success"} , {status : 200} )
+        const newUser = await User.create({
+            username,
+            email,
+            phoneNumber,
+            password: hashedPasss
+        })
+
+        return NextResponse.json({ message: "register success" }, { status: 200 })
     } catch (error) {
-        return NextResponse.json({message : "failed to register"} , {status : 400})
+        return NextResponse.json({ message: "failed to register" }, { status: 400 })
     }
 }

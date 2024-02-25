@@ -1,9 +1,11 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GithubProvider from "next-auth/providers/github";
-import connect from '@/config/DB';
-import {User} from '@/models/User';
+import { User } from '@/models/User';
 import bcrypt from 'bcryptjs';
+import { connect } from "@/config/DB";
+
+connect();
 
 export const authOptions = {
   providers: [
@@ -12,10 +14,9 @@ export const authOptions = {
       id: 'credentials',
       credentials: {
         phoneNumber: { label: "PhoneNumber", type: "text" },
-    password: { label: 'password', type: "password" }
+        password: { label: 'password', type: "password" }
       },
       async authorize(credentials) {
-        await connect();
         try {
           const user = await User.findOne({ phoneNumber: credentials.phoneNumber });
           if (user) {
@@ -27,7 +28,7 @@ export const authOptions = {
               return user;
             }
           }
-          return null; 
+          return null;
         } catch (error) {
           console.error("Error in authorize callback:", error);
           return null;
