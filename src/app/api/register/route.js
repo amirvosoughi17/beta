@@ -1,16 +1,23 @@
-import { NextResponse } from "next/server";
 import bcrpyt from 'bcryptjs';
 import { connect } from "@/config/DB";
 import { User } from "@/models/User";
+import { generate_token } from "@/utils/session";
 
 connect();
 
 export async function POST(request) {
     const { username, email, phoneNumber, password } = await request.json();
 
+    if (!username || !email || !password || !phoneNumber) {
+        return Response.json({
+            message: "Please fill in all inputs"
+        }, { status: 400 })
+    }
     const existUser = await User.findOne({ email: email });
     if (existUser) {
-        return NextResponse.json({ message: "user exist" }, { status: 400 })
+        return Response.json({
+            message: "user has already registerd in website"
+        }, { status: 400 })
     }
 
 
@@ -23,8 +30,10 @@ export async function POST(request) {
             password: hashedPasss
         })
 
-        return NextResponse.json({ message: "register success" }, { status: 200 })
+        return generate_token("Registeration was successfull", 201, newUser);
     } catch (error) {
-        return NextResponse.json({ message: "failed to register" }, { status: 400 })
+        return Response.json({
+            message: error.message
+        }, { status: 500 })
     }
 }
