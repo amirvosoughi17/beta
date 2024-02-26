@@ -20,17 +20,20 @@ export const authOptions = {
         try {
           const user = await User.findOne({ phoneNumber: credentials.phoneNumber });
           console.log('User:', user);
+
           if (user) {
             const isPasswordCorrect = await bcrypt.compare(
               credentials.password,
               user.password
             );
+
             if (isPasswordCorrect) {
               return {
                 id: user._id,
                 username: user.username,
                 email: user.email,
                 phoneNumber: user.phoneNumber,
+                role: user.role,
               };
             }
           }
@@ -47,7 +50,7 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account }) {
+    async signIn({ user, account, session, profile }) {
       if (account?.provider === "credentials") {
         return true;
       } else if (account?.provider === "github") {
@@ -69,6 +72,16 @@ export const authOptions = {
         }
       }
     },
+    async session (session , user) {
+      if(user) {
+        
+        session.user.phoneNumber = user.phoneNumber;
+        session.user.email = user.email;
+        session.user.username = user.username;
+      }
+
+      return session;
+    }
   },
   secret: process.env.JWT_SECRET,
 };
