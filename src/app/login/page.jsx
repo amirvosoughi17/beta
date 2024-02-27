@@ -1,6 +1,6 @@
 "use client";
 import { useState , useEffect } from 'react';
-import {signIn , useSession } from 'next-auth/react';
+
 import { useRouter } from 'next/navigation';
 
 
@@ -9,18 +9,14 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
-  const session = useSession();
+
   
   const [formData, setFormData] = useState({
     phoneNumber: "",
     password: "",
   });
   
-  useEffect(() => {
-    if (session?.status === "authenticated") {
-      router.replace("/dashboard");
-    }
-  }, [session, router]);
+ 
   
   const handleChange = (e) => {
     const name = e.target.name;
@@ -33,19 +29,7 @@ const Login = () => {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await signIn('credentials', {
-      redirect: false,
-      phoneNumber: formData.phoneNumber,
-      password: formData.password,
-    });
-  
-    if (res?.error) {
-      setError("Invalid phone number or password");
-    } else if (res?.url) {
-      router.replace("/dashboard");
-    } else {
-      setError("");
-    }
+   
   };
 
   return (
@@ -67,7 +51,6 @@ const Login = () => {
             onChange={handleChange}
             />
             <button className='bg-teal-700 text-white rounded-md py-3 px-10 ' type='submit'>{loading ? "Loading ..." : "Login"}</button>
-            <button onClick={() => {signIn("github")}}>sign in with github</button>
           <p className='text-red-600 text-[16px] mb-4'>{error && error}</p>
         </form>
     </div>

@@ -8,6 +8,7 @@ const Register = () => {
     const router = useRouter();
     const [loading , setLoading] = useState(false);
     const [formData, setFormData] = useState({
+
         username : "",
         email : "",
         phoneNumber : "",
@@ -27,7 +28,7 @@ const Register = () => {
         setLoading(true);
     
         try {
-            const res = await fetch('/api/register', {
+            const res = await fetch('/api/auth/register', {
                 method: 'POST',
                 body: JSON.stringify(formData),
                 headers: {
@@ -83,7 +84,6 @@ const Register = () => {
             name= "password"
             className='bg-gray-50 text-slate-700 px-4 py-4 rounded-md'
             onChange={handleChange}
-
             />
             <button className='bg-slate-700 text-white rounded-md py-3 px-10 ' type='submit'>{loading ? "Loading ..." : "Register"}</button>
         </form>
