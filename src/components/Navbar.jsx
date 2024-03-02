@@ -1,10 +1,20 @@
 "use client";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserData } from '@/utils/userActions';
+import { selectUserInfo , selectIsAuthenticated } from '@/redux/user/userSlice';
+import { useEffect } from 'react';
 import React from 'react'
 import Link from 'next/link';
 
 
 const Navbar = () => {
+    const dispatch = useDispatch();
+    const userInfo = useSelector(selectUserInfo);
+    const isAuthenticated = useSelector(selectIsAuthenticated);
+
+    useEffect(() => {
+        dispatch(fetchUserData());
+      }, [dispatch]);
 
     return (
         <div>
@@ -14,22 +24,17 @@ const Navbar = () => {
                     <div className="flex items-center gap-5">
 
 
-
-
+                        {isAuthenticated ? (
                             <>
                                 <Link className='text-gray-600 ' href='/dashboard'>Dashboard</Link>
                                 <button className='bg-red-400 py-1 px-3 rounded-md text-white'>Sign out </button>
                             </>
-
-
+                        ) : (
                             <>
                                 <Link className='text-gray-600 ' href='/login'>Login</Link>
                                 <Link className='text-gray-600 ' href='/register'>Register</Link>
                             </>
-
-
-
-
+                        )}
                     </div>
                 </div>
             </div>

@@ -38,8 +38,6 @@ const Register = () => {
             });
 
             if (res.ok) {
-                const userData = await res.json();
-                dispatch(setUser(userData));
 
                 router.push('/login');
             } else {

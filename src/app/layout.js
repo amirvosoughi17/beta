@@ -1,9 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import AuthProvider from "@/context/AuthProvider";
-
 const inter = Inter({ subsets: ["latin"] });
+import ReduxProvider from "@/redux/ReduxProvider";
 
 export const metadata = {
   title: "Create Next App",
@@ -15,14 +14,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AuthProvider>
+        <ReduxProvider>
+
           <div className="mx-auto">
             <Navbar />
             {children}
           </div>
-        </AuthProvider>
-
-
+        </ReduxProvider>
       </body>
     </html>
   );

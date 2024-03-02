@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { generate_token } from "@/utils/session";
 import { connect } from "@/config/DB";
 import { User } from "@/models/User";
+
 connect();
 export async function POST(request) {
     try {
