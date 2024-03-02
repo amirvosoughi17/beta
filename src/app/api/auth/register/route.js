@@ -13,6 +13,12 @@ export async function POST(request) {
             message: "Please fill in all inputs"
         }, { status: 400 })
     }
+
+    if (username.length < 3) {
+        return Response.json({
+            message: "Username should be more that 3 characters"
+        }, { status: 400 })
+    }
     const existUser = await User.findOne({ email: email });
     if (existUser) {
         return Response.json({
