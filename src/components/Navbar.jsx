@@ -1,11 +1,10 @@
 "use client";
 
 import React from 'react'
-
 import Link from 'next/link';
 
-const Navbar = () => {
 
+const Navbar = () => {
 
     return (
         <div>
@@ -16,13 +15,21 @@ const Navbar = () => {
 
 
 
+
+                            <>
+                                <Link className='text-gray-600 ' href='/dashboard'>Dashboard</Link>
+                                <button className='bg-red-400 py-1 px-3 rounded-md text-white'>Sign out </button>
+                            </>
+
+
+                            <>
                                 <Link className='text-gray-600 ' href='/login'>Login</Link>
                                 <Link className='text-gray-600 ' href='/register'>Register</Link>
+                            </>
 
 
-                            <Link className='text-gray-600 ' href='/dashboard'>Dashboard</Link>
-                            <button  className='bg-red-400 py-1 px-3 rounded-md text-white'>Sign out </button>
-                        
+
+
                     </div>
                 </div>
             </div>
