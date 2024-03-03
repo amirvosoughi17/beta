@@ -13,7 +13,7 @@ export async function GET() {
             httpOnly: true,
             expires: new Date(Date.now()),
         });
-        return response;
+        return response;    
     } catch (error) {
         return NextResponse.json({
             success: false,
