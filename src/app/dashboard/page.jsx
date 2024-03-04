@@ -1,13 +1,18 @@
 "use client";
+
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserInfo } from '@/redux/user/userSlice';
 import { fetchUserData } from '@/utils/userActions';
+import { selectIsAuthenticated } from '@/redux/user/userSlice';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 const Dashboard = () => {
     const dispatch = useDispatch();
     const userInfo = useSelector(selectUserInfo);
+    const isAuthenticated = useSelector(selectIsAuthenticated)
+    const router = useRouter();
 
     const [updateInfo, setUpdateInfo] = useState({
         username: userInfo?.username || "",
@@ -28,6 +33,12 @@ const Dashboard = () => {
     useEffect(() => {
         dispatch(fetchUserData())
     }, [dispatch]);
+
+    useEffect(() => {
+        if (!isAuthenticated) {
+            router.push('/login');
+        }
+    }, [isAuthenticated, router]);
 
     const handleUpdate = async (e) => {
         e.preventDefault();
