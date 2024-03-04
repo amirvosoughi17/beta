@@ -9,20 +9,22 @@ export async function POST(request) {
         const data = await request.json();
         const { name, price, plan } = data;
 
-        if (!name || !price) {
+        if (!name || !price || !plan) {
             return NextResponse.json({
                 success: false,
-                message: "Please fill in all inputs"
+                message: "Please fill in all required fields (name, price, plan)"
             }, { status: 400 })
         }
-        const is_exist_plan = await Plan.findById({ _id: plan });
+
+        const is_exist_plan = await Plan.findById(plan);
 
         if (!is_exist_plan) {
             return NextResponse.json({
                 success: false,
-                message: "Plan does not exits!"
+                message: "Plan does not exist!"
             }, { status: 404 })
         }
+
         const new_feature = await Feature.create({ name, price, plan });
         is_exist_plan.features.push(new_feature);
         await is_exist_plan.save();
