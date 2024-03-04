@@ -7,8 +7,14 @@ const planSchema = new mongoose.Schema({
         unique: [true, 'plan name should be unique']
     },
     features: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Feature'
+        name: {
+            type: String,
+            required: true
+        },
+        price: {
+            type: Number,
+            required: true
+        }
     }],
     basePrice: {
         type: Number,
