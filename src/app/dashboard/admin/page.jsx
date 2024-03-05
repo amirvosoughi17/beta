@@ -67,6 +67,7 @@ const Admin = () => {
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
     try {
@@ -80,6 +81,8 @@ const Admin = () => {
 
       if (res.ok) {
         console.log('Plan added successfully!');
+        router.refresh();
+        alert("plan created successFully")
       } else {
         console.error('Failed to add plan:', res.statusText);
       }

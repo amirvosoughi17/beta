@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import Plan from '@/models/Plan'
 import { connect } from "@/config/DB";
+
 connect();
 export async function GET(request, { params }) {
     try {

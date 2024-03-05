@@ -45,6 +45,8 @@ const Navbar = () => {
 
                         {isAuthenticated ? (
                             <>
+                            
+                                <Link className='text-gray-600 ' href='/order'>Order</Link>
                                 <Link className='text-gray-600 ' href='/dashboard'>Dashboard</Link>
                                 <button onClick={handleLogout} className='bg-red-400 py-1 px-3 rounded-md text-white'>Sign out </button>
                             </>
