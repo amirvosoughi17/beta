@@ -1,7 +1,6 @@
 import { connect } from "@/config/DB";
 import Plan from "@/models/Plan";
 import { NextResponse } from "next/server";
-
 connect();
 
 export async function POST(request) {
@@ -34,10 +33,7 @@ export async function POST(request) {
 
 export async function GET() {
     try {
-        const plans = await Plan.find().populate({
-            path: 'features',
-            select: 'name price',
-        });
+        const plans = await Plan.find();
         const planCount = await Plan.countDocuments();
         if (planCount === 0) {
             return NextResponse.json({
