@@ -2,6 +2,8 @@
 import React , {useState , useEffect} from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 const Order = () => {
 
@@ -38,7 +40,7 @@ const Order = () => {
       };
       
   return (
-    <div className='bg-slate-100 py-10 px-10 w-full '>
+    <div className='bg-slate-100 py-10 px-10 w-full min-h-screen '>
         <div>
       <h1>Order Page</h1>
 
@@ -49,7 +51,10 @@ const Order = () => {
           <div className='flex flex-wrap gap-7'>{renderPlans()}</div>
         </div>
       ) : (
-        <p>Loading...</p>
+        <div className="flex flex-col items-center justify-center ">
+          <p>please wait </p>
+          
+        </div>
       )}
     </div>
     </div>
