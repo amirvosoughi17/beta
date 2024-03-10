@@ -2,9 +2,20 @@ import mongoose from "mongoose";
 import Plan from "./Plan";
 const orderSchema = new mongoose.Schema({
     plan: {
-        type: mongoose.Types.ObjectId,
-        ref: "Plan",
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Plan',
+        required: true
+    },
+    supportTime: {
+        type: Number,
         required: true,
+        min: [1, 'Support time must be at least 1 month'],
+    },
+    supportStartedAt: {
+        type: Date,
+    },
+    supportExpiresAt: {
+        type: Date
     },
     selectedFeatures: [{
         name: {
@@ -15,9 +26,44 @@ const orderSchema = new mongoose.Schema({
             type: Number,
             required: true
         },
+        status: {
+            type: String,
+            enum: ['todo', 'inProgress', 'completed'],
+            default: 'todo'
+        }
     }],
+    totalFeature: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    orderProgress: {
+        type: Number,
+        min: 0,
+        max: 100,
+        default: 0
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    status: {
+        type: String,
+        required: true,
+        enum: ["pending", "under_review", "accepted", "in_progress", "completed"],
+        default: "pending"
+    },
+    statusDates: {
+        pending: { type: Date },
+        underReview: { type: Date },
+        accepted: { type: Date },
+        inProgress: { type: Date },
+        completed: { type: Date },
+    },
     totalPrice: {
         type: Number,
+        default: 0,
         required: true
     }
 });
@@ -32,9 +78,5 @@ orderSchema.pre("validate", async function () {
     }, 0);
     this.totalPrice = planBasePrice + selectedFeaturesTotalPrice;
 })
-
-
-
-
 const Order = mongoose.models.Order || mongoose.model("Order", orderSchema);
 export default Order;

@@ -9,7 +9,8 @@ const planSchema = new mongoose.Schema({
     features: [{
         name: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
         price: {
             type: Number,

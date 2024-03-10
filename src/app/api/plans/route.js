@@ -15,7 +15,6 @@ export async function POST(request) {
                 message: "Plan name already exists!",
             }, { status: 400 });
         }
-
         const newPlan = await Plan.create({ name, basePrice, description, ...features });
 
         return NextResponse.json({
