@@ -1,14 +1,13 @@
-import EcmmercePlan from "@/components/EcmmercePlan";
+import Layout from "@/components/Layout";
+
 
 
 const Home = () => {
   return (
-      <div>
-        <div className="w-full h-[500px]"></div>
-        <div className="">
-          <EcmmercePlan />
-        </div>
+    <Layout>
+      <div className="mt-[150px]">
       </div>
+    </Layout>
   );
 };
 

@@ -37,7 +37,7 @@ const LoginPage = () => {
                     'Content-Type': 'application/json',
                 },
             });
-
+            router.push('/dashboard')
             if (res.ok) {
                 router.push('/dashboard')
             } else {
@@ -51,22 +51,23 @@ const LoginPage = () => {
         }
     };
     return (
-        <div className='w-full h-[600px] bg-gray-100 flex flex-col items-center justify-center '>
-            <form onSubmit={handleSubmit} className="md:w-[45%] lg:w-[35%] w-[90%]  h-[90%] flex flex-col gap-7 py-10 px-10 bg-white rounded-md shadow-sm">
-                <h1 className='text-center font-bold text-3xl text-gray-900'>Login</h1>
+        <div className='w-full h-[600px]  flex flex-col items-center justify-center text-white '>
+            <form onSubmit={handleSubmit} className="md:w-[45%] lg:w-[35%] w-[90%]  h-[90%] flex flex-col gap-7 py-10 px-10  rounded-md shadow-sm">
+                <h1 className='text-center font-bold text-3xl '>Login</h1>
                 <input
                     type="email"
                     name="email"
                     placeholder='email'
-                    className='bg-gray-50 text-slate-800 px-4 py-4 rounded-md'
+                    className='bg-gray-50 text-slate-700  px-4 py-4 rounded-md'
                     onChange={handleChange}
                 />
                 <input
                     type='password'
                     placeholder='Password'
                     name="password"
-                    className='bg-gray-50 text-slate-700 px-4 py-4 rounded-md'
+                    className='bg-gray-50 text-slate-700  px-4 py-4 rounded-md'
                     onChange={handleChange}
+                    
                 />
                 <button className='bg-slate-700 text-white rounded-md py-3 px-10' type='submit'>{loading ? "Loading ..." : "Login"}</button>
             </form>

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFeatures, setTotalPrice } from '@/redux/features/featuresSlice';
 import { useRouter } from 'next/navigation';
+import Box from '@mui/material/Box'
+import LinearProgress from '@mui/material/LinearProgress'
 
 const fetchPlanDetails = async (id) => {
   const res = await fetch(`/api/plans/${id}`);
@@ -93,7 +95,12 @@ const PlanDetails = () => {
           </div>
         </div>
       ) : (
-        <p>Loading...</p>
+        <div className="flex flex-col items-center justify-center gap-10 w-[30%] mx-auto ">
+            <p>please wait </p>
+            <Box sx={{ width: '100%' }}>
+              <LinearProgress variant="query" />
+            </Box>
+          </div>
       )}
     </div>
   );

@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    font-family: Vazirmatn, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+@layer base {
+    :root {
+        --body-bg : #161820;
+        --color-secondary: #4025E7;   
+    }
+}

@@ -9,7 +9,7 @@ const Checkout = () => {
   
   const calculatedTotalPrice = selectedFeatures.length > 0 ? totalPrice : basePrice;
   return (
-    <div className='bg-slate-100 w-full min-h-screen py-9 px-10'>
+    <div className=' w-full min-h-screen py-9 px-10'>
       <h1 className='text-center my-10 text-2xl'>Checkout Page</h1>
       <div className='flex flex-col items-center gap-5 py-10 px-10 bg-white rounded-xl'>
         <h2 className='text-xl font-semibold mb-5'>Selected Features:</h2>

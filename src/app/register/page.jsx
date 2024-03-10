@@ -2,7 +2,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-
+import LinearProgress from '@mui/material/LinearProgress';
+import Box from '@mui/material/Box';
 
 const Register = () => {
     const router = useRouter();
@@ -52,14 +53,14 @@ const Register = () => {
     };
 
     return (
-        <div className='w-full h-[600px] bg-gray-100 flex flex-col items-center justify-center '>
+        <div className='w-full h-[600px]  flex flex-col items-center justify-center '>
             <form onSubmit={handleSubmit} className="md:w-[45%] lg:w-[35%] w-[90%]  h-[90%] flex flex-col gap-7 py-10 px-10 bg-white rounded-md shadow-sm">
                 <h1 className='text-center font-bold text-3xl text-gray-900'>Register</h1>
                 <input
                     type="text"
                     name="username"
                     placeholder='username'
-                    className='bg-gray-50 text-slate-800 px-4 py-4 rounded-md'
+                    className=' text-slate-800 px-4 py-4 rounded-md'
                     onChange={handleChange}
                 />
                 <input
@@ -83,7 +84,13 @@ const Register = () => {
                     className='bg-gray-50 text-slate-700 px-4 py-4 rounded-md'
                     onChange={handleChange}
                 />
-                <button className='bg-slate-700 text-white rounded-md py-3 px-10' type='submit'>{loading ? "Loading ..." : "Register"}</button>
+                <button className='bg-slate-700 text-white rounded-md py-3 px-10' type='submit'>{loading ? (
+                    <div className="flex flex-col gap-5 mx-auto  items-center justify-center  w-[200px] py-5">
+                    <Box sx={{ width: '100%' }}>
+                        <LinearProgress variant="query" />
+                    </Box>
+                </div>
+                ) : "Register"}</button>
             </form>
         </div>
     );
