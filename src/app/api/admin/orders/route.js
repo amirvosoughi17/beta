@@ -13,7 +13,7 @@ export async function GET() {
                 message: "There is not order here..."
             }, { status: 404 })
         }
-        return NextResponse.json({ orders }, { status: 200 })
+        return NextResponse.json({ orders, orderDocumentCount }, { status: 200 })
     } catch (error) {
         return NextResponse.json({
             success: false,
