@@ -6,9 +6,11 @@ connect()
 
 export async function GET() {
     try {
-        const orders = await Order.find();
-        const orderDocumentCount = await Order.countDocuments();
-        if(orderDocumentCount === 0){
+        const orders = await Order.find().populate({
+            path: 'user',
+            select: 'username email phoneNumber',
+        }); const orderDocumentCount = await Order.countDocuments();
+        if (orderDocumentCount === 0) {
             return NextResponse.json({
                 message: "There is not order here..."
             }, { status: 404 })
