@@ -2,8 +2,7 @@ import mongoose from "mongoose";
 import Plan from "./Plan";
 const orderSchema = new mongoose.Schema({
     plan: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Plan',
+        type: String,
         required: true
     },
     supportTime: {
@@ -70,9 +69,8 @@ const orderSchema = new mongoose.Schema({
 
 
 orderSchema.pre("validate", async function () {
-    const plan = await Plan.findOne({ _id: this.plan });
+    const plan = await Plan.findOne({ name: this.plan });
     const planBasePrice = plan.basePrice;
-
     const selectedFeaturesTotalPrice = this.selectedFeatures.reduce((total, feature) => {
         return total + feature.price
     }, 0);
