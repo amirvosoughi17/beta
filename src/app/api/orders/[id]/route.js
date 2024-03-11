@@ -2,6 +2,7 @@ import Order from "@/models/Order";
 import { calculateOrderProgress } from "@/utils/calculateOrderProgress";
 import mongoose from "mongoose";
 import { connect } from "@/config/DB";
+import { NextResponse } from "next/server";
 
 connect();
 
@@ -10,21 +11,21 @@ export async function GET(request, { params }) {
         const { id } = params;
 
         if (!id) {
-            return Response.json({
+            return NextResponse.json({
                 message: "Order Not found!"
             }, { status: 404 })
         }
         const isValidObjectId = mongoose.Types.ObjectId.isValid(id);
         if (!isValidObjectId) {
-            return Response.json({
+            return NextResponse.json({
                 message: "Invalid Order ID"
             }, { status: 400 });
         }
 
         const order = await Order.findOne({ _id: id });
-        return Response.json(order, { status: 200 })
+        return NextResponse.json(order, { status: 200 })
     } catch (error) {
-        return Response.json({
+        return NextResponse.json({
             message: error.message
         }, { status: 500 })
     }
@@ -38,7 +39,7 @@ export async function PUT(request, { params }) {
         const order = await Order.findById(id);
 
         if (!order) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: 'Order not found',
             }, { status: 404 });
@@ -47,7 +48,7 @@ export async function PUT(request, { params }) {
         const selectedFeature = order.selectedFeatures.find(sf => sf.name === featureName);
 
         if (!selectedFeature) {
-            return Response.json({
+            return NextResponse.json({
                 success: false,
                 message: 'Selected feature not found in the order',
             }, { status: 404 });
@@ -74,14 +75,14 @@ export async function PUT(request, { params }) {
         }
         await order.save();
 
-        return Response.json({
+        return NextResponse.json({
             success: true,
             message: 'Feature status updated successfully!',
             order,
         }, { status: 200 });
 
     } catch (error) {
-        return Response.json({
+        return NextResponse.json({
             success: false,
             message: error.message
         }, { status: 500 })

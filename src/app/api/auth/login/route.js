@@ -29,7 +29,7 @@ export async function POST(request) {
         return generate_token("Logged in successfully", 200, existsUser);
 
     } catch (error) {
-        return Response.json({
+        return NextResponse.json({
             message: error.message
         }, { status: 500 });
     }

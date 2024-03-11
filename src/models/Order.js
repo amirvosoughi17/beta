@@ -50,15 +50,24 @@ const orderSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true,
-        enum: ["pending", "under_review", "accepted", "in_progress", "completed"],
+        enum: [
+            "pending",
+            "underReview",
+            "accepted",
+            "notAccepted",
+            "inProgress",
+            "completed",
+            "canceled"],
         default: "pending"
     },
     statusDates: {
         pending: { type: Date },
         underReview: { type: Date },
         accepted: { type: Date },
+        notAccepted: { type: Date },
         inProgress: { type: Date },
         completed: { type: Date },
+        canceled: { type: Date },
     },
     totalPrice: {
         type: Number,
