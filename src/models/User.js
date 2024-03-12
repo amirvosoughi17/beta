@@ -34,6 +34,10 @@ const userSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: "Order"
     }],
+    notifications: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Notification',
+    }],
     password: {
         type: String,
         required: true,

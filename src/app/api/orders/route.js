@@ -1,25 +1,18 @@
 import { connect } from "@/config/DB";
+import Notification from "@/models/Notification";
 import Order from "@/models/Order";
 import { User } from "@/models/User";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
-import Plan from "@/models/Plan";
 
 connect();
 
 export async function POST(request) {
   try {
     const data = await request.json();
-    const { planName, selectedFeatures } = data;
+    const { planName, supportTime, selectedFeatures } = data;
     const user_id = await get_user_data_from_session(request);
     const user = await User.findOne({ _id: user_id });
-    const plan = await Plan.findOne({ name: planName });
-
-    const supportTime = 4; 
-
-    const originalPhoneNumberValidator = User.schema.path('phoneNumber').validators[0];
-    User.schema.path('phoneNumber').validators = [];
-
     const newOrder = await Order.create({
       plan: planName,
       user,
@@ -28,20 +21,28 @@ export async function POST(request) {
       totalFeature: selectedFeatures.length,
       statusDates: {
         pending: new Date(Date.now())
-      },
-      basePrice: plan.basePrice,
+      }
     });
-
-    User.schema.path('phoneNumber').validators = [originalPhoneNumberValidator];
-
+    const newNotification = await Notification.create({
+      message: "new Order created Successfully!",
+    });
+    user.notifications.push(newNotification);
     user.orders.push(newOrder._id);
+
     await user.save();
 
-    return NextResponse.json({ newOrder }, { status: 201 });
+    const userInfo = {
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+    };
+
+    return NextResponse.json({ newOrder: { ...newOrder.toObject(), user: userInfo } }, { status: 201 });
   } catch (error) {
     return NextResponse.json({
       success: false,
       message: error.message
-    }, { status: 500 });
+    }, { status: 500 })
   }
 }
