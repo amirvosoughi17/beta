@@ -6,17 +6,23 @@ import { fetchUserData } from '@/utils/userActions';
 import { selectIsAuthenticated } from '@/redux/user/userSlice';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+// mui
 import Avatar from '@mui/material/Avatar';
 import { deepOrange, deepPurple } from '@mui/material/colors';
 import DashboardSideNav from '@/components/DashboardSideNav';
 import LinearProgress from '@mui/material/LinearProgress';
+import PropTypes from 'prop-types';
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+
+//react icons
 import { FaRegUser } from 'react-icons/fa6';
 import { MdAlternateEmail } from 'react-icons/md';
 import { FaSquarePhone } from 'react-icons/fa6';
 import { RiLockPasswordLine } from 'react-icons/ri';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import DashboardLayout from '@/components/DashboardLayout';
+
 
 
 const Dashboard = () => {
@@ -125,13 +131,13 @@ const Dashboard = () => {
                                                     <h1 className='text-xl'>{order.plan}</h1>
 
                                                     <p className={
-                                                    order.status === 'completed' ? 'text-green-500 text-sm' :
-                                                    order.status === 'pending' ? 'text-orange-500 text-sm' :
-                                                    order.status === 'accepted' ? 'text-yellow-500 text-sm' :
-                                                    order.status === 'notAccepted' ? 'text-red-500 text-sm' :
-                                                    order.status === 'inProgress' ? 'text-blue-500 text-sm' :
-                                                    order.status === 'underReview' ? 'text-purple-500 text-sm' :
-                                                    order.status === 'canceled' ? 'text-gray-500 text-sm' : ''
+                                                        order.status === 'completed' ? 'text-green-500 text-sm' :
+                                                            order.status === 'pending' ? 'text-orange-500 text-sm' :
+                                                                order.status === 'accepted' ? 'text-yellow-500 text-sm' :
+                                                                    order.status === 'notAccepted' ? 'text-red-500 text-sm' :
+                                                                        order.status === 'inProgress' ? 'text-blue-500 text-sm' :
+                                                                            order.status === 'underReview' ? 'text-purple-500 text-sm' :
+                                                                                order.status === 'canceled' ? 'text-gray-500 text-sm' : ''
 
                                                     }>{order.status}</p>
                                                 </div>
@@ -152,12 +158,23 @@ const Dashboard = () => {
                                                         <span className='text-gray-300 text-sm'>تسویه حساب :</span>
                                                         <p className='text-red-500 text-md'>پرداخت نشده</p>
                                                     </div>
+                                                    <h1>وضعیت سفارش :</h1>
+                                                <Box sx={{ display: 'flex', alignItems: 'center' , gap : "10px" }}>
+                                                    <Box sx={{ width: '100%', mr: 1 }}>
+                                                        <LinearProgress variant="determinate" color='secondary' value={order.orderProgress} sx={{ height: '10px', borderRadius: '5px' , backgroundColor : "#ded6ed" }} />
+                                                    </Box>
+                                                    <Box sx={{ minWidth: 35 }}>
+                                                        <Typography variant="body2" color="text.white">{`${Math.round(order.orderProgress)}%`}</Typography>
+                                                    </Box>
+                                                </Box>
+                                                </div>
+                                                <div className="my-۲">
                                                 </div>
                                                 <div className="flex items-center justify-between">
                                                     <Link href={`/dashboard/order/${order._id}`} className='bg-[--color-secondary] py-[5px] px-4 rounded-md border-gray-400/40'>
                                                         مشاهده
                                                     </Link>
-                                                    <p className='text-gray-200 text-md '>تومان {order.totalPrice}</p>
+                                                    <p className='text-gray-200 text-md  '>تومان {order.totalPrice}</p>
                                                 </div>
                                             </div>
                                         ))}
