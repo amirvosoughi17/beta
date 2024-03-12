@@ -24,3 +24,4 @@ export const selectIsAuthenticated = (state) => state.user.isAuthenticated;
 export const selectUsers = (state) => state.user.users;
 
 export default userSlice.reducer;
+

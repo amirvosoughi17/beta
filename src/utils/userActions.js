@@ -22,6 +22,7 @@ export const fetchUserData = () => async (dispatch) => {
 
     }
   };
+  
   export const fetchAllUsers = () => async (dispatch) => {
     try {
       const res = await fetch('/api/admin', {

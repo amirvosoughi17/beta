@@ -1,17 +1,55 @@
-"use client";
-import React, { useEffect, useState } from 'react';
+"use client"
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation';
 
 const Checkout = () => {
+
   const selectedFeatures = useSelector((state) => state.features.selectedFeatures);
   const totalPrice = useSelector((state) => state.features.totalPrice);
-  const basePrice = useSelector((state) => state.features.basePrice);
-  
-  const calculatedTotalPrice = selectedFeatures.length > 0 ? totalPrice : basePrice;
+  const planName = useSelector((state) => state.features.planName);
+
+  const [isOrderSent, setIsOrderSent] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const router = useRouter();
+
+  const sendOrderToServer = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          planName,
+          selectedFeatures,
+          totalPrice,
+        }),
+      });
+
+      if (response.ok) {
+        const { newOrder } = await response.json();
+        console.log('Order sent successfully:', newOrder);
+        setIsOrderSent(true);
+        router.push('/dashboard'); 
+      } else {
+        const { message } = await response.json();
+        console.error('Error sending order:', message);
+      }
+    } catch (error) {
+      console.error('Error sending order:', error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div className=' w-full min-h-screen py-9 px-10'>
-      <h1 className='text-center my-10 text-2xl'>Checkout Page</h1>
-      <div className='flex flex-col items-center gap-5 py-10 px-10 bg-white rounded-xl'>
+    <div className='w-full min-h-screen py-9 px-10'>
+      {planName && <p className='mt-3 text-center text-3xl font-bold'>{planName}</p>}
+      <div className='flex flex-col items-center gap-5 py-10 px-10 rounded-xl'>
         <h2 className='text-xl font-semibold mb-5'>Selected Features:</h2>
         <ul>
           {selectedFeatures.map((feature) => (
@@ -21,6 +59,16 @@ const Checkout = () => {
           ))}
         </ul>
         <p className='mt-5'>Total Price: ${totalPrice}</p>
+        {!isOrderSent && (
+          <button
+            onClick={sendOrderToServer}
+            className={`bg-blue-500 text-white py-2 px-4 mt-5 rounded ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Confirming Order...' : 'Confirm Order'}
+          </button>
+        )}
+        {isOrderSent && <p className='mt-3 text-green-600 font-bold'>Order successfully sent!</p>}
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ const DashboardSideNav = () => {
 
   return (
     <div>
-        <div className="fixed w-[140px] h-screen right-0 top-0  bg-[--body-bg]">
+        <div className="fixed w-[140px] h-screen right-0 top-0  bg-[--body-bg] hidden lg:block">
             <div className="py-[50px] flex flex-col justify-between items-center h-full ">
                 <div className="flex flex-col items-center gap-[40px]">
                     <div className="">
@@ -49,11 +49,11 @@ const DashboardSideNav = () => {
                             <IoMdNotificationsOutline  size={25}/>
                             <span className='text-sm  text-gray-200'>اعلانات</span>
                         </Link>
-                        <Link href='/dashboard' className="flex flex-col items-center gap-2">
+                        <Link href='/dashboard/order' className="flex flex-col items-center gap-2">
                             <FiShoppingBag  size={25}/>
                             <span className='text-sm  text-gray-200'>سفارش ها</span>
                         </Link>
-                        <Link href='/dashboard' className="flex flex-col items-center gap-2">
+                        <Link href='/dashboard/order' className="flex flex-col items-center gap-2">
                             <GiCash  size={25}/>
                             <span className='text-sm  text-gray-200'>پرداخت</span>
                         </Link>

@@ -29,6 +29,7 @@ const Dashboard = () => {
     const userInfo = useSelector(selectUserInfo);
     const isAuthenticated = useSelector(selectIsAuthenticated)
     const router = useRouter();
+    const [orders, setOrders] = useState([]);
 
     const [updateInfo, setUpdateInfo] = useState({
         username: userInfo?.username || "",
@@ -49,6 +50,20 @@ const Dashboard = () => {
         }
     }, [isAuthenticated, router]);
 
+    useEffect(() => {
+    
+        const fetchUserOrders = async () => {
+          try {
+            const ordersResponse = await fetch(`/api/orders/[id]`);
+            const ordersData = await ordersResponse.json();
+            setOrders(ordersData.userOrders);
+          } catch (error) {
+            console.error('Error fetching user orders:', error.message);
+          } 
+        };
+
+        fetchUserOrders();
+      }, []);
 
 
     const renderWelcomeMessage = () => {
@@ -70,7 +85,7 @@ const Dashboard = () => {
         <div className='py-10 px-10 w-full min-h-screen bg-[#0D0F14]'>
             {userInfo ? (
                 <>
-                    <div className="w-full mr-0 lg:w-[80%] lg:mr-[200px]   md:h-[740px] flex flex-col gap-6">
+                    <div className="w-full mr-0 lg:w-[90%] lg:mr-[140px]   md:h-[740px] flex flex-col gap-6">
                         <div className="w-full bg-[#171B24] md:h-[250px] border-[1px] border-slate-700/30 shadow-md rounded-xl py-7 px-5 lg:px-4 xl:px-8">
                             <div className="flex flex-col md:flex-row items-center gap-[25px] lg:gap-[30px] xl:gap-[20px]">
                                 <div className="flex gap-4 md:mr-[40px] lg:mr-[60px]">
@@ -109,47 +124,16 @@ const Dashboard = () => {
                             </div>
                         </div>
                         <div className="w-full bg-[#171B24] min-h-[450px] overflow-y-auto border-[1px] border-slate-700/30 shadow-md  rounded-xl py-5 sm:px-4 md:px-8 ">
-                            <div className="flex flex-col gap-5">
-                            <h1 className='my-5 text-xl '>اعلانات</h1>
+                        <ul>
+                    {orders && orders.map((order) => (
+                      <li key={order._id}>
+                        <Link href={`/orders/${order._id}`}>
+                          <a>{`Order ID: ${order._id}`}</a>
+                        </Link>
 
-                                <div className="w-[98%] md:w-[92%]  py-4 px-4 bg-[#1b1d31ca] border-[1px] border-[#42444D] rounded-lg flex flex-col gap-5 ">
-                                    <div className='flex items-center gap-3'>
-                                        <IoMdNotificationsOutline size={28} className='text-teal-500' />
-                                        <h1 className='text-xl font-semibold text-white'>سفارش با موفقیت ثبت شد .</h1>
-                                    </div>
-                                    <div className="">
-                                        <p className='text-gray-300 text-md font-light'>سفارش شما با موفقیت ثبت لطفا برای ادامه روند پروژه ۲۴ ساعت صبر کنید تا تیم ویکسل برای هماهنگی بیشتر با شما تماس بگیرند با تشکر. ویکسل</p>
-                                    </div>
-                                </div>
-                                <div className="w-[98%] md:w-[92%]  py-4 px-4 bg-[#1b1d31ca] border-[1px] border-[#42444D] rounded-lg flex flex-col gap-5 ">
-                                    <div className='flex items-center gap-3'>
-                                        <IoMdNotificationsOutline size={28} />
-                                        <h1 className='text-xl font-semibold text-white'>سفارش با موفقیت ثبت شد .</h1>
-                                    </div>
-                                    <div className="">
-                                        <p className='text-gray-300 text-md font-light'>سفارش شما با موفقیت ثبت لطفا برای ادامه روند پروژه ۲۴ ساعت صبر کنید تا تیم ویکسل برای هماهنگی بیشتر با شما تماس بگیرند با تشکر. ویکسل</p>
-                                    </div>
-                                </div>
-                                <div className="w-[98%] md:w-[92%]  py-4 px-4 bg-[#1b1d31ca] border-[1px] border-[#42444D] rounded-lg flex flex-col gap-5 ">
-                                    <div className='flex items-center gap-3'>
-                                        <IoMdNotificationsOutline size={28} />
-                                        <h1 className='text-xl font-semibold text-white'>سفارش با موفقیت ثبت شد .</h1>
-                                    </div>
-                                    <div className="">
-                                        <p className='text-gray-300 text-md font-light'>سفارش شما با موفقیت ثبت لطفا برای ادامه روند پروژه ۲۴ ساعت صبر کنید تا تیم ویکسل برای هماهنگی بیشتر با شما تماس بگیرند با تشکر. ویکسل</p>
-                                    </div>
-                                </div>
-                                <div className="w-[98%] md:w-[92%]  py-4 px-4 bg-[#1b1d31ca] border-[1px] border-[#42444D] rounded-lg flex flex-col gap-5 ">
-                                    <div className='flex items-center gap-3'>
-                                        <IoMdNotificationsOutline size={28} />
-                                        <h1 className='text-xl font-semibold text-white'>سفارش با موفقیت ثبت شد .</h1>
-                                    </div>
-                                    <div className="">
-                                        <p className='text-gray-300 text-md font-light'>سفارش شما با موفقیت ثبت لطفا برای ادامه روند پروژه ۲۴ ساعت صبر کنید تا تیم ویکسل برای هماهنگی بیشتر با شما تماس بگیرند با تشکر. ویکسل</p>
-                                    </div>
-                                </div>
-
-                            </div>
+                      </li>
+                    ))}
+                  </ul>
                         </div>
                     </div>
                 </>
@@ -168,17 +152,3 @@ const Dashboard = () => {
 
 export default Dashboard;
 
-{/* {userInfo ? (
-    <div className='flex flex-col gap-5 mt-10 '>
-        <div className="flex items-center gap-3">
-        <Avatar sx={{ bgcolor: deepPurple[500] }}> {userInfo.username.charAt(0).toUpperCase()}</Avatar>
-        <article>{userInfo?.username}</article>
-        </div>
-        <article>email : {userInfo?.email}</article>
-        <article>phoneNumber : {userInfo?.phoneNumber}</article>
-    </div>
-) : (
-    <p>Loading user information...</p>
-
-    )}
-    {renderWelcomeMessage()} */}

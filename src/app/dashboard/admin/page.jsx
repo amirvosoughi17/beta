@@ -5,6 +5,7 @@ import { setUserInfo, selectUsers, selectUserInfo } from '@/redux/user/userSlice
 import { fetchUserData } from '@/utils/userActions';
 import { fetchAllUsers } from '@/utils/userActions';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 //mui
 import LinearProgress from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box';
@@ -14,7 +15,8 @@ const Admin = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectUserInfo);
   const router = useRouter();
-
+  const users = useSelector(selectUsers);
+  const [orders, setOrders] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
     basePrice: '',
@@ -30,6 +32,11 @@ const Admin = () => {
 
   useEffect(() => {
     dispatch(fetchUserData())
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchUserData());
+    dispatch(fetchAllUsers());
   }, [dispatch]);
 
   useEffect(() => {
@@ -94,14 +101,154 @@ const Admin = () => {
     }
   };
 
+  const fetchOrders = async () => {
+    try {
+      const response = await fetch('/api/admin/orders');
+      if (response.ok) {
+        const data = await response.json();
+        setOrders(data.orders);
+        console.log(data);
+      } else {
+        console.error('Failed to fetch orders:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching orders:', error.message);
+    }
+  };
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
   return (
     <DashboardLayout>
-      <div className='py-10 px-10 w-full min-h-screen bg-[#0D0F14]'>
-        <div className="w-full mr-0 lg:w-[80%] lg:mr-[200px]   md:h-[740px] flex flex-col gap-6">
-          <div className="w-full bg-[#171B24] md:h-[250px] border-[1px] border-slate-700/30 shadow-md rounded-xl py-7 px-5 lg:px-4 xl:px-8">
+      <div className='p-2 sm:p-8 w-full  bg-[#0D0F14]'>
+        <div className="w-full mr-0 lg:w-[90%] lg:mr-[140px]   flex flex-col gap-6">
+          <div className="w-full bg-[#171B24] border-[1px] border-slate-700/30 shadow-md rounded-xl py-7 px-5 lg:px-4 xl:px-8">
+            <h2 className="text-2xl font-bold text-white mb-5">سفارشات</h2>
+            {orders.length > 0 ? (
+              <div className='flex flex-wrap gap-6'>
+                {orders.map((order) => (
+                  <div key={order._id} className=" w-[300px] bg-[#23263e] flex flex-col gap-4 py-4 px-4 rounded-lg shadow-md border-gray-600/30 border-[1px]">
+                    <div className="flex w-full items-center justify-between">
+                      <h1 className='text-xl'>{order.plan}</h1>
+                      <p className={
+                        order.status === 'completed' ? 'text-green-500 text-sm' :
+                          order.status === 'pending' ? 'text-orange-500 text-sm' :
+                            order.status === 'accepted' ? 'text-yellow-500 text-sm' :
+                              order.status === 'notAccepted' ? 'text-red-500 text-sm' :
+                                order.status === 'inProgress' ? 'text-blue-500 text-sm' :
+                                  order.status === 'underReview' ? 'text-purple-500 text-sm' :
+                                    order.status === 'canceled' ? 'text-gray-500 text-sm' : '' 
+                                    
+                      }>{order.status}</p>
+                    </div>
+                    <div className="flex flex-col gap-[10px] my-5">
+                      {order.selectedFeatures.map((feature) => (
+                        <div key={feature.name} className='bg-[#313250] rounded-md shadow-sm py-[4px] px-3'>
+                          {feature.name}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <Link href={`/dashboard/order/${order._id}`} className='bg-[--color-secondary] py-[5px] px-4 rounded-md border-gray-400/40'>
+                        مشاهده
+                      </Link>
+                      <p className='text-gray-200 text-md '>تومان {order.totalPrice}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-white">loading...</p>
+            )}
           </div>
-          <div className="w-full bg-[#171B24] min-h-[450px] overflow-y-auto border-[1px] border-slate-700/30 shadow-md  rounded-xl py-5 sm:px-4 md:px-8 ">
+          <div className="w-full bg-[#171B24]  overflow-y-auto border-[1px] border-slate-700/30 shadow-md  rounded-xl py-5 px-3 sm:px-4 md:px-8 ">
+            <div className="">
+              <h2 className='text-xl font-bold text-white'>پلن را اضافه کنید</h2>
+              <form onSubmit={handleSubmit} className='flex w-full justify-start md:gap-[90px] lg:gap-[120px]  flex-wrap  gap-6 my-10 '>
+                <div className="flex flex-col gap-5 ">
+                  <div className="flex flex-col items-start gap-3">
+                    <label className='text-lg  text-gray-200'>
+                      نام پلن :
+                    </label>
+                    <input
+                      className='bg-[#3a3e60] border-[1px] border-gray-500/40 px-5 py-[7px] w-[310px]  rounded-md'
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="flex flex-col items-start gap-3">
+                    <label className='text-lg  text-gray-200'>
+                      قیمت پایه :
+                    </label>
+                    <input
+                      className='bg-[#3a3e60] border-[1px] border-gray-500/40 px-5 py-[7px] w-[310px]  rounded-md'
+                      type="text"
+                      name="basePrice"
+                      value={formData.basePrice}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="flex flex-col items-start gap-3">
+                    <label className='text-lg  text-gray-200'>
+                      توضیحات :
+                    </label>
+                    <textarea
+                      className='bg-[#3a3e60] border-[1px] border-gray-500/40 px-5 py-[7px] w-[310px]  rounded-md'
+                      name="description"
+                      value={formData.description}
+                      onChange={handleChange}
+                      rows={5}
+                    />
+                  </div>
+                  <button className='bg-[--color-secondary] text-white px-5 py-[11px] rounded-md ' type="submit">افزدون پلن</button>
+
+                </div>
+                <div className="flex flex-col gap-4">
+                  <h2 className='text-2xl mt-10'>امکانات</h2>
+                  {formData.features.map((feature, index) => (
+                    <div key={index} className='my- bg-[--color-secondary] px-7 py-2 rounded-md'>
+                      <p>{feature.name} - ${feature.price}</p>
+                    </div>
+                  ))}
+                  <div className="flex flex-col items-start gap-3">
+                    <label className='text-lg  text-gray-200'>
+                      نام :
+                    </label>
+                    <input
+                      className='bg-[#3a3e60] border-[1px] border-gray-500/40 px-5 py-[7px] w-[310px]  rounded-md'
+                      type="text"
+                      name="featureName"
+                      value={featureData.featureName}
+                      onChange={handleFeatureChange}
+                    />
+
+                  </div>
+                  <div className="flex flex-col items-start gap-3">
+                    <label className='text-lg  text-gray-200'>
+                      قیمت :‌
+                    </label>
+                    <input
+                      className='bg-[#3a3e60] border-[1px] border-gray-500/40 px-5 py-[7px] w-[310px]  rounded-md'
+                      type="text"
+                      name="featurePrice"
+                      value={featureData.featurePrice}
+                      onChange={handleFeatureChange}
+                    />
+                  </div>
+                  <button className='bg-[--color-secondary] text-white px-5 py-3 mt-2 rounded-md ' type="button" onClick={addFeature}>
+                    افزدون
+                  </button>
+
+                </div>
+                <br />
+              </form>
+
+            </div>
           </div>
+
         </div>
       </div>
     </DashboardLayout>
@@ -110,81 +257,3 @@ const Admin = () => {
 
 export default Admin;
 
-// <div className='py-10 px-10'>
-//   <h1>welcome admin </h1>
-// <div>
-//   <h2>User List</h2>
-//   <ul>
-//     {users && users.length > 0 ? (
-//       users.map((user) => <li key={user._id}>{user.username}</li>)
-//     ) : (
-//       <p>No users available.</p>
-//     )}
-//   </ul>
-// </div>
-//   <div className="">
-//     <form onSubmit={handleSubmit} className='flex flex-col items-center gap-6'>
-//       <label>
-//         Name:
-//         <input
-//           className='bg-gray-100 px-5 py-2 m-4 rounded-xl'
-//           type="text"
-//           name="name"
-//           value={formData.name}
-//           onChange={handleChange}
-//         />
-//       </label>
-//       <label>
-//         Base Price:
-//         <input
-//           className='bg-gray-100 px-5 py-2 m-4 rounded-xl'
-//           type="text"
-//           name="basePrice"
-//           value={formData.basePrice}
-//           onChange={handleChange}
-//         />
-//       </label>
-//       <label>
-//         Description:
-//         <textarea
-//           name="description"
-//           value={formData.description}
-//           onChange={handleChange}
-//         />
-//       </label>
-//       <h2 className='text-2xl mt-10'>Features</h2>
-//       {formData.features.map((feature, index) => (
-//         <div key={index} className='my-2 bg-gray-200 px-7 py-4 rounded-xl'>
-//           <p>{feature.name} - ${feature.price}</p>
-//         </div>
-//       ))}
-//       <label>
-//         Feature Name:
-//         <input
-//           className='bg-gray-100 px-5 py-2 m-4 rounded-xl'
-//           type="text"
-//           name="featureName"
-//           value={featureData.featureName}
-//           onChange={handleFeatureChange}
-//         />
-//       </label>
-
-//       <label>
-//         Feature Price:
-//         <input
-//           className='bg-gray-100 px-5 py-2 m-4 rounded-xl'
-//           type="text"
-//           name="featurePrice"
-//           value={featureData.featurePrice}
-//           onChange={handleFeatureChange}
-//         />
-//       </label>
-//       <br />
-//       <button className='bg-slate-500 text-white px-5 py-2 rounded-xl ' type="button" onClick={addFeature}>
-//         Add Feature
-//       </button>
-
-//       <button className='bg-slate-500 text-white px-5 py-2 rounded-xl ' type="submit">Add Plan</button>
-//     </form>
-//   </div>
-// </div>
