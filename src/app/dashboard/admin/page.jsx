@@ -128,9 +128,10 @@ const Admin = () => {
             {orders.length > 0 ? (
               <div className='flex flex-wrap gap-6'>
                 {orders.map((order) => (
-                  <div key={order._id} className=" w-[300px] bg-[#23263e] flex flex-col gap-4 py-4 px-4 rounded-lg shadow-md border-gray-600/30 border-[1px]">
+                  <div key={order._id} className=" w-[340px] sm:w-[340px] bg-[#23263e] flex flex-col gap-4 py-4 px-4 rounded-lg shadow-md border-gray-600/30 border-[1px]">
                     <div className="flex w-full items-center justify-between">
                       <h1 className='text-xl'>{order.plan}</h1>
+                      
                       <p className={
                         order.status === 'completed' ? 'text-green-500 text-sm' :
                           order.status === 'pending' ? 'text-orange-500 text-sm' :
@@ -142,12 +143,23 @@ const Admin = () => {
                                     
                       }>{order.status}</p>
                     </div>
-                    <div className="flex flex-col gap-[10px] my-5">
+                    <div className="flex flex-col gap-[10px] my-5 min-h-[170px]">
                       {order.selectedFeatures.map((feature) => (
                         <div key={feature.name} className='bg-[#313250] rounded-md shadow-sm py-[4px] px-3'>
                           {feature.name}
                         </div>
                       ))}
+                    </div>
+                    <div className="flex flex-col gap-2 my-1 border-b-[1px] pb-4 border-gray-600/30">
+                      <h1 className='text-white  '>اطلاعات کاربر</h1>
+                      <div className="flex items-center justify-between w-full">
+                        <span className='text-gray-300 text-sm '>نام کاربری :</span>
+                        <p className='text-gray-200 text-md '>{order.user.username}</p>
+                      </div>
+                      <div className="flex items-center justify-between w-full">
+                        <span className='text-gray-300 text-sm '>شماره تماس :</span>
+                        <p className='text-gray-200 text-md '>{order.user.phoneNumber}</p>
+                      </div>
                     </div>
                     <div className="flex items-center justify-between">
                       <Link href={`/dashboard/order/${order._id}`} className='bg-[--color-secondary] py-[5px] px-4 rounded-md border-gray-400/40'>

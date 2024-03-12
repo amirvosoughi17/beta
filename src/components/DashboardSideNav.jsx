@@ -49,7 +49,7 @@ const DashboardSideNav = () => {
                             <IoMdNotificationsOutline  size={25}/>
                             <span className='text-sm  text-gray-200'>اعلانات</span>
                         </Link>
-                        <Link href='/dashboard/order' className="flex flex-col items-center gap-2">
+                        <Link href='/dashboard' className="flex flex-col items-center gap-2">
                             <FiShoppingBag  size={25}/>
                             <span className='text-sm  text-gray-200'>سفارش ها</span>
                         </Link>

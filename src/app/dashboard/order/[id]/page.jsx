@@ -2,10 +2,18 @@
 
 import DashboardLayout from '@/components/DashboardLayout';
 import React, { useState, useEffect } from 'react';
+import { useDispatch , useSelector } from 'react-redux';
+import { selectUserInfo } from '@/redux/user/userSlice';
+import { fetchUserData } from '@/utils/userActions';
 
 const Order = ({ id }) => {
   const [order, setOrder] = useState(null);
-  const [featureStatus, setFeatureStatus] = useState({});
+  const userInfo = useSelector(selectUserInfo);
+  const dispatch = useDispatch(); 
+
+  useEffect(() => {
+    dispatch(fetchUserData())
+}, [dispatch]);
 
   useEffect(() => {
     const pathArray = window.location.pathname.split('/');
@@ -16,38 +24,11 @@ const Order = ({ id }) => {
         if (!id) {
           return;
         }
-
         const response = await fetch(`/api/admin/orders/${id}`);
         if (response.ok) {
           const data = await response.json();
           setOrder(data.order);
-          const handleStatusChange = async (e, featureId) => {
-            const newStatus = e.target.value;
-        
-            try {
-              const response = await fetch(`/api/admin/orders/${orderId}`, {
-                method: 'PUT',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ featureId, newStatus }),
-              });
-        
-              if (response.ok) {
-                const updatedOrder = await response.json();
-                setOrder(updatedOrder.order);
-        
-                setFeatureStatus((prevStatus) => ({
-                  ...prevStatus,
-                  [featureId]: newStatus,
-                }));
-              } else {
-                console.error('Failed to update feature status:', response.statusText);
-              }
-            } catch (error) {
-              console.error('Error updating feature status:', error.message);
-            }
-          };
+         
         } else {
           console.error('Failed to fetch order details:', response.statusText);
         }
@@ -59,34 +40,48 @@ const Order = ({ id }) => {
     fetchOrderDetails();
   }, []);
 
-  const handleStatusChange = async (e, featureId) => {
-    const newStatus = e.target.value;
-
+  const handleStatusChange = async (featureId, newStatus) => {
+    const orderId = order._id;
     try {
-      const response = await fetch(`/api/admin/orders/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ featureId, newStatus }),
-      });
-
+      const response = await fetch(`/api/admin/orders/${orderId}`);
       if (response.ok) {
-        const updatedOrder = await response.json();
-        setOrder(updatedOrder.order);
-
-        setFeatureStatus((prevStatus) => ({
-          ...prevStatus,
-          [featureId]: newStatus,
-        }));
-        
+        const data = await response.json();
+        const order = data.order;
+  
+        const selectedFeature = order.selectedFeatures.find(
+          (sf) => sf._id === featureId
+        );
+  
+        if (!selectedFeature) {
+          console.error('Selected feature not found in the order');
+          return;
+        }
+  
+        const updateResponse = await fetch(`/api/admin/orders/${orderId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            featureName: selectedFeature.name,
+            newStatus: newStatus,
+          }),
+        });
+  
+        if (updateResponse.ok) {
+          console.log('Feature status updated successfully!');
+        } else {
+          console.error('Failed to update feature status:', updateResponse.statusText);
+        }
       } else {
-        console.error('Failed to update feature status:', response.statusText);
+        console.error('Failed to fetch order details:', response.statusText);
       }
     } catch (error) {
       console.error('Error updating feature status:', error.message);
     }
   };
+  
+ 
 
   if (!order) {
     return <p>Loading...</p>;
@@ -112,22 +107,26 @@ const Order = ({ id }) => {
               </div>
               {/* <p>Support Time: {order.supportTime} months</p> */}
               <h1>قابلیت های انتخاب شده</h1>
-              <div className=''>
-              <ul>
-        {order.selectedFeatures.map((feature) => (
-          <div key={feature._id}>
-            {feature.name} - {feature.price} - Status:{' '}
-            <select
-              value={featureStatus[feature._id] || feature.status}
-              onChange={(e) => handleStatusChange(e, feature._id)}
-            >
-              <option value="todo">Todo</option>
-              <option value="inProgress">In Progress</option>
-              <option value="completed">Completed</option>
-            </select>
-          </div>
-        ))}
-      </ul>
+              <div className='flex flex-col gap-3'>
+              {order.selectedFeatures.map((feature) => (
+                  <div key={feature._id}>
+                    <div className="flex items-center justify-between py-2 px-4 rounded-md bg-[#232836]">
+                      <span>{feature.name}</span>
+                      <span>{feature.price}</span>
+                      {userInfo && userInfo.role === 'admin' && (
+                        <select
+                        className=' bg-transparent text-white border-gray-400/60'
+                          value={feature.status}
+                          onChange={(e) => handleStatusChange(feature._id, e.target.value)}
+                        >
+                          <option value="todo">To Do</option>
+                          <option value="inProgress">In Progress</option>
+                          <option value="completed">Completed</option>
+                        </select>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
 
             </div>
@@ -139,4 +138,3 @@ const Order = ({ id }) => {
 }
 
 export default Order
-
