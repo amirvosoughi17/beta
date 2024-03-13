@@ -10,7 +10,7 @@ const orderSchema = new mongoose.Schema({
         required: true,
         min: [1, 'Support time must be at least 1 month'],
     },
-    supportStartedAt: {
+    supportStartedAt: { 
         type: Date,
     },
     supportExpiresAt: {

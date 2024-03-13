@@ -38,10 +38,6 @@ const userSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Notification',
     }],
-    tickets: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Ticket"
-    }],
     password: {
         type: String,
         required: true,

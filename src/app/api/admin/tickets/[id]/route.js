@@ -1,5 +1,5 @@
 import { connect } from "@/config/DB";
-import Ticket from "@/models/Ticket";
+import Ticket from "@/models/Chat";
 import { User } from "@/models/User";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
