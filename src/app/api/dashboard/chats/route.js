@@ -29,12 +29,13 @@ export async function POST(request) {
 export async function GET(request) {
     try {
         const userId = await get_user_data_from_session(request);
-        const myChats = await Chat.find().where({ sender: userId })
+        const myChats = await Chat.find({ sender: userId })
         for (const chat of myChats) {
             chat.isRead = true;
             await chat.save();
         }
-        return NextResponse.json({ myChats }, { status: 200 })
+        const unreadChats = myChats.filter(chat => !chat.isRead);
+        return NextResponse.json({ myChats, unreadChats: unreadChats.length }, { status: 200 })
     } catch (error) {
         return NextResponse.json({
             success: false,
