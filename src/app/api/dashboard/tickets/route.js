@@ -40,3 +40,17 @@ export async function POST(request) {
         }, { status: 500 })
     }
 }
+
+export async function GET(request) {
+    try {
+        const userId = await get_user_data_from_session(request);
+        const user = await User.findOne({ _id: userId }).select('tickets')
+        const myTickets = await Ticket.find({ _id: { $in: user.tickets } });
+        return NextResponse.json({ myTickets }, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({
+            success: false,
+            message: error.message
+        }, { status: 500 })
+    }
+}

@@ -20,8 +20,13 @@ const ticketSchema = new mongoose.Schema({
         default: "open",
         required: true
     },
-    reply: [{
-        content: {
+    responses: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        },
+        message: {
             type: String,
             required: true
         }
