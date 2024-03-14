@@ -10,6 +10,7 @@ body {
 @layer base {
     :root {
         --body-bg : #161820;
+        --dashboard-bg : #242529 ;
         --color-secondary: #4025E7;   
     }
 }

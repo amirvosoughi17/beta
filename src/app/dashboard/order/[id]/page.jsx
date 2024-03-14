@@ -88,7 +88,6 @@ const Order = ({ id }) => {
   }
   return (
     <div>
-      <DashboardLayout>
         <div className='p-2 sm:p-8 w-full  bg-[#0D0F14]'>
           <div className="w-full mr-0 lg:w-[90%] lg:mr-[140px] flex flex-col gap-6">
             <div className="w-full bg-[#171B24] min-h-screen border-[1px] border-slate-700/30 shadow-md   rounded-xl py-5 sm:px-4 md:px-8 flex flex-col gap-5 ">
@@ -132,7 +131,6 @@ const Order = ({ id }) => {
             </div>
           </div>
         </div>
-      </DashboardLayout>
     </div>
   )
 }

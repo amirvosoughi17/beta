@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import LinearProgress from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box';
+import Layout from '@/components/Layout';
 
 const Order = () => {
 
@@ -40,27 +41,29 @@ const Order = () => {
   };
 
   return (
-    <div className=' py-10 px-10 w-full min-h-screen '>
-      <div>
-        <h1>Order Page</h1>
+    <Layout>
+      <div className=' py-10 px-10 w-full min-h-screen '>
+        <div>
+          <h1>Order Page</h1>
 
-        {plans ? (
-          <div>
-            <h2>choose your plan </h2>
+          {plans ? (
+            <div>
+              <h2>choose your plan </h2>
 
-            <div className='flex flex-wrap gap-7'>{renderPlans()}</div>
+              <div className='flex flex-wrap gap-7'>{renderPlans()}</div>
 
-          </div>
-        ) : (
-          <div className="flex flex-col items-center justify-center gap-10 w-[30%] mx-auto ">
-            <p>please wait </p>
-            <Box sx={{ width: '100%' }}>
-              <LinearProgress variant="query" />
-            </Box>
-          </div>
-        )}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center gap-10 w-[30%] mx-auto ">
+              <p>please wait </p>
+              <Box sx={{ width: '100%' }}>
+                <LinearProgress variant="query" />
+              </Box>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </Layout>
   )
 }
 

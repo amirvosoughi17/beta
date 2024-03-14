@@ -21,6 +21,8 @@ import { CiBoxes } from "react-icons/ci";
 import { FaQuestionCircle } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { LuUser } from "react-icons/lu";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 // mui 
 import Avatar from '@mui/material/Avatar';
 import { deepPurple, deepOrange, pink, green } from '@mui/material/colors';
@@ -88,117 +90,54 @@ const Navbar = () => {
 
     return (
         <header className='flex items-center justify-center'>
-            <div className="lg:order-2 w-[92%] h-[62px] sm:w-[89%] sm:h-[68px] md:w-[80%] md:h-[70px] lg:w-[65%] lg:h-[65px] bg-[#1a1e29e4] fixed top-8 rounded-full border-[1px] border-[#2A2D3A] py-5 px-1 lg:px-[6px] flex items-center justify-between backdrop-blur-xl duration-200">
-                <div className="flex items-center gap-[40px] ">
-                    <div className="flex items-center gap-1 lg:hidden">
-                        <IconButton
-                            aria-label="more"
-                            id="long-button"
-                            aria-controls={open ? 'long-menu' : undefined}
-                            aria-expanded={open ? 'true' : undefined}
-                            aria-haspopup="true"
-                            onClick={handleClickMenu}
-                        >
-                            <div className=" flex items-center justify-center bg-[#383f5358] rounded-full text-white   py-[10px] px-[10px] ">
-                                <BiMenu size={30} />
-                            </div>
-                        </IconButton>
-                        <Menu
-                            id="long-menu"
-                            MenuListProps={{
-                                'aria-labelledby': 'long-button',
-                            }}
-                            anchorEl={menu}
-                            open={openMenu}
-                            onClose={handleCloseMenu}
-                            PaperProps={{
-                                style: {
-                                    maxHeight: ITEM_HEIGHT * 20.5,
-                                    width: '35ch',
-                                    backgroundColor: "#1a1e29e4",
-                                    borderRadius: "10px"
-                                },
-                            }}
-                        >
-                            <div className="flex flex-col  gap-2 my-5 py-5 ">
-                                <nav className='flex flex-col items-start gap-1 my-4'>
-                                    <Link onClick={handleCloseMenu} href='/' className='flex items-center gap-4 text-[19px] text-white duration-200 hover:bg-gray-900 py-2 px-4 rounded-full'>
-                                        <AiOutlineHome size={26} className='text-zinc-200' />
-                                        <span>صفحه اصلی</span>
-                                    </Link>
-                                    <Link onClick={handleCloseMenu} href='/' className='text-[19px] flex items-center gap-4 text-white duration-200 hover:bg-gray-900 py-2 px-4 rounded-full'>
-                                        <MdWeb size={26} className='text-rose-600' />
-                                        <span>طراحی سایت</span>
-                                    </Link>
-                                    <Link onClick={handleCloseMenu} href='/' className='text-[19px] flex items-center gap-4 text-white duration-200 hover:bg-gray-900 py-2 px-4 rounded-full'>
-                                        <CiBoxes size={26} className='text-violet-600' />
-                                        <span>خدمات</span>
-                                    </Link>
-                                    <Link onClick={handleCloseMenu} href='/' className='text-[19px] flex items-center gap-4 text-white duration-200 hover:bg-gray-900 py-2 px-4 rounded-full'>
-                                        <FaQuestionCircle size={26} className='text-orange-600' />
-                                        <span>سوالات متداول</span>
-                                    </Link>
-                                    <Link onClick={handleCloseMenu} href='/' className='text-[19px] flex items-center gap-4 text-white duration-200 hover:bg-gray-900 py-2 px-4 rounded-full'>
-                                        <FaPhone size={26} className='text-teal-600' />
-                                        <span>تماس با ما</span>
-                                    </Link>
-                                </nav>
-                                <Divider style={{ backgroundColor: "#9CA5B5" }} />
-                                <div className="">
+            <div className="lg:order-2 w-[95%] h-[60px] sm:w-[89%] sm:h-[68px] md:w-[80%] md:h-[70px] lg:w-[65%] lg:h-[70px] bg-[#1a1e29ba] fixed top-6 rounded-full   py-5 px-1 lg:px-[6px] flex items-center justify-between backdrop-blur-xl duration-200">
 
-                                </div>
-                            </div>
-                        </Menu>
-                    </div>
-                    <div className=" hidden lg:block bg-slate-800 py-[6.5px] px-[8px] rounded-full mr-">
+                <div className="flex items-center gap-[40px] ">
+                    <div className="block mr-1">
                         <Image
                             src={navLogo}
                             alt='logo'
                             width={50}
                             height={50}
-                            className='md:w-[50px] md:h-[50px] lg:w-[43px] lg:h-[43px] w-[45px] h-[45px] mt-[5px]    md:mt-[1.5px]'
+                            className='md:w-[43px] md:h-[43px] mr-[10px] lg:w-[45px] lg:h-[45px] w-[40px] h-[40px] mt-[2px]    md:mt-[1.5px]'
                         />
                     </div>
-                    <nav className='hidden lg:flex items-center lg:gap-5 xl:gap-6 '>
-                        <Link href='/' className='font-semibold text-gray-400 duration-200 hover:text-white '>صفحه اصلی</Link>
-                        <Link href='/' className='text-[16px] text-gray-400 duration-200  hover:text-white'>طراحی سایت </Link>
-                        <Link href='/' className='text-[16px] text-gray-400 duration-200  hover:text-white'>خدمات</Link>
-                        <Link href='/' className='text-[16px] text-gray-400 duration-200  hover:text-white'>سوالات متداول</Link>
-                        <Link href='/' className='text-[16px] text-gray-400 duration-200  hover:text-white'>تماس با ما</Link>
-                    </nav>
+                    {/* <nav className='hidden xl:flex items-center gap-[9px] mr-1 '>
+                        <Link href='/' className=' bg-[#32374758] rounded-full  hover:bg-[--color-secondary] py-[13px] px-[13px] duration-300 flex items-center justify-center gap-1 shadow-sm hover:shadow-md'>
+                            <span className='text-[15px]  text-slate-300 hover:text-white duration-150'>ثبت سفارش</span>
+                        </Link>
+                        <Link href='/' className='  bg-[#32374758] rounded-full  hover:bg-[--color-secondary] py-[13px] px-[13px] duration-300 flex items-center justify-center gap-1 shadow-sm hover:shadow-md'>
+                            <span className='text-[15px]  text-slate-300 hover:text-white duration-150'>طراحی سایت</span>
+                            <MdOutlineKeyboardArrowDown  size={20} className='text-slate-300'/>
+                        </Link>
+                        <Link href='/' className=' bg-[#32374758] rounded-full  hover:bg-[--color-secondary] py-[13px] px-[13px] duration-300 flex items-center justify-center gap-1 shadow-sm hover:shadow-md'>
+                            <span className='text-[15px]  text-slate-300 hover:text-white duration-150'>ارتباط با ما</span>
+                            <MdOutlineKeyboardArrowDown  size={20} className='text-slate-300'/>
+                        </Link>
+                    </nav> */}
                 </div>
-
-                <div className=" text-center lg:text-right lg:hidden">
-                    <Image
-                        src={navLogo}
-                        alt='logo'
-                        width={50}
-                        height={50}
-                        className='md:w-[50px] md:h-[50px] ml-3 lg:w-[55px] lg:h-[55px] w-[45px] h-[45px] mt-[5px]  sm:mr-[5px] md:mr-2 md:mt-[6px]'
-                    />
-                </div>
-
-                <div className="flex items-center gap- ">
+                <div className="flex items-center gap-">
+                <div className="flex items-center ">
                     {isAuthenticated ? (
                         <React.Fragment>
-                            <Link href='/dashboard#notifications' className='hidden md:block'>
+                            {/* <Link href='/dashboard#notifications' className='hidden md:block'>
                             <Box sx={{ color: 'action.active' }}>
-                                <Badge color="info" badgeContent={1} className='cursor-pointer bg-transparent text-white border-[1px] border-gray-400 py-[10px] px-[10px] ml-[2px] rounded-full'>
+                                <Badge color="info" badgeContent={0} className='cursor-pointer bg-transparent text-white border-[1px] border-gray-400 py-[10px] px-[10px]  rounded-full'>
                                     <IoIosNotificationsOutline  size={26} className='text-gray-400'/>
                                 </Badge>
                             </Box>
-                            </Link>
+                            </Link> */}
                             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', fontFamily: "vazirmatn" }}>
                                 <Tooltip title="حساب شخصی">
                                     <IconButton
                                         onClick={handleClick}
                                         size="small"
-                                        sx={{ ml: 0 }}
+                                        sx={{ ml: -1 }}
                                         aria-controls={open ? 'account-menu' : undefined}
                                         aria-haspopup="true"
                                         aria-expanded={open ? 'true' : undefined}
                                     >
-                                        <Avatar sx={{ bgcolor: deepPurple[500], width: 48, height: 48 }}> {userInfo?.username.charAt(0).toUpperCase()}</Avatar>
+                                        <Avatar className='bg-[#383f5358] w-[45px] h-[45px] md:w-[50px] md:h-[50px]'> <LuUser/></Avatar>
                                     </IconButton>
                                 </Tooltip>
 
@@ -278,12 +217,75 @@ const Navbar = () => {
                         </React.Fragment>
                     ) : (
                         <div className="flex items-center gap-3">
-                            <Link href='/login' className='bg-[--color-secondary] ml-2 py-[10px] px-5 rounded-full'>
+                            <Link href='/login' className='bg-[--color-secondary]  py-[10px] px-5 rounded-full'>
                                 ورود
                             </Link>
                         </div>
                     )}
                 </div>
+
+                    <div className="flex items-center gap-1 ">
+                        <IconButton
+                            aria-label="more"
+                            id="long-button"
+                            aria-controls={open ? 'long-menu' : undefined}
+                            aria-expanded={open ? 'true' : undefined}
+                            aria-haspopup="true"
+                            onClick={handleClickMenu}
+                        >
+                            <div className=" flex items-center justify-center bg-[#383f5358] rounded-full text-white  mr-[px]  py-[10px] px-[10px]  ">
+                                <BiMenu className='md:text-3xl text-[25px] text-gray-300' />
+                            </div>
+                        </IconButton>
+                        <Menu
+                            id="long-menu"
+                            MenuListProps={{
+                                'aria-labelledby': 'long-button',
+                            }}
+                            anchorEl={menu}
+                            open={openMenu}
+                            onClose={handleCloseMenu}
+                            PaperProps={{
+                                style: {
+                                    maxHeight: ITEM_HEIGHT * 20.5,
+                                    width: '35ch',
+                                    backgroundColor: "#1a1e29e4",
+                                    borderRadius: "10px"
+                                },
+                            }}
+                        >
+                            <div className="flex flex-col  gap-2 my-5 py-5 ">
+                                <nav className='flex flex-col items-start gap-1 my-4'>
+                                    <Link onClick={handleCloseMenu} href='/' className='flex items-center gap-4 text-[19px] text-white duration-200 hover:bg-gray-900 py-2 px-4 rounded-full'>
+                                        <AiOutlineHome size={26} className='text-zinc-200' />
+                                        <span>صفحه اصلی</span>
+                                    </Link>
+                                    <Link onClick={handleCloseMenu} href='/' className='text-[19px] flex items-center gap-4 text-white duration-200 hover:bg-gray-900 py-2 px-4 rounded-full'>
+                                        <MdWeb size={26} className='text-rose-600' />
+                                        <span>طراحی سایت</span>
+                                    </Link>
+                                    <Link onClick={handleCloseMenu} href='/' className='text-[19px] flex items-center gap-4 text-white duration-200 hover:bg-gray-900 py-2 px-4 rounded-full'>
+                                        <CiBoxes size={26} className='text-violet-600' />
+                                        <span>خدمات</span>
+                                    </Link>
+                                    <Link onClick={handleCloseMenu} href='/' className='text-[19px] flex items-center gap-4 text-white duration-200 hover:bg-gray-900 py-2 px-4 rounded-full'>
+                                        <FaQuestionCircle size={26} className='text-orange-600' />
+                                        <span>سوالات متداول</span>
+                                    </Link>
+                                    <Link onClick={handleCloseMenu} href='/' className='text-[19px] flex items-center gap-4 text-white duration-200 hover:bg-gray-900 py-2 px-4 rounded-full'>
+                                        <FaPhone size={26} className='text-teal-600' />
+                                        <span>تماس با ما</span>
+                                    </Link>
+                                </nav>
+                                <Divider style={{ backgroundColor: "#9CA5B5" }} />
+                                <div className="">
+
+                                </div>
+                            </div>
+                        </Menu>
+                    </div>
+                </div>
+
             </div>
         </header>
 
