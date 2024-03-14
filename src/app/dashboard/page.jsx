@@ -36,10 +36,14 @@ const Dashboard = () => {
     const [orders, setOrders] = useState([]);
     const [loadingOrders, setLoadingOrders] = useState(true);
     const [loadingNotifications, setLoadingNotifications] = useState(true);
-    const [chats, setChats] = useState([]);
-    const [selectedChatId, setSelectedChatId] = useState(null);
+    const [subject, setSubject] = useState('');
+    const [description, setDescription] = useState('');
+    const [ticketModal, setTicketModal] = useState(false);
+    const [tickets, setTickets] = useState([]);
 
-
+    const handelTicketModal = () => {
+        setTicketModal(!ticketModal)
+    }
 
     const [updateInfo, setUpdateInfo] = useState({
         username: userInfo?.username || '',
@@ -119,29 +123,40 @@ const Dashboard = () => {
             console.error('Error marking notification as read:', error.message);
         }
     };
-    useEffect(() => {
-        dispatch(fetchUserData());
-        fetchChats();
-    }, [dispatch]);
 
-    const fetchChats = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         try {
-            const response = await fetch('/api/admin/chats');
+            const response = await fetch('/api/dashboard/tickets', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ subject, description }),
+            });
+            const data = await response.json();
+            console.log(data);
             if (response.ok) {
-                const data = await response.json();
-                setChats(data.chats);
-            } else {
-                console.error('Failed to fetch chats:', response.statusText);
+                setTicketModal(!ticketModal)
             }
         } catch (error) {
-            console.error('Error fetching chats:', error.message);
+            console.error('Error creating ticket:', error);
         }
     };
 
-    const handleUserClick = (userId) => {
-        setSelectedChatId(userId);
-        router.push(`/dashboard/chat/${userId}`);
-      };
+    useEffect(() => {
+        const fetchTickets = async () => {
+            try {
+                const response = await fetch('/api/dashboard/tickets');
+                const data = await response.json();
+                setTickets(data.myTickets);
+            } catch (error) {
+                console.error('Error fetching tickets:', error);
+            }
+        };
+
+        fetchTickets();
+    }, []);
 
 
 
@@ -183,13 +198,6 @@ const Dashboard = () => {
                                                                     <FaRegCircleDot className='text-zinc-200' />
                                                                 </p>
                                                             </div>
-                                                            {/* <div className="flex flex-wrap items-start  gap-[10px] my-5 min-h-[100px] ">
-                    {order.selectedFeatures.map((feature) => (
-                        <div key={feature.name} className='bg-[#313250] rounded-md shadow-sm py-[4px] w-[310px] flex items-center justify-center '>
-                            {feature.name}
-                        </div>
-                    ))}
-                </div> */}
                                                             <div className="flex flex-col gap-2 my-1 border-b-[1px] pb-4 border-gray-600/30">
                                                                 <h1 className='md:text-xl text-lg text-white my-3 '>وضعیت پرداخت :</h1>
                                                                 <div className="w-full flex items-center justify-between">
@@ -294,19 +302,60 @@ const Dashboard = () => {
                             </div>
                         </div>
                         <div className="w-full h-[400px] overflow-y-auto py-5 px-5 bg-[#171717] mt-10">
-                            <h1>پیام ها</h1>
-                            <div className="flex flex-wrap items-center gap-3">
-                                {chats.map((chat) => (
-                                    <div key={chat._id} className="flex bg-[#202020] py-2 px-2 w-full shadow-sm rounded-lg gap-3 cursor-pointer" onClick={() => handleUserClick(chat._id)}>
-                                        <Avatar sx={{ bgcolor: deepPurple[500], width: 55, height: 55 }}> <span className='text-xl'>{chat.user.username.charAt(0).toUpperCase()}</span></Avatar>
-                                        <div className="flex flex-col gap-1">
-                                            <h1 className='text-md text-gray-200 '>{chat.user.username}</h1>
-                                            <p className='text-sm text-gray-400 font-light'>{chat.messages[chat.messages.length - 1]?.content}</p>
-                                        </div>
-                                    </div>
-                                ))}
+                            <h1>سوالات شما</h1>
+                            <div className="flex flex-col  gap-3">
+                                <ul>
+                                    {tickets.length > 0 ? (
+                                        tickets.map((ticket) => (
+                                            <Link href={`/dashboard/tickets/${ticket._id}`} className='bg-[#2a2a2a] my-2 ' key={ticket._id}>
+                                                <div>Subject: {ticket.subject}</div>
+                                                <div>Description: {ticket.description}</div>
+                                            </Link>
+                                        ))
+                                    ) : (
+                                       <>
+                                                <h1 className='mt-3'>
+                                                    هنوز هیچ سوالی پرسیده نشده است
+                                                </h1>
+                                                <button onClick={handelTicketModal} className='bg-[--color-secondary] py-2 px-5 rounded-md w-[130px]'>پرسیدن سوال</button>
+                                       </>
+                                    )}
+                                                <button onClick={handelTicketModal} className='bg-[--color-secondary] py-2 px-5 rounded-md w-[130px]'>سوال جدید</button>
+                                </ul>
+                            
                             </div>
                         </div>
+                        {ticketModal ? (
+                            <div className='fixed w-[95%] md:w-[600px] h-[600px] top-10 mx-auto bg-white text-black rounded-xl '>
+                                <div className=" relative flex flex-col items-center gap-3">
+                                    <button onClick={handelTicketModal} className=' absolute top-4 left-4 text-3xl'>x</button>
+                                    <form onSubmit={handleSubmit} className='flex flex-col items-center gap-4'>
+                                        <div className='flex flex-col gap-2 py-10 '>
+                                            <label className='text-md text-gray-700' htmlFor="subject">Subject:</label>
+                                            <input
+                                                type="text"
+                                                id="subject"
+                                                value={subject}
+                                                onChange={(e) => setSubject(e.target.value)}
+                                                required
+                                                className='bg-zinc-600 rounded-md text-white'
+                                            />
+                                        </div>
+                                        <div className='flex flex-col gap-2 '>
+                                            <label htmlFor="description">Description:</label>
+                                            <textarea
+                                                id="description"
+                                                value={description}
+                                                onChange={(e) => setDescription(e.target.value)}
+                                                required
+                                                className='bg-zinc-600 rounded-md text-white'
+                                            ></textarea>
+                                        </div>
+                                        <button type="submit" className='bg-zinc-600 py-2 px-5 rounded-md text-white'>Create Ticket</button>
+                                    </form>
+                                </div>
+                            </div>
+                        ) : <></>}
                     </div>
                 </div>
             </div>

@@ -27,6 +27,7 @@ const Admin = () => {
     featureName: '',
     featurePrice: '',
   });
+  const [tickets, setTickets] = useState([]);
 
 
 
@@ -119,11 +120,25 @@ const Admin = () => {
     fetchOrders();
   }, []);
 
+  useEffect(() => {
+    const fetchTickets = async () => {
+      try {
+        const response = await fetch('/api/admin/tickets');
+        const data = await response.json();
+        setTickets(data.tickets);
+      } catch (error) {
+        console.error('Error fetching tickets:', error);
+      }
+    };
+
+    fetchTickets();
+  }, []);
+
   return (
     <DashboardLayout>
       <div className='p-2 sm:p-8 w-full  bg-[#0D0F14]'>
-        <div className="w-full mr-0 lg:w-[90%] lg:mr-[140px]   flex flex-col gap-6">
-          <div className="w-full bg-[#171B24] border-[1px] border-slate-700/30 shadow-md rounded-xl py-7 px-5 lg:px-4 xl:px-8">
+        <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[210px]   flex flex-col gap-6">
+          <div className="w-full bg-[#171B24] h-screen overflow-y-auto border-[1px] border-slate-700/30 shadow-md rounded-xl py-7 px-5 lg:px-4 xl:px-8">
             <h2 className="text-2xl font-bold text-white mb-5">سفارشات</h2>
             {orders.length > 0 ? (
               <div className='flex flex-wrap gap-6'>
@@ -131,7 +146,7 @@ const Admin = () => {
                   <div key={order._id} className=" w-[340px] sm:w-[340px] bg-[#23263e] flex flex-col gap-4 py-4 px-4 rounded-lg shadow-md border-gray-600/30 border-[1px]">
                     <div className="flex w-full items-center justify-between">
                       <h1 className='text-xl'>{order.plan}</h1>
-                      
+
                       <p className={
                         order.status === 'completed' ? 'text-green-500 text-sm' :
                           order.status === 'pending' ? 'text-orange-500 text-sm' :
@@ -139,8 +154,8 @@ const Admin = () => {
                               order.status === 'notAccepted' ? 'text-red-500 text-sm' :
                                 order.status === 'inProgress' ? 'text-blue-500 text-sm' :
                                   order.status === 'underReview' ? 'text-purple-500 text-sm' :
-                                    order.status === 'canceled' ? 'text-gray-500 text-sm' : '' 
-                                    
+                                    order.status === 'canceled' ? 'text-gray-500 text-sm' : ''
+
                       }>{order.status}</p>
                     </div>
                     <div className="flex flex-col gap-[10px] my-5 min-h-[170px]">
@@ -154,11 +169,11 @@ const Admin = () => {
                       <h1 className='text-white  '>اطلاعات کاربر</h1>
                       <div className="flex items-center justify-between w-full">
                         <span className='text-gray-300 text-sm '>نام کاربری :</span>
-                        <p className='text-gray-200 text-md '>{order.user.username}</p>
+                        <p className='text-gray-200 text-md '>{order?.user?.username}</p>
                       </div>
                       <div className="flex items-center justify-between w-full">
                         <span className='text-gray-300 text-sm '>شماره تماس :</span>
-                        <p className='text-gray-200 text-md '>{order.user.phoneNumber}</p>
+                        <p className='text-gray-200 text-md '>{order?.user?.phoneNumber}</p>
                       </div>
                     </div>
                     <div className="flex items-center justify-between">
@@ -173,6 +188,16 @@ const Admin = () => {
             ) : (
               <p className="text-white">loading...</p>
             )}
+          </div>
+          <div id='tickets' className="w-full bg-[#171B24]  overflow-y-auto border-[1px] border-slate-700/30 shadow-md  rounded-xl py-5 px-3 sm:px-4 md:px-8 ">
+          <ul className='flex flex-wrap gap-4'>
+        {tickets?.map((ticket) => (
+          <Link href={`/dashboard/ticket/${ticket._id}`} className='bg-[#404040] py-2 px-4 rounded-md' key={ticket._id}>
+            <div>Subject: {ticket.subject}</div>
+            <div>Description: {ticket.description}</div>
+          </Link>
+        ))}
+      </ul>
           </div>
           <div className="w-full bg-[#171B24]  overflow-y-auto border-[1px] border-slate-700/30 shadow-md  rounded-xl py-5 px-3 sm:px-4 md:px-8 ">
             <div className="">
@@ -260,7 +285,6 @@ const Admin = () => {
 
             </div>
           </div>
-
         </div>
       </div>
     </DashboardLayout>

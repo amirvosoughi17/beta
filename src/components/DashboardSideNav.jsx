@@ -70,7 +70,7 @@ const DashboardSideNav = () => {
                                             <span className='text-[18px]  text-gray-400'>کاربران</span>
                                         </Link>
                                     ) : <></>}
-                                    <Link href='/dashboard/chat' className="flex items-center gap-3  py-4 rounded-xl pl-9 pr-5">
+                                    <Link href='/dashboard/admin#tickets' className="flex items-center gap-3  py-4 rounded-xl pl-9 pr-5">
                                         <BiMessageDetail size={25} className='text-gray-100' />
                                         <span className='text-[18px]  text-gray-400'>پیام ها</span>
                                     </Link>
