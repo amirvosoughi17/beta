@@ -8,7 +8,8 @@ export async function GET() {
     try {
         const chats = await Chat.find();
         return NextResponse.json({
-            chats
+            chats,
+            chatsCount: chats.length
         }, { status: 200 })
     } catch (error) {
         return NextResponse.json({
