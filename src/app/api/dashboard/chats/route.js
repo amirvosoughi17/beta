@@ -12,7 +12,7 @@ export async function POST(request) {
         const data = await request.json();
         const { content } = data;
         const userId = await get_user_data_from_session(request);
-        const user = await User.findOne({ _id: userId }).select('_id chat')
+        const user = await User.findOne({ _id: userId }).select("_id username email chat")
 
         let chat = null;
         if (!user.chat) {
@@ -21,7 +21,7 @@ export async function POST(request) {
             await user.save();
             chat = newChat;
         } else {
-            chat = await Chat.findOne({ _id: user.chat });
+            chat = await Chat.findOne({ _id: user.chat }).populate("user", "_id username email");
             if (!chat) {
                 return NextResponse.json({
                     success: false,
@@ -29,11 +29,14 @@ export async function POST(request) {
                 }, { status: 404 });
             }
         }
-        const newMessage = chat.messages.push({ content, sender: userId });
+        const newMessage = chat.messages.push({
+            content, sender: user
+        });
         await chat.save();
         const channelName = chat._id.toHexString();
 
         await pusherServer.trigger(channelName, "new-message", newMessage)
+
         return NextResponse.json({ chat }, { status: 200 })
     } catch (error) {
         return NextResponse.json({

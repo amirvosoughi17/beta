@@ -6,7 +6,10 @@ connect()
 
 export async function GET() {
     try {
-        const chats = await Chat.find();
+        const chats = await Chat.find().populate({
+            path: "user",
+            select: "_id username email"
+        });
         return NextResponse.json({
             chats,
             chatsCount: chats.length
