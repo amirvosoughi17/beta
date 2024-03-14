@@ -1,5 +1,6 @@
 import { connect } from "@/config/DB";
 import Chat from "@/models/Chat";
+import { pusherServer } from "@/utils/pusher";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
 
@@ -36,12 +37,13 @@ export async function POST(request, { params }) {
         const { content } = data;
 
         const userId = await get_user_data_from_session(request);
-        const findChat = await Chat.findById({ _id: id });
-        if (content) {
-            findChat.messages.push({ content, sender: userId })
-            await findChat.save();
-        }
-        return NextResponse.json({ findChat }, { status: 200 })
+        const chat = await Chat.findById({ _id: id });
+
+        const newMessage = chat.messages.push({ content, sender: userId })
+        await chat.save();
+        const channelName = chat._id.toHexString();
+        await pusherServer.trigger(channelName, "new-message", newMessage)
+        return NextResponse.json({ chat }, { status: 200 })
     } catch (error) {
         return NextResponse.json({
             success: false,

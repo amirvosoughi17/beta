@@ -1,6 +1,7 @@
 import { connect } from "@/config/DB";
 import Chat from "@/models/Chat";
 import { User } from "@/models/User";
+import { pusherServer } from "@/utils/pusher";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
 
@@ -28,10 +29,11 @@ export async function POST(request) {
                 }, { status: 404 });
             }
         }
-        const newMessage = { content, sender: userId };
-        chat.messages.push(newMessage);
+        const newMessage = chat.messages.push({ content, sender: userId });
         await chat.save();
+        const channelName = chat._id.toHexString();
 
+        await pusherServer.trigger(channelName, "new-message", newMessage)
         return NextResponse.json({ chat }, { status: 200 })
     } catch (error) {
         return NextResponse.json({
