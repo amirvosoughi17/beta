@@ -10,7 +10,13 @@ connect();
 export async function GET(request, { params }) {
     try {
         const { id } = params;
-        const ticket = await Ticket.findById(id);
+        const ticket = await Ticket.findById(id).populate({
+            path: "createdBy",
+            select: "_id username email"
+        }).populate({
+            path: "responses.user",
+            select: "_id username email"
+        });
         if (!ticket) {
             return NextResponse.json({ message: "Ticket not found!" }, { status: 404 })
         }
