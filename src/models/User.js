@@ -34,6 +34,10 @@ const userSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: "Order"
     }],
+    chat: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Chat"
+    },
     notifications: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Notification',
