@@ -34,10 +34,10 @@ const userSchema = new Schema({
         type: mongoose.Types.ObjectId,
         ref: "Order"
     }],
-    chat: {
+    tickets: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Chat"
-    },
+        ref: "Ticket"
+    }],
     notifications: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Notification',
