@@ -36,6 +36,9 @@ const Dashboard = () => {
     const [orders, setOrders] = useState([]);
     const [loadingOrders, setLoadingOrders] = useState(true);
     const [loadingNotifications, setLoadingNotifications] = useState(true);
+    const [chats, setChats] = useState([]);
+    const [selectedChatId, setSelectedChatId] = useState(null);
+
 
 
     const [updateInfo, setUpdateInfo] = useState({
@@ -116,7 +119,29 @@ const Dashboard = () => {
             console.error('Error marking notification as read:', error.message);
         }
     };
+    useEffect(() => {
+        dispatch(fetchUserData());
+        fetchChats();
+    }, [dispatch]);
 
+    const fetchChats = async () => {
+        try {
+            const response = await fetch('/api/admin/chats');
+            if (response.ok) {
+                const data = await response.json();
+                setChats(data.chats);
+            } else {
+                console.error('Failed to fetch chats:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching chats:', error.message);
+        }
+    };
+
+    const handleUserClick = (userId) => {
+        setSelectedChatId(userId);
+        router.push(`/dashboard/chat/${userId}`);
+      };
 
 
 
@@ -209,7 +234,7 @@ const Dashboard = () => {
                                         </div>
                                         <h1 className='my-3'>برای ثبت سفارش اینجا کلیک کنید </h1>
                                         <div className="mt-3">
-                                        <Link href='/order' className='bg-[--color-secondary] py-[7px] px-5 rounded-md'>شروع کنید</Link>
+                                            <Link href='/order' className='bg-[--color-secondary] py-[7px] px-5 rounded-md'>شروع کنید</Link>
                                         </div>
                                     </div>
                                 )}
@@ -266,6 +291,20 @@ const Dashboard = () => {
                                         )}
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div className="w-full h-[400px] overflow-y-auto py-5 px-5 bg-[#171717] mt-10">
+                            <h1>پیام ها</h1>
+                            <div className="flex flex-wrap items-center gap-3">
+                                {chats.map((chat) => (
+                                    <div key={chat._id} className="flex bg-[#202020] py-2 px-2 w-full shadow-sm rounded-lg gap-3 cursor-pointer" onClick={() => handleUserClick(chat._id)}>
+                                        <Avatar sx={{ bgcolor: deepPurple[500], width: 55, height: 55 }}> <span className='text-xl'>{chat.user.username.charAt(0).toUpperCase()}</span></Avatar>
+                                        <div className="flex flex-col gap-1">
+                                            <h1 className='text-md text-gray-200 '>{chat.user.username}</h1>
+                                            <p className='text-sm text-gray-400 font-light'>{chat.messages[chat.messages.length - 1]?.content}</p>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
