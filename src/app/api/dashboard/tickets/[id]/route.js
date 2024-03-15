@@ -4,7 +4,6 @@ import { User } from "@/models/User";
 import { sendNotification } from "@/utils/sendNotification";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
-
 connect()
 
 export async function POST(request, { params }) {
@@ -86,6 +85,7 @@ export async function PUT(request, { params }) {
             case "closed":
                 const closedTicketMessage = await sendNotification(NOTIFICATION_MESSAGES.CLOSED);
                 user.notifications.push(closedTicketMessage._id)
+                await deleteOldClosedTickets();
                 break;
         }
         await user.save();
@@ -96,4 +96,11 @@ export async function PUT(request, { params }) {
             message: error.message
         }, { status: 500 })
     }
+}
+
+async function deleteOldClosedTickets() {
+    const threeWeeksAgo = new Date();
+    threeWeeksAgo.setDate(threeWeeksAgo.getDate() - 21);
+
+    await Ticket.deleteMany({ status: "closed", createdAt: { $lt: threeWeeksAgo } });
 }
