@@ -13,6 +13,10 @@ const notificationSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    // sendTo: {
+    //     type : mongoose.Schema.Types.ObjectId,
+    //     ref: "User"
+    // },
     createdAt: {
         type: Date,
         default: Date.now,

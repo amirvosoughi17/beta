@@ -15,14 +15,21 @@ export async function POST(request, { params }) {
 
         const userId = await get_user_data_from_session(request);
         const user = await User.findById(userId)
+
         const ticket = await Ticket.findById(id).populate({
             path: 'responses.user',
             select: '_id',
-        });
+        }).populate("createdBy", "_id username role notifications");
         ticket.responses.push({
             user,
             message
         })
+        if (user.role === "admin") {
+            const notificationMessage = await sendNotification("You have new Message")
+            const createdByUser = await User.findById(ticket.createdBy._id);
+            createdByUser.notifications.push(notificationMessage._id)
+            await createdByUser.save()
+        }
         await ticket.save()
         return NextResponse.json({ ticket }, { status: 200 })
     } catch (error) {
