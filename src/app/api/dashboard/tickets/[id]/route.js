@@ -13,7 +13,7 @@ export async function POST(request, { params }) {
         const { message } = data;
 
         const userId = await get_user_data_from_session(request);
-        const user = await User.findById(userId)
+        const user = await User.findById(userId).select("_id role username email")
 
         const ticket = await Ticket.findById(id).populate({
             path: 'responses.user',
