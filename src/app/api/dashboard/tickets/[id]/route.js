@@ -72,18 +72,31 @@ export async function PUT(request, { params }) {
 
         const updatedTicket = await Ticket.findByIdAndUpdate(id, { status: newStatus }, { new: true })
 
-        const NOTIFICATION_MESSAGES = {
-            IN_PROGRESS: "Ticket is checking",
-            CLOSED: "Ticket is closed"
+        const NOTIFICATION_CONTENT = {
+            IN_PROGRESS: {
+                title: "Ticket is checking",
+                message: "Ticket is checking when ticket checked you will inform"
+            },
+            CLOSED: {
+                title: "Ticket is closed",
+                message: "Ticket closed that mean your problem solved successfully"
+            }
         };
 
         switch (updatedTicket.status) {
             case "inProgress":
-                const inProgressTicketMessage = await sendNotification(NOTIFICATION_MESSAGES.IN_PROGRESS);
+                const inProgressTicketMessage = await sendNotification(
+                    NOTIFICATION_CONTENT.IN_PROGRESS.title,
+                    NOTIFICATION_CONTENT.IN_PROGRESS.message
+                );
                 user.notifications.push(inProgressTicketMessage._id)
                 break;
             case "closed":
-                const closedTicketMessage = await sendNotification(NOTIFICATION_MESSAGES.CLOSED);
+                const closedTicketMessage = await sendNotification(
+                    NOTIFICATION_CONTENT.CLOSED.title,
+                    NOTIFICATION_CONTENT.CLOSED.message
+                );
+
                 user.notifications.push(closedTicketMessage._id)
                 await deleteOldClosedTickets();
                 break;

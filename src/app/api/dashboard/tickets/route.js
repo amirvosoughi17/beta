@@ -1,7 +1,7 @@
 import { connect } from "@/config/DB";
-import Notification from "@/models/Notification";
 import Ticket from "@/models/Ticket";
 import { User } from "@/models/User";
+import { sendNotification } from "@/utils/sendNotification";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
 
@@ -24,10 +24,10 @@ export async function POST(request) {
             createdBy: user
         });
 
-        const newNotification = await Notification.create({
-            message: "Ticket created Successfully!",
-        })
-
+        const newNotification = await sendNotification(
+            "new Ticket created successfully",
+            "you open new ticket, we will check it"
+        );
         user.tickets.push(newTicket._id)
         user.notifications.push(newNotification._id)
         await user.save();

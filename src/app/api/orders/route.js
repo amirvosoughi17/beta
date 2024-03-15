@@ -1,7 +1,7 @@
 import { connect } from "@/config/DB";
-import Notification from "@/models/Notification";
 import Order from "@/models/Order";
 import { User } from "@/models/User";
+import { sendNotification } from "@/utils/sendNotification";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
 
@@ -23,9 +23,11 @@ export async function POST(request) {
         pending: new Date(Date.now())
       }
     });
-    const newNotification = await Notification.create({
-      message: "new Order created Successfully!",
-    });
+
+    const newNotification = await sendNotification(
+      "new Order created Successfully!",
+      "you order new website, we will check it"
+    );
     user.notifications.push(newNotification);
     user.orders.push(newOrder._id);
 
