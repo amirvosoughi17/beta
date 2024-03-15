@@ -307,7 +307,7 @@ const Dashboard = () => {
                                 <ul>
                                     {tickets.length > 0 ? (
                                         tickets.map((ticket) => (
-                                            <Link href={`/dashboard/tickets/${ticket._id}`} className='bg-[#2a2a2a] my-2 ' key={ticket._id}>
+                                            <Link href={`/dashboard/ticket/${ticket._id}`} className='bg-[#2a2a2a] my-2 ' key={ticket._id}>
                                                 <div>Subject: {ticket.subject}</div>
                                                 <div>Description: {ticket.description}</div>
                                             </Link>
