@@ -40,7 +40,7 @@ export async function GET(request, { params }) {
             path: "createdBy",
             select: "_id username email"
         }).populate({
-            path: "responses.user", 
+            path: "responses.user",
             select: "_id username email"
         });
         if (!ticket) {
@@ -79,7 +79,6 @@ export async function PUT(request, { params }) {
             case "closed":
                 const closedTicketMessage = await sendNotification(NOTIFICATION_MESSAGES.CLOSED);
                 user.notifications.push(closedTicketMessage._id)
-
                 break;
         }
         await user.save();
