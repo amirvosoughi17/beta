@@ -8,10 +8,10 @@ const orderSchema = new mongoose.Schema({
     supportTime: {
         type: Number,
         required: true,
-        default : 1 ,
+        default: 1,
         min: [1, 'Support time must be at least 1 month'],
     },
-    supportStartedAt: { 
+    supportStartedAt: {
         type: Date,
     },
     supportExpiresAt: {
@@ -53,7 +53,6 @@ const orderSchema = new mongoose.Schema({
         required: true,
         enum: [
             "pending",
-            "underReview",
             "accepted",
             "notAccepted",
             "inProgress",
@@ -63,7 +62,6 @@ const orderSchema = new mongoose.Schema({
     },
     statusDates: {
         pending: { type: Date },
-        underReview: { type: Date },
         accepted: { type: Date },
         notAccepted: { type: Date },
         inProgress: { type: Date },

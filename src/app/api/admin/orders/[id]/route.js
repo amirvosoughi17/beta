@@ -21,7 +21,6 @@ export async function GET(request, { params }) {
         }, { status: 500 })
     }
 }
-
 export async function PUT(request, { params }) {
     try {
         const { id } = params;
@@ -35,7 +34,6 @@ export async function PUT(request, { params }) {
                 message: 'Order not found',
             }, { status: 404 });
         }
-
         const selectedFeature = order.selectedFeatures.find(sf => sf.name === featureName);
 
         if (!selectedFeature) {
@@ -44,8 +42,6 @@ export async function PUT(request, { params }) {
                 message: 'Selected feature not found in the order',
             }, { status: 404 });
         }
-
-
         selectedFeature.status = newStatus;
 
         const saveOrderProgress = calculateOrderProgress(order);
