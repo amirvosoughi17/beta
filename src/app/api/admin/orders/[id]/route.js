@@ -55,33 +55,56 @@ export async function PUT(request, { params }) {
             SECOND_INSTALLMENT_MESSAGE: {
                 title: "قسط دوم سفارش",
                 message: `${user.username} مهلت پرداخت قسط دوم شما فرا رسیده است لطفا برای ادامه فرایند توسعه قسط دوم خود را پرداخت کنید`
+            },
+            WAIT_FOR_PAY_PRICE: {
+                title: "پرداخت هزینه سفارش",
+                message: "فرایند توسعه وبسایت شما به اتمام رسیده است, خواهش مند هستیم نسبت به پرداخت هزینه باقی مانده اقدام کنید"
             }
         }
 
         const saveOrderProgress = calculateOrderProgress(order);
         order.orderProgress = saveOrderProgress;
-
-        if (order.orderProgress >= 40 && !order.installments.find(inst => inst.amount === order.totalPrice * 0.4)) {
-            const firstInstallmentAmount = order.totalPrice * 0.4;
-            order.installments.push({ amount: firstInstallmentAmount });
-            order.status = "waitForFirstInstallment"
-            await sendNotification(MESSAGE_CONTENT.FIRST_INSTALLMENT_MESSAGE.title, MESSAGE_CONTENT.FIRST_INSTALLMENT_MESSAGE.message);
-        }
-
-        if (order.orderProgress >= 60 && !order.installments.find(inst => inst.amount === order.totalPrice * 0.6)) {
-            const secondInstallmentAmount = order.totalPrice * 0.6;
-            order.installments.push({ amount: secondInstallmentAmount });
-            order.status = "waitForSecondInstallment"
-            await sendNotification(MESSAGE_CONTENT.SECOND_INSTALLMENT_MESSAGE.title, MESSAGE_CONTENT.SECOND_INSTALLMENT_MESSAGE.message);
-        }
-
         if (order.orderProgress === 100) {
             order.status = "completed";
+
             order.statusDates.completed = new Date()
             order.supportStartedAt = new Date();
             order.supportExpiresAt = new Date();
+
             order.supportExpiresAt.setMonth(order.supportExpiresAt.getMonth() + order.supportTime)
-            await sendNotification(MESSAGE_CONTENT.COMPLETED_ORDER_MESSAGE.title, MESSAGE_CONTENT.COMPLETED_ORDER_MESSAGE.message);
+
+            if (order.orderProgress === 100 && !order.paymentStatus.isFullPaid) {
+                const waitPayPriceNotification = await sendNotification(
+                    MESSAGE_CONTENT.WAIT_FOR_PAY_PRICE.title,
+                    MESSAGE_CONTENT.WAIT_FOR_PAY_PRICE.message
+                );
+                user.notifications.push(waitPayPriceNotification._id)
+            }
+
+
+            const completedOrderStatusNotification = await sendNotification(
+                MESSAGE_CONTENT.COMPLETED_ORDER_MESSAGE.title,
+                MESSAGE_CONTENT.COMPLETED_ORDER_MESSAGE.message
+            );
+
+            user.notifications.push(completedOrderStatusNotification._id)
+
+        } else if (order.orderProgress >= 40) {
+            order.status = "waitForFirstInstallment"
+            const waitForFirstInstallmentNotification = await sendNotification(
+                MESSAGE_CONTENT.FIRST_INSTALLMENT_MESSAGE.title,
+                MESSAGE_CONTENT.FIRST_INSTALLMENT_MESSAGE.message
+            );
+            user.notifications.push(waitForFirstInstallmentNotification._id)
+        } else if (order.orderProgress >= 60) {
+            order.status = "waitForSecondInstallment"
+            const waitForSecondInstallmentNotification = await sendNotification(
+                MESSAGE_CONTENT.SECOND_INSTALLMENT_MESSAGE.title,
+                MESSAGE_CONTENT.SECOND_INSTALLMENT_MESSAGE.message
+            );
+            user.notifications.push(waitForSecondInstallmentNotification._id)
+        } else {
+            order.status = "inProgress"
         }
 
         await Promise.all([

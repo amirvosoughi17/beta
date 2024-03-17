@@ -12,14 +12,6 @@ export async function GET(request) {
         const user = await User.findOne({ _id: userId }).populate('orders');
 
         const myOrders = await Order.find({ _id: { $in: user.orders } });
-
-        const myOrderCount = user.orders.length;
-        if (myOrderCount === 0) {
-            return NextResponse.json({
-                message: "There is no Order here! create one"
-            }, { status: 404 })
-        }
-
         return NextResponse.json({ myOrders, myOrderCount }, { status: 200 })
 
     } catch (error) {

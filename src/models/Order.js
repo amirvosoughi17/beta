@@ -58,7 +58,6 @@ const orderSchema = new mongoose.Schema({
             "waitForSecondInstallment",
             "inProgress",
             "completed",
-            "paid",
             "canceled"
         ],
         default: "pending"

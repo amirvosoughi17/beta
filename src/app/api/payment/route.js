@@ -54,6 +54,8 @@ export async function POST(request) {
                     inst.paidAt = Date.now();
                 });
                 findOrder.paymentStatus.isFullPaid = true;
+                findOrder.paymentStatus.totalPaidPrice += amount
+
                 paymentMessage = MESSAGE_CONTENT.FULL_PAYMENT_MESSAGE;
                 break;
 
@@ -63,7 +65,7 @@ export async function POST(request) {
                 if (findOrder.installments[index].paid) {
                     return NextResponse.json({
                         success: false,
-                        message: "هزینه قسط وارد کرده قبلا پرداخت شده بود"
+                        message: "هزینه قسط وارد شده قبلا پرداخت شده بود"
                     }, { status: 400 })
                 }
                 amount = findOrder.installments[index].amount;
