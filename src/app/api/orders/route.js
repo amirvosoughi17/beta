@@ -32,6 +32,16 @@ export async function POST(request) {
       totalPrice: planBasePrice + selectedFeaturesTotalPrice
     });
 
+    if (!newOrder.installments.find(inst => inst.amount === newOrder.totalPrice * 0.4)) {
+      const firstInstallmentAmount = newOrder.totalPrice * 0.4;
+      newOrder.installments.push({ amount: firstInstallmentAmount });
+    }
+
+    if (!newOrder.installments.find(inst => inst.amount === newOrder.totalPrice * 0.6)) {
+      const secondInstallmentAmount = newOrder.totalPrice * 0.6;
+      newOrder.installments.push({ amount: secondInstallmentAmount });
+    }
+
     const newNotification = await sendNotification(
       "سفارش جدید با موفقیت ثبت شد",
       "شما یک وبسایت جدید ثبت کردید, پس از برسی آن ما به شما وضعیت آنرا اطلاع خواهیم داد"
@@ -40,7 +50,7 @@ export async function POST(request) {
     user.orders.push(newOrder._id);
 
     await user.save();
-
+    await newOrder.save();
     const userInfo = {
       _id: user._id,
       username: user.username,

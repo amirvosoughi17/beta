@@ -58,15 +58,11 @@ const orderSchema = new mongoose.Schema({
             "waitForSecondInstallment",
             "inProgress",
             "completed",
+            "paid",
             "canceled"
         ],
         default: "pending"
     },
-    installments: [{
-        dueDate: { type: Date },
-        amount: { type: Number },
-        paid: { type: Boolean, default: false },
-    }],
     statusDates: {
         pending: { type: Date },
         accepted: { type: Date },
@@ -75,24 +71,34 @@ const orderSchema = new mongoose.Schema({
         completed: { type: Date },
         canceled: { type: Date },
     },
-    paymentStatus: {
-        firstInstallmentPaid: {
+    installments: [{
+        amount: {
+            type: Number,
+            required: true
+        },
+        paid: {
             type: Boolean,
             default: false
         },
-        firstInstallmentPaidAt: {
-            type: Date,
-            default: null
-        },
-        secondInstallmentPaid: {
-            type: Boolean,
-            default: false
-        },
-        secondInstallmentPaidAt: {
+        paidAt: {
             type: Date,
             default: null
         }
-    },
+    }],
+    paymentStatus: {
+        paidInsallments: {
+            type: Number,
+            default: 0
+        },
+        totalPaidPrice: {
+            type: Number,
+            default: 0
+        },
+        isFullPaid: {
+            type: Boolean,
+            default: false
+        }
+    },  
     totalPrice: {
         type: Number,
         default: 0,
