@@ -13,7 +13,7 @@ const TicketPage = () => {
     const dispatch = useDispatch();
     const userInfo = useSelector(selectUserInfo);
     const [ticket, setTicket] = useState(null);
-    const [responseMessage , setResponseMessage] = useState(''); 
+    const [responseMessage, setResponseMessage] = useState('');
 
     useEffect(() => {
         dispatch(fetchUserData())
@@ -42,11 +42,11 @@ const TicketPage = () => {
 
     const handleResponseChange = (event) => {
         setResponseMessage(event.target.value);
-      };
+    };
 
-      const handleSubmitResponse = async () => {
+    const handleSubmitResponse = async () => {
         try {
-            const response = await fetch(`/api/admin/tickets/${ticket._id}`, {
+            const response = await fetch(`/api/dashboard/tickets/${ticket._id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -80,36 +80,44 @@ const TicketPage = () => {
                                 <span className='text-zinc-500 text-sm font-semibold'>تاریخ ایجاد :</span>
                             </div>
                             <div className='flex flex-col gap-5'>
-                                <div className="flex items-center gap-6 bg-[#242424] py-3 px-4 rounded-xl w-full">
-                                    <div className="flex gap-2">
-                                        <Avatar sx={{ bgcolor: deepPurple[500], width: 55, height: 55 }} className='bg-[--color-secondary] w-[100px]'>M</Avatar>
-                                        <h1 className='text-semibold text-md '>امیر محمد</h1>
-                                    </div>
-                                    <div className="">
-                                        {ticket.description}
-                                    </div>
-                                </div>
-                                {ticket.responses.map((res) => (
-                                    <div key={res.id} className="flex items-center gap-6 bg-[#242424] py-3 px-4 rounded-xl w-full">
+                                {ticket && (
+                                    <div className="flex items-center gap-6 bg-[#242424] py-3 px-4 rounded-xl w-full">
                                         <div className="flex gap-2">
-                                            <Avatar sx={{ bgcolor: deepPurple[500], width: 55, height: 55 }} className='bg-[--color-secondary] w-[100px]'>M</Avatar>
-                                            <h1 className='text-semibold text-md '>{res.user}</h1>
+                                            <Avatar sx={{ bgcolor: deepPurple[500], width: 55, height: 55 }} className='bg-[--color-secondary]'>M</Avatar>
+                                            <h1 className='text-semibold text-md '>{ticket.user?.username}</h1> {/* Accessing username */}
                                         </div>
                                         <div className="">
-                                            {res.message}
+                                            {ticket.description}
                                         </div>
                                     </div>
-                                ))}
-                               <div className="flex gap-5 items-end w-full border-t-[1px] border-zinc-500/60 py-4 mx-auto">
-                                <textarea 
-                                rows={4}
-                                className='w-[580px] bg-[#242424] text-zinc-500 text-md p-3 rounded-xl'
-                                placeholder='متن پیام را وارد کنید ...'
-                                onChange={handleResponseChange}
-                                value={responseMessage} 
-                                />
-                                <button onClick={handleSubmitResponse} className='bg-[--color-secondary] py-3 px-8 rounded-md w-[20%]' >ارسال پیام</button>
-                               </div>
+                                )}
+
+                                <div className="flex flex-col gap-3">
+
+                                    {ticket.responses.map((res) => (
+                                        <div key={res._id} className={`flex items-center gap-6 py-3 px-4 rounded-xl w-full ${res.user.role === 'admin' ? 'bg-red-500' : 'bg-blue-500'}`}>
+                                            <div className="flex gap-2">
+                                                <Avatar sx={{ bgcolor: deepPurple[500], width: 55, height: 55 }} className='bg-[--color-secondary] '>M</Avatar>
+                                                <h1 className='text-semibold text-md'>{res.user.username}</h1>
+                                            </div>
+                                            <div className="">
+                                                {res.message}
+                                            </div>
+                                        </div>
+                                    ))}
+
+
+                                </div>
+                                <div className="flex gap-5 items-end w-full border-t-[1px] border-zinc-500/60 py-4 mx-auto">
+                                    <textarea
+                                        rows={4}
+                                        className='w-[580px] bg-[#242424] text-zinc-500 text-md p-3 rounded-xl'
+                                        placeholder='متن پیام را وارد کنید ...'
+                                        onChange={handleResponseChange}
+                                        value={responseMessage}
+                                    />
+                                    <button onClick={handleSubmitResponse} className='bg-[--color-secondary] py-3 px-8 rounded-md w-[20%]' >ارسال پیام</button>
+                                </div>
                             </div>
                         </div>
                     </div>

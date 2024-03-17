@@ -1,13 +1,18 @@
 "use client";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { Loader2 } from "lucide-react"
 
-import LinearProgress from '@mui/material/LinearProgress';
-import Box from '@mui/material/Box';
+// shadcn 
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 const Register = () => {
     const router = useRouter();
-
+    const [error, setError] = useState("")
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         username: "",
@@ -39,59 +44,79 @@ const Register = () => {
             });
 
             if (res.ok) {
-
                 router.push('/login');
             } else {
                 setLoading(false);
-                alert('Failed to register');
+                setError("اطلاعات وارد شده اشتباه است")
             }
         } catch (error) {
             console.error('An error occurred during registration:', error);
             setLoading(false);
-            alert('Failed to register. Please try again.');
         }
     };
 
     return (
-        <div className='w-full h-[600px]  flex flex-col items-center justify-center '>
-            <form onSubmit={handleSubmit} className="md:w-[45%] lg:w-[35%] w-[90%]  h-[90%] flex flex-col gap-7 py-10 px-10 bg-white rounded-md shadow-sm">
-                <h1 className='text-center font-bold text-3xl text-gray-900'>Register</h1>
-                <input
-                    type="text"
-                    name="username"
-                    placeholder='username'
-                    className=' text-slate-800 px-4 py-4 rounded-md'
-                    onChange={handleChange}
-                />
-                <input
-                    type='email'
-                    placeholder='Email Address'
-                    name="email"
-                    className='bg-gray-50 text-slate-800 px-4 py-4 rounded-md'
-                    onChange={handleChange}
-                />
-                <input
-                    type='text'
-                    placeholder='Phone Number'
-                    name="phoneNumber"
-                    className='bg-gray-50 text-slate-700 px-4 py-4 rounded-md'
-                    onChange={handleChange}
-                />
-                <input
-                    type='password'
-                    placeholder='password'
-                    name="password"
-                    className='bg-gray-50 text-slate-700 px-4 py-4 rounded-md'
-                    onChange={handleChange}
-                />
-                <button className='bg-slate-700 text-white rounded-md py-3 px-10' type='submit'>{loading ? (
-                    <div className="flex flex-col gap-5 mx-auto  items-center justify-center  w-[200px] py-5">
-                    <Box sx={{ width: '100%' }}>
-                        <LinearProgress variant="query" />
-                    </Box>
+        <div className='w-full h-screen relative bg-zinc-900 '>
+            <div className="flex items-center justify-center h-[850px] md:h-[800px]">
+                <div className="flex flex-col gap-2 w-[325px] sm:w-[350px] duration-300  ">
+                    <div className="flex flex-col gap-[8px] mb-4 ">
+                        <h1 className='sm:text-[25px] text-[23px]  text-white duration-300 '>به ویکسل خوش امدید  </h1>
+                        <p className='text-zinc-500  text-[14px] font-light sm:text-[15px] hover:text-white duration-300 '>برای استفاده از سایت ابتدای وارد حساب کاربری خود شوید .</p>
+                    </div>
+                    
+                    <form onSubmit={handleSubmit} className='flex flex-col gap-4 mt-4'>
+                        <div className="flex flex-col gap-3 ">
+                            <Input
+                                name="username"
+                                type="text"
+                                placeholder="نام کاربری را وارد کنید"
+                                className="py-6"
+                                onChange={handleChange}
+                            />
+                            <Input
+                                name="phoneNumber"
+                                type="text"
+                                placeholder=" شماره تماس را وارد کنید"
+                                className="py-6"
+                                onChange={handleChange}
+                            />
+                            <Input
+                                name="email"
+                                type="email"
+                                placeholder="ایمیل را وارد کنید"
+                                className="py-6"
+                                onChange={handleChange}
+                            />
+                            <Input
+                                name="password"
+                                type="password"
+                                placeholder="رمز عبور را وارد کنید"
+                                className="py-6"
+                                onChange={handleChange}
+                            />
+                            {loading ? (
+                                <Button disabled className="py-6">
+                                    لطفا کمی صبر کنید
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                </Button>
+                            ) : (
+                                <Button variant="secondary" type="submit" className="py-6">ورود </Button>
+                            )}
+                        </div>
+                        {error && (
+                        <Alert variant="destructive" className="text-red-500 border-red-500">
+                            <AlertDescription>
+                                {error}
+                            </AlertDescription>
+                        </Alert>
+                        )}
+                    </form>
+                    <div className="flex items-center justify-between  border-zinc-700/50 pb-5 mt-6">
+                        <span className='text-[14px] text-zinc-400 duration-300 hover:text-white' > ثبت نام کرده اید ؟ </span>
+                        <Link href='/login' className='text-blue-500 text-[14px] border-b-[1px] border-blue-600 pb-[1.5px] duration-300 hover:text-white hover:border-white'>ورود</Link>
+                    </div>
                 </div>
-                ) : "Register"}</button>
-            </form>
+            </div>
         </div>
     );
 };

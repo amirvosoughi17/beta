@@ -190,14 +190,17 @@ const Admin = () => {
             )}
           </div>
           <div id='tickets' className="w-full bg-[#171B24]  overflow-y-auto border-[1px] border-slate-700/30 shadow-md  rounded-xl py-5 px-3 sm:px-4 md:px-8 ">
-          <ul className='flex flex-wrap gap-4'>
-        {tickets?.map((ticket) => (
-          <Link href={`/dashboard/ticket/${ticket._id}`} className='bg-[#404040] py-2 px-4 rounded-md' key={ticket._id}>
-            <div>Subject: {ticket.subject}</div>
-            <div>Description: {ticket.description}</div>
-          </Link>
-        ))}
-      </ul>
+            <ul className='flex flex-wrap gap-4'>
+              {tickets && tickets.map((ticket) => (
+                <Link href={`/dashboard/ticket/${ticket._id}`} key={ticket._id}>
+                  <div className='bg-[#404040] py-2 px-4 rounded-md'>
+                    <div>Subject: {ticket.subject}</div>
+                    <div>Description: {ticket.description}</div>
+                  </div>
+                </Link>
+              ))}
+            </ul>
+
           </div>
           <div className="w-full bg-[#171B24]  overflow-y-auto border-[1px] border-slate-700/30 shadow-md  rounded-xl py-5 px-3 sm:px-4 md:px-8 ">
             <div className="">

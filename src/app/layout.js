@@ -1,8 +1,8 @@
 
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-
 import ReduxProvider from "@/redux/ReduxProvider";
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata = {
   title: "Create Next App",
@@ -16,12 +16,13 @@ export default function RootLayout({children}) {
       <head>
       <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
       </head>
-      <body className='bg-[--body-bg] text-white font-vazirmatn'>
+      <body className='bg-zinc-900 text-white font-vazirmatn'>
         <ReduxProvider>
           <div className="mx-auto ">
             <div className="">
              {children}
             </div>
+            <Toaster />
           </div>
         </ReduxProvider>
       </body>
