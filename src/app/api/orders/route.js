@@ -33,8 +33,8 @@ export async function POST(request) {
     });
 
     const newNotification = await sendNotification(
-      "new Order created Successfully!",
-      "you order new website, we will check it"
+      "سفارش جدید با موفقیت ثبت شد",
+      "شما یک وبسایت جدید ثبت کردید, پس از برسی آن ما به شما وضعیت آنرا اطلاع خواهیم داد"
     );
     user.notifications.push(newNotification);
     user.orders.push(newOrder._id);
