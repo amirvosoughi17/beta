@@ -1,5 +1,6 @@
 import { connect } from "@/config/DB";
 import Order from "@/models/Order";
+import Plan from "@/models/Plan";
 import { User } from "@/models/User";
 import { sendNotification } from "@/utils/sendNotification";
 import { get_user_data_from_session } from "@/utils/session";
@@ -13,6 +14,12 @@ export async function POST(request) {
     const { planName, supportTime, selectedFeatures } = data;
     const user_id = await get_user_data_from_session(request);
     const user = await User.findOne({ _id: user_id });
+
+    const plan = await Plan.findOne({ name: planName });
+    const planBasePrice = plan.basePrice;
+    const selectedFeaturesTotalPrice = selectedFeatures.reduce((total, feature) => {
+      return total + feature.price
+    }, 0);
     const newOrder = await Order.create({
       plan: planName,
       user,
@@ -21,7 +28,8 @@ export async function POST(request) {
       totalFeature: selectedFeatures.length,
       statusDates: {
         pending: new Date(Date.now())
-      }
+      },
+      totalPrice: planBasePrice + selectedFeaturesTotalPrice
     });
 
     const newNotification = await sendNotification(
