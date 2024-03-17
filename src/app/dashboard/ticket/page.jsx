@@ -152,7 +152,7 @@ const Ticket = () => {
                               موضوع پیام :
                             </Label>
                             <Input
-                              placeholder="موضوع پیام خود را بنویسید"
+                              placeholder="مثلا :‌مشکل در ثبت سفارش"
                               id="subject"
                               value={subject}
                               required
