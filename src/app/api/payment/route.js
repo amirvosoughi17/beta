@@ -33,9 +33,12 @@ export async function POST(request) {
             SECOND_INSTALLMENT_PAID_MESSAGE: {
                 title: "قسط دوم پرداخت شد",
                 message: "شما قسط دوم از سفارش خود را پرداخت کردید"
+            },
+            ADMIN_NOTIFICATION_MESSAGE: {
+                title: `${installment === "firstInstallment" ? "قسط اول" : "قسط دوم"} پرداخت شد`,
+                message: ` ${installment === "firstInstallment" ? "قسط اول" : "قسط دوم"} را پرداخت کرد ${user.username}`
             }
         };
-
         let amount;
         let paymentMessage;
         let newPayment;
@@ -68,6 +71,12 @@ export async function POST(request) {
                         message: "هزینه قسط وارد شده قبلا پرداخت شده بود"
                     }, { status: 400 })
                 }
+                if (installment === "secondInstallment" && findOrder.installments[0].paid === false) {
+                    return NextResponse.json({
+                        success: false,
+                        message: "نخست هزینه قسط اول را پرداخت کنید"
+                    }, { status: 400 })
+                }
                 amount = findOrder.installments[index].amount;
                 findOrder.installments[index].paid = true;
                 findOrder.installments[index].paidAt = Date.now();
@@ -75,23 +84,41 @@ export async function POST(request) {
                 findOrder.paymentStatus.totalPaidPrice += amount;
                 paymentMessage = installment === "firstInstallment" ? MESSAGE_CONTENT.FIRST_INSTALLMENT_PAID_MESSAGE : MESSAGE_CONTENT.SECOND_INSTALLMENT_PAID_MESSAGE;
                 break;
-
             default:
                 return NextResponse.json({
                     success: false,
                     message: "لطفا مشخص کنید چه مقدار از هزینه سفارش را پرداخت میکنید"
                 }, { status: 400 });
         }
-
+        if (findOrder.paymentStatus.totalPaidPrice === findOrder.totalPrice) {
+            findOrder.paymentStatus.isFullPaid = true;
+            paymentMessage = MESSAGE_CONTENT.FULL_PAYMENT_MESSAGE;
+        }
         const paymentNotification = await sendNotification(paymentMessage.title, paymentMessage.message);
         user.notifications.push(paymentNotification._id);
 
-        newPayment = await Payment.create({ order: orderId, installment, amount });
+        newPayment = await Payment.create({ order: orderId, user, installment, amount });
         user.payments.push(newPayment._id);
+
+        const sendNotificationToAdmins = await sendNotification(
+            MESSAGE_CONTENT.ADMIN_NOTIFICATION_MESSAGE.title,
+            MESSAGE_CONTENT.ADMIN_NOTIFICATION_MESSAGE.message,
+        )
+        const admins = await User.find({ role: "admin" });
+
+        const adminNotifications = admins.map(async admin => {
+            const adminNotification = await sendNotification(
+                MESSAGE_CONTENT.ADMIN_NOTIFICATION_MESSAGE.title,
+                MESSAGE_CONTENT.ADMIN_NOTIFICATION_MESSAGE.message,
+            );
+            admin.notifications.push(adminNotification._id);
+            return admin.save();
+        });
 
         await Promise.all([
             findOrder.save(),
-            user.save()
+            user.save(),
+            ...adminNotifications
         ]);
 
         return NextResponse.json({ newPayment }, { status: 201 });

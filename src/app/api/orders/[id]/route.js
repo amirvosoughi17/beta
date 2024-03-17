@@ -20,7 +20,6 @@ export async function GET(request, { params }) {
                 message: "Invalid Order ID"
             }, { status: 400 });
         }
-
         const order = await Order.findOne({ _id: id });
         return NextResponse.json(order, { status: 200 })
     } catch (error) {

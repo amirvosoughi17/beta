@@ -12,14 +12,7 @@ export async function GET(request) {
         const user = await User.findOne({ _id: userId }).populate('payments');
         const myPayments = await Payment.find({ _id: { $in: user.payments } });
 
-        const myPaymentsCount = user.payments.length;
-        if (myPaymentsCount === 0) {
-            return NextResponse.json({
-                message: "There is no Payment here! create one"
-            }, { status: 404 })
-        }
-
-        return NextResponse.json({ myPayments, myPaymentsCount }, { status: 200 })
+        return NextResponse.json({ myPayments, myPaymentsCount: user.payments.length }, { status: 200 })
 
     } catch (error) {
         return NextResponse.json({

@@ -5,12 +5,10 @@ connect()
 
 export async function GET() {
     try {
-        const payments = await Payment.find();
-        if (payments.length === 0) {
-            return NextResponse.json({
-                message: "There is no Payment here!"
-            }, { status: 404 })
-        }
+        const payments = await Payment.find().populate({
+            path: "user",
+            select: "_id username email phoneNumber"
+        });
         return NextResponse.json({
             payments,
             paymentsCount: payments.length

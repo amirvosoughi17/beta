@@ -6,6 +6,11 @@ const paymentSchema = new mongoose.Schema({
         ref: 'Order',
         required: true
     },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
     installments: {
         type: String,
         enum: ["firstInstallment", "secondInstallment", "fullPayment"],

@@ -12,7 +12,8 @@ export async function GET(request) {
         const user = await User.findOne({ _id: userId }).populate('orders');
 
         const myOrders = await Order.find({ _id: { $in: user.orders } });
-        return NextResponse.json({ myOrders, myOrderCount }, { status: 200 })
+
+        return NextResponse.json({ myOrders, myOrderCount: myOrders.length }, { status: 200 })
 
     } catch (error) {
         return NextResponse.json({
