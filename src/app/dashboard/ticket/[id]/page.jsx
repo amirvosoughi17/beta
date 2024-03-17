@@ -84,14 +84,14 @@ const TicketPage = () => {
                                     <div className="flex items-center gap-6 bg-[#242424] py-3 px-4 rounded-xl w-full">
                                         <div className="flex gap-2">
                                             <Avatar sx={{ bgcolor: deepPurple[500], width: 55, height: 55 }} className='bg-[--color-secondary]'>M</Avatar>
-                                            <h1 className='text-semibold text-md '>{ticket.user?.username}</h1> {/* Accessing username */}
+                                            <h1 className='text-semibold text-md '>{ticket?.user?.username}</h1> 
                                         </div>
                                         <div className="">
                                             {ticket.description}
                                         </div>
                                     </div>
                                 )}
-
+``
                                 <div className="flex flex-col gap-3">
 
                                     {ticket.responses.map((res) => (

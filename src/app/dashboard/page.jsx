@@ -193,10 +193,10 @@ const Dashboard = () => {
                     <div className="flex flex-col gap-4 w-full lg:w-[75%] mx-auto ">
 
                        
-                                <div className="flex flex-col  items-center gap-3 border-b-[0.5px] border-zinc-700/60 pb-5">
+                                <div className="flex flex-col  gap-3 border-b-[0.5px] border-zinc-700/60 pb-5">
                                     <p className='text-zinc-300 text-sm sm:text-md md:text-[14px] hover:text-white duration-300 font-light'>برای مشاهده وضعیت پروژه تیم ویکسل در هر مرحله پیامی به شما ارسال میکند که در بخش <Link href='/dashboard/notofications' className='text-blue-500 border-b-[0.7px] border-blue-500 pb-[2px]' >اعلانات </Link> قابل مشاهده است</p>
                                 </div>
-                                <div className="flex flex-col items-center gap-3  mt-10 ">
+                                <div className="flex flex-col items- gap-3  mt-10 ">
                                     <h1 className='text-2xl text-gray-200 '>لیست سفارشات</h1>
                                     <p className='text-sm text-gray-400 '>برای مشاهده صفحه مربوط به سفارش روی سطر سفارش کلیک کنید</p>
                                 </div>
