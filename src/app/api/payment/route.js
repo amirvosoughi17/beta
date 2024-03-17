@@ -12,8 +12,8 @@ export async function POST(request) {
         const data = await request.json();
         const { order, installment } = data;
         const findOrder = await Order.findById(order);
-        const userId  = await get_user_data_from_session(request);
-        const user = await User.findById(userId).select("_id username email notifications")
+        const userId = await get_user_data_from_session(request);
+        const user = await User.findById(userId).select("_id username email notifications payments")
 
         const MESSAGE_CONTENT = {
             FULL_PAYMENT_MESSAGE: {
@@ -46,7 +46,7 @@ export async function POST(request) {
                 const fullPaymentNotification = await sendNotification(
                     MESSAGE_CONTENT.FULL_PAYMENT_MESSAGE.title,
                     MESSAGE_CONTENT.FULL_PAYMENT_MESSAGE.message
-                )                
+                )
                 user.notifications.push(fullPaymentNotification._id)
                 break;
 
@@ -65,25 +65,26 @@ export async function POST(request) {
             default:
                 throw new Error("Invalid installment type");
         }
-        if(installment === "firstInstallment"){
+        if (installment === "firstInstallment") {
             const firstInstallmentPaidNotification = await sendNotification(
                 MESSAGE_CONTENT.FIRST_INSTALLMENT_PAID_MESSAGE.title,
                 MESSAGE_CONTENT.FIRST_INSTALLMENT_PAID_MESSAGE.message
-            )                
+            )
             user.notifications.push(firstInstallmentPaidNotification._id)
-        } else if(installment === "secondInstallment"){
+        } else if (installment === "secondInstallment") {
             const secondInstallmentPaidNotification = await sendNotification(
                 MESSAGE_CONTENT.SECOND_INSTALLMENT_PAID_MESSAGE.title,
                 MESSAGE_CONTENT.SECOND_INSTALLMENT_PAID_MESSAGE.message
-            )                
+            )
             user.notifications.push(secondInstallmentPaidNotification._id)
         }
+        newPayment = await Payment.create({ order, installment, amount });
+        user.payments.push(newPayment._id)
+
         await Promise.all([
             findOrder.save(),
             user.save()
         ]);
-        newPayment = await Payment.create({ order, installment, amount });
-
         return NextResponse.json({ newPayment }, { status: 201 })
     } catch (error) {
         return NextResponse.json({
