@@ -218,8 +218,6 @@ const DashboardSideNav = () => {
 
                                     ) : <></>}
 
-                                    {userInfo && userInfo.role === "user" && (
-                                   <>
                                     <div className=" w-full my-2">
                                         <hr className='bg-zinc-600 h-[1px] w-[95%] mx-auto' />
                                     </div>
@@ -229,8 +227,6 @@ const DashboardSideNav = () => {
                                         </div>
                                         <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>کمک</span>
                                     </Link>
-                                    </>
-                                    )}
                                 </>
                             ) : <div>
                                 <>

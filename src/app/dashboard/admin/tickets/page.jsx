@@ -31,28 +31,38 @@ const Tickets = () => {
                                 تیکت ها
                             </h1>
                         </div>
-                        <div className="flex flex-col gap-2">
-                            {tickets && tickets.map((ticket) => (
-                                <Link href={`/dashboard/ticket/${ticket._id}`} key={ticket._id}>
-                                    <div className='border-[1px] border-zinc-500/40 py-2 px-4 rounded-lg'>
-                                        <div className="flex items-center justify-between w-full">
-                                            <div className="flex ">
-                                                <Avatar className="w-[50px] h-[50px] shadow-md">
-                                                    <AvatarFallback ><span className='text-lg'>{ticket.createdBy?.user?.username.charAt(0).toUpperCase()}</span></AvatarFallback>
-                                                </Avatar>
-                                                <div className="flex flex-col gap-1">
-                                                    <h1>{ticket.createdBy?.username}</h1>
-                                                    <h1>{ticket.createdBy?.email}</h1>
+                        <div className="flex flex-col gap-0 w-full lg:w-[85%] ">
+                            <div className="w-full flex items-center justify-between bg-[#1b1b1b] rounded-md my-3 py-4 px-4">
+                                <span className='text-md text-zinc-300 '>کاربر</span>
+                                <span className='text-md text-zinc-300'>موضوع پیام</span>
+                            </div>
+                            <div className="flex flex-col gap-1 w-full]">
+                                {tickets && tickets.map((ticket) => (
+                                    <Link href={`/dashboard/ticket/${ticket._id}`} key={ticket._id}>
+                                        <div className='border-b-[0.6px] border-zinc-500/40 py-3 px-4 '>
+                                            <div className="flex items-center justify-between gap-10 w-full">
+                                                <div className="flex gap-2 ">
+                                                    <Avatar className="w-[50px] h-[50px] md:w-[55px] md:h-[55px] shadow-md">
+                                                        <AvatarFallback ><span className='text-lg'>{ticket.createdBy?.username.charAt(0).toUpperCase()}</span></AvatarFallback>
+                                                    </Avatar>
+                                                    <div className="flex flex-col gap-1">
+                                                        <h1 className='text-md text-zinc-100 md:text-[18px]'>{ticket.createdBy?.username}</h1>
+                                                        <h1 className='text-[12px] text-zinc-400 md:text-md'>{ticket.createdBy?.email}</h1>
+                                                    </div>
+                                                </div>
+                                                <div className=" max-w-[60%]">
+                                                    <div>
+                                                        <p className='text-sm text-zinc-300 md:text-md text-left'>
+                                                        {ticket.subject}
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="">
-                                             <div>{ticket.subject}</div>
-                                            </div>
                                         </div>
-                                    </div>
-                                </Link>
-                            ))}
+                                    </Link>
+                                ))}
 
+                            </div>
                         </div>
                     </div>
                 </div>

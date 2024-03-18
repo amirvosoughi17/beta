@@ -27,7 +27,7 @@ const TicketPage = () => {
     const [success, setSuccess] = useState(false);
 
     useEffect(() => {
-        dispatch(fetchUserData())
+        dispatch(fetchUserData());
     }, [dispatch]);
 
     useEffect(() => {
@@ -48,14 +48,11 @@ const TicketPage = () => {
     }, []);
 
     if (!ticket) {
-        return <div>
-            <div disabled className="flex items-center justify-center min-h-screen">
-                <div className="flex items-center gap-2">
-                   <Loader2 className="h-10 w-10 animate-spin" />
-                </div>
-                
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <Loader2 className="h-10 w-10 animate-spin" />
             </div>
-        </div>;
+        );
     }
 
     const handleResponseChange = (event) => {
@@ -64,7 +61,7 @@ const TicketPage = () => {
 
     const handleSubmitResponse = async () => {
         try {
-            setLoading(true)
+            setLoading(true);
             const response = await fetch(`/api/dashboard/tickets/${ticket._id}`, {
                 method: 'POST',
                 headers: {
@@ -72,23 +69,21 @@ const TicketPage = () => {
                 },
                 body: JSON.stringify({ message: responseMessage }),
             });
-            setLoading(false)
+            setLoading(false);
             const data = await response.json();
             console.log('Response submitted:', data);
             setResponseMessage('');
-            window.location.reload();
+
             if (response.ok) {
                 setSuccess(true);
             }
         } catch (error) {
             console.error('Error submitting response:', error);
-            setError("پیام شما ارسال نشد !")
+            setError("پیام شما ارسال نشد !");
         } finally {
             setLoading(false);
         }
     };
-
-
 
 
     return (
