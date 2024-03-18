@@ -24,7 +24,11 @@ export async function POST(request, { params }) {
             message
         })
         if (user.role === "admin") {
-            const notificationMessage = await sendNotification("You have new Message")
+            const notificationMessage = await sendNotification(
+                ` ${ticket.subject} پاسخ جدید برای تیکت`,
+                "تیکت شما توسط ویکسل پاسخ داده شده"
+            )
+
             const createdByUser = await User.findById(ticket.createdBy._id);
             createdByUser.notifications.push(notificationMessage._id)
             await createdByUser.save()

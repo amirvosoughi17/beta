@@ -99,11 +99,6 @@ export async function POST(request) {
 
         newPayment = await Payment.create({ order: orderId, user, installment, amount });
         user.payments.push(newPayment._id);
-
-        const sendNotificationToAdmins = await sendNotification(
-            MESSAGE_CONTENT.ADMIN_NOTIFICATION_MESSAGE.title,
-            MESSAGE_CONTENT.ADMIN_NOTIFICATION_MESSAGE.message,
-        )
         const admins = await User.find({ role: "admin" });
 
         const adminNotifications = admins.map(async admin => {
