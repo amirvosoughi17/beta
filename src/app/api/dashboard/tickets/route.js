@@ -12,7 +12,7 @@ export async function POST(request) {
         const data = await request.json();
         const { subject, description } = data;
         const userId = await get_user_data_from_session(request);
-        const user = await User.findOne({ _id: userId }).select('_id email tickets notifications')
+        const user = await User.findOne({ _id: userId }).select('_id email username tickets notifications')
 
         if (!subject || !description) {
             return NextResponse.json({ message: "Please fill out all inputs" }, { status: 400 })
@@ -25,8 +25,8 @@ export async function POST(request) {
         });
 
         const newNotification = await sendNotification(
-            "new Ticket created successfully",
-            "you open new ticket, we will check it"
+            "تیکت جدید ایجاد شد",
+            `تیکت جدیدی را ایجاد  ${user.username}`
         );
         user.tickets.push(newTicket._id)
         user.notifications.push(newNotification._id)
@@ -45,7 +45,7 @@ export async function GET(request) {
     try {
         const userId = await get_user_data_from_session(request);
         const user = await User.findOne({ _id: userId }).select('tickets')
-        const myTickets = await Ticket.find({ _id: { $in: user.tickets } });
+        const myTickets = await Ticket.find({ _id: { $in: user.tickets } }).populate("createdBy", "_id username email phoneNumber");
         return NextResponse.json({ myTickets }, { status: 200 });
     } catch (error) {
         return NextResponse.json({

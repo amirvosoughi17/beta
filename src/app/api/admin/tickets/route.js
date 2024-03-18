@@ -6,7 +6,7 @@ connect()
 
 export async function GET() {
     try {
-        const tickets = await Ticket.find();
+        const tickets = await Ticket.find().populate("createdBy", "_id username email");
         const ticketsCount = await Ticket.countDocuments();
         if (ticketsCount === 0) {
             return NextResponse.json({
