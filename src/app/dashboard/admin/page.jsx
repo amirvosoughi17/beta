@@ -6,10 +6,12 @@ import { fetchUserData } from '@/utils/userActions';
 import { fetchAllUsers } from '@/utils/userActions';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-//mui
-import LinearProgress from '@mui/material/LinearProgress';
-import Box from '@mui/material/Box';
 import DashboardLayout from '@/components/DashboardLayout';
+import { Loader2 } from "lucide-react"
+// shadcn 
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Progress } from '@/components/ui/progress';
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -136,72 +138,56 @@ const Admin = () => {
 
   return (
     <DashboardLayout>
-      <div className='p-2 sm:p-8 w-full  bg-[#0D0F14]'>
-        <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[210px]   flex flex-col gap-6">
-          <div className="w-full bg-[#171B24] h-screen overflow-y-auto border-[1px] border-slate-700/30 shadow-md rounded-xl py-7 px-5 lg:px-4 xl:px-8">
+      <div className='p-2 sm:p-8 w-full  bg-[#0A0A0A]'>
+        <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[220px]">
+          <div className="w-full min-h-screen  overflow-y-auto  shadow-md rounded-xl py-7 px-5 lg:px-4 xl:px-8">
             <h2 className="text-2xl font-bold text-white mb-5">سفارشات</h2>
             {orders.length > 0 ? (
               <div className='flex flex-wrap gap-6'>
                 {orders.map((order) => (
-                  <div key={order._id} className=" w-[340px] sm:w-[340px] bg-[#23263e] flex flex-col gap-4 py-4 px-4 rounded-lg shadow-md border-gray-600/30 border-[1px]">
-                    <div className="flex w-full items-center justify-between">
-                      <h1 className='text-xl'>{order.plan}</h1>
-
-                      <p className={
-                        order.status === 'completed' ? 'text-green-500 text-sm' :
-                          order.status === 'pending' ? 'text-orange-500 text-sm' :
-                            order.status === 'accepted' ? 'text-yellow-500 text-sm' :
-                              order.status === 'notAccepted' ? 'text-red-500 text-sm' :
-                                order.status === 'inProgress' ? 'text-blue-500 text-sm' :
-                                  order.status === 'underReview' ? 'text-purple-500 text-sm' :
-                                    order.status === 'canceled' ? 'text-gray-500 text-sm' : ''
-
-                      }>{order.status}</p>
-                    </div>
-                    <div className="flex flex-col gap-[10px] my-5 min-h-[170px]">
-                      {order.selectedFeatures.map((feature) => (
-                        <div key={feature.name} className='bg-[#313250] rounded-md shadow-sm py-[4px] px-3'>
-                          {feature.name}
+                  <Link href={`/dashboard/order/${order._id}`} key={order._id} className=" w-full md:w-[42%]  border-[1px] border-zinc-500/60 rounded-lg p-3">
+                    <div className="flex flex-col gap-3">
+                      <div className="w-full flex items-center justify-between">
+                        <h1 className='text-zinc-300 text-lg'>{order.plan}</h1>
+                        <Badge >
+                          {order.status}
+                        </Badge>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <span className='text-sm text-muted-foreground'>امکانات :</span>
+                        <div className="flex flex-wrap gap-2">
+                          {order.selectedFeatures.map((feature) => (
+                            <Badge  variant='secondary' key={feature.name} className=''>
+                              {feature.name}
+                            </Badge>
+                          ))}
                         </div>
-                      ))}
-                    </div>
-                    <div className="flex flex-col gap-2 my-1 border-b-[1px] pb-4 border-gray-600/30">
-                      <h1 className='text-white  '>اطلاعات کاربر</h1>
-                      <div className="flex items-center justify-between w-full">
-                        <span className='text-gray-300 text-sm '>نام کاربری :</span>
-                        <p className='text-gray-200 text-md '>{order?.user?.username}</p>
                       </div>
-                      <div className="flex items-center justify-between w-full">
-                        <span className='text-gray-300 text-sm '>شماره تماس :</span>
-                        <p className='text-gray-200 text-md '>{order?.user?.phoneNumber}</p>
+                      <div className="my-3 flex items-center gap-1">
+                        <span className='text-zinc-300 hover:text-white duration-300  tex-lg '>{`${Math.round(order.orderProgress)}%`}</span>
+                        <Progress  value={order.orderProgress}/>
+                      </div>
+                      <div className="flex w-full items-center justify-between border-t-[0.6px] border-zinc-700/60 pt-3 px-2">
+                        <div className="flex gap-1 flex-col">
+                          <h1 className='text-zinc-200 text-md'>{order.user.username}</h1>
+                          <h2 className='text-zinc-400 text-sm'>{order.user.phoneNumber}</h2>
+                        </div>
+                        <div className="">
+                          {order.totalPrice.toLocaleString()} تومان
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <Link href={`/dashboard/order/${order._id}`} className='bg-[--color-secondary] py-[5px] px-4 rounded-md border-gray-400/40'>
-                        مشاهده
-                      </Link>
-                      <p className='text-gray-200 text-md '>تومان {order.totalPrice}</p>
-                    </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             ) : (
-              <p className="text-white">loading...</p>
+              <div className='flex items-center justify-center '>
+                <span className='text-md text-gray-200'>لطفا کمی صبر کنید</span>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              </div>
             )}
           </div>
-          <div id='tickets' className="w-full bg-[#171B24]  overflow-y-auto border-[1px] border-slate-700/30 shadow-md  rounded-xl py-5 px-3 sm:px-4 md:px-8 ">
-            <ul className='flex flex-wrap gap-4'>
-              {tickets && tickets.map((ticket) => (
-                <Link href={`/dashboard/ticket/${ticket._id}`} key={ticket._id}>
-                  <div className='bg-[#404040] py-2 px-4 rounded-md'>
-                    <div>Subject: {ticket.subject}</div>
-                    <div>Description: {ticket.description}</div>
-                  </div>
-                </Link>
-              ))}
-            </ul>
-
-          </div>
+         
           <div className="w-full bg-[#171B24]  overflow-y-auto border-[1px] border-slate-700/30 shadow-md  rounded-xl py-5 px-3 sm:px-4 md:px-8 ">
             <div className="">
               <h2 className='text-xl font-bold text-white'>پلن را اضافه کنید</h2>
@@ -296,3 +282,44 @@ const Admin = () => {
 
 export default Admin;
 
+
+
+
+{/* <div className="flex w-full items-center justify-between">
+                      <h1 className='text-xl'>{order.plan}</h1>
+
+                      <p className={
+                        order.status === 'completed' ? 'text-green-500 text-sm' :
+                          order.status === 'pending' ? 'text-orange-500 text-sm' :
+                            order.status === 'accepted' ? 'text-yellow-500 text-sm' :
+                              order.status === 'notAccepted' ? 'text-red-500 text-sm' :
+                                order.status === 'inProgress' ? 'text-blue-500 text-sm' :
+                                  order.status === 'underReview' ? 'text-purple-500 text-sm' :
+                                    order.status === 'canceled' ? 'text-gray-500 text-sm' : ''
+
+                      }>{order.status}</p>
+                    </div>
+                    <div className="flex flex-col gap-[10px] my-5 min-h-[170px]">
+                      {order.selectedFeatures.map((feature) => (
+                        <div key={feature.name} className='bg-[#313250] rounded-md shadow-sm py-[4px] px-3'>
+                          {feature.name}
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex flex-col gap-2 my-1 border-b-[1px] pb-4 border-gray-600/30">
+                      <h1 className='text-white  '>اطلاعات کاربر</h1>
+                      <div className="flex items-center justify-between w-full">
+                        <span className='text-gray-300 text-sm '>نام کاربری :</span>
+                        <p className='text-gray-200 text-md '>{order?.user?.username}</p>
+                      </div>
+                      <div className="flex items-center justify-between w-full">
+                        <span className='text-gray-300 text-sm '>شماره تماس :</span>
+                        <p className='text-gray-200 text-md '>{order?.user?.phoneNumber}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <Link href={`/dashboard/order/${order._id}`} className='bg-[--color-secondary] py-[5px] px-4 rounded-md border-gray-400/40'>
+                        مشاهده
+                      </Link>
+                      <p className='text-gray-200 text-md '>تومان {order.totalPrice}</p>
+                    </div> */}

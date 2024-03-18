@@ -188,11 +188,9 @@ const Dashboard = () => {
 
     return (
         <DashboardLayout>
-            <div className='py-5 px-2 sm:px-5 md:px-7 lg:py-10 lg:px-10 w-full min-h-screen  bg-[#1E1E1E] '>
+            <div className='py-5 px-2 sm:px-5 md:px-7 lg:py-10 lg:px-10 w-full min-h-screen   '>
                 <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[220px] flex flex-col gap-6">
                     <div className="flex flex-col gap-4 w-full lg:w-[75%] mx-auto ">
-
-                       
                                 <div className="flex flex-col  gap-3 border-b-[0.5px] border-zinc-700/60 pb-5">
                                     <p className='text-zinc-300 text-sm sm:text-md md:text-[14px] hover:text-white duration-300 font-light'>برای مشاهده وضعیت پروژه تیم ویکسل در هر مرحله پیامی به شما ارسال میکند که در بخش <Link href='/dashboard/notofications' className='text-blue-500 border-b-[0.7px] border-blue-500 pb-[2px]' >اعلانات </Link> قابل مشاهده است</p>
                                 </div>
@@ -209,7 +207,7 @@ const Dashboard = () => {
                                     ) : (
                                         <>
                                         <Table className="">
-                                            <TableHeader className="bg-[#242424]">
+                                            <TableHeader className="bg-[#1b1b1b]">
                                                 <TableRow className="">
                                                     <TableHead className="w-[150px] text-right">نوع سایت</TableHead>
                                                     <TableHead className="w-[250px] text-right">پیشرفت پروژه</TableHead>
@@ -217,12 +215,8 @@ const Dashboard = () => {
                                                     <TableHead className="text-right">قیمت نهایی</TableHead>
                                                 </TableRow>
                                             </TableHeader>
-                                            <TableBody className="bg-[#1a1a1a]] ">
-                                                {orders.length === 0  ? (
-                                                    <div className='flex items-center gap-2 w-[300px] mt-3 border-b-[1px] border-zinc-700/60 pb-6'>
-                                                    <h1 className='text-[17px] text-gray-100'>شما سفارشی ندارید</h1>
-                                                    </div>
-                                                ) :  orders.map((order) => (
+                                            <TableBody className="">
+                                                {orders && orders.map((order) => (
                                                     <TableRow key={order._id} onClick={() => handleOrderClick(order._id)} className='cursor-pointer hover:bg-gray-600'>
                                                         <TableCell className="font-medium w-[100px] text-[17px] text-zinc-300">{order.plan}</TableCell>
                                                         <TableCell className="flex items-center h-[65px] gap-2 w-[200px]">

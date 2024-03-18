@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import DashboardLayout from '@/components/DashboardLayout';
 import { Loader2 } from 'lucide-react';
 import moment from 'moment-jalaali';
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
 // dhascn
 import { Badge } from '@/components/ui/badge';
 import {
@@ -34,14 +34,14 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { toast } from 'sonner';
 
 const CustomTable = ({ tickets, handleTicketClick }) => (
-  <Table className="w-full bg-[#1a1a1a]">
-    <thead className="bg-[#242424]">
+  <Table className="w-full ">
+    <TableHeader className='bg-[#1b1b1b]'>
       <TableRow>
         <TableHead className="w-[350px] text-right">عنوان</TableHead>
         <TableHead className="w-[100px] text-right">زمان ایجاد </TableHead>
         <TableHead className="md:w-[150px] w-[100px] text-right">وضعیت</TableHead>
       </TableRow>
-    </thead>
+    </TableHeader>
     <TableBody>
       {tickets?.length === 0 ? (
         <TableRow>
@@ -125,13 +125,13 @@ const Ticket = () => {
   return (
     <div>
       <DashboardLayout>
-        <div className="py-5 px-2 lg:px-5 xl:px-7 lg:py-8 w-full min-h-screen bg-[#1E1E1E]">
+        <div className="py-5 px-2 lg:px-5 xl:px-7 lg:py-8 w-full min-h-screen ">
           <div className="w-full lg:w-[80%] xl:w-[85%] lg:mr-[230px] xl:mr-[250px] flex flex-col items-center justify-center gap-6 h-full">
             <div className="md:w-[80%] w-[95%] sm:w-[90%]  flex flex-col gap-5">
               <div className="flex flex-col   gap-3 border-b-[0.5px] border-zinc-700/60 pb-5">
                 <p className='text-[15px] text-zinc-400  duration-300 hover:text-white'>در صورت داشتن سوال ,مشکل یا پیام میتوانید با ایجاد پیام باما ارتباط برقرار کنید و در کمترین زمان پاسخ بگیرید</p>
               </div>
-              <div className="flex flex-col items-  gap-5 mt-10">
+              <div className="flex flex-col items-  gap-5 mt-6">
                 <div className="flex w-full items-center">
                   <h1 className='text-2xl text-gray-200 text-cetner'>لیست پیام ها</h1>
                 </div>

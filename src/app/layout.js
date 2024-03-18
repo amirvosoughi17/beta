@@ -16,7 +16,7 @@ export default function RootLayout({children}) {
       <head>
       <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
       </head>
-      <body className='bg-zinc-900 text-white font-vazirmatn'>
+      <body className='font-vazirmatn min-h-screen bg-background font-sans antialiased'>
         <ReduxProvider>
           <div className="mx-auto ">
             <div className="">

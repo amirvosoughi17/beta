@@ -93,9 +93,9 @@ const TicketPage = () => {
 
     return (
         <DashboardLayout>
-            <div className='min-h-screen bg-[#1E1E1E] w-full'>
+            <div className='min-h-screen  w-full'>
                 <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[210px] md:py-10 md:px-10">
-                    <div className="w-full lg:w-[95%] xl:w-[90%] bg-[#171717] mx-auto rounded-xl min-h-[700px] py-10 px-6 sm:px-8 md:px-10 relative">
+                    <div className="w-full lg:w-[95%] xl:w-[90%]  mx-auto rounded-xl min-h-[700px] py-10 px-6 sm:px-8 md:px-10 relative">
                         <div className="flex flex-col gap-4  ">
                             <div className="flex flex-col w-full gap-5 border-b-[1px] border-zinc-600/50 py-6 ">
                                 <div className="flex items-center justify-between w-full">

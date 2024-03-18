@@ -39,22 +39,7 @@ const Navbar = () => {
         dispatch(fetchUserData());
     }, [dispatch]);
 
-    // const handleLogout = async () => {
-    //     try {
-    //         const response = await fetch("/api/auth/logout", {
-    //             method: "GET",
-    //         });
 
-    //         router.push('/login')
-    //         if (response.ok) {
-    //             dispatch(logoutUser());
-    //         } else {
-    //             console.error("Failed to log out");
-    //         }
-    //     } catch (error) {
-    //         console.error("Error during logout:", error);
-    //     }
-    // };
 
     return (
         <header className='flex items-center justify-center'>

@@ -15,21 +15,12 @@ import { MdPayment } from "react-icons/md";
 import { IoLogOutOutline } from "react-icons/io5";
 import { FiUser } from "react-icons/fi";
 import { IoIosHelpCircleOutline } from "react-icons/io";
-
-// mui 
-
+import { IoHomeOutline } from "react-icons/io5";
+import { RiAdminLine } from "react-icons/ri";
 // shadcn 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import {
-    Calculator,
-    Calendar,
-    CreditCard,
-    Settings,
-    Smile,
-    User,
-} from "lucide-react";
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, } from "@/components/ui/command"
 import { Skeleton } from "@/components/ui/skeleton"
 
@@ -38,6 +29,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 const DashboardSideNav = () => {
     const [open, setOpen] = useState(false);
     const userInfo = useSelector(selectUserInfo);
+    const [loading, setLoading] = useState(false)
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -56,9 +48,28 @@ const DashboardSideNav = () => {
         return () => document.removeEventListener("keydown", down)
     }, [])
 
+    const handleLogout = async () => {
+        try {
+            setLoading(true)
+            const response = await fetch("/api/auth/logout", {
+                method: "GET",
+            });
+            router.push('/login')
+            if (response.ok) {
+                dispatch(logoutUser());
+            } else {
+                console.error("Failed to log out");
+            }
+        } catch (error) {
+            console.error("Error during logout:", error);
+        } finally {
+            setLoading(false)
+        }
+    };
+
     return (
         <div>
-            <div className="fixed w-[240px] right-0 top-0 bottom-0 h-[100%] bg-[#171717] backdrop-blur-xl hidden lg:block border-l-[3px] border-[#171717]">
+            <div className="fixed w-[240px] right-0 top-0 bottom-0 h-[100%]  backdrop-blur-xl hidden lg:block border-l-[3px] border-[#171717]">
                 <div className="lg:py-[20px] xl:py-[25px] 2xl:py-[30px] px-5 flex flex-col justify-between h-full ">
                     <div className="flex flex-col items- gap-[5px]  ">
                         <div className="w-full flex items-center justify-between ">
@@ -137,19 +148,6 @@ const DashboardSideNav = () => {
                         <div className="flex flex-col  ">
                             {userInfo ? (
                                 <>
-                                    <Link href='/dashboard#orders' className="flex  items-center gap-4 mt-1  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
-                                        <div className=" p-[6px] shadow-md rounded-lg">
-                                            <FiShoppingBag size={25} className='text-gray-100' />
-                                        </div>
-                                        <span className='text-[18px] text-whit'>سفارش ها</span>
-                                    </Link>
-
-                                    <Link href='/dashboard/order' className="flex items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
-                                        <div className=" p-[6px] shadow-md rounded-lg">
-                                            <MdPayment size={25} className='text-gray-100' />
-                                        </div>
-                                        <span className='text-[18px] hover:text-white duration-300 text-zinc-400 '>پرداخت</span>
-                                    </Link>
                                     <Link href='/dashboard/userInfo' className="flex items-center gap-3 py-2 ">
                                         <div className=" p-[6px] shadow-md rounded-lg">
                                             <FiUser size={25} className='text-white' />
@@ -158,43 +156,70 @@ const DashboardSideNav = () => {
                                             حساب کاربری
                                         </span>
                                     </Link>
+
+
                                     {userInfo && userInfo.role === "user" && (
-                                    <Link href='/dashboard/ticket' className="flex items-center justify-between gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
-                                        <div className="flex items-center gap-4">
-                                            <div className=" p-[6px] shadow-md rounded-lg">
-                                                <BiMessageDetail size={25} className='text-gray-100' />
-                                            </div>
-                                            <span className='text-[18px]  hover:text-white duration-300 text-zinc-400'>پیام ها</span>
+                                        <>
+                                            <Link href='/dashboard#orders' className="flex  items-center gap-4 mt-1  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
+                                                <div className=" p-[6px] shadow-md rounded-lg">
+                                                    <FiShoppingBag size={25} className='text-gray-100' />
+                                                </div>
+                                                <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>سفارش ها</span>
+                                            </Link>
+                                            <Link href='/dashboard/ticket' className="flex items-center justify-between gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
+                                                <div className="flex items-center gap-4">
+                                                    <div className=" p-[6px] shadow-md rounded-lg">
+                                                        <BiMessageDetail size={25} className='text-gray-100' />
+                                                    </div>
+                                                    <span className='text-[18px]  hover:text-white duration-300 text-zinc-400'>پیام ها</span>
+                                                </div>
+                                            </Link>
+                                            <Link href='/dashboard/notifications' className="flex  items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl  ">
+                                                <div className=" p-[6px] shadow-md rounded-lg">
+                                                    <MdOutlineNotificationsActive size={25} className='text-gray-100' />
+                                                </div>
+                                                <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>اعلان ها</span>
+                                            </Link>
+                                        </>
+                                    )}
+                                    <Link href={`${userInfo.role === "admin" ? "/dashboard/admin" : "/dashbard/payment"}`} className="flex items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
+                                        <div className=" p-[6px] shadow-md rounded-lg">
+                                            <MdPayment size={25} className='text-gray-100' />
                                         </div>
-
+                                        <span className='text-[18px] hover:text-white duration-300 text-zinc-400 '>پرداخت</span>
                                     </Link>
-                                    )} 
-
                                     {userInfo && userInfo.role === "admin" ? (
                                         <>
-                                        <Link href='/dashboard/order' className="flex items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
-                                            <div className=" p-[6px] shadow-md rounded-lg">
-                                                <FaUsers size={25} className='text-gray-100' />
-                                            </div>
-                                            <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>کاربران</span>
-                                        </Link>
-                                        <Link href='/dashboard/admin/tickets' className="flex  items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl  ">
-                                        <div className=" p-[6px] shadow-md rounded-lg">
-                                            <BiMessageDetail size={25} className='text-gray-100' />
-                                        </div>
-                                        <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>پیام ها</span>
-                                    </Link>
+                                            <Link href='/dashboard/admin/overview' className="flex items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl  ">
+                                                <div className=" p-[6px] shadow-md rounded-lg">
+                                                    <RiAdminLine size={25} className='text-gray-100' />
+                                                </div>
+                                                <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>مدیریت</span>
+                                            </Link>
+                                            <Link href='/dashboard/overview' className="flex items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
+                                                <div className=" p-[6px] shadow-md rounded-lg">
+                                                    <FiShoppingBag size={25} className='text-gray-100' />
+                                                </div>
+                                                <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>سفارشات</span>
+                                            </Link>
+                                            <Link href='/dashboard/admin' className="flex items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
+                                                <div className=" p-[6px] shadow-md rounded-lg">
+                                                    <FaUsers size={25} className='text-gray-100' />
+                                                </div>
+                                                <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>کاربران</span>
+                                            </Link>
+                                            <Link href='/dashboard/admin/tickets' className="flex  items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl  ">
+                                                <div className=" p-[6px] shadow-md rounded-lg">
+                                                    <BiMessageDetail size={25} className='text-gray-100' />
+                                                </div>
+                                                <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>پیام ها</span>
+                                            </Link>
                                         </>
-                                        
+
                                     ) : <></>}
 
-
-                                    <Link href='/dashboard/notifications' className="flex  items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl  ">
-                                        <div className=" p-[6px] shadow-md rounded-lg">
-                                            <MdOutlineNotificationsActive size={25} className='text-gray-100' />
-                                        </div>
-                                        <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>اعلان ها</span>
-                                    </Link>
+                                    {userInfo && userInfo.role === "user" && (
+                                   <>
                                     <div className=" w-full my-2">
                                         <hr className='bg-zinc-600 h-[1px] w-[95%] mx-auto' />
                                     </div>
@@ -204,7 +229,8 @@ const DashboardSideNav = () => {
                                         </div>
                                         <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>کمک</span>
                                     </Link>
-
+                                    </>
+                                    )}
                                 </>
                             ) : <div>
                                 <>
@@ -233,7 +259,7 @@ const DashboardSideNav = () => {
                             }
                         </div>
                     </div>
-                    <div className="flex flex-col  gap-4 w-full border-t-[0.5px] border-zinc-600/50">
+                    <div className="flex flex-col  gap-3 w-full border-t-[0.5px] border-zinc-600/50">
                         <div className="flex  gap-[12px] mt-3 rounded-lg">
                             {userInfo ? (
                                 <>
@@ -259,9 +285,9 @@ const DashboardSideNav = () => {
                             )}
                         </div>
                         <Link href='/' className="flex items-center gap-4  rounded-xl  duration-300 ">
-                            <Button variant="secondary" className=" w-full flex items-center gap-3 ">
+                            <Button onClick={handleLogout} variant="secondary" className=" w-full flex items-center gap-3 ">
                                 <IoLogOutOutline size={20} />
-                                <span className='text-md text-white'>خروج</span>
+                                <span className='text-md '>خروج</span>
                             </Button>
                         </Link>
                     </div>

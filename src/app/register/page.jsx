@@ -56,7 +56,7 @@ const Register = () => {
     };
 
     return (
-        <div className='w-full h-screen relative bg-zinc-900 '>
+        <div className='w-full h-screen relative'>
             <div className="flex items-center justify-center h-[850px] md:h-[800px]">
                 <div className="flex flex-col gap-2 w-[325px] sm:w-[350px] duration-300  ">
                     <div className="flex flex-col gap-[8px] mb-4 ">
