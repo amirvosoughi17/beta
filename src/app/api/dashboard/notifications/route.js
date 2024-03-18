@@ -35,14 +35,18 @@ export async function PUT(request) {
                 { $set: { isRead: true } }
             );
             await Notification.deleteMany({ _id: { $in: user.notifications }, isRead: true });
+            user.notifications = [];
         } else {
             await Notification.findByIdAndUpdate(notificationId,
                 {
                     $set: { isRead: true }
                 });
             await Notification.findByIdAndDelete(notificationId);
+            user.notifications = user.notifications.filter(id => id !== notificationId);
+
         }
 
+        await user.save()
         return NextResponse.json({ message: "Update was Successfull" }, { status: 200 })
     } catch (error) {
         return NextResponse.json({
