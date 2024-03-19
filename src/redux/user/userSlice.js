@@ -23,5 +23,24 @@ export const selectUserInfo = (state) => state.user.userInfo;
 export const selectIsAuthenticated = (state) => state.user.isAuthenticated;
 export const selectUsers = (state) => state.user.users;
 
-export default userSlice.reducer;
+export const fetchAllUsers = () => async (dispatch) => {
+  try {
+    const res = await fetch('/api/admin', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
+    if (res.ok) {
+      const { users } = await res.json();
+      dispatch(setUsers(users));
+    } else {
+      console.error('Failed to fetch all users');
+    }
+  } catch (error) {
+    console.error('Error', error);
+  }
+};
+
+export default userSlice.reducer;

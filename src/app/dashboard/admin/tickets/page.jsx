@@ -32,7 +32,7 @@ const Tickets = () => {
                             </h1>
                         </div>
                         <div className="flex flex-col gap-0 w-full lg:w-[85%] ">
-                            <div className="w-full flex items-center justify-between bg-[#1b1b1b] rounded-md my-3 py-4 px-4">
+                            <div className="w-full flex items-center justify-between bg-[#1b1b1b]  my-3 py-4 px-4">
                                 <span className='text-md text-zinc-300 '>کاربر</span>
                                 <span className='text-md text-zinc-300'>موضوع پیام</span>
                             </div>

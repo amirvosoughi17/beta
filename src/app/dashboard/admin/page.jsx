@@ -12,6 +12,7 @@ import { Loader2 } from "lucide-react"
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { Card } from '@/components/ui/card';
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -80,7 +81,6 @@ const Admin = () => {
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     try {
@@ -138,14 +138,15 @@ const Admin = () => {
 
   return (
     <DashboardLayout>
-      <div className='p-2 sm:p-8 w-full  bg-[#0A0A0A]'>
+      <div className='p-2 sm:p-8 w-full'>
         <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[220px]">
           <div className="w-full min-h-screen  overflow-y-auto  shadow-md rounded-xl py-7 px-5 lg:px-4 xl:px-8">
-            <h2 className="text-2xl font-bold text-white mb-5">سفارشات</h2>
+            <h2 className="text-2xl font-bold text-white mb-6 pb-5 border-b-[1px] border-slate-800/60">سفارشات</h2>
             {orders.length > 0 ? (
               <div className='flex flex-wrap gap-6'>
                 {orders.map((order) => (
-                  <Link href={`/dashboard/order/${order._id}`} key={order._id} className=" w-full md:w-[42%]  border-[1px] border-zinc-500/60 rounded-lg p-3">
+                  <Card key={order._id} className=" w-full md:w-[42%] p-4">
+                  <Link  href={`/dashboard/order/${order._id}`} >
                     <div className="flex flex-col gap-3">
                       <div className="w-full flex items-center justify-between">
                         <h1 className='text-zinc-300 text-lg'>{order.plan}</h1>
@@ -165,7 +166,7 @@ const Admin = () => {
                       </div>
                       <div className="my-3 flex items-center gap-1">
                         <span className='text-zinc-300 hover:text-white duration-300  tex-lg '>{`${Math.round(order.orderProgress)}%`}</span>
-                        <Progress  value={order.orderProgress}/>
+                        <Progress   value={order.orderProgress}/>
                       </div>
                       <div className="flex w-full items-center justify-between border-t-[0.6px] border-zinc-700/60 pt-3 px-2">
                         <div className="flex gap-1 flex-col">
@@ -178,6 +179,7 @@ const Admin = () => {
                       </div>
                     </div>
                   </Link>
+                  </Card>
                 ))}
               </div>
             ) : (
@@ -188,92 +190,6 @@ const Admin = () => {
             )}
           </div>
          
-          <div className="w-full bg-[#171B24]  overflow-y-auto border-[1px] border-slate-700/30 shadow-md  rounded-xl py-5 px-3 sm:px-4 md:px-8 ">
-            <div className="">
-              <h2 className='text-xl font-bold text-white'>پلن را اضافه کنید</h2>
-              <form onSubmit={handleSubmit} className='flex w-full justify-start md:gap-[90px] lg:gap-[120px]  flex-wrap  gap-6 my-10 '>
-                <div className="flex flex-col gap-5 ">
-                  <div className="flex flex-col items-start gap-3">
-                    <label className='text-lg  text-gray-200'>
-                      نام پلن :
-                    </label>
-                    <input
-                      className='bg-[#3a3e60] border-[1px] border-gray-500/40 px-5 py-[7px] w-[310px]  rounded-md'
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="flex flex-col items-start gap-3">
-                    <label className='text-lg  text-gray-200'>
-                      قیمت پایه :
-                    </label>
-                    <input
-                      className='bg-[#3a3e60] border-[1px] border-gray-500/40 px-5 py-[7px] w-[310px]  rounded-md'
-                      type="text"
-                      name="basePrice"
-                      value={formData.basePrice}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  <div className="flex flex-col items-start gap-3">
-                    <label className='text-lg  text-gray-200'>
-                      توضیحات :
-                    </label>
-                    <textarea
-                      className='bg-[#3a3e60] border-[1px] border-gray-500/40 px-5 py-[7px] w-[310px]  rounded-md'
-                      name="description"
-                      value={formData.description}
-                      onChange={handleChange}
-                      rows={5}
-                    />
-                  </div>
-                  <button className='bg-[--color-secondary] text-white px-5 py-[11px] rounded-md ' type="submit">افزدون پلن</button>
-
-                </div>
-                <div className="flex flex-col gap-4">
-                  <h2 className='text-2xl mt-10'>امکانات</h2>
-                  {formData.features.map((feature, index) => (
-                    <div key={index} className='my- bg-[--color-secondary] px-7 py-2 rounded-md'>
-                      <p>{feature.name} - ${feature.price}</p>
-                    </div>
-                  ))}
-                  <div className="flex flex-col items-start gap-3">
-                    <label className='text-lg  text-gray-200'>
-                      نام :
-                    </label>
-                    <input
-                      className='bg-[#3a3e60] border-[1px] border-gray-500/40 px-5 py-[7px] w-[310px]  rounded-md'
-                      type="text"
-                      name="featureName"
-                      value={featureData.featureName}
-                      onChange={handleFeatureChange}
-                    />
-
-                  </div>
-                  <div className="flex flex-col items-start gap-3">
-                    <label className='text-lg  text-gray-200'>
-                      قیمت :‌
-                    </label>
-                    <input
-                      className='bg-[#3a3e60] border-[1px] border-gray-500/40 px-5 py-[7px] w-[310px]  rounded-md'
-                      type="text"
-                      name="featurePrice"
-                      value={featureData.featurePrice}
-                      onChange={handleFeatureChange}
-                    />
-                  </div>
-                  <button className='bg-[--color-secondary] text-white px-5 py-3 mt-2 rounded-md ' type="button" onClick={addFeature}>
-                    افزدون
-                  </button>
-
-                </div>
-                <br />
-              </form>
-
-            </div>
-          </div>
         </div>
       </div>
     </DashboardLayout>

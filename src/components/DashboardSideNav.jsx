@@ -69,7 +69,7 @@ const DashboardSideNav = () => {
 
     return (
         <div>
-            <div className="fixed w-[240px] right-0 top-0 bottom-0 h-[100%]  backdrop-blur-xl hidden lg:block border-l-[3px] border-[#171717]">
+            <div className="fixed w-[240px] right-0 top-0 bottom-0 h-[100%]  backdrop-blur-xl hidden lg:block border-l-[2px] border-[#252732]">
                 <div className="lg:py-[20px] xl:py-[25px] 2xl:py-[30px] px-5 flex flex-col justify-between h-full ">
                     <div className="flex flex-col items- gap-[5px]  ">
                         <div className="w-full flex items-center justify-between ">
@@ -152,7 +152,7 @@ const DashboardSideNav = () => {
                                         <div className=" p-[6px] shadow-md rounded-lg">
                                             <FiUser size={25} className='text-white' />
                                         </div>
-                                        <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>
+                                        <span className='text-[18px] hover:text-white duration-300 text-slate-300'>
                                             حساب کاربری
                                         </span>
                                     </Link>
@@ -164,21 +164,21 @@ const DashboardSideNav = () => {
                                                 <div className=" p-[6px] shadow-md rounded-lg">
                                                     <FiShoppingBag size={25} className='text-gray-100' />
                                                 </div>
-                                                <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>سفارش ها</span>
+                                                <span className='text-[18px] hover:text-white duration-300 text-slate-300'>سفارش ها</span>
                                             </Link>
                                             <Link href='/dashboard/ticket' className="flex items-center justify-between gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
                                                 <div className="flex items-center gap-4">
                                                     <div className=" p-[6px] shadow-md rounded-lg">
                                                         <BiMessageDetail size={25} className='text-gray-100' />
                                                     </div>
-                                                    <span className='text-[18px]  hover:text-white duration-300 text-zinc-400'>پیام ها</span>
+                                                    <span className='text-[18px]  hover:text-white duration-300 text-slate-300'>پیام ها</span>
                                                 </div>
                                             </Link>
                                             <Link href='/dashboard/notifications' className="flex  items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl  ">
                                                 <div className=" p-[6px] shadow-md rounded-lg">
                                                     <MdOutlineNotificationsActive size={25} className='text-gray-100' />
                                                 </div>
-                                                <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>اعلان ها</span>
+                                                <span className='text-[18px] hover:text-white duration-300 text-slate-300'>اعلان ها</span>
                                             </Link>
                                         </>
                                     )}
@@ -186,7 +186,7 @@ const DashboardSideNav = () => {
                                         <div className=" p-[6px] shadow-md rounded-lg">
                                             <MdPayment size={25} className='text-gray-100' />
                                         </div>
-                                        <span className='text-[18px] hover:text-white duration-300 text-zinc-400 '>پرداخت</span>
+                                        <span className='text-[18px] hover:text-white duration-300 text-slate-300 '>پرداخت</span>
                                     </Link>
                                     {userInfo && userInfo.role === "admin" ? (
                                         <>
@@ -194,25 +194,25 @@ const DashboardSideNav = () => {
                                                 <div className=" p-[6px] shadow-md rounded-lg">
                                                     <RiAdminLine size={25} className='text-gray-100' />
                                                 </div>
-                                                <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>مدیریت</span>
+                                                <span className='text-[18px] hover:text-white duration-300 text-slate-300'>مدیریت</span>
                                             </Link>
                                             <Link href='/dashboard/overview' className="flex items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
                                                 <div className=" p-[6px] shadow-md rounded-lg">
                                                     <FiShoppingBag size={25} className='text-gray-100' />
                                                 </div>
-                                                <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>سفارشات</span>
+                                                <span className='text-[18px] hover:text-white duration-300 text-slate-300'>سفارشات</span>
                                             </Link>
-                                            <Link href='/dashboard/admin' className="flex items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
+                                            <Link href='/dashboard/admin/users' className="flex items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
                                                 <div className=" p-[6px] shadow-md rounded-lg">
                                                     <FaUsers size={25} className='text-gray-100' />
                                                 </div>
-                                                <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>کاربران</span>
+                                                <span className='text-[18px] hover:text-white duration-300 text-slate-300'>کاربران</span>
                                             </Link>
                                             <Link href='/dashboard/admin/tickets' className="flex  items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl  ">
                                                 <div className=" p-[6px] shadow-md rounded-lg">
                                                     <BiMessageDetail size={25} className='text-gray-100' />
                                                 </div>
-                                                <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>پیام ها</span>
+                                                <span className='text-[18px] hover:text-white duration-300 text-slate-300'>پیام ها</span>
                                             </Link>
                                         </>
 
@@ -225,7 +225,7 @@ const DashboardSideNav = () => {
                                         <div className=" p-[6px] shadow-md rounded-lg">
                                             <IoIosHelpCircleOutline size={25} className='text-gray-100' />
                                         </div>
-                                        <span className='text-[18px] hover:text-white duration-300 text-zinc-400'>کمک</span>
+                                        <span className='text-[18px] hover:text-white duration-300 text-slate-300'>کمک</span>
                                     </Link>
                                 </>
                             ) : <div>

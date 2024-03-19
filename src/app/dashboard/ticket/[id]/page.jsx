@@ -76,6 +76,7 @@ const TicketPage = () => {
 
             if (response.ok) {
                 setSuccess(true);
+                window.location.reload();
             }
         } catch (error) {
             console.error('Error submitting response:', error);
@@ -125,7 +126,7 @@ const TicketPage = () => {
 
                                 <div className="flex flex-col gap-3 w-full">
                                     {ticket.responses.map((res) => (
-                                        <div key={res._id} className={`flex flex-col  gap-4 py-5 px-2 sm:px-4 rounded-xl w-[290px] sm:w-[320px] lg:w-[450px] xl:w-[550px] ${userInfo?.username === res.user?.username ? 'items-start' : 'items-end justify-end'}`} style={{ alignSelf: userInfo.username === res.user?.username ? 'flex-start' : 'flex-end', backgroundColor: userInfo.username === res.user?.username ? '#1E1E1E' : '#303030' }}>
+                                        <div key={res._id} className={`flex flex-col  gap-4 py-5 px-2 sm:px-4 rounded-xl w-[270px] sm:w-[300px] lg:w-[350px] xl:w-[380px] ${userInfo?.username === res.user?.username ? 'items-start' : 'items-end justify-end'}`} style={{ alignSelf: userInfo.username === res.user?.username ? 'flex-start' : 'flex-end', backgroundColor: userInfo.username === res.user?.username ? '#1E1E1E' : '#303030' }}>
                                             <div className="flex items-center gap-1">
 
                                                 {res.user && (
