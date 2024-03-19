@@ -16,28 +16,46 @@ const eventSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-    discount: {
-        percentage: {
-            type: Number,
-            required: true,
-            min: 0,
-            max: 100,
-            default: 0,
-        },
-        code: {
-            type: String,
-            unique: true,
-            sparse: true,
-        },
+    discountPercentage: {
+        type: Number,
+        required: true,
+        min: 0,
+        max: 100,
+        default: 0,
     },
-    applicablePlans: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Plan',
-    }],
-    applicableUsers: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-    }],
+    applicablePlans: [
+        {
+            plan: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Plan',
+            },
+        },
+        {
+            isAllPlans: {
+                type: Boolean,
+                default: false
+            },
+        }
+    ],
+    applicableUsers: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User'
+            },
+            userDiscountCode: {
+                type: String,
+                unique: true,
+                sparse: true,
+            }
+        },
+        {
+            isAllUsers: {
+                type: Boolean,
+                default: false
+            }
+        },
+    ],
 });
 
 eventSchema.virtual('isActive').get(function () {
