@@ -25,7 +25,7 @@ const UserInfo = () => {
     <div>
       <DashboardLayout>
         <div className='py-5 px-2 lg:px-5 xl:px-7 lg:py-8 w-full min-h-screen'>
-          <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[230px] xl:mr-[250px]   flex flex-col items-center justify-center gap-6 h-full">
+          <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[220px] xl:mr-[230px]   flex flex-col items-center justify-center gap-6 h-full">
             <div className="xl:w-[90%] w-full lg:w-[95%]  md:h-[700px] py-4 sm:py-8 p-4 md:p-10 rounded-xl">
               <h1 className='sm:mb-10 mb-4 text-xl text-zinc-300 font-semibold'>اطلاعات حساب</h1>
               <div className="flex flex-col md:flex-row items-center md:items-start gap-[20px] sm:gap-[40px] lg:gap-[25px] xl:gap-[60px] lg:px-4 xl:px-10">

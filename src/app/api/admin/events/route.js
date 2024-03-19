@@ -22,21 +22,20 @@ export async function POST(request) {
         } = data;
 
         if (applicableUsers && applicableUsers.isAllUsers === true) {
-            applicableUsers = (await User.find({ role: "user" })).map(user => user._id);
+            const allUsers = await User.find({ role: "user" }).select("_id notifications");
+            applicableUsers = allUsers.map(user => ({
+                user: user._id,
+                userDiscountCode: generateDiscountCode()
+            }));
         }
-
         if (applicablePlans && applicablePlans.isAllPlans === true) {
-            applicablePlans = (await Plan.find()).map(plan => plan._id);
+            const allPlans = await Plan.find().select("_id");
+            applicablePlans = allPlans.map(plan => plan._id);
         }
 
         for (const user of applicableUsers) {
             user.userDiscountCode = generateDiscountCode();
         }
-
-        // await User.updateMany(
-        //     { _id: { $in: applicableUsers } },
-        //     { $push: { notifications: { $each: notifications } } }
-        // );
 
         const newEvent = await Event.create({
             name,
@@ -47,6 +46,14 @@ export async function POST(request) {
             applicableUsers,
             discountPercentage
         });
+        for (const userId of newEvent.applicableUsers) {
+            const user = await User.findById(userId.user);
+            if (user) {
+                const newEventNotification = await sendNotification(`دعوت شدید ${newEvent.name} شما به جشنواره`, `Event: ${newEvent.description}, ${userId.userDiscountCode}`);
+                user.notifications.push(newEventNotification._id)
+                await user.save();
+            }
+        }
         return NextResponse.json({ newEvent }, { status: 201 })
     } catch (error) {
         return NextResponse.json({
