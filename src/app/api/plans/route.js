@@ -32,14 +32,14 @@ export async function POST(request) {
 
 export async function GET() {
     try {
-        const plans = await Plan.find();
-        const planCount = await Plan.countDocuments();
-        if (planCount === 0) {
-            return NextResponse.json({
-                message: "There are no plans available. Create one...",
-            }, { status: 400 });
-        }
-        return NextResponse.json({ plans }, { status: 200 });
+        const plans = await Plan.find().populate({
+            path: "event",
+            select: "_id name discountPercentage"
+        });
+        return NextResponse.json({ 
+            plans,
+            plansCount: plans.length
+         }, { status: 200 });
     } catch (error) {
         return NextResponse.json({
             success: false,

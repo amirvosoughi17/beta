@@ -19,8 +19,10 @@ export async function GET(request, { params }) {
                 message: "Invalid Plan ID"
             }, { status: 400 });
         }
-
-        const plan = await Plan.findOne({ _id: id });
+        const plan = await Plan.findOne({ _id: id }).populate({
+            path: "event",
+            select: "_id name discountPercentage"
+        });
         return NextResponse.json({
             success: true,
             plan
