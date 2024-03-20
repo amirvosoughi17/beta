@@ -27,8 +27,8 @@ const orderSchema = new mongoose.Schema({
         },
         status: {
             type: String,
-            enum: ['todo', 'inProgress', 'completed'],
-            default: 'todo'
+            enum: ['در انتظار توسعه', 'در حال توسعه', 'توسعه داده شده'],
+            default: 'در انتظار توسعه'
         }
     }],
     totalFeature: {
