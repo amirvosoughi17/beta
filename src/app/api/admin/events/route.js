@@ -54,6 +54,20 @@ export async function POST(request) {
                 await user.save();
             }
         }
+
+        for (const planId of newEvent.applicablePlans) {
+            const plan = await Plan.findById(planId.plan)
+            plan.isInEvent = true;
+            const eventName = await Event.findById(plan.event).select("_id name")
+            if (plan.event != null) {
+                return NextResponse.json({
+                    message: ` تعرفه انتخابی در حال حاضر در جشنواره ${eventName.name} حضور دارد`
+                }, { stauts: 400 })
+            }
+            plan.event = newEvent._id;
+            await plan.save();
+        }
+
         return NextResponse.json({ newEvent }, { status: 201 })
     } catch (error) {
         return NextResponse.json({

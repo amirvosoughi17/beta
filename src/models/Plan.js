@@ -17,6 +17,15 @@ const planSchema = new mongoose.Schema({
             required: true
         }
     }],
+    isInEvent: {
+        type: Boolean,
+        default: false,
+    },
+    event: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Event",
+        default: null
+    },
     basePrice: {
         type: Number,
         required: true,
