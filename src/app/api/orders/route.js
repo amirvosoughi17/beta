@@ -13,13 +13,17 @@ export async function POST(request) {
     const data = await request.json();
     const { planName, supportTime, selectedFeatures } = data;
     const user_id = await get_user_data_from_session(request);
-    const user = await User.findOne({ _id: user_id });
+    const user = await User.findOne({ _id: user_id }).select("_id username email phoneNumber orders notifications");
 
     const plan = await Plan.findOne({ name: planName });
     const planBasePrice = plan.basePrice;
     const selectedFeaturesTotalPrice = selectedFeatures.reduce((total, feature) => {
       return total + feature.price
     }, 0);
+
+
+
+
     const newOrder = await Order.create({
       plan: planName,
       user,
@@ -46,6 +50,10 @@ export async function POST(request) {
       "سفارش جدید با موفقیت ثبت شد",
       "شما یک وبسایت جدید ثبت کردید, پس از برسی آن ما به شما وضعیت آنرا اطلاع خواهیم داد"
     );
+
+
+
+
     user.notifications.push(newNotification);
     user.orders.push(newOrder._id);
 

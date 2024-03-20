@@ -51,16 +51,16 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true,
         enum: [
-            "pending",
-            "accepted",
-            "notAccepted",
-            "waitForFirstInstallment",
-            "waitForSecondInstallment",
-            "inProgress",
-            "completed",
-            "canceled"
+            "در انتظار تایید",
+            "پذیرفته شده",
+            "پذیرفته نشده",
+            "در انتظار پرداخت قسط اول",
+            "در انتطار پرداخت قسط دوم",
+            "در حال پیشرفت",
+            "تکمیل شده",
+            "لغو شده"
         ],
-        default: "pending"
+        default: "در انتظار تایید"
     },
     statusDates: {
         pending: { type: Date },

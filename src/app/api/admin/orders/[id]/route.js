@@ -65,7 +65,7 @@ export async function PUT(request, { params }) {
         const saveOrderProgress = calculateOrderProgress(order);
         order.orderProgress = saveOrderProgress;
         if (order.orderProgress === 100) {
-            order.status = "completed";
+            order.status = "تکمیل شده";
 
             order.statusDates.completed = new Date()
             order.supportStartedAt = new Date();
@@ -90,21 +90,21 @@ export async function PUT(request, { params }) {
             user.notifications.push(completedOrderStatusNotification._id)
 
         } else if (order.orderProgress >= 40) {
-            order.status = "waitForFirstInstallment"
+            order.status = "در انتظار پرداخت قسط اول"
             const waitForFirstInstallmentNotification = await sendNotification(
                 MESSAGE_CONTENT.FIRST_INSTALLMENT_MESSAGE.title,
                 MESSAGE_CONTENT.FIRST_INSTALLMENT_MESSAGE.message
             );
             user.notifications.push(waitForFirstInstallmentNotification._id)
         } else if (order.orderProgress >= 60) {
-            order.status = "waitForSecondInstallment"
+            order.status = "در انتطار پرداخت قسط دوم"
             const waitForSecondInstallmentNotification = await sendNotification(
                 MESSAGE_CONTENT.SECOND_INSTALLMENT_MESSAGE.title,
                 MESSAGE_CONTENT.SECOND_INSTALLMENT_MESSAGE.message
             );
             user.notifications.push(waitForSecondInstallmentNotification._id)
         } else {
-            order.status = "inProgress"
+            order.status = "در حال پیشرفت"
         }
 
         await Promise.all([
