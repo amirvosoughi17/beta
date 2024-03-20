@@ -3,6 +3,7 @@ import bcrpyt from 'bcryptjs';
 import { connect } from "@/config/DB";
 import { User } from "@/models/User";
 import { generate_token } from "@/utils/session";
+import { sendNotification } from '@/utils/sendNotification';
 
 connect();
 
@@ -36,9 +37,19 @@ export async function POST(request) {
             phoneNumber,
             password: hashedPasss
         })
+        const nowDate = new Intl.DateTimeFormat(
+            'fa-IR', {
+            year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'
+        }).format(Date.now());
 
+        const registerationNotification = await sendNotification(
+            `خوش امدید ${newUser.username}`,
+            `  ${nowDate}  ${newUser.username} به ویکسل پیوستید  شما  در تاریخ`
+        );
+        newUser.notifications.push(registerationNotification._id)
+        await newUser.save();
         return generate_token("Registeration was successfull", 201, newUser);
-        
+
     } catch (error) {
         return NextResponse.json({
             message: error.message

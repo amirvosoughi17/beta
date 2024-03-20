@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { generate_token } from "@/utils/session";
 import { connect } from "@/config/DB";
 import { User } from "@/models/User";
+import { sendNotification } from "@/utils/sendNotification";
 
 connect();
 export async function POST(request) {
@@ -26,6 +27,17 @@ export async function POST(request) {
                 message: "Password does not match !"
             }, { status: 400 });
         }
+        const nowDate = new Intl.DateTimeFormat(
+            'fa-IR', {
+            year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'
+        }).format(Date.now());
+
+        const loggedinNotification = await sendNotification(
+            "اعلام ورودی",
+            `${nowDate}  وارد ویکسل شدید  شما در ساعت  ${existsUser.username}`
+        )
+        existsUser.notifications.push(loggedinNotification._id);
+        await existsUser.save()
         return generate_token("Logged in successfully", 200, existsUser);
 
     } catch (error) {
