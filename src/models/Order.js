@@ -97,13 +97,13 @@ const orderSchema = new mongoose.Schema({
             type: Boolean,
             default: false
         }
-    },  
+    },
     totalPrice: {
         type: Number,
         default: 0,
         required: true
     }
-});
+}, { timestamps: true });
 
 
 const Order = mongoose.models.Order || mongoose.model("Order", orderSchema);
