@@ -61,7 +61,7 @@ export async function POST(request) {
             const eventName = await Event.findById(plan.event).select("_id name")
             if (plan.event != null) {
                 return NextResponse.json({
-                    message: ` تعرفه انتخابی در حال حاضر در جشنواره ${eventName.name} حضور دارد`
+                    message: ` تعرفه ${plan.name} در حال حاضر در جشنواره ${eventName.name} حضور دارد`
                 }, { stauts: 400 })
             }
             plan.event = newEvent._id;
