@@ -46,6 +46,10 @@ const userSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Notification',
     }],
+    discountCode: {
+        type: String,
+        default: null  
+    },
     password: {
         type: String,
         required: true,

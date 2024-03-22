@@ -48,6 +48,25 @@ export async function POST(request) {
         });
         for (const userId of newEvent.applicableUsers) {
             const user = await User.findById(userId.user);
+            if (user.discountCode === null) {
+                user.discountCode = userId.userDiscountCode
+            } else {
+                return NextResponse.json({ message: ` درحال حاضر کد تخفیف دارد${user.username}` }, { status: 400 })
+            }
+
+
+            const currentDate = new Date();
+            if (newEvent.endDate <= currentDate) {
+                const eventEndedNotification = await sendNotification(
+                    "اتمام جشنواره",
+                    `جشنواره ${newEvent.name} به اتمام رسید`
+                )
+                user.notifications.push(eventEndedNotification._id)
+            }
+
+
+
+
             if (user) {
                 const newEventNotification = await sendNotification(`دعوت شدید ${newEvent.name} شما به جشنواره`, `Event: ${newEvent.description}, ${userId.userDiscountCode}`);
                 user.notifications.push(newEventNotification._id)
@@ -74,5 +93,20 @@ export async function POST(request) {
             success: false,
             message: error.message || "An error occurred while creating the event"
         }, { status: 500 });
+    }
+}
+
+export async function GET() {
+    try {
+        const events = await Event.find().populate({
+            path: "applicableUsers.user",
+            select: "_id username email"
+        });
+        return NextResponse.json({ events }, { status: 200 });
+    } catch (error) {
+        return NextResponse.json({
+            success: false,
+            message: error.message
+        }, { status: 500 })
     }
 }
