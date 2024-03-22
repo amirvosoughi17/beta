@@ -8,7 +8,8 @@ const orderSchema = new mongoose.Schema({
         type: Number,
         required: true,
         default: 1,
-        min: [1, 'Support time must be at least 1 month'],
+        min: [1, "زمان پشتیبانی نمیتواند کمتر از یک ماه باشد"],
+        max: [12, "زمان پشتیبانی نمیتواند بیشتر از یک سال باشد"]
     },
     supportStartedAt: {
         type: Date,

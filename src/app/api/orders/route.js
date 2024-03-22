@@ -21,6 +21,8 @@ export async function POST(request) {
     if (!selectedFeatures || selectedFeatures.length === 0) {
       selectedFeatures = plan.features.filter(feature => feature.isNeseccary);
     }
+    const supportFeaturePricePerMonth = 120;
+    const supportTotalPrice = supportFeaturePricePerMonth * supportTime;
 
     const selectedFeaturesTotalPrice = selectedFeatures.reduce((total, feature) => {
       return total + feature.price
@@ -38,7 +40,7 @@ export async function POST(request) {
       statusDates: {
         pending: new Date(Date.now())
       },
-      totalPrice: planBasePrice + selectedFeaturesTotalPrice
+      totalPrice: planBasePrice + selectedFeaturesTotalPrice + supportTotalPrice
     });
 
     if (!newOrder.installments.find(inst => inst.amount === newOrder.totalPrice * 0.4)) {
