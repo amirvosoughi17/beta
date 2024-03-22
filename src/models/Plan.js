@@ -15,6 +15,10 @@ const planSchema = new mongoose.Schema({
         price: {
             type: Number,
             required: true
+        },
+        isNeseccary: {
+            type: Boolean,
+            default: false
         }
     }],
     isInEvent: {
