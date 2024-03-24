@@ -69,7 +69,7 @@ const DashboardSideNav = () => {
 
     return (
         <div>
-            <div className="fixed w-[240px] right-0 top-0 bottom-0 h-[100%]  backdrop-blur-xl hidden lg:block border-l-[2px] border-[#252732]">
+            <div className="fixed w-[240px] right-0 top-0 bottom-0 h-[100%]  backdrop-blur-xl hidden lg:block border-l-[2px] border-[#2f3033]">
                 <div className="lg:py-[20px] xl:py-[25px] 2xl:py-[30px] px-5 flex flex-col justify-between h-full ">
                     <div className="flex flex-col items- gap-[5px]  ">
                         <div className="w-full flex items-center justify-between ">
