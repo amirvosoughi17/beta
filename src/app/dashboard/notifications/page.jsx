@@ -70,7 +70,7 @@ const Notifications = () => {
 
   return (
     <DashboardLayout>
-      <div className="py-5 px-3 sm:px-5 md:px-7 lg:py-10 lg:px-10 w-full">
+      <div className="py-5 px-3 sm:px-5 md:px-7 lg:py-10 lg:px-10 w-full md:mt-0 mt-[70px]">
         <div className="w-full lg:w-[80%] xl:w-[85%] lg:mr-[210px] flex flex-col gap-6">
           <div className="w-full md:w-[85%] mx-auto">
             <div className="flex flex-col">

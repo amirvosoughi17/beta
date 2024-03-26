@@ -4,6 +4,7 @@ import DashboardLayout from "@/components/DashboardLayout";
 import { addDays, format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { DateRange } from "react-day-picker";
+import Link from "next/link";
 // react icons
 import { LuUsers } from "react-icons/lu";
 import { MdOutlineAttachMoney } from "react-icons/md";
@@ -11,6 +12,7 @@ import { MdOutlineCreditCard } from "react-icons/md";
 import { VscSymbolEvent } from "react-icons/vsc";
 import { VscTarget } from "react-icons/vsc";
 // shadcn
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -18,7 +20,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Card } from "@/components/ui/card";
 import {
   Select,
   SelectContent,
@@ -28,7 +29,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -42,6 +42,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+
 
 const Overview = () => {
   const [formData, setFormData] = useState({
@@ -56,7 +66,8 @@ const Overview = () => {
     featureName: "",
     featurePrice: "",
   });
-
+  const [overData, setOverData] = useState(null);
+  const [popularPlans, setPopularPlans] = useState([]);
   const [eventData, setEventData] = useState({
     name: "",
     description: "",
@@ -191,30 +202,61 @@ const Overview = () => {
     }
   };
 
+  // over data 
+  useEffect(() => {
+    const fetchOverData = async () => {
+      try {
+        const res = await fetch("/api/admin/overview");
+        const resData = await res.json();
+        setOverData(resData)
+      } catch (error) {
+        console.log("cant fetch overData ");
+      }
+    }
+    fetchOverData();
+  }, [])
+  useEffect(() => {
+    fetchPopularPlans();
+  }, []);
+
+  const fetchPopularPlans = async () => {
+    try {
+      const response = await fetch('/api/admin/overview');
+      if (response.ok) {
+        const data = await response.json();
+        setPopularPlans(data.popularPlans);
+      } else {
+        throw new Error('Failed to fetch popular plans');
+      }
+    } catch (error) {
+      console.error('Error fetching popular plans:', error);
+    }
+  };
+
 
 
 
   return (
     <DashboardLayout>
-      <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[220px]">
-        <div className="w-full min-h-screen  overflow-y-auto  shadow-md rounded-xl py-7 px-5 lg:px-4 xl:px-8">
-          <div className="w-full h-full flex flex-col px-10 py-4">
+      <div className="w-full lg:w-[80%] xl:w-[85%] lg:mr-[220px] md:mt-0 mt-[70px]">
+        <div className="w-full min-h-screen  overflow-y-auto  shadow-md rounded-xl py-7 px-1 lg:px-4 xl:px-8">
+          <div className="w-full h-full flex flex-col px-4 sm:px-10 py-4">
             {/* head  */}
             <div className="w-full items-center justify-between flex border-b-[0.4px] border-slate-800 pb-5">
               <div className="">
-                <h1 className="text-[30px] font-semibold text-white">
+                <h1 className="md:text-[30px] text-[24px] font-semibold text-white">
                   Dashboard
                 </h1>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-[4px] md:gap-3">
                 <Dialog>
                   <DialogTrigger asChild dir="rtl">
                     <Button
                       variant="outline"
-                      className="flex items-center gap-1"
+                      className="flex items-center gap-1 p-3"
                     >
                       <VscSymbolEvent size={17} />
-                      <span>افزدون جشنواره</span>
+                      <span className="hidden md:block">افزدون جشنواره</span>
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="" dir="rtl">
@@ -287,6 +329,9 @@ const Overview = () => {
                               <SelectValue placeholder="انتخاب پلن" />
                             </SelectTrigger>
                             <SelectContent position="popper">
+                              <SelectItem key="all" value="all">
+                                همه پلن‌ها
+                              </SelectItem>
                               {plans.map((plan) => (
                                 <SelectItem key={plan._id} value={plan._id}>
                                   {plan.name}
@@ -308,10 +353,10 @@ const Overview = () => {
                     <Button
                       variant={"outline"}
                       className={
-                        "w-[240px] justify-start text-left font-normal"
+                        "md:w-[240px] w-[130px] justify-start text-left font-normal"
                       }
                     >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      <CalendarIcon className="ml-2 h-4 w-4" />
                       {oData ? format(oData, "PPP") : <span>Pick a date</span>}
                     </Button>
                   </PopoverTrigger>
@@ -328,10 +373,10 @@ const Overview = () => {
                         <SelectValue placeholder="Select" />
                       </SelectTrigger>
                       <SelectContent position="popper">
-                        <SelectItem value="0">Today</SelectItem>
-                        <SelectItem value="1">Tomorrow</SelectItem>
-                        <SelectItem value="3">In 3 days</SelectItem>
-                        <SelectItem value="7">In a week</SelectItem>
+                        <SelectItem value="0">امروز</SelectItem>
+                        <SelectItem value="1">فردا</SelectItem>
+                        <SelectItem value="3">این سه روز</SelectItem>
+                        <SelectItem value="7">این هفته</SelectItem>
                       </SelectContent>
                     </Select>
                     <div className="rounded-md border">
@@ -347,8 +392,9 @@ const Overview = () => {
             </div>
             {/* end head  */}
             {/* totals  */}
-            <div className="flex flex-col md:flex-row gap-3 py-6">
-              <Card className="w-[33%] h-[150px] px-5 py-6 flex flex-col gap-2">
+            { }
+            <div className="flex flex-col lg:flex-row gap-3 py-6">
+              <Card className="lg:w-[33%] w-full h-[150px] px-5 py-6 flex flex-col gap-2">
                 <div className="w-full flex items-center justify-between ">
                   <h1 className="text-lg text-slate-200 font-semibold">
                     کل درامد
@@ -366,7 +412,7 @@ const Overview = () => {
                 </div>
               </Card>
 
-              <Card className="w-[33%] h-[150px] px-5 py-6 flex flex-col gap-2">
+              <Card className="lg:w-[33%] w-full px-5 py-6 flex flex-col gap-2">
                 <div className="w-full flex items-center justify-between ">
                   <h1 className="text-lg text-gray-200  font-semibold">
                     کاربران
@@ -381,7 +427,7 @@ const Overview = () => {
                 </div>
               </Card>
 
-              <Card className="w-[33%] h-[150px] px-5 py-6 flex flex-col gap-2">
+              <Card className="lg:w-[33%] w-full px-5 py-6 flex flex-col gap-2">
                 <div className="w-full flex items-center justify-between ">
                   <h1 className="text-lg text-slate-200  font-semibold">
                     تعداد فروش
@@ -397,27 +443,28 @@ const Overview = () => {
               </Card>
             </div>
             {/* end totals  */}
-            <div className="w-full flex flex-col md:flex-row gap-4">
+            <div className="w-full flex flex-col lg:flex-row gap-4">
               {/* right  */}
-              <div className="flex flex-col w-[40%] h-[600px] gap-4">
-                <Card className="w-full h-[450px] flex flex-col gap-3 px-4 py-6">
-                  <div className="flex  gap-[2px] items-center w-full justify-between">
+              <div className="flex flex-col w-full lg:w-[40%]  gap-4">
+                <Card className="w-full h-[400px] sm:h-[450px] flex flex-col gap-3 px-4 py-6">
+                  <div className="flex  gap-[2px] items-start w-full justify-between">
                     <div className="flex flex-col gap-[2px]">
-                      <h1 className="text-white text-lg font-bold">
+                      <h1 className="text-white lg:text-[15px] text-[15px] xl:text-lg font-bold">
                         محبوبیت پلن ها
                       </h1>
-                      <p className="text-[14px] text-gray-400 font-medium">
+                      <p className="xl:text-[14px] text-[12px]  lg:text-[13px] text-gray-300 hidden md:block  lg:font-medium">
                         محبوبیت پلن ها بر اساس تعداد فروش
                       </p>
                     </div>
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button
+                          size=""
                           variant="outline"
-                          className="flex items-center gap-[5px]"
+                          className="flex items-center gap-[5px] p-3"
                         >
-                          <VscTarget />
-                          <span>افزدون پلن</span>
+                          <VscTarget size={20} />
+                          <span className="xl:block hidden sm:block lg:hidden">افزدون پلن</span>
                         </Button>
                       </DialogTrigger>
                       <DialogContent className="w-[800px]">
@@ -521,64 +568,96 @@ const Overview = () => {
                       </DialogContent>
                     </Dialog>
                   </div>
-                  <div className="flex justify-center flex-col  w-full gap-6 mt-10 ">
-                    <div className="flex  gap-[4px] items-center justify-end">
-                      <Progress
-                        className=" w-[85%] h-[50px] rounded-l-[0.2rem]  rounded-r-[0.2rem]"
-                        value={40}
-                      />
-                      <span className="text-[12px] rotate-90 text-gray-300 font-medium">
-                        اموزشی
-                      </span>
-                    </div>
-                    <div className="flex  gap-[px] items-center justify-end">
-                      <Progress
-                        className=" w-[85%] h-[50px] rounded-l-[0.2rem]  rounded-r-[0.2rem]"
-                        value={70}
-                      />
-                      <span className="text-[10px] rotate-90 text-gray-300 font-medium">
-                        فروشگاهی
-                      </span>
-                    </div>
-                    <div className="flex  gap-[8px] items-center justify-end">
-                      <Progress
-                        className=" w-[85%] h-[50px] rounded-l-[0.2rem]  rounded-r-[0.2rem]"
-                        value={50}
-                      />
-                      <span className="text-[12px] rotate-90 text-gray-300 font-medium">
-                        شرکتی
-                      </span>
-                    </div>
-                    <div className="flex  gap-[3px] items-center justify-end">
-                      <Progress
-                        className=" w-[85%] h-[50px] rounded-l-[0.2rem]  rounded-r-[0.2rem]"
-                        value={25}
-                      />
-                      <span className="text-[12px] rotate-90 text-gray-300 font-medium">
-                        شخصی
-                      </span>
-                    </div>
+                  <div className="flex justify-center rotate-[270deg] flex-col gap-[20px] sm:gap-[60px]  w-full lg:gap-4 xl:gap-6 md:mt-[90px] sm:mt-[60px] mt-[80px]  lg:mt-[60px]">
+                    {popularPlans.map(plan => (
+                      <div key={plan._id} className="flex gap-[px] items-center justify-start">
+                        <Progress
+                          className="xl:w-[67%] 2xl:w-[60%] lg:w-[80%] md:w-[40%] w-[60%] h-[45px] sm:w-[50%] lg:h-[40px] xl:h-[50px] sm:h-[50px] md:h-[65px] rounded-l-[0.2rem]  rounded-r-[0.2rem]"
+                          value={(plan.totalOrders / popularPlans[0].totalOrders) * 100}
+                        />
+                        <div className="xl:w-[50px] lg:w-[40px] md:w-[60px] w-[45px] sm:w-[50px] rotate-90">
+                          <span className="text-[12px]  text-gray-300 font-medium">{plan._id}</span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </Card>
               </div>
               {/* end right  */}
               {/* left  */}
-              <Card className="w-[60%] h-[450px]  py-6 px-4">
-                <h1 className="text-xl font-bold text-gray-200">
-                  نمودار درآمد ماهیانه
-                </h1>
-                <div className="flex gap-2 mt-10 px-4">
-                  <div className="flex flex-col gap-[38px]">
-                    <span className="text-gray-400 text-[12px]">50M</span>
-                    <span className="text-gray-400 text-[12px]">30M</span>
-                    <span className="text-gray-400 text-[12px]">15M</span>
-                    <span className="text-gray-400 text-[12px]">7M</span>
-                    <span className="text-gray-400 text-[12px]">4M</span>
-                    <span className="text-gray-400 text-[12px]">0M</span>
-                  </div>
-                  <div className=" flex items-end ">
-                    <div className="flex flex-col items-center gap-2"></div>
-                  </div>
+              <Card className="lg:w-[60%] w-full h-[520px] lg:h-[450px] py-4 px-4">
+                <h1 className="text-xl font-bold my-3">اخرین سفارشات</h1>
+                <div className="flex items-center gap-3 w-full mt-5">
+                  {overData && overData.latestOrders.map((order) => (
+                    <Link href={`/dashboard/order/${order._id}`} key={order._id} className="w-[50%]   hidden md:block">
+                      <Card className="flex flex-col gap-4 w-full h-full px-4 py-5 ">
+                        <span className="flex items-center justify-center relative rotate-45 duration-300">
+                          <div className="w-[142px] h-[142px] rounded-full flex items-center justify-center bg-[#1e1e1e] rotate-[-45deg] absolute top- z-50">
+                            <span className="text-white text-2xl">
+                              40%
+                            </span>
+                          </div>
+                          <Progress className='w-[160px] h-[160px] rounded-full flex items-center justify-center z-10 ' value={40} />
+                        </span>
+                        <div className="w-full flex items-center justify-between  ">
+                          <h1 className="text-xl font-semibold text-white">{order?.plan}</h1>
+                          <span className="text-sm text-gray-400 ">{order?.status}</span>
+
+                        </div>
+                        <div className="w-full flex items-center justify-end">
+                          <span>تومان {order?.totalPrice.toLocaleString()}</span>
+                        </div>
+                        <div className="border-t-[0.7px] border-zinc-800 pt-3 flex items-center gap-3">
+                          <Avatar className="w-[50px] h-[50px] shadow-md">
+                            <AvatarFallback ><span className='text-lg'>{order?.user?.email?.charAt(0).toUpperCase()}</span></AvatarFallback>
+                          </Avatar>
+                          <div className="flex flex-col gap-1">
+                            <h1>{order?.user?.phoneNumber}</h1>
+                          </div>
+                        </div>
+                      </Card>
+                    </Link>
+                  ))}
+                  <Carousel className="w-full block md:hidden " dir='ltr'>
+                    <CarouselContent>
+                      {overData &&
+                        overData.latestOrders.map((order) => (
+                          <CarouselItem key={order._id}>
+                            <div className="p-1">
+                              <Card className='h-[420px] border-none '>
+                                <CardContent className="flex aspect-square items-center justify-center p-6 w-full h-full">
+                                  <Link href={`/dashboard/order/${order._id}`} className="lg:w-[50%] w-[300px] h-full ">
+                                    <Card className="flex flex-col gap-4 w-full h-full px-4 py-7 border  ">
+                                      <span className="flex items-center justify-center relative rotate-45 duration-300">
+                                        <div className="w-[142px] h-[142px] rounded-full flex items-center justify-center bg-[#1e1e1e] rotate-[-45deg] absolute top- z-50">
+                                          <span className="text-white text-2xl">40%</span>
+                                        </div>
+                                        <Progress className='w-[160px] h-[160px] rounded-full flex items-center justify-center z-10 ' value={40} />
+                                      </span>
+                                      <div className="w-full flex items-center justify-between">
+                                        <span className="text-sm text-gray-400">{order?.status}</span>
+                                        <h1 className="text-xl font-semibold text-white">{order?.plan}</h1>
+                                      </div>
+                                      <div className="w-full flex items-center justify-start">
+                                        <span>تومان {order?.totalPrice.toLocaleString()}</span>
+                                      </div>
+                                      <div className="border-t-[0.7px] border-zinc-800 pt-3 flex items-center justify-end gap-3">
+                                        <Avatar className="w-[50px] h-[50px] shadow-md">
+                                          <AvatarFallback ><span className='text-lg'>{order?.user?.email?.charAt(0).toUpperCase()}</span></AvatarFallback>
+                                        </Avatar>
+                                        <div className="flex flex-col gap-1">
+                                          <h1>{order?.user?.phoneNumber}</h1>
+                                        </div>
+                                      </div>
+                                    </Card>
+                                  </Link>
+                                </CardContent>
+                              </Card>
+                            </div>
+                          </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                  </Carousel>
                 </div>
               </Card>
               {/* end left  */}

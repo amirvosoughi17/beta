@@ -24,7 +24,7 @@ const Tickets = () => {
     return (
         <div>
             <DashboardLayout>
-                <div className='p-2 sm:p-8 w-full  bg-[#0A0A0A]'>
+                <div className='p-2 sm:p-8 w-full  bg-[#0A0A0A] md:mt-0 mt-[70px]' >
                     <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[220px]">
                         <div className="pb-5 mb-5 border-b-[0.5px] border-zinc-600/50">
                             <h1 className='text-2xl text-zinc-200 '>

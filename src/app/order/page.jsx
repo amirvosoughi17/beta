@@ -25,6 +25,7 @@ const Order = () => {
 
     fetchPlansData();
   }, []);
+
   const renderPlans = () => {
     return plans.map((plan) => (
       <Link key={plan._id} href={`/features/${plan._id}`}>
@@ -49,9 +50,20 @@ const Order = () => {
           {plans ? (
             <div>
               <h2>choose your plan </h2>
-
-              <div className='flex flex-wrap gap-7'>{renderPlans()}</div>
-
+              <div className='flex flex-wrap gap-7'>
+                {plans && plans.map((plan) => (
+                  <Link key={plan._id} href={`/features/${plan._id}`}>
+                  <div className='w-[200px] h-[200px] rounded-xl bg-white my-5 px-5 py-7 flex flex-col justify-between '>
+                    <h1 className='font-bold text-slate-900 text-xl'>{plan.name}</h1>
+                    <p>{plan.description}</p>
+                    <div className="flex items-center w-full justify-between ">
+                      <span>basePrice : </span>
+                      <span>${plan.basePrice}</span>
+                    </div>
+                  </div>
+                </Link>
+                ))}
+                </div>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center gap-10 w-[30%] mx-auto ">

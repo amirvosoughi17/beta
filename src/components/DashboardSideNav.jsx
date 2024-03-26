@@ -17,13 +17,21 @@ import { FiUser } from "react-icons/fi";
 import { IoIosHelpCircleOutline } from "react-icons/io";
 import { IoHomeOutline } from "react-icons/io5";
 import { RiAdminLine } from "react-icons/ri";
+import { AiOutlineMenu } from "react-icons/ai";
+import { RxDashboard } from "react-icons/rx";
 // shadcn 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut, } from "@/components/ui/command"
 import { Skeleton } from "@/components/ui/skeleton"
-
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 
 const DashboardSideNav = () => {
@@ -67,11 +75,86 @@ const DashboardSideNav = () => {
         }
     };
 
+
     return (
-        <div>
-            <div className="fixed w-[240px] right-0 top-0 bottom-0 h-[100%]  backdrop-blur-xl hidden lg:block border-l-[2px] border-[#2f3033]">
-                <div className="lg:py-[20px] xl:py-[25px] 2xl:py-[30px] px-5 flex flex-col justify-between h-full ">
-                    <div className="flex flex-col items- gap-[5px]  ">
+        <div className='flex items-center justify-center'>
+            <div className="fixed z-[100] rounded-full lg:rounded-none border-[0.4px] border-zinc-700 flex mx-auto lg:w-[240px] w-[95%] sm:w-[88%] h-[62px] sm:h-[70px] top-5 lg:right-0 lg:top-0 lg:bottom-0 lg:h-[100%]  backdrop-blur-2xl  lg:border-l-[2px] lg:border-[#2f3033]">
+                <div className="flex lg:hidden items-center justify-between w-full px-2">
+                    <Link href='/' className="p-2.5 bg-zinc-800 rounded-full">
+                        <Image
+                            src={sideLogo}
+                            alt='logo'
+                            width={50}
+                            height={50}
+                            className='w-[29px] h-[29px] sm:w-[33px] sm:h-[33px]  '
+                        />
+                    </Link>
+                    <DropdownMenu dir='rtl' >
+                        <DropdownMenuTrigger asChild>
+                            <div className="p-3.5 rounded-full bg-zinc-800 text-white cursor-pointer">
+                                <span className=''>
+                                    <AiOutlineMenu className='text-lg sm:text-xl' />
+                                </span>
+                            </div>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-45 mt-3 ml-4 flex flex-col gap-3 py-5 px-5">
+                            <Link href='/dashboard/userInfo' className="flex items-center gap-3" >
+                                <FiUser size={19} />
+                                <span className='text-[18px] font-semibold text-gray-200'>حساب کاربری</span>
+                            </Link>
+
+                            {userInfo && userInfo.role === "user" && (
+                                <>
+                                    <Link href='/' className="flex items-center gap-3" >
+                                        <FiShoppingBag size={19} />
+                                        <span className='text-[18px] font-semibold text-gray-200'>سفارشات</span>
+                                    </Link>
+                                    <Link href='/' className="flex items-center gap-3" >
+                                        <MdPayment size={19} />
+                                        <span className='text-[18px] font-semibold text-gray-200'>پرداخت</span>
+                                    </Link>
+                                    <Link href='/' className="flex items-center gap-3" >
+                                        <BiMessageDetail size={19} />
+                                        <span className='text-[18px] font-semibold text-gray-200'>پیام ها</span>
+                                    </Link>
+                                    <Link href='/dashboard/notifications' className="flex items-center gap-3" >
+                                        <MdPayment size={19} />
+                                        <span className='text-[18px] font-semibold text-gray-200'>اعلانات</span>
+                                    </Link>
+                                </>
+                            )}
+                            {userInfo && userInfo.role === "admin" && (
+                                <>
+                                    <Link href='/dashboard/admin/overview' className="flex items-center gap-3" >
+
+                                        <RxDashboard size={19} />
+                                        <span className='text-[18px] font-semibold text-gray-200'>دشبورد</span>
+                                    </Link>
+                                    <Link href='/dashboard/admin' className="flex items-center gap-3" >
+                                        <FiShoppingBag size={19} />
+                                        <span className='text-[18px] font-semibold text-gray-200'>سفارشات</span>
+                                    </Link>
+                                    <Link href='/dashboard/admin/users' className="flex items-center gap-3" >
+                                        <FaUsers size={19} />
+                                        <span className='text-[18px] font-semibold text-gray-200'>کاربران</span>
+                                    </Link>
+                                    <Link href='/dashboard/admin/tickets' className="flex items-center gap-3" >
+                                        <BiMessageDetail size={19} />
+                                        <span className='text-[18px] font-semibold text-gray-200'>پیام ها</span>
+                                    </Link>
+                                </>
+                            )}
+                            <DropdownMenuSeparator />
+                            <Link href='/' className="flex items-center gap-3" >
+                                <IoLogOutOutline size={19} />
+                                <span className='text-[18px] font-semibold text-gray-200'>خروج</span>
+                            </Link>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+
+                </div>
+                <div className="lg:py-[20px] xl:py-[25px] 2xl:py-[30px] px-5 hidden lg:flex flex-col justify-between h-full ">
+                    <div className=" flex-col items- gap-[5px] flex">
                         <div className="w-full flex items-center justify-between ">
                             <Image
                                 src={sideLogo}
@@ -152,7 +235,7 @@ const DashboardSideNav = () => {
                                         <div className=" p-[6px] shadow-md rounded-lg">
                                             <FiUser size={25} className='text-white' />
                                         </div>
-                                        <span className='text-[18px] hover:text-white duration-300 text-slate-300'>
+                                        <span className='text-[18px] font-semibold text-gray-200 hover:text-white duration-300'>
                                             حساب کاربری
                                         </span>
                                     </Link>
@@ -164,21 +247,21 @@ const DashboardSideNav = () => {
                                                 <div className=" p-[6px] shadow-md rounded-lg">
                                                     <FiShoppingBag size={25} className='text-gray-100' />
                                                 </div>
-                                                <span className='text-[18px] hover:text-white duration-300 text-slate-300'>سفارش ها</span>
+                                                <span className='text-[18px] font-semibold text-gray-200 hover:text-white duration-300'>سفارش ها</span>
                                             </Link>
                                             <Link href='/dashboard/ticket' className="flex items-center justify-between gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
                                                 <div className="flex items-center gap-4">
                                                     <div className=" p-[6px] shadow-md rounded-lg">
                                                         <BiMessageDetail size={25} className='text-gray-100' />
                                                     </div>
-                                                    <span className='text-[18px]  hover:text-white duration-300 text-slate-300'>پیام ها</span>
+                                                    <span className='text-[18px] font-semibold text-gray-200  hover:text-white duration-300 text-slate-300'>پیام ها</span>
                                                 </div>
                                             </Link>
                                             <Link href='/dashboard/notifications' className="flex  items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl  ">
                                                 <div className=" p-[6px] shadow-md rounded-lg">
                                                     <MdOutlineNotificationsActive size={25} className='text-gray-100' />
                                                 </div>
-                                                <span className='text-[18px] hover:text-white duration-300 text-slate-300'>اعلان ها</span>
+                                                <span className='text-[18px] font-semibold text-gray-200 hover:text-white duration-300'>اعلان ها</span>
                                             </Link>
                                         </>
                                     )}
@@ -186,7 +269,7 @@ const DashboardSideNav = () => {
                                         <div className=" p-[6px] shadow-md rounded-lg">
                                             <MdPayment size={25} className='text-gray-100' />
                                         </div>
-                                        <span className='text-[18px] hover:text-white duration-300 text-slate-300 '>پرداخت</span>
+                                        <span className='text-[18px] font-semibold text-gray-200 hover:text-white duration-300 '>پرداخت</span>
                                     </Link>
                                     {userInfo && userInfo.role === "admin" ? (
                                         <>
@@ -194,39 +277,43 @@ const DashboardSideNav = () => {
                                                 <div className=" p-[6px] shadow-md rounded-lg">
                                                     <RiAdminLine size={25} className='text-gray-100' />
                                                 </div>
-                                                <span className='text-[18px] hover:text-white duration-300 text-slate-300'>مدیریت</span>
+                                                <span className='text-[18px] font-semibold text-gray-200 hover:text-white duration-300'>مدیریت</span>
                                             </Link>
                                             <Link href='/dashboard/overview' className="flex items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
                                                 <div className=" p-[6px] shadow-md rounded-lg">
                                                     <FiShoppingBag size={25} className='text-gray-100' />
                                                 </div>
-                                                <span className='text-[18px] hover:text-white duration-300 text-slate-300'>سفارشات</span>
+                                                <span className='text-[18px] font-semibold text-gray-200 hover:text-white duration-300'>سفارشات</span>
                                             </Link>
                                             <Link href='/dashboard/admin/users' className="flex items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
                                                 <div className=" p-[6px] shadow-md rounded-lg">
                                                     <FaUsers size={25} className='text-gray-100' />
                                                 </div>
-                                                <span className='text-[18px] hover:text-white duration-300 text-slate-300'>کاربران</span>
+                                                <span className='text-[18px] font-semibold text-gray-200 hover:text-white duration-300'>کاربران</span>
                                             </Link>
                                             <Link href='/dashboard/admin/tickets' className="flex  items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl  ">
                                                 <div className=" p-[6px] shadow-md rounded-lg">
                                                     <BiMessageDetail size={25} className='text-gray-100' />
                                                 </div>
-                                                <span className='text-[18px] hover:text-white duration-300 text-slate-300'>پیام ها</span>
+                                                <span className='text-[18px] font-semibold text-gray-200 hover:text-white duration-300'>پیام ها</span>
                                             </Link>
                                         </>
 
                                     ) : <></>}
+                                    {userInfo && userInfo.role === "user" && (
+                                        <>
+                                            <div className=" w-full my-2">
+                                                <hr className='bg-zinc-600 h-[1px] w-[95%] mx-auto' />
+                                            </div>
+                                            <Link href='/dashboard/notifications' className="flex  items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl  ">
+                                                <div className=" p-[6px] shadow-md rounded-lg">
+                                                    <IoIosHelpCircleOutline size={25} className='text-gray-100' />
+                                                </div>
+                                                <span className='text-[18px] font-semibold text-gray-200 hover:text-white duration-300'>کمک</span>
+                                            </Link>
+                                        </>
+                                    )}
 
-                                    <div className=" w-full my-2">
-                                        <hr className='bg-zinc-600 h-[1px] w-[95%] mx-auto' />
-                                    </div>
-                                    <Link href='/dashboard/notifications' className="flex  items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl  ">
-                                        <div className=" p-[6px] shadow-md rounded-lg">
-                                            <IoIosHelpCircleOutline size={25} className='text-gray-100' />
-                                        </div>
-                                        <span className='text-[18px] hover:text-white duration-300 text-slate-300'>کمک</span>
-                                    </Link>
                                 </>
                             ) : <div>
                                 <>
@@ -255,7 +342,7 @@ const DashboardSideNav = () => {
                             }
                         </div>
                     </div>
-                    <div className="flex flex-col  gap-3 w-full border-t-[0.5px] border-zinc-600/50">
+                    <div className="flex-col hidden lg:flex  gap-3 w-full border-t-[0.5px] border-zinc-600/50">
                         <div className="flex  gap-[12px] mt-3 rounded-lg">
                             {userInfo ? (
                                 <>

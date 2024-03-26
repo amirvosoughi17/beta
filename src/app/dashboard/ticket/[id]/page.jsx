@@ -89,12 +89,12 @@ const TicketPage = () => {
 
     return (
         <DashboardLayout>
-            <div className='min-h-screen  w-full'>
+            <div className='min-h-screen  w-full md:mt-0 mt-[70px]'>
                 <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[210px] md:py-10 md:px-10">
                     <div className="w-full lg:w-[95%] xl:w-[90%]  mx-auto rounded-xl min-h-[700px] py-10 px-6 sm:px-8 md:px-10 relative">
                         <div className="flex flex-col gap-4  ">
                             <div className="flex flex-col w-full gap-5 border-b-[1px] border-zinc-600/50 py-6 ">
-                                <div className="flex items-center justify-between w-full">
+                                <div className="flex items-start justify-between w-full">
                                     <div>
                                         <h1 className='sm:text-3xl text-xl text-gray-100'>{ticket.subject}</h1>
                                     </div>

@@ -26,7 +26,7 @@ const Users = () => {
 
   return (
     <DashboardLayout>
-      <div className="w-full lg:w-[80%] xl:w-[85%] lg:mr-[240px]">
+      <div className="w-full lg:w-[80%] xl:w-[85%] lg:mr-[240px] md:mt-0 mt-[70px]">
         <div className="w-full min-h-screen overflow-y-auto shadow-md rounded-xl py-7 px-5 lg:px-4 xl:px-8">
         <div className="flex flex-col gap-0 w-full lg:w-[85%] ">
                             <div className="w-full flex items-center justify-between bg-[#1b1b1b]  my-3 py-4 px-4">

@@ -139,7 +139,7 @@ const Admin = () => {
   return (
     <DashboardLayout>
       <div className='p-2 sm:p-8 w-full'>
-        <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[220px]">
+        <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[220px] md:mt-0 mt-[70px]">
           <div className="w-full min-h-screen  overflow-y-auto  shadow-md rounded-xl py-7 px-5 lg:px-4 xl:px-8">
             <h2 className="text-2xl font-bold text-white mb-6 pb-5 border-b-[1px] border-slate-800/60">سفارشات</h2>
             {orders.length > 0 ? (
@@ -170,8 +170,8 @@ const Admin = () => {
                       </div>
                       <div className="flex w-full items-center justify-between border-t-[0.6px] border-zinc-700/60 pt-3 px-2">
                         <div className="flex gap-1 flex-col">
-                          <h1 className='text-zinc-200 text-md'>{order.user.username}</h1>
-                          <h2 className='text-zinc-400 text-sm'>{order.user.phoneNumber}</h2>
+                          <h1 className='text-zinc-200 text-md'>{order?.user?.username}</h1>
+                          <h2 className='text-zinc-400 text-sm'>{order?.user?.phoneNumber}</h2>
                         </div>
                         <div className="">
                           {order.totalPrice.toLocaleString()} تومان
