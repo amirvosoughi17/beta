@@ -23,5 +23,23 @@ const discountCodeSchema = new mongoose.Schema({
         default: 0,
     }
 })
+
+discountCodeSchema.pre("validate", async function () {
+    const now = new Date();
+    if (now >= this.expiredAt && now <= this.endDate) {
+        return true;
+    } else {
+        const expiredDiscountCodeNotification = await sendNotification(
+            "کد تخفیف شما سوخت",
+            `کد تخفیف ${this.discountPercentage} درصدی شما دیگر سوخت و اعتباری ندارد`
+        )
+        this.remove();
+        for (const userId of this.applicableUsers) {
+            const user = await User.findById(userId.user);
+            user.notifications.push(expiredDiscountCodeNotification._id);
+            await user.save();
+        }
+        return false;}
+});
 const DiscountCode = mongoose.models.DiscountCode || mongoose.model("DiscountCode", discountCodeSchema);
 export default DiscountCode;
