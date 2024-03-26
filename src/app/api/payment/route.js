@@ -98,6 +98,7 @@ export async function POST(request) {
         user.notifications.push(paymentNotification._id);
 
         newPayment = await Payment.create({ order: orderId, user, installment, amount });
+        newPayment.status = "completed"
         user.payments.push(newPayment._id);
         const admins = await User.find({ role: "admin" });
 
@@ -111,6 +112,7 @@ export async function POST(request) {
         });
 
         await Promise.all([
+            newPayment.save(),
             findOrder.save(),
             user.save(),
             ...adminNotifications

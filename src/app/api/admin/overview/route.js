@@ -17,8 +17,10 @@ export async function GET() {
                 path: "user",
                 select: "_id username email phoneNumber"
             });
-        const latestUsers = await User.find().sort({ createdAt: -1 }).limit(3);
-        const allUsersCount = await User.find().countDocuments();
+        const allOrders = await Order.find().countDocuments();;
+        const AllUsers = await User.find().countDocuments();
+        const AllTickets = await Ticket.find().countDocuments();
+
         const latestPayments = await Payment
             .find()
             .sort({ createdAt: -1 })
@@ -27,25 +29,30 @@ export async function GET() {
                 path: "user",
                 select: "_id username email phoneNumber"
             });
-        const latestTickets = await Ticket
-            .find()
-            .sort({ createdAt: -1 })
-            .limit(3).populate({
-                path: "createdBy",
-                select: "_id username email phoneNumber"
-            });
+        const allPayments = await Payment.find().countDocuments();
+
         const popularPlans = await Order.aggregate([
             { $group: { _id: "$plan", totalOrders: { $sum: 1 } } },
             { $sort: { totalOrders: -1 } },
             { $limit: 5 }
         ]);
+        const totalIncomes = await Payment
+            .find({ status: "completed" })
+            .select("amount");
+
+        let totalAmount = 0;
+        for (const income of totalIncomes) {
+            totalAmount += income.amount;
+        }
         return NextResponse.json({
+            totalAmount,
             latestOrders,
-            latestUsers,
+            allOrders,
+            AllUsers,
+            AllTickets,
             latestPayments,
-            latestTickets,
+            allPayments,
             popularPlans,
-            allUsersCount
         }, { status: 200 })
     } catch (error) {
         return NextResponse.json({
