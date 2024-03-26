@@ -11,6 +11,7 @@ export async function GET() {
     try {
         const latestOrders = await Order.find().sort({ createdAt: -1 }).limit(3);
         const latestUsers = await User.find().sort({ createdAt: -1 }).limit(3);
+        const allUsers = await User.find();
         const latestPayments = await Payment.find().sort({ createdAt: -1 }).limit(3);
         const latestTickets = await Ticket.find().sort({ createdAt: -1 }).limit(3);
 
@@ -24,7 +25,9 @@ export async function GET() {
             latestUsers,
             latestPayments,
             latestTickets,
-            popularPlans
+            popularPlans,
+            allUsers,
+            usersCount: allUsers.length
         }, { status: 200 })
     } catch (error) {
         return NextResponse.json({
