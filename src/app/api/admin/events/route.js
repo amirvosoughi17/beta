@@ -2,6 +2,7 @@ import { connect } from "@/config/DB";
 import Event from "@/models/Event";
 import Plan from "@/models/Plan";
 import { User } from "@/models/User";
+import DiscountCode from "@/models/discountCode";
 import { generateDiscountCode } from "@/utils/generateDiscount";
 import { sendNotification } from "@/utils/sendNotification";
 import { NextResponse } from "next/server";
@@ -21,20 +22,28 @@ export async function POST(request) {
             discountPercentage
         } = data;
 
-        if (applicableUsers && applicableUsers.isAllUsers === true) {
-            const allUsers = await User.find({ role: "user" }).select("_id notifications");
-            applicableUsers = allUsers.map(user => ({
-                user: user._id,
-                userDiscountCode: generateDiscountCode()
-            }));
+        if (applicableUsers && Array.isArray(applicableUsers) && applicableUsers.some(user => user.isAllUsers === true)) {
+            const allUsers = await User.find({ role: "user" }).select("_id notifications discountCodes");
+            for (const user of allUsers) {
+                const discountCode = await generateDiscountCode(user._id, endDate, discountPercentage);
+                const findUser = await User.findById(user._id);
+                findUser.discountCodes.push(discountCode._id);
+                await findUser.save()
+            }
         }
+
         if (applicablePlans && applicablePlans.isAllPlans === true) {
             const allPlans = await Plan.find().select("_id");
-            applicablePlans = allPlans.map(plan => plan._id);
+            for (const plan of allPlans) {
+                applicablePlans = plan._id
+            }
         }
 
         for (const user of applicableUsers) {
-            user.userDiscountCode = generateDiscountCode();
+            const discountCode = await generateDiscountCode(user.user, endDate, discountPercentage);
+            const findUser = await User.findById(user.user);
+            findUser.discountCodes.push(discountCode._id);
+            await findUser.save()
         }
 
         const newEvent = await Event.create({
@@ -48,45 +57,38 @@ export async function POST(request) {
         });
         for (const userId of newEvent.applicableUsers) {
             const user = await User.findById(userId.user);
-            if (user.discountCode === null) {
-                user.discountCode = userId.userDiscountCode
-            } else {
-                return NextResponse.json({ message: ` درحال حاضر کد تخفیف دارد${user.username}` }, { status: 400 })
-            }
-
-
-            const currentDate = new Date();
-            if (newEvent.endDate <= currentDate) {
-                const eventEndedNotification = await sendNotification(
-                    "اتمام جشنواره",
-                    `جشنواره ${newEvent.name} به اتمام رسید`
-                )
-                user.notifications.push(eventEndedNotification._id)
-            }
-
-
-
-
             if (user) {
-                const newEventNotification = await sendNotification(`دعوت شدید ${newEvent.name} شما به جشنواره`, `Event: ${newEvent.description}, ${userId.userDiscountCode}`);
+                const findDiscountCode = await DiscountCode.findById(user.discountCodes)
+                const nowDate = new Intl.DateTimeFormat(
+                    'fa-IR', {
+                    year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'
+                }).format(newEvent.endDate);
+
+                const newEventNotification = await sendNotification(
+                    `دعوت شدید ${newEvent.name} شما به جشنواره`,
+                    `جشنواره: ${newEvent.description}
+                    درصد تخفیف: ${newEvent.discountPercentage}%
+                    کد تخفیف شما: ${findDiscountCode.code}
+                    مهلت استفاده: ${nowDate}`
+                );
+
                 user.notifications.push(newEventNotification._id)
                 await user.save();
             }
         }
-
         for (const planId of newEvent.applicablePlans) {
             const plan = await Plan.findById(planId.plan)
             plan.isInEvent = true;
-            const eventName = await Event.findById(plan.event).select("_id name")
+
             if (plan.event != null) {
                 return NextResponse.json({
-                    message: ` تعرفه ${plan.name} در حال حاضر در جشنواره ${eventName.name} حضور دارد`
+                    message: ` تعرفه ${plan.name} در حال حاضر در جشنواره حضور دارد`
                 }, { stauts: 400 })
+            } else {
+                plan.event = newEvent._id
+                await plan.save()
             }
-            plan.event = newEvent._id;
-            await plan.save();
         }
-
         return NextResponse.json({ newEvent }, { status: 201 })
     } catch (error) {
         return NextResponse.json({

@@ -46,10 +46,10 @@ const userSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Notification',
     }],
-    discountCode: {
-        type: String,
-        default: null  
-    },
+    discountCodes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "DiscountCode"
+    }],
     password: {
         type: String,
         required: true,

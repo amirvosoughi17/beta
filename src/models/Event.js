@@ -44,11 +44,6 @@ const eventSchema = new mongoose.Schema({
             user: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'
-            },
-            userDiscountCode: {
-                type: String,
-                unique: true,
-                sparse: true,
             }
         },
         {
