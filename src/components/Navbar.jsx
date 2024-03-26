@@ -76,7 +76,7 @@ const Navbar = () => {
 
 
     return (
-        <header className='w-full h-[75px] border-b-[0.9px] border-slate-800 fixed top-0 right-0 left-0 backdrop-blur-md bg-[#040711a1] px-4 md:px-8'>
+        <header className='w-full h-[75px] border-b-[0.9px] border-zinc-800 fixed top-0 right-0 left-0 backdrop-blur-md  px-4 md:px-8'>
             <div className="flex items-center justify-between w-full h-full">
                 <div className="flex items-center gap-[70px]">
                     <Image
@@ -88,8 +88,8 @@ const Navbar = () => {
                     />
                     <nav className=' hidden md:flex items-center'>
                         <NavigationMenu>
-                            <NavigationMenuList dir="rtl" className='flex items-center'>
-                                <NavigationMenuItem>
+                            <NavigationMenuList dir="rtl" className='flex items-center '>
+                                <NavigationMenuItem className='ml-5'>
                                     <Link href="/docs" legacyBehavior passHref>
                                         <NavigationMenuLink className="text-gray-300 hover:text-white duration-300 text-[14px] font-medium">
                                             صفحه اصلی
@@ -145,7 +145,7 @@ const Navbar = () => {
                                         </ul>
                                     </NavigationMenuContent>
                                 </NavigationMenuItem>
-                                <NavigationMenuItem>
+                                <NavigationMenuItem className='mr-10'>
                                     <Link href="/docs" legacyBehavior passHref>
                                         <NavigationMenuLink className="text-gray-300 hover:text-white duration-300 text-[14px] font-medium">
                                             ارتباط باما

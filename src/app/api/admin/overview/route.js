@@ -12,7 +12,7 @@ export async function GET() {
         const latestOrders = await Order
             .find()
             .sort({ createdAt: -1 })
-            .limit(3)
+            .limit(2)
             .populate({
                 path: "user",
                 select: "_id username email phoneNumber"
