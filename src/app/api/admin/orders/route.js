@@ -1,7 +1,6 @@
 import { connect } from "@/config/DB";
 import Order from "@/models/Order";
 import { User } from "@/models/User";
-import { generateDiscountCode } from "@/utils/generateDiscount";
 import { sendNotification } from "@/utils/sendNotification";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
@@ -63,21 +62,9 @@ export async function PUT(request) {
                         MESSAGES_CONTENT.ACCEPTED.title,
                         MESSAGES_CONTENT.ACCEPTED.message
                     );
-
-                    let generateDiscountCodeNotification = "";
-
-                    if (orderedUser.orders.length === 1) {
-                        const discountCode = generateDiscountCode();
-                        generateDiscountCodeNotification = await sendNotification(
-                            "کد تخفیف برای اولین سفارش",
-                            `این اولین سفارش شما از ویکسل بود ,کد تخفیف شما:${discountCode} ${user.username}`
-                        )
-                    }
                     orderedUser.notifications.push(
                         acceptedNotification._id,
-                        generateDiscountCodeNotification._id
                     )
-                    
                     await orderedUser.save();
                     break;
                 case "پذیرفته نشده":

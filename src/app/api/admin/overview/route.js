@@ -20,7 +20,14 @@ export async function GET() {
         const allOrders = await Order.find().countDocuments();;
         const AllUsers = await User.find().countDocuments();
         const AllTickets = await Ticket.find().countDocuments();
-
+        const latestTickets = await Ticket
+            .find()
+            .sort({ createdAt: -1 })
+            .limit(3)
+            .populate({
+                path: "createdBy",
+                select: "_id username email phoneNumber"
+            });
         const latestPayments = await Payment
             .find()
             .sort({ createdAt: -1 })
@@ -50,6 +57,7 @@ export async function GET() {
             allOrders,
             AllUsers,
             AllTickets,
+            latestTickets,
             latestPayments,
             allPayments,
             popularPlans,
