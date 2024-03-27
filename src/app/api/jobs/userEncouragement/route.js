@@ -4,6 +4,9 @@ import { generateDiscountCode } from '@/utils/generateDiscount';
 import { sendNotification } from '@/utils/sendNotification';
 import { NextResponse } from 'next/server';
 import cron from 'node-cron'
+import { connect } from "@/config/DB";
+connect();
+
 export async function GET() {
     try {
         cron.schedule('30 10 * * *', async () => {
