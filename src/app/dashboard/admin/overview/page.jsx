@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUserInfo } from "@/redux/user/userSlice";
 import { fetchUserData } from "@/utils/userActions";
+import Autoplay from "embla-carousel-autoplay";
 // react icons
 import { LuUsers } from "react-icons/lu";
 import { MdOutlineAttachMoney } from "react-icons/md";
@@ -16,10 +17,12 @@ import { MdOutlineCreditCard } from "react-icons/md";
 import { VscSymbolEvent } from "react-icons/vsc";
 import { VscTarget } from "react-icons/vsc";
 import { TbMessages } from "react-icons/tb";
+import { FaPhoneAlt } from "react-icons/fa";
 // shadcn
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+
 import {
   Popover,
   PopoverContent,
@@ -62,7 +65,7 @@ const Overview = () => {
   const [loadingPP, setLoadingPP] = useState(false);
   const [LoadinglatestOrders, setLoadingLatestOrders] = useState(false);
   const userInfo = useSelector(selectUserInfo);
-  const [date, setDate] = useState()
+  const [date, setDate] = useState();
   const [formData, setFormData] = useState({
     name: "",
     basePrice: "",
@@ -94,7 +97,9 @@ const Overview = () => {
       isAllUsers: false,
     },
   });
-
+  const plugin = React.useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: true })
+  );
   const handleFeatureChange = (e) => {
     setFeatureData({
       ...featureData,
@@ -271,24 +276,24 @@ const Overview = () => {
                   </div>
                   <div className="flex  gap-2">
                     <div className="flex  gap-1 ">
-                      <Button size='icon' variant='outline'>
+                      <Button size="icon" variant="outline">
                         <VscSymbolEvent />
                       </Button>
-                      <Button size="icon" variant='outline'>
+                      <Button size="icon" variant="outline">
                         <VscTarget />
                       </Button>
-                      <Button size="icon" variant='outline'>
+                      <Button size="icon" variant="outline">
                         <TbMessages />
                       </Button>
                     </div>
-                    <Popover dir='ltr'>
+                    <Popover dir="ltr">
                       <PopoverTrigger asChild>
                         <Button
                           variant={"outline"}
-                          className={(
-                            "w-[240px] justify-start text-left font-normal",
-                            !date && "text-muted-foreground"
-                          )}
+                          className={
+                            ("w-[240px] justify-start text-left font-normal",
+                            !date && "text-muted-foreground")
+                          }
                         >
                           <CalendarIcon className="ml-2 h-4 w-4" />
                           {date ? (
@@ -311,102 +316,134 @@ const Overview = () => {
                 </div>
               </div>
             </div>
-            <div className="w-full items-start justify-between flex py-3">
-              <Card className="w-full lg:w-[55%] h-[300px] border-none">
+            <div className="w-full items-cetner justify-between flex gap-5 py-3">
+              <div className="flex flex-col items-end w-[40%] gap-1 ">
+                <div className="mb-[10px] w-full ">
+                  <Carousel
+                    plugins={[plugin.current]}
+                    className="w-full"
+                    dir="ltr"
+                    onMouseEnter={plugin.current.stop}
+                    onMouseLeave={plugin.current.reset}
+                  >
+                    <CarouselContent className="-ml-1">
+                      <CarouselItem
+                        className="pl-1 md:basis-1/1 lg:basis-1/1"
+                        dir="rtl"
+                      >
+                        <div className="p-1">
+                          <Card>
+                            <CardContent className="w-full h-[145px] px-5 py-5 flex flex-col gap-2">
+                              <div className="w-full flex items-center justify-between  ">
+                                <h1 className="text-lg text-slate-200 font-semibold h-8">
+                                  کل درامد
+                                </h1>
+                                <MdOutlineAttachMoney size={22} />
+                              </div>
+                              <div className="flex flex-col gap-[5px]">
+                                <h1 className="text-white text-[28px] font-bold">
+                                  {overData?.totalAmount.toLocaleString()} +
+                                </h1>
+                                <h1 className="text-gray-400 text-[13px]">
+                                  {" "}
+                                  +%36نسبت به ماه قبل
+                                </h1>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      </CarouselItem>
+                      <CarouselItem
+                        className="pl-1 md:basis-1/1 lg:basis-1/1"
+                        dir="rtl"
+                      >
+                        <div className="p-1">
+                          <Card>
+                            <CardContent className="w-full h-[145px] px-5 py-5 flex flex-col gap-2">
+                              <div className="w-full flex items-center justify-between  ">
+                                <h1 className="text-lg text-slate-200 font-semibold">
+                                  سفارشات
+                                </h1>
+                                <MdOutlineAttachMoney size={22} />
+                              </div>
+                              <div className="flex flex-col gap-[5px]">
+                                <h1 className="text-white text-[28px] font-bold h-10">
+                                  {overData?.allOrders} +
+                                </h1>
+                                <h1 className="text-gray-400 text-[13px]">
+                                  {" "}
+                                  +%36نسبت به ماه قبل
+                                </h1>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      </CarouselItem>
 
-              </Card>
-              <div className="mb-[30px] w-[40%] mt-[20px]">
-                <Carousel className="w-full max-w-sm" dir="ltr">
-                  <CarouselContent className="-ml-1">
-                    <CarouselItem
-                      className="pl-1 md:basis-1/1 lg:basis-1/1"
-                      dir="rtl"
+                      <CarouselItem
+                        className="pl-1 md:basis-1/1 lg:basis-1/1"
+                        dir="rtl"
+                      >
+                        <div className="p-1">
+                          <Card>
+                            <CardContent className="w-full h-[145px] px-5 py-5 flex flex-col gap-2">
+                              <div className="w-full flex items-center justify-between  ">
+                                <h1 className="text-lg text-slate-200 font-semibold">
+                                  کاربران
+                                </h1>
+                                <MdOutlineAttachMoney size={22} />
+                              </div>
+                              <div className="flex flex-col gap-[5px]">
+                                <h1 className="text-white text-[28px] font-bold h-10">
+                                  {overData?.AllUsers} +
+                                </h1>
+                                <h1 className="text-gray-400 text-[13px]">
+                                  مشاهده کاربران
+                                </h1>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      </CarouselItem>
+                    </CarouselContent>
+                  </Carousel>
+                </div>
+                <Card className="w-full flex flex-col gap-5 p-3 lg:h-[280px] overflow-y-auto">
+                  <h1 className="text-[16px] mb-3 mt-3 pr-3 text-white font-semibold">
+                    آخرین پرداخت ها
+                  </h1>
+                  {overData?.latestPayments.map((lastpyment) => (
+                    <div
+                      key={lastpyment._id}
+                      className="flex w-full items-center justify-between px-2"
                     >
-                      <div className="p-1">
-                        <Card>
-                          <CardContent className="w-full h-[145px] px-5 py-5 flex flex-col gap-2">
-                            <div className="w-full flex items-center justify-between  ">
-                              <h1 className="text-lg text-slate-200 font-semibold">
-                                کل درامد
-                              </h1>
-                              <MdOutlineAttachMoney size={22} />
-                            </div>
-                            <div className="flex flex-col gap-[5px]">
-                              <h1 className="text-white text-[28px] font-bold">
-                                $100,000,000
-                              </h1>
-                              <h1 className="text-gray-400 text-[13px]">
-                                {" "}
-                                +%36نسبت به ماه قبل
-                              </h1>
-                            </div>
-                          </CardContent>
-                        </Card>
+                      <div className="flex gap-3 items-center">
+                        <Avatar className="w-[45px] h-[45px] shadow-md">
+                          <AvatarFallback>
+                            <span className="text-lg">
+                              {lastpyment?.user?.username
+                                ?.charAt(0)
+                                .toUpperCase()}
+                            </span>
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-col gap-1">
+                          <h1 className="text-[15px] text-white font-medium">
+                            {lastpyment.user.username}
+                          </h1>
+                          <span className="text-xs text-zinc-400">
+                            {lastpyment.user.phoneNumber}
+                          </span>
+                        </div>
                       </div>
-                    </CarouselItem>
-
-                    <CarouselItem
-                      className="pl-1 md:basis-1/1 lg:basis-1/1"
-                      dir="rtl"
-                    >
-                      <div className="p-1">
-                        <Card>
-                          <CardContent className="w-full h-[145px] px-5 py-5 flex flex-col gap-2">
-                            <div className="w-full flex items-center justify-between  ">
-                              <h1 className="text-lg text-slate-200 font-semibold">
-                                کاربران
-                              </h1>
-                              <MdOutlineAttachMoney size={22} />
-                            </div>
-                            <div className="flex flex-col gap-[5px]">
-                              <h1 className="text-white text-[28px] font-bold h-10">
-                                {overData?.allUsersCount} +
-                              </h1>
-                              <h1 className="text-gray-400 text-[13px]">
-                                مشاهده کاربران
-                              </h1>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </div>
-                    </CarouselItem>
-                    <CarouselItem
-                      className="pl-1 md:basis-1/1 lg:basis-1/1"
-                      dir="rtl"
-                    >
-                      <div className="p-1">
-                        <Card>
-                          <CardContent className="w-full h-[145px] px-5 py-5 flex flex-col gap-2">
-                            <div className="w-full flex items-center justify-between  ">
-                              <h1 className="text-lg text-slate-200 font-semibold">
-                                کل درامد
-                              </h1>
-                              <MdOutlineAttachMoney size={22} />
-                            </div>
-                            <div className="flex flex-col gap-[5px]">
-                              <h1 className="text-white text-[28px] font-bold">
-                                $100,000,000
-                              </h1>
-                              <h1 className="text-gray-400 text-[13px]">
-                                {" "}
-                                +%36نسبت به ماه قبل
-                              </h1>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </div>
-                    </CarouselItem>
-
-                    {/* Add more CarouselItem components for additional items */}
-                  </CarouselContent>
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </Carousel>
+                      <span className="text-zinc-۲00 text-sm">
+                        تومان {lastpyment?.amount?.toLocaleString()}
+                      </span>
+                    </div>
+                  ))}
+                </Card>
               </div>
-            </div>
-            <div className="w-full flex flex-col lg:flex-row gap-4">
-              {/* right  */}
-              <div className="flex flex-col w-full lg:w-[40%]  gap-4">
+              <div className="flex flex-col w-full lg:w-[60%]  gap-4">
                 <Card className="w-full h-[400px] sm:h-[450px] flex flex-col gap-3 px-4 py-6">
                   <div className="flex  gap-[2px] items-start w-full justify-between">
                     <div className="flex flex-col gap-[2px]">
@@ -418,7 +455,7 @@ const Overview = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="flex justify-center rotate-[270deg] flex-col gap-[20px] sm:gap-[60px] w-full lg:gap-4 xl:gap-6 md:mt-[90px] sm:mt-[60px] mt-[80px] lg:mt-[60px] ">
+                  <div className="flex justify-center rotate-[270deg] flex-col gap-[20px] sm:gap-[60px] w-full lg:gap-4 xl:gap-8 md:mt-[90px] sm:mt-[60px] mt-[80px] lg:mt-[60px] xl:mt-[110px] ">
                     {loadingPP ? (
                       <div className="flex h-full w-full items-center justify-center">
                         <Loader2 className="h-7 w-7 animate-spin" />
@@ -431,14 +468,14 @@ const Overview = () => {
                           className="flex gap-[px] items-center justify-start"
                         >
                           <Progress
-                            className="xl:w-[67%] 2xl:w-[60%] lg:w-[80%] md:w-[40%] w-[60%] h-[45px] sm:w-[50%] lg:h-[40px] xl:h-[50px] sm:h-[50px] md:h-[65px] rounded-l-[0.1rem]  rounded-r-[0.1rem]"
+                            className="xl:w-[48%] 2xl:w-[60%] lg:w-[80%] md:w-[40%] w-[60%] h-[45px] sm:w-[50%] lg:h-[40px] xl:h-[55px] sm:h-[50px] md:h-[65px] rounded-l-[0.1rem]  rounded-r-[0.4rem]"
                             value={
                               (plan.totalOrders / popularPlans[0].totalOrders) *
                               100
                             }
                           />
                           <div className="xl:w-[50px] lg:w-[40px] md:w-[60px] w-[45px] sm:w-[50px] rotate-90">
-                            <span className="text-[12px] text-gray-300 font-medium">
+                            <span className="text-[11.5px] text-gray-300 font-medium">
                               {plan._id}
                             </span>
                           </div>
@@ -448,97 +485,189 @@ const Overview = () => {
                   </div>
                 </Card>
               </div>
-              {/* end right  */}
-              {/* left  */}
-              <Card className="lg:w-[60%] w-full h-[520px] lg:h-[450px] border-none">
-                <div className="flex items-center gap-3 w-full ">
-                  {LoadinglatestOrders ? (
+            </div>
+            <div className="w-full flex justify-between gap-5">
+              <Card className="w-full lg:w-[60%] h-[350px] overflow-y-auto flex flex-col gap-3 p-5">
+                <h1 className="text-lg font-semibold text-white mb-2">
+                  سفارشات اخیر
+                </h1>
+                <div className="w-full flex items-center justify-between border-b-[0.4px] hover:bg-[#262626] bg-zinc-900 duration-300 border-zinc-800 py-3 px-4 rounded-md">
+                  <div className="flex items-cetner gap-[90px]">
+                    <span className="text-[14px] text-zinc-200">کاربر</span>
+                    <span className="text-[14px] text-zinc-200">نوع سایت</span>
+                    <span className="text-[14px] text-zinc-200">قیمت</span>
+                  </div>
+                  <span className="text-[14px] text-zinc-200">وضعیت</span>
+                </div>
+                <div className="flex flex-col gap-3">
+                  {overData ? (
+                    overData?.latestOrders.map((order) => (
+                      <Link
+                        href={`/dashbaord/feature/${order._id}`}
+                        key={order._id}
+                        className="flex justify-between items-center gap-3 border-b-[0.5px] border-zinc-800 py-3 px-3"
+                      >
+                        <div className="flex items-center gap-[50px]">
+                          <div className=" flex items-center gap-3">
+                            <div className="flex flex-col gap-1">
+                              <span className="text-md text-zinc-100 font-medium">
+                                {order?.user?.username}
+                              </span>
+                              <span className="text-sm text-zinc-400 font-light">
+                                {order?.user?.phoneNumber}
+                              </span>
+                            </div>
+                          </div>
+                          <h1 className="text-[16px] text-zinc-200 font-medium">
+                            {order.plan}
+                          </h1>
+                          <div className="">
+                            <span className="text-md text-zinc-300 ">
+                              تومان {order?.totalPrice.toLocaleString()}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="">
+                          <span className="flex items-center justify-center  rotate-45 duration-300">
+                            <div className="w-[48px] h-[48px]  rounded-full flex items-center justify-center bg-[#1e1e1e] rotate-[-45deg] absolute top- z-50">
+                              <span className="text-white text-[15px]">
+                                {`${Math.round(order.orderProgress)}%`}
+                              </span>
+                            </div>
+                            <Progress
+                              className="w-[60px] h-[60px]  rounded-full flex items-center justify-center z-10 "
+                              value={order.orderProgress}
+                            />
+                          </span>
+                        </div>
+                      </Link>
+                    ))
+                  ) : (
                     <>
-                      <div className="w-full flex items-center gap-3">
-                        <Skeleton className="w-[50%] h-[450px]" />
-                        <Skeleton className="w-[50%] h-[450px]" />
+                      <div className="flex w-full h-full mx-auto items-center justify-center">
+                        <Loader2 className="h-7 w-7 animate-spin" />
                       </div>
                     </>
-                  ) : (
-                    <div className="flex flex-col sm:flex-row w-full gap-3 r ">
-                      {overData &&
-                        overData.latestOrders.map((order) => (
-                          <Link
-                            href={`/dashboard/order/${order._id}`}
-                            key={order._id}
-                            className="sm:w-[50%] w-full h-[450px] "
-                          >
-                            <Card className="flex flex-col gap-4 w-full h-full justify-between px-4 py-5 ">
-                              <span className="flex items-center justify-center relative rotate-45 duration-300">
-                                <div className="w-[142px] h-[142px] rounded-full flex items-center justify-center bg-[#1e1e1e] rotate-[-45deg] absolute top- z-50">
-                                  <span className="text-white text-2xl">
-                                    {`${Math.round(order.orderProgress)}%`}
-                                  </span>
-                                </div>
-                                <Progress
-                                  className="w-[160px] h-[160px] rounded-full flex items-center justify-center z-10 "
-                                  value={order.orderProgress}
-                                />
-                              </span>
-                              <div className="w-full flex items-center justify-between  ">
-                                <h1 className="text-xl font-semibold text-white">
-                                  {order?.plan}
-                                </h1>
-                                <span className="text-sm text-gray-400 ">
-                                  {order?.status}
-                                </span>
-                              </div>
-                              <div className="w-full flex items-center justify-end">
-                                <span>
-                                  تومان {order?.totalPrice.toLocaleString()}
-                                </span>
-                              </div>
-                              <div className="border-t-[0.7px] border-zinc-800 pt-3 flex items-center gap-3">
-                                <Avatar className="w-[50px] h-[50px] shadow-md">
-                                  <AvatarFallback>
-                                    <span className="text-lg">
-                                      {order?.user?.email
-                                        ?.charAt(0)
-                                        .toUpperCase()}
-                                    </span>
-                                  </AvatarFallback>
-                                </Avatar>
-                                <div className="flex flex-col gap-1">
-                                  <h1>{order?.user?.phoneNumber}</h1>
-                                </div>
-                              </div>
-                            </Card>
-                          </Link>
-                        ))}
-                    </div>
                   )}
                 </div>
               </Card>
-              {/* end left  */}
-            </div>
-            {/* <Carousel
-      opts={{
-        align: "start",
-      }}
-      orientation="vertical"
-      className="w-full max-w-xs"
-    >
-      <CarouselContent className="-mt-1 h-[200px]">
-        {Array.from({ length: 5 }).map((_, index) => (
-          <CarouselItem key={index} className="pt-1 md:basis-1/2">
-            <div className="p-1">
-              <Card>
-                <CardContent className="flex items-center justify-center p-6">
-                  <span className="text-3xl font-semibold">{index + 1}</span>
-                </CardContent>
+              <Card className="w-full lg:w-[40%] h-[350px] overflow-y-auto flex flex-col gap-3 p-5">
+                <h1 className="text-lg font-medium text-white mb-4">
+                  ویکسل تیم
+                </h1>
+                <div className="flex flex-col gap-5">
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Avatar className="w-[45px] h-[45px] shadow-md">
+                        <AvatarFallback>
+                          <span className="text-lg">
+                            {/* {lastpyment?.user?.username
+                                ?.charAt(0)
+                                .toUpperCase()} */}{" "}
+                            A
+                          </span>
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col gap-1">
+                        <span className="text-[14px] text-zinc-200 font-medium">
+                          Amir vosoughi
+                        </span>
+                        <span className="text-xs text-zinc-400 font-light">
+                          09024927209
+                        </span>
+                      </div>
+                    </div>
+                    <Select>
+                      <SelectTrigger className="w-[110px]">
+                        <SelectValue placeholder="Owner" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="apple">Admin</SelectItem>
+                          <SelectItem value="banana">user</SelectItem>
+                          <SelectItem value="blueberry">Developer</SelectItem>
+                          <SelectItem value="grapes">Owner</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Avatar className="w-[45px] h-[45px] shadow-md">
+                        <AvatarFallback>
+                          <span className="text-lg">
+                            {/* {lastpyment?.user?.username
+                                ?.charAt(0)
+                                .toUpperCase()} */}{" "}
+                            A
+                          </span>
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col gap-1">
+                        <span className="text-[14px] text-zinc-200 font-medium">
+                          Amir vosoughi
+                        </span>
+                        <span className="text-xs text-zinc-400 font-light">
+                          09024927209
+                        </span>
+                      </div>
+                    </div>
+                    <Select>
+                      <SelectTrigger className="w-[110px]">
+                        <SelectValue placeholder="Owner" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="apple">Admin</SelectItem>
+                          <SelectItem value="banana">user</SelectItem>
+                          <SelectItem value="blueberry">Developer</SelectItem>
+                          <SelectItem value="grapes">Owner</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Avatar className="w-[45px] h-[45px] shadow-md">
+                        <AvatarFallback>
+                          <span className="text-lg">
+                            {/* {lastpyment?.user?.username
+                                ?.charAt(0)
+                                .toUpperCase()} */}{" "}
+                            A
+                          </span>
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col gap-1">
+                        <span className="text-[14px] text-zinc-200 font-medium">
+                          Amir vosoughi
+                        </span>
+                        <span className="text-xs text-zinc-400 font-light">
+                          09024927209
+                        </span>
+                      </div>
+                    </div>
+                    <Select>
+                      <SelectTrigger className="w-[110px]">
+                        <SelectValue placeholder="Owner" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="apple">Admin</SelectItem>
+                          <SelectItem value="banana">user</SelectItem>
+                          <SelectItem value="blueberry">Developer</SelectItem>
+                          <SelectItem value="grapes">Owner</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                </div>
               </Card>
             </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel> */}
           </div>
         </div>
       </div>
