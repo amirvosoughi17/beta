@@ -55,24 +55,5 @@ const eventSchema = new mongoose.Schema({
     ],
 }, { timestamps: true });
 
-eventSchema.virtual('isActive').get(async function () {
-    const now = new Date();
-    if (now >= this.startDate && now <= this.endDate) {
-        return true;
-    } else {
-        const expiredEventNotification = await sendNotification(
-            "اتمام زمان جشنواره",
-            `جشنواره ${this.name} به اتمام رسید`
-        )
-        this.remove();
-        for (const userId of this.applicableUsers) {
-            const user = await User.findById(userId.user);
-            user.notifications.push(expiredEventNotification._id);
-            await user.save();
-        }
-        return false;
-    }
-});
-
 const Event = mongoose.models.Event || mongoose.model("Event", eventSchema)
 export default Event;
