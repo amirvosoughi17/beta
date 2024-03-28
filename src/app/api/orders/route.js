@@ -2,7 +2,6 @@ import { connect } from "@/config/DB";
 import Order from "@/models/Order";
 import Plan from "@/models/Plan";
 import { User } from "@/models/User";
-import DiscountCode from "@/models/discountCode";
 import { sendNotification } from "@/utils/sendNotification";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
@@ -12,7 +11,9 @@ connect();
 export async function POST(request) {
   try {
     const data = await request.json();
-    let { planName, supportTime, selectedFeatures, discount } = data;
+    let { planName, supportTime, selectedFeatures } = data;
+
+    
     const user_id = await get_user_data_from_session(request);
     const user = await User.findOne({ _id: user_id });
 
@@ -36,41 +37,11 @@ export async function POST(request) {
       supportTime,
       selectedFeatures,
       totalFeature: selectedFeatures.length,
-      discount: {
-        code: discount
-      },
       statusDates: {
         pending: new Date(Date.now())
       },
       totalPrice: planBasePrice + selectedFeaturesTotalPrice + supportTotalPrice
     });
-
-    if (newOrder.discount) {
-      const code = await DiscountCode.findOne({ code: newOrder.discount.code });
-      if (!code) {
-        return NextResponse.json({
-          message: "کد تخفیف نا معتبر"
-        }, { status: 400 })
-      }
-      if (code && !code.isApplied) {
-        const discountedAmount = (newOrder.totalPrice * code.discountPercentage) / 100;
-
-        newOrder.totalPrice -= discountedAmount;
-        newOrder.discount.isApplied = true;
-        newOrder.discount.amount = discountedAmount;
-        code.isApplied = true;
-
-
-
-        await DiscountCode.deleteOne({ code: newOrder.discount.code });
-
-        if (user) {
-          user.discountCodes = user.discountCodes.filter(code => code !== newOrder.discount.code);
-          await user.save();
-        }
-      }
-    }
-
 
     if (!newOrder.installments.find(inst => inst.amount === newOrder.totalPrice * 0.4)) {
       const firstInstallmentAmount = newOrder.totalPrice * 0.4;

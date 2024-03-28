@@ -99,20 +99,6 @@ const orderSchema = new mongoose.Schema({
             default: false
         }
     },
-    discount: {
-        code: {
-            type: String,
-            default: null
-        },
-        amount: {
-            type: Number,
-            default: 0
-        },
-        isApplied: {
-            type: Boolean,
-            default: false
-        }
-    },
     totalPrice: {
         type: Number,
         default: 0,
