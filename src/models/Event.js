@@ -1,6 +1,4 @@
-import { sendNotification } from '@/utils/sendNotification';
-import mongoose from 'mongoose'
-import { User } from './User';
+import mongoose from 'mongoose';
 
 const eventSchema = new mongoose.Schema({
     name: {
@@ -31,12 +29,10 @@ const eventSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Plan',
             },
-        },
-        {
             isAllPlans: {
                 type: Boolean,
                 default: false
-            },
+            }
         }
     ],
     applicableUsers: [
@@ -44,9 +40,7 @@ const eventSchema = new mongoose.Schema({
             user: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'User'
-            }
-        },
-        {
+            },
             isAllUsers: {
                 type: Boolean,
                 default: false
@@ -55,5 +49,5 @@ const eventSchema = new mongoose.Schema({
     ],
 }, { timestamps: true });
 
-const Event = mongoose.models.Event || mongoose.model("Event", eventSchema)
+const Event = mongoose.models.Event || mongoose.model("Event", eventSchema);
 export default Event;
