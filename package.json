@@ -24,6 +24,7 @@
     "@radix-ui/react-progress": "^1.0.3",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tabs": "^1.0.4",
     "@reduxjs/toolkit": "^2.2.1",
     "@tanstack/react-table": "^8.13.2",
     "bcryptjs": "^2.4.3",
@@ -63,7 +64,16 @@
     "tailwindcss": "^3.3.0"
   },
   "main": "index.js",
-  "repository": "https://github.com/amirvosoughi17/beta.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amirvosoughi17/beta.git"
+  },
   "author": "amirvosoughi17 <amir11.vosoughi@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "bugs": {
+    "url": "https://github.com/amirvosoughi17/beta/issues"
+  },
+  "homepage": "https://github.com/amirvosoughi17/beta#readme",
+  "keywords": []
 }

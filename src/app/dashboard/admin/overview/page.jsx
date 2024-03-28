@@ -98,7 +98,7 @@ const Overview = () => {
     },
   });
   const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
+    Autoplay({ delay: 3000, stopOnInteraction: true })
   );
   const handleFeatureChange = (e) => {
     setFeatureData({
@@ -266,11 +266,12 @@ const Overview = () => {
       <div className="w-full lg:w-[80%] xl:w-[85%] lg:mr-[220px] lg:mt-0 mt-[70px]">
         <div className="w-full min-h-screen  overflow-y-auto  shadow-md rounded-xl py-7 px-1 lg:px-4 xl:px-8">
           <div className="w-full h-full flex flex-col px-4 sm:px-10 py-4">
+            {/*  head  */}
             <div className="flex w-full items-start  justify-between">
               <div className="w-full  pb-4 border-b-[0.4px] border-zinc-800 ">
-                <div className="flex w-full items-start justify-between">
+                <div className="flex w-full items-center md:items-start justify-between">
                   <div className="w-full flex flex-col gap-1">
-                    <h1 className="text-white text-3xl tracking-wide font-bold">
+                    <h1 className="text-white text-2xl md:text-3xl tracking-wide font-bold">
                       مدیریت
                     </h1>
                   </div>
@@ -286,38 +287,42 @@ const Overview = () => {
                         <TbMessages />
                       </Button>
                     </div>
-                    <Popover dir="ltr">
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"outline"}
-                          className={
-                            ("w-[240px] justify-start text-left font-normal",
-                            !date && "text-muted-foreground")
-                          }
-                        >
-                          <CalendarIcon className="ml-2 h-4 w-4" />
-                          {date ? (
-                            format(date, "PPP")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={date}
-                          onSelect={setDate}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
+                    <div className="hidden sm:block">
+                      <Popover dir="ltr" className="">
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant={"outline"}
+                            className={
+                              ("w-[240px] justify-start text-left font-normal",
+                              !date && "text-muted-foreground")
+                            }
+                          >
+                            <CalendarIcon className="ml-2 h-4 w-4" />
+                            {date ? (
+                              format(date, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={date}
+                            onSelect={setDate}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="w-full items-cetner justify-between flex gap-5 py-3">
-              <div className="flex flex-col items-end w-[40%] gap-1 ">
+            {/* end head  */}
+            <div className="w-full items-cetner justify-between flex-col lg:flex-row flex gap-5 py-3">
+              {/* totals  */}
+              <div className="flex flex-col items-end w-full lg:w-[40%] gap-1 ">
                 <div className="mb-[10px] w-full ">
                   <Carousel
                     plugins={[plugin.current]}
@@ -408,41 +413,87 @@ const Overview = () => {
                     </CarouselContent>
                   </Carousel>
                 </div>
+                {/* last payment  */}
                 <Card className="w-full flex flex-col gap-5 p-3 lg:h-[280px] overflow-y-auto">
                   <h1 className="text-[16px] mb-3 mt-3 pr-3 text-white font-semibold">
                     آخرین پرداخت ها
                   </h1>
-                  {overData?.latestPayments.map((lastpyment) => (
-                    <div
-                      key={lastpyment._id}
-                      className="flex w-full items-center justify-between px-2"
-                    >
-                      <div className="flex gap-3 items-center">
-                        <Avatar className="w-[45px] h-[45px] shadow-md">
-                          <AvatarFallback>
-                            <span className="text-lg">
-                              {lastpyment?.user?.username
-                                ?.charAt(0)
-                                .toUpperCase()}
+                  {overData ? (
+                    overData?.latestPayments.map((lastpyment) => (
+                      <div
+                        key={lastpyment._id}
+                        className="flex w-full items-center justify-between px-2"
+                      >
+                        <div className="flex gap-3 items-center">
+                          <Avatar className="w-[45px] h-[45px] shadow-md">
+                            <AvatarFallback>
+                              <span className="text-lg">
+                                {lastpyment?.user?.username
+                                  ?.charAt(0)
+                                  .toUpperCase()}
+                              </span>
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="flex flex-col gap-1">
+                            <h1 className="text-[15px] text-white font-medium">
+                              {lastpyment.user.username}
+                            </h1>
+                            <span className="text-xs text-zinc-400">
+                              {lastpyment.user.phoneNumber}
                             </span>
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex flex-col gap-1">
-                          <h1 className="text-[15px] text-white font-medium">
-                            {lastpyment.user.username}
-                          </h1>
-                          <span className="text-xs text-zinc-400">
-                            {lastpyment.user.phoneNumber}
-                          </span>
+                          </div>
+                        </div>
+                        <span className="text-zinc-۲00 text-sm">
+                          تومان {lastpyment?.amount?.toLocaleString()}
+                        </span>
+                      </div>
+                    ))
+                  ) : (
+                    <>
+                      <div className="flex flex-col gap-5">
+                        <div className="flex items-center justify-between">
+                          <div className="flex gap-3 items-center">
+                            <Skeleton className="w-[42px] h-[42px] rounded-full" />
+                            <div className="flex flex-col gap-1">
+                              <Skeleton className="w-[95px] h-[17px]" />
+                              <Skeleton className="w-[80px] h-[15px]" />
+                            </div>
+                          </div>
+                          <div className="">
+                            <Skeleton className="w-[130px] h-[28px]" />
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex gap-3 items-center">
+                            <Skeleton className="w-[42px] h-[42px] rounded-full" />
+                            <div className="flex flex-col gap-1">
+                              <Skeleton className="w-[95px] h-[17px]" />
+                              <Skeleton className="w-[80px] h-[15px]" />
+                            </div>
+                          </div>
+                          <div className="">
+                            <Skeleton className="w-[130px] h-[28px]" />
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex gap-3 items-center">
+                            <Skeleton className="w-[42px] h-[42px] rounded-full" />
+                            <div className="flex flex-col gap-1">
+                              <Skeleton className="w-[95px] h-[17px]" />
+                              <Skeleton className="w-[80px] h-[15px]" />
+                            </div>
+                          </div>
+                          <div className="">
+                            <Skeleton className="w-[130px] h-[28px]" />
+                          </div>
                         </div>
                       </div>
-                      <span className="text-zinc-۲00 text-sm">
-                        تومان {lastpyment?.amount?.toLocaleString()}
-                      </span>
-                    </div>
-                  ))}
+                    </>
+                  )}
                 </Card>
+                {/* end last payment  */}
               </div>
+              {/* pouplar */}
               <div className="flex flex-col w-full lg:w-[60%]  gap-4">
                 <Card className="w-full h-[400px] sm:h-[450px] flex flex-col gap-3 px-4 py-6">
                   <div className="flex  gap-[2px] items-start w-full justify-between">
@@ -485,17 +536,22 @@ const Overview = () => {
                   </div>
                 </Card>
               </div>
+              {/* end pouplar  */}
             </div>
-            <div className="w-full flex justify-between gap-5">
-              <Card className="w-full lg:w-[60%] h-[350px] overflow-y-auto flex flex-col gap-3 p-5">
+            <div className="w-full flex-col lg:flex-row flex justify-between gap-5">
+              <Card className="w-full overflow-x-auto lg:w-[60%] h-[350px] overflow-y-auto flex flex-col gap-3 p-5">
                 <h1 className="text-lg font-semibold text-white mb-2">
                   سفارشات اخیر
                 </h1>
                 <div className="w-full flex items-center justify-between border-b-[0.4px] hover:bg-[#262626] bg-zinc-900 duration-300 border-zinc-800 py-3 px-4 rounded-md">
                   <div className="flex items-cetner gap-[90px]">
                     <span className="text-[14px] text-zinc-200">کاربر</span>
-                    <span className="text-[14px] text-zinc-200">نوع سایت</span>
-                    <span className="text-[14px] text-zinc-200">قیمت</span>
+                    <span className="text-[14px] text-zinc-200 hidden sm:block">
+                      نوع سایت
+                    </span>
+                    <span className="text-[14px] text-zinc-200 hidden sm:block">
+                      قیمت
+                    </span>
                   </div>
                   <span className="text-[14px] text-zinc-200">وضعیت</span>
                 </div>
@@ -518,10 +574,10 @@ const Overview = () => {
                               </span>
                             </div>
                           </div>
-                          <h1 className="text-[16px] text-zinc-200 font-medium">
+                          <h1 className="text-[16px] text-zinc-200 font-medium hidden sm:block">
                             {order.plan}
                           </h1>
-                          <div className="">
+                          <div className="hidden sm:block">
                             <span className="text-md text-zinc-300 ">
                               تومان {order?.totalPrice.toLocaleString()}
                             </span>
@@ -544,130 +600,135 @@ const Overview = () => {
                     ))
                   ) : (
                     <>
-                      <div className="flex w-full h-full mx-auto items-center justify-center">
-                        <Loader2 className="h-7 w-7 animate-spin" />
+                      <div className="flex flex-col gap-5">
+                        <div className="flex  g w-full items-center justify-between px-4 pb-5 pt-4 border-b-[0.4px] border-zinc-800">
+                          <div className="flex items-center gap-5 ">
+                            <Skeleton className="w-[100px] h-[30px]" />
+                            <Skeleton className="w-[100px] h-[30px]" />
+                            <Skeleton className="w-[100px] h-[30px]" />
+                          </div>
+                          <div className="">
+                            <Skeleton className="w-[40px] h-[40px] rounded-full " />
+                          </div>
+                        </div>
+                        <div className="flex  g w-full items-center justify-between px-4 py-3">
+                          <div className="flex items-center gap-5 ">
+                            <Skeleton className="w-[100px] h-[30px]" />
+                            <Skeleton className="w-[100px] h-[30px]" />
+                            <Skeleton className="w-[100px] h-[30px]" />
+                          </div>
+                          <div className="">
+                            <Skeleton className="w-[40px] h-[40px] rounded-full " />
+                          </div>
+                        </div>
                       </div>
                     </>
                   )}
                 </div>
               </Card>
+              {/* tickets  */}
               <Card className="w-full lg:w-[40%] h-[350px] overflow-y-auto flex flex-col gap-3 p-5">
                 <h1 className="text-lg font-medium text-white mb-4">
-                  ویکسل تیم
+                  اخرین تیکت ها
                 </h1>
                 <div className="flex flex-col gap-5">
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Avatar className="w-[45px] h-[45px] shadow-md">
-                        <AvatarFallback>
-                          <span className="text-lg">
-                            {/* {lastpyment?.user?.username
-                                ?.charAt(0)
-                                .toUpperCase()} */}{" "}
-                            A
-                          </span>
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex flex-col gap-1">
-                        <span className="text-[14px] text-zinc-200 font-medium">
-                          Amir vosoughi
-                        </span>
-                        <span className="text-xs text-zinc-400 font-light">
-                          09024927209
-                        </span>
+                  {overData ? (
+                    overData.latestTickets.map((ticket) => (
+                      <Link
+                        key={ticket._id}
+                        href={`/dashboard/ticket/${ticket._id}`}
+                        className="  py-2 rounded-md  cursor-pointer"
+                      >
+                        <div className="items-center justify-between  gap-5 flex w-full">
+                          <div className="flex items-center w-full  gap-2 sm:gap-3">
+                            <Avatar className="w-[45px] h-[45px] shadow-md">
+                              <AvatarFallback>
+                                <span className="text-lg">
+                                  {ticket?.createdBy?.username
+                                    ?.charAt(0)
+                                    .toUpperCase()}
+                                </span>
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="flex flex-col gap-1">
+                              <span className="sm:text-[14px] text-[13px] text-zinc-200 font-medium">
+                                {ticket?.createdBy?.username}
+                              </span>
+                              <span className="text-xs text-zinc-400 font-light">
+                                {ticket?.createdBy?.phoneNumber}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="w-full flex items-end ">
+                            <span className="text-zinc-300 text-sm ">
+                              ...
+                              {ticket?.subject
+                                ? ticket.subject
+                                    .split(" ")
+                                    .slice(0, 3)
+                                    .join(" ")
+                                : ""}
+                            </span>
+                          </div>
+                        </div>
+                      </Link>
+                    ))
+                  ) : (
+                    <div className="flex flex-col gap-5">
+                      <div className="flex items-center justify-between w-full ">
+                        <div className="flex gap-3 items-center">
+                          <Skeleton className="w-[45px] h-[45px] rounded-full" />
+                          <div className="flex flex-col gap-1">
+                            <Skeleton className="sm:w-[110px] w-[90px] h-[17px]" />
+                            <Skeleton className="sm:w-[80px] w-[70px] h-[15px]" />
+                          </div>
+                        </div>
+                        <div className="">
+                          <Skeleton className="sm:w-[150px] w-[110px] h-[30px]" />
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between w-full ">
+                        <div className="flex gap-3 items-center">
+                          <Skeleton className="w-[45px] h-[45px] rounded-full" />
+                          <div className="flex flex-col gap-1">
+                            <Skeleton className="sm:w-[110px] w-[90px] h-[17px]" />
+                            <Skeleton className="sm:w-[80px] w-[70px] h-[15px]" />
+                          </div>
+                        </div>
+                        <div className="">
+                          <Skeleton className="sm:w-[150px] w-[110px] h-[30px]" />
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between w-full ">
+                        <div className="flex gap-3 items-center">
+                          <Skeleton className="w-[45px] h-[45px] rounded-full" />
+                          <div className="flex flex-col gap-1">
+                            <Skeleton className="sm:w-[110px] w-[90px] h-[17px]" />
+                            <Skeleton className="sm:w-[80px] w-[70px] h-[15px]" />
+                          </div>
+                        </div>
+                        <div className="">
+                          <Skeleton className="sm:w-[150px] w-[110px] h-[30px]" />
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between w-full ">
+                        <div className="flex gap-3 items-center">
+                          <Skeleton className="w-[45px] h-[45px] rounded-full" />
+                          <div className="flex flex-col gap-1">
+                            <Skeleton className="sm:w-[110px] w-[90px] h-[17px]" />
+                            <Skeleton className="sm:w-[80px] w-[70px] h-[15px]" />
+                          </div>
+                        </div>
+                        <div className="">
+                          <Skeleton className="sm:w-[150px] w-[110px] h-[30px]" />
+                        </div>
                       </div>
                     </div>
-                    <Select>
-                      <SelectTrigger className="w-[110px]">
-                        <SelectValue placeholder="Owner" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="apple">Admin</SelectItem>
-                          <SelectItem value="banana">user</SelectItem>
-                          <SelectItem value="blueberry">Developer</SelectItem>
-                          <SelectItem value="grapes">Owner</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Avatar className="w-[45px] h-[45px] shadow-md">
-                        <AvatarFallback>
-                          <span className="text-lg">
-                            {/* {lastpyment?.user?.username
-                                ?.charAt(0)
-                                .toUpperCase()} */}{" "}
-                            A
-                          </span>
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex flex-col gap-1">
-                        <span className="text-[14px] text-zinc-200 font-medium">
-                          Amir vosoughi
-                        </span>
-                        <span className="text-xs text-zinc-400 font-light">
-                          09024927209
-                        </span>
-                      </div>
-                    </div>
-                    <Select>
-                      <SelectTrigger className="w-[110px]">
-                        <SelectValue placeholder="Owner" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="apple">Admin</SelectItem>
-                          <SelectItem value="banana">user</SelectItem>
-                          <SelectItem value="blueberry">Developer</SelectItem>
-                          <SelectItem value="grapes">Owner</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Avatar className="w-[45px] h-[45px] shadow-md">
-                        <AvatarFallback>
-                          <span className="text-lg">
-                            {/* {lastpyment?.user?.username
-                                ?.charAt(0)
-                                .toUpperCase()} */}{" "}
-                            A
-                          </span>
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex flex-col gap-1">
-                        <span className="text-[14px] text-zinc-200 font-medium">
-                          Amir vosoughi
-                        </span>
-                        <span className="text-xs text-zinc-400 font-light">
-                          09024927209
-                        </span>
-                      </div>
-                    </div>
-                    <Select>
-                      <SelectTrigger className="w-[110px]">
-                        <SelectValue placeholder="Owner" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="apple">Admin</SelectItem>
-                          <SelectItem value="banana">user</SelectItem>
-                          <SelectItem value="blueberry">Developer</SelectItem>
-                          <SelectItem value="grapes">Owner</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
+                  )}
                 </div>
               </Card>
             </div>
+            {/* tickets  */}
           </div>
         </div>
       </div>
