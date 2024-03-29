@@ -13,8 +13,8 @@ const paymentSchema = new mongoose.Schema({
     },
     installments: {
         type: String,
-        enum: ["firstInstallment", "secondInstallment", "fullPayment"],
-        default: "firstInstallment"
+        enum: ["قسط اول", "قسط دوم", "کل مبلغ"],
+        default: "قسط اول"
     },
     discount: {
         code: {
@@ -33,8 +33,8 @@ const paymentSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['pending', 'completed', 'failed'],
-        default: 'pending'
+        enum: ['در انتظار', 'موفق', 'ناموفق'],
+        default: 'در انتظار'
     },
 }, { timestamps: true })
 

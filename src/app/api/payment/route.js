@@ -69,16 +69,16 @@ export async function POST(request) {
                 paymentMessage = MESSAGE_CONTENT.FULL_PAYMENT_MESSAGE;
                 break;
 
-            case "firstInstallment":
-            case "secondInstallment":
-                const index = installment === "firstInstallment" ? 0 : 1;
+            case "قسط اول":
+            case "قسط دوم":
+                const index = installment === "قسط اول" ? 0 : 1;
                 if (findOrder.installments[index].paid) {
                     return NextResponse.json({
                         success: false,
                         message: "هزینه قسط وارد شده قبلا پرداخت شده بود"
                     }, { status: 400 })
                 }
-                if (installment === "secondInstallment" && findOrder.installments[0].paid === false) {
+                if (installment === "قسط دوم" && findOrder.installments[0].paid === false) {
                     return NextResponse.json({
                         success: false,
                         message: "نخست هزینه قسط اول را پرداخت کنید"
@@ -108,7 +108,11 @@ export async function POST(request) {
                 findOrder.installments[index].paidAt = Date.now();
                 findOrder.paymentStatus.paidInsallments += 1;
                 findOrder.paymentStatus.totalPaidPrice += amount;
-                paymentMessage = installment === "firstInstallment" ? MESSAGE_CONTENT.FIRST_INSTALLMENT_PAID_MESSAGE : MESSAGE_CONTENT.SECOND_INSTALLMENT_PAID_MESSAGE;
+
+                paymentMessage = installment === "قسط اول"
+                    ? MESSAGE_CONTENT.FIRST_INSTALLMENT_PAID_MESSAGE
+                    : MESSAGE_CONTENT.SECOND_INSTALLMENT_PAID_MESSAGE;
+
                 break;
             default:
                 return NextResponse.json({
@@ -135,14 +139,14 @@ export async function POST(request) {
 
         });
 
-        if (newPayment.discount) {
+        if (newPayment.discount && newPayment.discount.code) {
             await User.findOneAndUpdate(
                 { _id: userId },
                 { $pull: { discountCodes: code._id } }
             );
-        }
+        } 
 
-        newPayment.status = "completed"
+        newPayment.status = "موفق"
         user.payments.push(newPayment._id);
         const admins = await User.find({ role: "admin" });
 
