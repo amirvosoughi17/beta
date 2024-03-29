@@ -16,6 +16,16 @@ const paymentSchema = new mongoose.Schema({
         enum: ["firstInstallment", "secondInstallment", "fullPayment"],
         default: "firstInstallment"
     },
+    discount: {
+        code: {
+            type: String,
+            default: null
+        },
+        discountAmount: {
+            type: Number,
+            default: 0
+        }
+    },
     amount: {
         type: Number,
         required: true,
