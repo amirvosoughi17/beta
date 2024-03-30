@@ -9,7 +9,7 @@ connect();
 
 export async function GET() {
     try {
-        cron.schedule('60 * * * *', async () => {
+        cron.schedule('0 */1 * * *', async () => {
             console.log('paymentReminder job is running ...');
 
             const orders = await Order.find({
