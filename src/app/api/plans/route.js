@@ -1,4 +1,5 @@
 import { connect } from "@/config/DB";
+import Event from "@/models/Event";
 import Plan from "@/models/Plan";
 import { NextResponse } from "next/server";
 connect();
