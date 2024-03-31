@@ -162,7 +162,10 @@ export async function POST(request, { params }) {
 export async function GET(request, { params }) {
     try {
         const orderID = params.orderID;
-        const order = await Order.findById(orderID);
+        const order = await Order.findById(orderID).populate({
+            path: "user",
+            select: "_id username email phoneNumber"
+        });
         return NextResponse.json({ order }, { status: 200 })
     } catch (error) {
         return NextResponse.json({
