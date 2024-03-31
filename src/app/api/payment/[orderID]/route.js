@@ -8,16 +8,17 @@ import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
 connect();
 
-export async function POST(request) {
+export async function POST(request, { params }) {
     try {
         const data = await request.json();
-        const { order: orderId, installment, discount } = data;
+        const orderID = params.orderID;
+        const { installment, discount } = data;
 
 
         const userId = await get_user_data_from_session(request);
         const user = await User.findById(userId)
 
-        const findOrder = await Order.findById(orderId).populate('user');
+        const findOrder = await Order.findById(orderID).populate('user');
 
         if (!findOrder || String(findOrder.user._id) !== userId) {
             return NextResponse.json({
@@ -112,7 +113,7 @@ export async function POST(request) {
         user.notifications.push(paymentNotification._id);
 
         newPayment = await Payment.create({
-            order: orderId,
+            order: orderID,
             user,
             installment,
             amount,
