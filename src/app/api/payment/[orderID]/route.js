@@ -158,3 +158,16 @@ export async function POST(request, { params }) {
         }, { status: 500 });
     }
 }
+
+export async function GET(request, { params }) {
+    try {
+        const orderID = params.orderID;
+        const order = await Order.findById(orderID);
+        return NextResponse.json({ order }, { status: 200 })
+    } catch (error) {
+        return NextResponse.json({
+            success: false,
+            message: error.message
+        }, { status: 500 })
+    }
+}
