@@ -26,10 +26,6 @@ export async function POST(request) {
             }, { status: 400 })
         }
         const MESSAGE_CONTENT = {
-            FULL_PAYMENT_MESSAGE: {
-                title: "هزینه سفارش به طور کلی پرداخت شد",
-                message: "شما همه هزینه سفارش تان را پرداخت کردید"
-            },
             FIRST_INSTALLMENT_PAID_MESSAGE: {
                 title: "قسط اول پرداخت شد",
                 message: "شما قسط اول از سفارش خود را پرداخت کردید"
@@ -52,32 +48,26 @@ export async function POST(request) {
 
         switch (installment) {
             case "fullPayment":
-                if (findOrder.paymentStatus.isFullPaid) {
-                    return NextResponse.json({
-                        success: false,
-                        message: "تمامی هزینه سفارش مربوطه پرداخت شده است"
-                    }, { status: 400 })
-                }
                 amount = findOrder.totalPrice;
                 findOrder.installments.forEach(inst => {
                     inst.paid = true;
                     inst.paidAt = Date.now();
                 });
-                findOrder.paymentStatus.isFullPaid = true;
-                findOrder.paymentStatus.totalPaidPrice += amount
-
                 paymentMessage = MESSAGE_CONTENT.FULL_PAYMENT_MESSAGE;
                 break;
 
             case "قسط اول":
             case "قسط دوم":
+
                 const index = installment === "قسط اول" ? 0 : 1;
+
                 if (findOrder.installments[index].paid) {
                     return NextResponse.json({
                         success: false,
                         message: "هزینه قسط وارد شده قبلا پرداخت شده بود"
                     }, { status: 400 })
                 }
+
                 if (installment === "قسط دوم" && findOrder.installments[0].paid === false) {
                     return NextResponse.json({
                         success: false,
@@ -106,8 +96,6 @@ export async function POST(request) {
 
                 findOrder.installments[index].paid = true;
                 findOrder.installments[index].paidAt = Date.now();
-                findOrder.paymentStatus.paidInsallments += 1;
-                findOrder.paymentStatus.totalPaidPrice += amount;
 
                 paymentMessage = installment === "قسط اول"
                     ? MESSAGE_CONTENT.FIRST_INSTALLMENT_PAID_MESSAGE
@@ -119,10 +107,6 @@ export async function POST(request) {
                     success: false,
                     message: "لطفا مشخص کنید چه مقدار از هزینه سفارش را پرداخت میکنید"
                 }, { status: 400 });
-        }
-        if (findOrder.paymentStatus.totalPaidPrice === findOrder.totalPrice) {
-            findOrder.paymentStatus.isFullPaid = true;
-            paymentMessage = MESSAGE_CONTENT.FULL_PAYMENT_MESSAGE;
         }
         const paymentNotification = await sendNotification(paymentMessage.title, paymentMessage.message);
         user.notifications.push(paymentNotification._id);
@@ -136,7 +120,6 @@ export async function POST(request) {
                 code: discount,
                 discountAmount: discountedAmount
             }
-
         });
 
         if (newPayment.discount && newPayment.discount.code) {
@@ -144,7 +127,7 @@ export async function POST(request) {
                 { _id: userId },
                 { $pull: { discountCodes: code._id } }
             );
-        } 
+        }
 
         newPayment.status = "موفق"
         user.payments.push(newPayment._id);

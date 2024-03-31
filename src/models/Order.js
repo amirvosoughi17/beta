@@ -32,11 +32,6 @@ const orderSchema = new mongoose.Schema({
             default: 'در انتظار توسعه'
         }
     }],
-    totalFeature: {
-        type: Number,
-        required: true,
-        default: 0
-    },
     orderProgress: {
         type: Number,
         min: 0,
@@ -85,20 +80,6 @@ const orderSchema = new mongoose.Schema({
             default: null
         }
     }],
-    paymentStatus: {
-        paidInsallments: {
-            type: Number,
-            default: 0
-        },
-        totalPaidPrice: {
-            type: Number,
-            default: 0
-        },
-        isFullPaid: {
-            type: Boolean,
-            default: false
-        }
-    },
     totalPrice: {
         type: Number,
         default: 0,
