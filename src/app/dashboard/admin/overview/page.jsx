@@ -22,7 +22,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Popover,
   PopoverContent,
@@ -37,8 +37,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
 import {
@@ -50,6 +48,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -77,6 +77,7 @@ const Overview = () => {
   const [featureData, setFeatureData] = useState({
     featureName: "",
     featurePrice: "",
+    isNecessary: false,
   });
   const [overData, setOverData] = useState(null);
   const [popularPlans, setPopularPlans] = useState([]);
@@ -104,6 +105,12 @@ const Overview = () => {
     setFeatureData({
       ...featureData,
       [e.target.name]: e.target.value,
+    });
+  };
+  const handleCheckboxChange = (e) => {
+    setFeatureData({
+      ...featureData,
+      isNecessary: e.target.checked,
     });
   };
   useEffect(() => {
@@ -148,12 +155,14 @@ const Overview = () => {
         {
           name: featureData.featureName,
           price: parseFloat(featureData.featurePrice),
+          isNecessary: featureData.isNecessary,
         },
       ],
     });
     setFeatureData({
       featureName: "",
       featurePrice: "",
+      isNecessary: false,
     });
   };
 
@@ -209,6 +218,7 @@ const Overview = () => {
         },
       });
       if (res.ok) {
+        const data = await res.json();
         console.log("Plan added successfully!");
         router.push("/order");
         alert("plan created successFully");
@@ -280,9 +290,100 @@ const Overview = () => {
                       <Button size="icon" variant="outline">
                         <VscSymbolEvent />
                       </Button>
-                      <Button size="icon" variant="outline">
-                        <VscTarget />
-                      </Button>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button variant="outline" size="icon">
+                            <VscTarget />
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[525px]">
+                          <h1 className="my-5 text-xl text-white">پلن</h1>
+                          <form
+                            className="flex flex-col gap-3 "
+                            onSubmit={handleSubmit}
+                          >
+                            <div className="flex flex-col items-start gap-2">
+                              <Label htmlFor="name">نام</Label>
+                              <Input
+                                type="text"
+                                id="name"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                              />
+                            </div>
+                            <div>
+                              <Label htmlFor="basePrice">قیمت پایه</Label>
+                              <Input
+                                type="number"
+                                id="basePrice"
+                                name="basePrice"
+                                value={formData.basePrice}
+                                onChange={handleChange}
+                                required
+                              />
+                            </div>
+                            <div>
+                              <Label htmlFor="description">توضیحات</Label>
+                              <Textarea
+                                id="description"
+                                name="description"
+                                value={formData.description}
+                                onChange={handleChange}
+                                required
+                              />
+                            </div>
+                            <div>
+                              <Label htmlFor="featureName">نام امکان</Label>
+                              <Input
+                                type="text"
+                                id="featureName"
+                                name="featureName"
+                                value={featureData.featureName}
+                                onChange={handleFeatureChange}
+                              />
+                            </div>
+                            <div>
+                              <Label htmlFor="featurePrice">قیمت امکان</Label>
+                              <Input
+                                type="number"
+                                id="featurePrice"
+                                name="featurePrice"
+                                value={featureData.featurePrice}
+                                onChange={handleFeatureChange}
+                              />
+                            </div>
+                            <div className="w-full flex items-center justify-between">
+                              <Label htmlFor="featurePrice">پیشفرض است</Label>
+                              <input
+                                type="checkbox"
+                                name="isNecessary"
+                                checked={featureData.isNecessary}
+                                onChange={handleCheckboxChange}
+                              />
+                            </div>
+                            <Button
+                              type="button"
+                              variant="secondary"
+                              onClick={addFeature}
+                            >
+                              افزدون امکان
+                            </Button>
+                            <div>
+                              <h3>Features:</h3>
+                              <ul>
+                                {formData.features.map((feature, index) => (
+                                  <li key={index}>
+                                    {feature.name} - {feature.price}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                            <Button type="submit">افزدون پلن</Button>
+                          </form>
+                        </DialogContent>
+                      </Dialog>
                       <Button size="icon" variant="outline">
                         <TbMessages />
                       </Button>
@@ -559,7 +660,7 @@ const Overview = () => {
                   {overData ? (
                     overData?.latestOrders.map((order) => (
                       <Link
-                        href={`/dashbaord/feature/${order._id}`}
+                        href={`/dashboard/order/${order._id}`}
                         key={order._id}
                         className="flex justify-between items-center gap-3 border-b-[0.5px] border-zinc-800 py-3 px-3"
                       >
