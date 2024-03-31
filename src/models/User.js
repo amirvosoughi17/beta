@@ -1,8 +1,7 @@
+import { sendNotification } from "@/utils/sendNotification";
 import mongoose from "mongoose";
 
-const { Schema } = mongoose;
-
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
     username: {
         type: String,
         unique: true,
@@ -46,10 +45,10 @@ const userSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Notification',
     }],
-    discountCodes: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "DiscountCode"
-    }],
+        discountCodes: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "DiscountCode"
+        }],
     password: {
         type: String,
         required: true,
@@ -58,6 +57,10 @@ const userSchema = new Schema({
         type: String,
         enum: ['user', 'admin'],
         default: 'user',
+    },
+    encouragementNotificationSent: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 

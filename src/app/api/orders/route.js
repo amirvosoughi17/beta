@@ -12,8 +12,10 @@ export async function POST(request) {
   try {
     const data = await request.json();
     let { planName, supportTime, selectedFeatures } = data;
+
+    
     const user_id = await get_user_data_from_session(request);
-    const user = await User.findOne({ _id: user_id }).select("_id username email phoneNumber orders notifications");
+    const user = await User.findOne({ _id: user_id });
 
     const plan = await Plan.findOne({ name: planName });
     const planBasePrice = plan.basePrice;
@@ -27,8 +29,6 @@ export async function POST(request) {
     const selectedFeaturesTotalPrice = selectedFeatures.reduce((total, feature) => {
       return total + feature.price
     }, 0);
-
-
 
 
     const newOrder = await Order.create({
@@ -58,22 +58,13 @@ export async function POST(request) {
       "شما یک وبسایت جدید ثبت کردید, پس از برسی آن ما به شما وضعیت آنرا اطلاع خواهیم داد"
     );
 
-
-
-
     user.notifications.push(newNotification);
     user.orders.push(newOrder._id);
 
     await user.save();
     await newOrder.save();
-    const userInfo = {
-      _id: user._id,
-      username: user.username,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-    };
 
-    return NextResponse.json({ newOrder: { ...newOrder.toObject(), user: userInfo } }, { status: 201 });
+    return NextResponse.json({ newOrder }, { status: 201 });
   } catch (error) {
     return NextResponse.json({
       success: false,

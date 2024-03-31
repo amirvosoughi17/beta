@@ -2,6 +2,7 @@ import { connect } from "@/config/DB";
 import Order from "@/models/Order";
 import Payment from "@/models/Payment";
 import { User } from "@/models/User";
+import DiscountCode from "@/models/discountCode";
 import { sendNotification } from "@/utils/sendNotification";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
@@ -10,11 +11,14 @@ connect();
 export async function POST(request) {
     try {
         const data = await request.json();
-        const { order: orderId, installment } = data;
+        const { order: orderId, installment, discount } = data;
+
+
         const userId = await get_user_data_from_session(request);
-        const user = await User.findById(userId).select("_id username email notifications payments");
+        const user = await User.findById(userId)
 
         const findOrder = await Order.findById(orderId).populate('user');
+
         if (!findOrder || String(findOrder.user._id) !== userId) {
             return NextResponse.json({
                 success: false,
@@ -39,8 +43,11 @@ export async function POST(request) {
                 message: ` ${installment === "firstInstallment" ? "قسط اول" : "قسط دوم"} را پرداخت کرد ${user.username}`
             }
         };
+
         let amount;
         let paymentMessage;
+        let discountedAmount = 0;
+        let code;
         let newPayment;
 
         switch (installment) {
@@ -62,27 +69,50 @@ export async function POST(request) {
                 paymentMessage = MESSAGE_CONTENT.FULL_PAYMENT_MESSAGE;
                 break;
 
-            case "firstInstallment":
-            case "secondInstallment":
-                const index = installment === "firstInstallment" ? 0 : 1;
+            case "قسط اول":
+            case "قسط دوم":
+                const index = installment === "قسط اول" ? 0 : 1;
                 if (findOrder.installments[index].paid) {
                     return NextResponse.json({
                         success: false,
                         message: "هزینه قسط وارد شده قبلا پرداخت شده بود"
                     }, { status: 400 })
                 }
-                if (installment === "secondInstallment" && findOrder.installments[0].paid === false) {
+                if (installment === "قسط دوم" && findOrder.installments[0].paid === false) {
                     return NextResponse.json({
                         success: false,
                         message: "نخست هزینه قسط اول را پرداخت کنید"
                     }, { status: 400 })
                 }
+
                 amount = findOrder.installments[index].amount;
+
+
+                if (discount) {
+                    code = await DiscountCode.findOne({ code: discount });
+
+                    if (!code) {
+                        return NextResponse.json({
+                            message: "کد تخفیف نامعتبر است"
+                        }, { status: 400 })
+                    }
+                    discountedAmount = (amount * code.discountPercentage) / 100;
+
+                    amount -= discountedAmount;
+
+                    await DiscountCode.deleteOne({ code: discount });
+                }
+
+
                 findOrder.installments[index].paid = true;
                 findOrder.installments[index].paidAt = Date.now();
                 findOrder.paymentStatus.paidInsallments += 1;
                 findOrder.paymentStatus.totalPaidPrice += amount;
-                paymentMessage = installment === "firstInstallment" ? MESSAGE_CONTENT.FIRST_INSTALLMENT_PAID_MESSAGE : MESSAGE_CONTENT.SECOND_INSTALLMENT_PAID_MESSAGE;
+
+                paymentMessage = installment === "قسط اول"
+                    ? MESSAGE_CONTENT.FIRST_INSTALLMENT_PAID_MESSAGE
+                    : MESSAGE_CONTENT.SECOND_INSTALLMENT_PAID_MESSAGE;
+
                 break;
             default:
                 return NextResponse.json({
@@ -97,8 +127,26 @@ export async function POST(request) {
         const paymentNotification = await sendNotification(paymentMessage.title, paymentMessage.message);
         user.notifications.push(paymentNotification._id);
 
-        newPayment = await Payment.create({ order: orderId, user, installment, amount });
-        newPayment.status = "completed"
+        newPayment = await Payment.create({
+            order: orderId,
+            user,
+            installment,
+            amount,
+            discount: {
+                code: discount,
+                discountAmount: discountedAmount
+            }
+
+        });
+
+        if (newPayment.discount && newPayment.discount.code) {
+            await User.findOneAndUpdate(
+                { _id: userId },
+                { $pull: { discountCodes: code._id } }
+            );
+        } 
+
+        newPayment.status = "موفق"
         user.payments.push(newPayment._id);
         const admins = await User.find({ role: "admin" });
 

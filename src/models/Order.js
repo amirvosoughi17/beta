@@ -64,12 +64,12 @@ const orderSchema = new mongoose.Schema({
         default: "در انتظار تایید"
     },
     statusDates: {
-        pending: { type: Date },
-        accepted: { type: Date },
-        notAccepted: { type: Date },
-        inProgress: { type: Date },
-        completed: { type: Date },
-        canceled: { type: Date },
+        pending: { type: Date, default: null },
+        accepted: { type: Date, default: null },
+        notAccepted: { type: Date, default: null },
+        inProgress: { type: Date, default: null },
+        completed: { type: Date, default: null },
+        canceled: { type: Date, default: null },
     },
     installments: [{
         amount: {

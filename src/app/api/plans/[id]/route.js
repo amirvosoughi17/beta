@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
 import { NextResponse } from "next/server";
 import Plan from '@/models/Plan'
 import { connect } from "@/config/DB";
+import Event from '@/models/Event';
 
 connect();
 export async function GET(request, { params }) {
@@ -11,13 +11,6 @@ export async function GET(request, { params }) {
             return NextResponse.json({
                 message: "Plan Not found!"
             }, { status: 404 })
-        }
-        const isValidId = mongoose.Types.ObjectId.isValid(id);
-
-        if (!isValidId) {
-            return NextResponse.json({
-                message: "Invalid Plan ID"
-            }, { status: 400 });
         }
         const plan = await Plan.findOne({ _id: id }).populate({
             path: "event",

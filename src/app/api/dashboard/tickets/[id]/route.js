@@ -102,7 +102,6 @@ export async function PUT(request, { params }) {
                 );
 
                 user.notifications.push(closedTicketMessage._id)
-                await deleteOldClosedTickets();
                 break;
         }
         await user.save();
@@ -113,11 +112,4 @@ export async function PUT(request, { params }) {
             message: error.message
         }, { status: 500 })
     }
-}
-
-async function deleteOldClosedTickets() {
-    const threeWeeksAgo = new Date();
-    threeWeeksAgo.setDate(threeWeeksAgo.getDate() - 21);
-
-    await Ticket.deleteMany({ status: "closed", createdAt: { $lt: threeWeeksAgo } });
 }
