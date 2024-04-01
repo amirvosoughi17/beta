@@ -1,6 +1,7 @@
 import { connect } from "@/config/DB";
 import Ticket from "@/models/Ticket";
 import { NextResponse } from "next/server";
+import User from '@/models/User';
 
 connect()
 

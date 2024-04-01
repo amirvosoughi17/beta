@@ -4,22 +4,30 @@ import { User } from "@/models/User";
 import { sendNotification } from "@/utils/sendNotification";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
+import NodeCache from "node-cache";
 
 connect()
 
+const nodeCache = new NodeCache();
+
 export async function GET() {
     try {
-        const orders = await Order.find().populate({
-            path: 'user',
-            select: 'username email phoneNumber',
-        });
-        const orderDocumentCount = await Order.countDocuments();
-        if (orderDocumentCount === 0) {
-            return NextResponse.json({
-                message: "There is not order here..."
-            }, { status: 404 })
+        let orders = [];
+
+
+        if (nodeCache.has("orders")) {
+            orders = JSON.parse(nodeCache.get("orders"));
+        } else {
+            orders = await Order.find().populate({
+                path: 'user',
+                select: 'username email phoneNumber',
+            });
+            nodeCache.set("orders", JSON.stringify(orders))
         }
-        return NextResponse.json({ orders, orderDocumentCount }, { status: 200 })
+        return NextResponse.json({
+            orders,
+            orderDocumentCount: orders.length
+        }, { status: 200 })
     } catch (error) {
         return NextResponse.json({
             success: false,
