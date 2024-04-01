@@ -6,6 +6,7 @@ import DiscountCode from "@/models/discountCode";
 import { sendNotification } from "@/utils/sendNotification";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
+
 connect();
 
 export async function POST(request, { params }) {

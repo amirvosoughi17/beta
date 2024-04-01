@@ -8,6 +8,7 @@ import { fetchUserData } from "@/utils/userActions";
 import moment from "moment";
 import "moment/locale/fa";
 import Link from "next/link";
+import { setOrder } from "@/redux/user/userSlice";
 //shadcn
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -39,13 +40,14 @@ const Order = ({ id }) => {
         } else {
           console.error("Failed to fetch order details:", response.statusText);
         }
+        dispatch(setOrder(orderData));
       } catch (error) {
         console.error("Error fetching order details:", error.message);
       }
     };
 
     fetchOrderDetails();
-  }, []);
+  }, [dispatch]);
 
   const handleStatusChange = async (featureId, newStatus) => {
     const orderId = order._id;
@@ -213,7 +215,7 @@ const Order = ({ id }) => {
                       <span>تومان {order?.totalPrice.toLocaleString()}</span>
                     </div>
                     <div className="border-t-[0.5px] mt-2 pt-3 bordr-zinc-800 w-full flex items-center justify-between">
-                      <Link href="/">
+                      <Link href={`/payment/${order._id}`}>
                         <Button>
                           {order?.installments[0]?.paid === "true" ? "تسویه حساب"  : "پرداخت قسط اول"}
                         </Button>
