@@ -14,7 +14,6 @@ export async function GET() {
     try {
         let orders = [];
 
-
         if (nodeCache.has("orders")) {
             orders = JSON.parse(nodeCache.get("orders"));
         } else {
@@ -49,7 +48,6 @@ export async function PUT(request) {
         }
         const order = await Order.findByIdAndUpdate(orderId, { status: newStatus }, { new: true })
         const orderedUser = await User.findById(order.user);
-
 
         const MESSAGES_CONTENT = {
             ACCEPTED: {
@@ -87,6 +85,7 @@ export async function PUT(request) {
                     break;
             }
         }
+        nodeCache.del("orders")
         return NextResponse.json({ order }, { status: 200 })
     } catch (error) {
         return NextResponse.json({
