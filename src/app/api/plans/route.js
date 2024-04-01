@@ -2,7 +2,10 @@ import { connect } from "@/config/DB";
 import Event from "@/models/Event";
 import Plan from "@/models/Plan";
 import { NextResponse } from "next/server";
+import NodeCache from "node-cache";
 connect();
+
+const nodeCache = new NodeCache();
 
 export async function POST(request) {
     try {
@@ -33,14 +36,25 @@ export async function POST(request) {
 
 export async function GET() {
     try {
-        const plans = await Plan.find().populate({
-            path: "event",
-            select: "_id name discountPercentage"
-        });
-        return NextResponse.json({ 
+        let plans = [];
+
+        if (nodeCache.has('plans')) {
+
+            plans = JSON.parse(nodeCache.get("plans"))
+
+        } else {
+            plans = await Plan.find().populate({
+                path: "event",
+                select: "_id name discountPercentage"
+            });
+
+            nodeCache.set("plans", JSON.stringify(plans), 120)
+        }
+
+        return NextResponse.json({
             plans,
             plansCount: plans.length
-         }, { status: 200 });
+        }, { status: 200 });
     } catch (error) {
         return NextResponse.json({
             success: false,
