@@ -4,11 +4,19 @@ import Payment from "@/models/Payment";
 import Ticket from "@/models/Ticket";
 import { User } from "@/models/User";
 import { NextResponse } from "next/server";
+import NodeCache from "node-cache";
 
 connect()
+const nodeCache = new NodeCache();
 
 export async function GET() {
     try {
+        let responseData;
+
+        if (nodeCache.has('reviewData')) {
+            responseData = JSON.parse(nodeCache.get("reviewData"))
+        }
+
         const latestOrders = await Order
             .find()
             .sort({ createdAt: -1 })
@@ -51,7 +59,8 @@ export async function GET() {
         for (const income of totalIncomes) {
             totalAmount += income.amount;
         }
-        return NextResponse.json({
+
+        responseData = {
             totalAmount,
             latestOrders,
             allOrders,
@@ -61,7 +70,9 @@ export async function GET() {
             latestPayments,
             allPayments,
             popularPlans,
-        }, { status: 200 })
+        }
+        nodeCache.set('reviewData', JSON.stringify(responseData), 300)
+        return NextResponse.json({ responseData }, { status: 200 })
     } catch (error) {
         return NextResponse.json({
             success: false,
