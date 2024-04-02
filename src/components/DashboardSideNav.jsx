@@ -39,6 +39,10 @@ const DashboardSideNav = () => {
     const userInfo = useSelector(selectUserInfo);
     const [loading, setLoading] = useState(false)
     const dispatch = useDispatch();
+    const [darkMode, setDarkMode] = useState(false);
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+    };
 
     useEffect(() => {
         dispatch(fetchUserData())
@@ -89,6 +93,7 @@ const DashboardSideNav = () => {
                             className='w-[29px] h-[29px] sm:w-[33px] sm:h-[33px]  '
                         />
                     </Link>
+                    <button onClick={toggleDarkMode} className='bg-red-500 w-'>dark</button>
                     <DropdownMenu dir='rtl' >
                         <DropdownMenuTrigger asChild>
                             <div className="p-3.5 rounded-full bg-zinc-800 text-white cursor-pointer">

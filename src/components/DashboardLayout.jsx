@@ -1,13 +1,14 @@
-import DashboardSideNav from "./DashboardSideNav"
+import DashboardSideNav from "./DashboardSideNav";
 
+import './dashboardLayout.css';
 
-const DashboardLayout = ({children}) => {
+const DashboardLayout = ({ children }) => {
   return (
-    <div>
+      <div>
         <DashboardSideNav />
         {children}
-    </div>
-  )
-}
+      </div>
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;
