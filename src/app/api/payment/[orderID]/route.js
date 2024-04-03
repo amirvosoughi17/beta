@@ -112,7 +112,6 @@ export async function POST(request, { params }) {
         }
         const paymentNotification = await sendNotification(paymentMessage.title, paymentMessage.message);
         user.notifications.push(paymentNotification._id);
-
         newPayment = await Payment.create({
             order: orderID,
             user,
