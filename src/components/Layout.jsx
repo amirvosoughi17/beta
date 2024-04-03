@@ -4,7 +4,7 @@ import Navbar from "./structure/Navbar";
 
 const Layout = ({children}) => {
   return (
-    <div>
+    <div className="">
         <Navbar /> 
         <div className=" scroll-smooth text-black">
         {children}

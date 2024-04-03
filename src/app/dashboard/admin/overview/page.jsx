@@ -448,7 +448,7 @@ const Overview = () => {
                               </div>
                               <div className="flex flex-col gap-[5px]">
                                 <h1 className="text-white text-[28px] font-bold">
-                                  {overData?.totalAmount.toLocaleString()} +
+                                  {overData?.totalAmount?.toLocaleString()} +
                                 </h1>
                                 <h1 className="text-gray-400 text-[13px]">
                                   {" "}
@@ -520,7 +520,7 @@ const Overview = () => {
                     آخرین پرداخت ها
                   </h1>
                   {overData ? (
-                    overData?.latestPayments.map((lastpyment) => (
+                    overData?.latestPayments?.map((lastpyment) => (
                       <div
                         key={lastpyment._id}
                         className="flex w-full items-center justify-between px-2"
@@ -658,7 +658,7 @@ const Overview = () => {
                 </div>
                 <div className="flex flex-col gap-3">
                   {overData ? (
-                    overData?.latestOrders.map((order) => (
+                    overData?.latestOrders?.map((order) => (
                       <Link
                         href={`/dashboard/order/${order._id}`}
                         key={order._id}
