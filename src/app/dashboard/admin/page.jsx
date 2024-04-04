@@ -145,6 +145,7 @@ const Admin = () => {
                           </div>
                         </div>
                       </div>
+                      <Link href={`/dashboard/order/${order._id}`}>مشاهده</Link>
                     </div>
                   </Card>
                 ))}

@@ -104,11 +104,11 @@ export async function POST(request, { params }) {
                     : MESSAGE_CONTENT.SECOND_INSTALLMENT_PAID_MESSAGE;
 
                 break;
-            default:
+           ` default:
                 return NextResponse.json({
                     success: false,
                     message: "لطفا مشخص کنید چه مقدار از هزینه سفارش را پرداخت میکنید"
-                }, { status: 400 });
+                }, { status: 400 });`
         }
         const paymentNotification = await sendNotification(paymentMessage.title, paymentMessage.message);
         user.notifications.push(paymentNotification._id);

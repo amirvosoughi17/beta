@@ -47,33 +47,21 @@ const Payment = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Convert installmentAmount and discount to numbers
-      const installmentAmountValue = parseFloat(installmentAmount);
-      const discountValue = parseFloat(discount);
-
-      // Check if the conversion was successful
-      if (isNaN(installmentAmountValue) || isNaN(discountValue)) {
-        console.error(
-          "Invalid input. Please enter numeric values for installment amount and discount."
-        );
-        return;
-      }
-
-      // Calculate discounted price
-      const discountedPrice = installmentAmountValue - discountValue;
-
-      // Send request with discount and discounted price
-      const response = await fetch("/api/payment", {
+      const installmentAmountToSend = order.installments[0].paid === "true"
+        ? order.installments[1].amount
+        : order.installments[0].amount;
+  
+      const response = await fetch(`/api/payment/${order._id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          discount: discountValue,
-          price: discountedPrice,
+          installment: installmentAmountToSend,
+          discount: discount,
         }),
       });
-
+  
       if (response.ok) {
         alert("انتقال به صفحه پرداخت با موفقیت انجام شد");
       } else {
@@ -83,7 +71,8 @@ const Payment = () => {
       console.error("Error submitting payment:", error.message);
     }
   };
-
+  
+  
   return (
       <div className="min-h-screen w-full py-5 px-3 sm:py-6 sm:px-5 lg:px-10 lg:py-10">
         <Card className="w-[80%] border-none mx-auto flex flex-col gap-4 h-[650px] md:flex-row items-start mt-[50px]">

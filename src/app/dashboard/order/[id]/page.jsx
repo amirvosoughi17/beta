@@ -1,4 +1,5 @@
 "use client";
+
 import DashboardLayout from "@/components/DashboardLayout";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,100 +9,96 @@ import moment from "moment";
 import "moment/locale/fa";
 import Link from "next/link";
 import { setOrder } from "@/redux/user/userSlice";
+//shadcn
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 
 const Order = ({ id }) => {
-    const [orderId, setOrderId] = useState(null);
-    const [order, setOrder] = useState(null);
-    const [isUpdating, setIsUpdating] = useState(false);
-    const userInfo = useSelector(selectUserInfo);
-    const dispatch = useDispatch();
+  
+  const [order, setOrder] = useState(null);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const userInfo = useSelector(selectUserInfo);
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(fetchUserData());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchUserData());
+  }, [dispatch]);
 
-    useEffect(() => {
-        const pathArray = window.location.pathname.split("/");
-        const id = pathArray[pathArray.length - 1];
-        setOrderId(id);
-        const fetchOrderDetails = async () => {
-            try {
-                if (!id) {
-                    return;
-                }
-                const response = await fetch(`/api/admin/orders/${id}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    setOrder(data.order);
-                } else {
-                    console.error("Failed to fetch order details:", response.statusText);
-                }
-                dispatch(setOrder(orderData));
-            } catch (error) {
-                console.error("Error fetching order details:", error.message);
-            }
-        };
+  useEffect(() => {
+    const pathArray = window.location.pathname.split("/");
+    const id = pathArray[pathArray.length - 1];
 
-        fetchOrderDetails();
-    }, [dispatch]);
-
-    const handleStatusChange = async (featureId, newStatus) => {
-        try {
-            const updatedOrder = { ...order };
-            const selectedFeatureIndex = updatedOrder.selectedFeatures.findIndex(sf => sf._id === featureId);
-            if (selectedFeatureIndex === -1) {
-                console.error("Selected feature not found in the order");
-                return;
-            }
-            updatedOrder.selectedFeatures[selectedFeatureIndex].status = newStatus;
-            const updateResponse = await fetch(`/api/admin/orders/${orderId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(updatedOrder),
-            });
-            if (updateResponse.ok) {
-                console.log("Feature status updated successfully!");
-                setOrder(updatedOrder);
-            } else {
-                console.error("Failed to update feature status:", updateResponse.statusText);
-            }
-        } catch (error) {
-            console.error("Error updating feature status:", error.message);
+    const fetchOrderDetails = async () => {
+      try {
+        if (!id) {
+          return;
         }
+        const response = await fetch(`/api/admin/orders/${id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setOrder(data.order);
+        } else {
+          console.error("Failed to fetch order details:", response.statusText);
+        }
+        dispatch(setOrder(orderData));
+      } catch (error) {
+        console.error("Error fetching order details:", error.message);
+      }
     };
 
-    if (!order) {
-        return <p>Loading...</p>;
+    fetchOrderDetails();
+  }, [dispatch]);
+
+  const handleStatusChange = async (featureId, newStatus) => {
+    const orderId = order._id;
+    try {
+      const response = await fetch(`/api/admin/orders/${orderId}`);
+      if (response.ok) {
+        const data = await response.json();
+        const order = data.order;
+
+        const selectedFeature = order.selectedFeatures.find(
+          (sf) => sf._id === featureId
+        );
+
+        if (!selectedFeature) {
+          console.error("Selected feature not found in the order");
+          return;
+        }
+
+        const updateResponse = await fetch(`/api/admin/orders/${orderId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            featureName: selectedFeature.name,
+            newStatus: newStatus,
+          }),
+        });
+
+        if (updateResponse.ok) {
+          console.log("Feature status updated successfully!");
+        } else {
+          console.error(
+            "Failed to update feature status:",
+            updateResponse.statusText
+          );
+        }
+      } else {
+        console.error("Failed to fetch order details:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error updating feature status:", error.message);
     }
+  };
 
-    const handleAcceptProject = async () => {
-        setIsUpdating(true);
-        try {
-            const response = await fetch(`/api/admin/orders/${orderId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ newStatus: 'پذیرفته شده' }),
-            });
-            if (!response.ok) {
-                throw new Error('خطا در تایید پروژه.');
-            }
-            alert('پروژه با موفقیت تایید شد.');
-        } catch (error) {
-            console.error('Error accepting project:', error.message);
-            alert(error.message);
-        } finally {
-            setIsUpdating(false);
-        }
-    };
-
+  if (!order) {
+    return <p>Loading...</p>;
+  }
+  
   return (
     <DashboardLayout>
       <div className="p-2 sm:p-8 w-full  md:mt-0 mt-[120px]">
@@ -121,9 +118,7 @@ const Order = ({ id }) => {
                 </div>
               </h1>
               <div className="flex items-center gap-2">
-                {userInfo && userInfo.role === "admin" && (
-                  <Button variant='secondary' disabled={isUpdating} onClick={handleAcceptProject}>پذیرش</Button>
-                )}
+                
                 <Badge>{order.status}</Badge>
               </div>
             </div>
