@@ -6,6 +6,7 @@ import Image from "next/image";
 import target from "@/assets/target.png";
 import blueItem from "@/assets/blue-item.png";
 import greenItem from '@/assets/green-item.png'
+
 // react icons
 import { MdKeyboardArrowLeft } from "react-icons/md";
 
@@ -95,7 +96,7 @@ const Hero = () => {
             <Image
               src={heroBlue}
               alt="hero image"
-              className="rotate-[-2.6deg]"
+              className="md:rotate-[-2.6deg] "
               width={600}
               height={807}
             />
@@ -104,7 +105,7 @@ const Hero = () => {
               src={blueItem}
               width={246}
               height={105}
-              className=" absolute bottom-[135px] right-[-20px]"
+              className=" absolute bottom-[135px] hidden sm:block right-[-20px]"
             />
           </div>
           <Image
@@ -112,7 +113,7 @@ const Hero = () => {
             width={33}
             height={33}
             alt="wixel"
-            className=" absolute left-2 bottom-[90px]"
+            className=" absolute left-2 hidden sm:block  bottom-[90px]"
           />
         </div>
       </div>

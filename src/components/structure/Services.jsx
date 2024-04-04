@@ -31,49 +31,49 @@ const Services = () => {
           </button>
         </div>
         <div className="lg:px-[110px] sm:px-[30px] px-[10px] md:px-[50px] sticky w-full h-full flex items-center justify-center gap-4 mt-[40px]">
-          <div className="lg:flex items-center justify-center gap-2 xl:gap-4 grid grid-cols-1 sm:grid-cols-2">
-            <div className="2xl:w-[320px] 2xl:h-[350px] xl:w-[300px] xl:h-[330px] lg:w-[250px] lg:h-[280px] bg-white xl:px-8 px-6 py-8  xl:py-10 rounded-[27px] flex flex-col gap-2 items-start justify-start">
-              <div className=" rounded-full bg-[#0077ff1a] w-[100px] h-[100px] flex items-center lg:p-6 xl:p-8 justify-center ">
+          <div className="lg:flex items-center justify-center gap-[10px] xl:gap-4 grid grid-cols-2 sm:grid-cols-2">
+            <div className="2xl:w-[320px] 2xl:h-[350px] xl:w-[300px] xl:h-[330px] sm:w-[250px] sm:h-[280px] w-[180px] h-[220px] bg-white xl:px-8 sm:px-6 sm:py-8 px-4 py-6  xl:py-10 rounded-[27px] flex flex-col gap-2 items-start justify-start">
+              <div className=" rounded-full bg-[#0077ff1a] sm:w-[100px] sm:h-[100px] w-[50px] h-[50px] flex items-center p-3 lg:p-6 xl:p-8 justify-center ">
                 <Image alt="wixel" src={s1} />
               </div>
-              <div className="flex flex-col gap-2 mt-2 xl:mt-2 xl:gap-3">
-                <h1 className="xl:text-[24px] text-[22px] text-[#313B78] font-medium">
+              <div className="flex flex-col gap-1 sm:gap-2 mt-1 sm:mt-2 xl:mt-2 xl:gap-3">
+                <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-medium">
                   سئو و بهینه سازی
                 </h1>
-                <p className="text-[#313a787f] text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
+                <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
               </div>
             </div>
-            <div className="2xl:w-[320px] 2xl:h-[350px] xl:w-[300px] xl:h-[330px] lg:w-[250px] lg:h-[280px] bg-white xl:px-8 px-6 py-8  xl:py-10 rounded-[27px] flex flex-col gap-2 items-start justify-start">
-              <div className=" rounded-full bg-[#ff5d5d24] w-[100px] h-[100px] flex items-center lg:p-6 xl:p-8 justify-center ">
+            <div className="2xl:w-[320px] 2xl:h-[350px] xl:w-[300px] xl:h-[330px] sm:w-[250px] sm:h-[280px] w-[180px] h-[220px] bg-white xl:px-8 sm:px-6 sm:py-8 px-4 py-6  xl:py-10 rounded-[27px] flex flex-col gap-2 items-start justify-start">
+              <div className=" rounded-full bg-[#ff5d5d24] sm:w-[100px] sm:h-[100px] w-[50px] h-[50px] flex items-center p-3 lg:p-6 xl:p-8 justify-center ">
                 <Image alt="wixel" src={s2} className="" />
               </div>
-              <div className="flex flex-col gap-2 mt-2 xl:mt-2 xl:gap-3">
-                <h1 className="xl:text-[24px] text-[22px] text-[#313B78] font-medium">
+              <div className="flex flex-col gap-1 sm:gap-2 mt-1 sm:mt-2 xl:mt-2 xl:gap-3">
+                <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-medium">
                   طراحی واکنشگرا
                 </h1>
-                <p className="text-[#313a787f] text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
+                <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
               </div>
             </div>
-            <div className="2xl:w-[320px] 2xl:h-[350px] xl:w-[300px] xl:h-[330px] lg:w-[250px] lg:h-[280px] bg-white xl:px-8 px-6 py-8  xl:py-10 rounded-[27px] flex flex-col gap-2 items-start justify-start">
-              <div className=" rounded-full bg-[#995aff1b] w-[100px] h-[100px] flex items-center lg:p-6 xl:p-8 justify-center ">
+            <div className="2xl:w-[320px] 2xl:h-[350px] xl:w-[300px] xl:h-[330px] sm:w-[250px] sm:h-[280px] w-[180px] h-[220px] bg-white xl:px-8 sm:px-6 sm:py-8 px-4 py-6  xl:py-10 rounded-[27px] flex flex-col gap-2 items-start justify-start">
+              <div className=" rounded-full bg-[#995aff1b] sm:w-[100px] sm:h-[100px] w-[50px] h-[50px] flex items-center p-3 lg:p-6 xl:p-8 justify-center ">
                 <Image alt="wixel" src={s3} className="" />
               </div>
-              <div className="flex flex-col gap-2 mt-2 xl:mt-2 xl:gap-3">
-                <h1 className="xl:text-[24px] text-[22px] text-[#313B78] font-medium">
+              <div className="flex flex-col gap-1 sm:gap-2 mt-1 sm:mt-2 xl:mt-2 xl:gap-3">
+                <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-medium">
                   ازادی انتخاب
                 </h1>
-                <p className="text-[#313a787f] text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
+                <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
               </div>
             </div>
-            <div className="2xl:w-[320px] 2xl:h-[350px] xl:w-[300px] xl:h-[330px] lg:w-[250px] lg:h-[280px] bg-white xl:px-8 px-6 py-8  xl:py-10 rounded-[27px] flex flex-col gap-2 items-start justify-start">
-              <div className=" rounded-full bg-[#4ec88125] w-[100px] h-[100px] flex items-center lg:p-6 xl:p-8 justify-center ">
+            <div className="2xl:w-[320px] 2xl:h-[350px] xl:w-[300px] xl:h-[330px] sm:w-[250px] sm:h-[280px] w-[180px] h-[220px] bg-white xl:px-8 sm:px-6 sm:py-8 px-4 py-6  xl:py-10 rounded-[27px] flex flex-col gap-2 items-start justify-start">
+              <div className=" rounded-full bg-[#4ec88125] sm:w-[100px] sm:h-[100px] w-[50px] h-[50px] flex items-center p-3 lg:p-6 xl:p-8 justify-center ">
                 <Image alt="wixel" src={s4} className="" />
               </div>
-              <div className="flex flex-col gap-2 mt-2 xl:mt-2 xl:gap-3">
-                <h1 className="xl:text-[24px] text-[22px] text-[#313B78] font-medium">
+              <div className="flex flex-col gap-1 sm:gap-2 mt-1 sm:mt-2 xl:mt-2 xl:gap-3">
+                <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-medium">
                   تخصص
                 </h1>
-                <p className="text-[#313a787f] text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
+                <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
               </div>
             </div>
           </div>
