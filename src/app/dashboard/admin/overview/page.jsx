@@ -101,18 +101,22 @@ const Overview = () => {
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true })
   );
+
   const handleFeatureChange = (e) => {
     setFeatureData({
       ...featureData,
       [e.target.name]: e.target.value,
     });
   };
+
   const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
     setFeatureData({
       ...featureData,
-      isNecessary: e.target.checked,
+      [name]: checked,
     });
   };
+
   useEffect(() => {
     dispatch(fetchUserData());
   }, [dispatch]);
@@ -147,42 +151,25 @@ const Overview = () => {
       },
     }));
   };
+
   const addFeature = () => {
+    const newFeature = {
+      name: featureData.featureName,
+      price: parseFloat(featureData.featurePrice),
+      isNecessary: featureData.isNecessary,
+    };
     setFormData({
       ...formData,
-      features: [
-        ...formData.features,
-        {
-          name: featureData.featureName,
-          price: parseFloat(featureData.featurePrice),
-          isNecessary: featureData.isNecessary,
-        },
-      ],
+      features: [...formData.features, newFeature],
     });
+
     setFeatureData({
+      ...featureData,
       featureName: "",
       featurePrice: "",
       isNecessary: false,
     });
   };
-
-  useEffect(() => {
-    const fetchPlans = async () => {
-      try {
-        const res = await fetch("/api/plans");
-        if (res.ok) {
-          const data = await res.json();
-          setPlans(data.plans);
-        } else {
-          console.error("Failed to fetch plans:", res.statusText);
-        }
-      } catch (error) {
-        console.error("Failed to fetch plans:", error);
-      }
-    };
-
-    fetchPlans();
-  }, []);
 
   const handleEventSubmit = async (e) => {
     e.preventDefault();
@@ -218,15 +205,13 @@ const Overview = () => {
         },
       });
       if (res.ok) {
-        const data = await res.json();
-        console.log("Plan added successfully!");
-        router.push("/order");
-        alert("plan created successFully");
+        router.push('/');
       } else {
         console.error("Failed to add plan:", res.statusText);
       }
     } catch (error) {
       console.error("Failed to add plan:", error);
+    } finally {
     }
   };
 
@@ -448,7 +433,8 @@ const Overview = () => {
                               </div>
                               <div className="flex flex-col gap-[5px]">
                                 <h1 className="text-white text-[28px] font-bold">
-                                  {overData?.totalAmount?.toLocaleString()} +
+                                  {overData?.responseData.totalAmount?.toLocaleString()}{" "}
+                                  +
                                 </h1>
                                 <h1 className="text-gray-400 text-[13px]">
                                   {" "}
@@ -474,7 +460,7 @@ const Overview = () => {
                               </div>
                               <div className="flex flex-col gap-[5px]">
                                 <h1 className="text-white text-[28px] font-bold h-10">
-                                  {overData?.allOrders} +
+                                  {overData?.responseData.allOrders} +
                                 </h1>
                                 <h1 className="text-gray-400 text-[13px]">
                                   {" "}
@@ -501,7 +487,7 @@ const Overview = () => {
                               </div>
                               <div className="flex flex-col gap-[5px]">
                                 <h1 className="text-white text-[28px] font-bold h-10">
-                                  {overData?.AllUsers} +
+                                  {overData?.responseData.AllUsers} +
                                 </h1>
                                 <h1 className="text-gray-400 text-[13px]">
                                   مشاهده کاربران
@@ -520,7 +506,7 @@ const Overview = () => {
                     آخرین پرداخت ها
                   </h1>
                   {overData ? (
-                    overData?.latestPayments?.map((lastpyment) => (
+                    overData?.responseData.latestPayments?.map((lastpyment) => (
                       <div
                         key={lastpyment._id}
                         className="flex w-full items-center justify-between px-2"
@@ -613,8 +599,8 @@ const Overview = () => {
                         <Loader2 className="h-7 w-7 animate-spin" />
                       </div>
                     ) : (
-                      popularPlans &&
-                      popularPlans.map((plan) => (
+                      overData &&
+                      overData.responseData.popularPlans.map((plan) => (
                         <div
                           key={plan._id}
                           className="flex gap-[px] items-center justify-start"
@@ -622,8 +608,13 @@ const Overview = () => {
                           <Progress
                             className="xl:w-[48%] 2xl:w-[60%] lg:w-[80%] md:w-[40%] w-[60%] h-[45px] sm:w-[50%] lg:h-[40px] xl:h-[55px] sm:h-[50px] md:h-[65px] rounded-l-[0.1rem]  rounded-r-[0.4rem]"
                             value={
-                              (plan.totalOrders / popularPlans[0].totalOrders) *
-                              100
+                              popularPlans &&
+                              popularPlans.length > 0 &&
+                              popularPlans[0]
+                                ? (plan.totalOrders /
+                                    popularPlans[0]?.totalOrders) *
+                                  100
+                                : 0
                             }
                           />
                           <div className="xl:w-[50px] lg:w-[40px] md:w-[60px] w-[45px] sm:w-[50px] rotate-90">
@@ -658,7 +649,7 @@ const Overview = () => {
                 </div>
                 <div className="flex flex-col gap-3">
                   {overData ? (
-                    overData?.latestOrders?.map((order) => (
+                    overData.responseData.latestOrders.map((order) => (
                       <Link
                         href={`/dashboard/order/${order._id}`}
                         key={order._id}
@@ -734,7 +725,7 @@ const Overview = () => {
                 </h1>
                 <div className="flex flex-col gap-5">
                   {overData ? (
-                    overData.latestTickets.map((ticket) => (
+                    overData.responseData.latestTickets?.map((ticket) => (
                       <Link
                         key={ticket._id}
                         href={`/dashboard/ticket/${ticket._id}`}

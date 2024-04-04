@@ -85,7 +85,6 @@ const Payment = () => {
   };
 
   return (
-    <Layout>
       <div className="min-h-screen w-full py-5 px-3 sm:py-6 sm:px-5 lg:px-10 lg:py-10">
         <Card className="w-[80%] border-none mx-auto flex flex-col gap-4 h-[650px] md:flex-row items-start mt-[50px]">
           <Card className="w-full md:w-[60%] h-full p-5">
@@ -163,7 +162,6 @@ const Payment = () => {
           </Card>
         </Card>
       </div>
-    </Layout>
   );
 };
 

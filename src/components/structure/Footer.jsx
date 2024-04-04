@@ -10,7 +10,7 @@ import { IoLogoLinkedin } from "react-icons/io5";
 const Footer = () => {
   return (
     <div>
-      <div className="w-full min-h-[420px] bg-[#161D48] p-10 md:px-[100px] md:py-[100px]">
+      <div className="w-full min-h-[370px] bg-[#161D48] p-10 md:px-[100px] md:py-[100px]">
         <div className="flex flex-col gap-5">
           <div className="w-full flex flex-col md:flex-row gap-4 items-center justify-between py-4 border-b-[0.6px] border-zinc-500">
             <Image src={logo} alt="logo" className="w-[150px]" />

@@ -1,6 +1,6 @@
 import DashboardSideNav from "./DashboardSideNav";
 
-import './dashboardLayout.css';
+
 
 const DashboardLayout = ({ children }) => {
   return (
