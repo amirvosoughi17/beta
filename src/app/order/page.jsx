@@ -30,7 +30,7 @@ const Order = () => {
     return plans.map((plan) => (
       <Link key={plan._id} href={`/features/${plan._id}`}>
         <div className='w-[200px] h-[200px] rounded-xl bg-white my-5 px-5 py-7 flex flex-col justify-between '>
-          <h1 className='font-bold text-slate-900 text-xl'>{plan.name}</h1>
+          <h1 className='font-bold text-white text-xl'>{plan.name}</h1>
           <p>{plan.description}</p>
           <div className="flex items-center w-full justify-between ">
             <span>basePrice : </span>
@@ -54,7 +54,7 @@ const Order = () => {
                 {plans && plans.map((plan) => (
                   <Link key={plan._id} href={`/features/${plan._id}`}>
                   <div className='w-[200px] h-[200px] rounded-xl bg-white my-5 px-5 py-7 flex flex-col justify-between '>
-                    <h1 className='font-bold text-slate-900 text-xl'>{plan.name}</h1>
+                    <h1 className='font-bold text-white text-xl'>{plan.name}</h1>
                     <p>{plan.description}</p>
                     <div className="flex items-center w-full justify-between ">
                       <span>basePrice : </span>

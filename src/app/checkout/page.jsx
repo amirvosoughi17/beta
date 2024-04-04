@@ -15,6 +15,7 @@ const Checkout = () => {
 
   const router = useRouter();
 
+
   const sendOrderToServer = async () => {
     setIsLoading(true);
 
@@ -48,7 +49,6 @@ const Checkout = () => {
   };
 
   return (
-    <Layout>
       <div className='w-full min-h-screen py-9 px-10'>
         {planName && <p className='mt-3 text-center text-3xl font-bold'>{planName}</p>}
         <div className='flex flex-col items-center gap-5 py-10 px-10 rounded-xl'>
@@ -73,7 +73,6 @@ const Checkout = () => {
           {isOrderSent && <p className='mt-3 text-green-600 font-bold'>Order successfully sent!</p>}
         </div>
       </div>
-    </Layout>
   );
 };
 
