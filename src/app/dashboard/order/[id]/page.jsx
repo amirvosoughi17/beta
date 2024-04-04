@@ -1,5 +1,4 @@
 "use client";
-
 import DashboardLayout from "@/components/DashboardLayout";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,97 +8,104 @@ import moment from "moment";
 import "moment/locale/fa";
 import Link from "next/link";
 import { setOrder } from "@/redux/user/userSlice";
-//shadcn
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 
 const Order = ({ id }) => {
-  const [order, setOrder] = useState(null);
-  const userInfo = useSelector(selectUserInfo);
-  const dispatch = useDispatch();
+    const [orderId, setOrderId] = useState(null);
+    const [order, setOrder] = useState(null);
+    const [isUpdating, setIsUpdating] = useState(false);
+    const userInfo = useSelector(selectUserInfo);
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchUserData());
-  }, [dispatch]);
+    useEffect(() => {
+        dispatch(fetchUserData());
+    }, [dispatch]);
 
-  useEffect(() => {
-    const pathArray = window.location.pathname.split("/");
-    const id = pathArray[pathArray.length - 1];
+    useEffect(() => {
+        const pathArray = window.location.pathname.split("/");
+        const id = pathArray[pathArray.length - 1];
+        setOrderId(id);
+        const fetchOrderDetails = async () => {
+            try {
+                if (!id) {
+                    return;
+                }
+                const response = await fetch(`/api/admin/orders/${id}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setOrder(data.order);
+                } else {
+                    console.error("Failed to fetch order details:", response.statusText);
+                }
+                dispatch(setOrder(orderData));
+            } catch (error) {
+                console.error("Error fetching order details:", error.message);
+            }
+        };
 
-    const fetchOrderDetails = async () => {
-      try {
-        if (!id) {
-          return;
+        fetchOrderDetails();
+    }, [dispatch]);
+
+    const handleStatusChange = async (featureId, newStatus) => {
+        try {
+            const updatedOrder = { ...order };
+            const selectedFeatureIndex = updatedOrder.selectedFeatures.findIndex(sf => sf._id === featureId);
+            if (selectedFeatureIndex === -1) {
+                console.error("Selected feature not found in the order");
+                return;
+            }
+            updatedOrder.selectedFeatures[selectedFeatureIndex].status = newStatus;
+            const updateResponse = await fetch(`/api/admin/orders/${orderId}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updatedOrder),
+            });
+            if (updateResponse.ok) {
+                console.log("Feature status updated successfully!");
+                setOrder(updatedOrder);
+            } else {
+                console.error("Failed to update feature status:", updateResponse.statusText);
+            }
+        } catch (error) {
+            console.error("Error updating feature status:", error.message);
         }
-        const response = await fetch(`/api/admin/orders/${id}`);
-        if (response.ok) {
-          const data = await response.json();
-          setOrder(data.order);
-        } else {
-          console.error("Failed to fetch order details:", response.statusText);
-        }
-        dispatch(setOrder(orderData));
-      } catch (error) {
-        console.error("Error fetching order details:", error.message);
-      }
     };
 
-    fetchOrderDetails();
-  }, [dispatch]);
-
-  const handleStatusChange = async (featureId, newStatus) => {
-    const orderId = order._id;
-    try {
-      const response = await fetch(`/api/admin/orders/${orderId}`);
-      if (response.ok) {
-        const data = await response.json();
-        const order = data.order;
-
-        const selectedFeature = order.selectedFeatures.find(
-          (sf) => sf._id === featureId
-        );
-
-        if (!selectedFeature) {
-          console.error("Selected feature not found in the order");
-          return;
-        }
-
-        const updateResponse = await fetch(`/api/admin/orders/${orderId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            featureName: selectedFeature.name,
-            newStatus: newStatus,
-          }),
-        });
-
-        if (updateResponse.ok) {
-          console.log("Feature status updated successfully!");
-        } else {
-          console.error(
-            "Failed to update feature status:",
-            updateResponse.statusText
-          );
-        }
-      } else {
-        console.error("Failed to fetch order details:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error updating feature status:", error.message);
+    if (!order) {
+        return <p>Loading...</p>;
     }
-  };
 
-  if (!order) {
-    return <p>Loading...</p>;
-  }
+    const handleAcceptProject = async () => {
+        setIsUpdating(true);
+        try {
+            const response = await fetch(`/api/admin/orders/${orderId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ newStatus: 'پذیرفته شده' }),
+            });
+            if (!response.ok) {
+                throw new Error('خطا در تایید پروژه.');
+            }
+            alert('پروژه با موفقیت تایید شد.');
+        } catch (error) {
+            console.error('Error accepting project:', error.message);
+            alert(error.message);
+        } finally {
+            setIsUpdating(false);
+        }
+    };
+
   return (
     <DashboardLayout>
-      <div className="p-2 sm:p-8 w-full  md:mt-0 mt-[70px]">
-        <div className="w-full lg:w-[80%] xl:w-[85%] lg:mr-[220px] md:mt-0 mt-[70px]">
+      <div className="p-2 sm:p-8 w-full  md:mt-0 mt-[120px]">
+        <div className="w-full lg:w-[80%] xl:w-[85%] lg:mr-[220px] md:mt-0 mt-[140px]">
           <div className="w-full  min-h-screen  py-5 sm:px-4 md:px-8 flex flex-col gap-5 ">
             <div className="flex w-full items-center justify-between border-b-[1px] border-zinc-800 pb-5 ">
               <h1 className=" flex flex-col gap-4">
@@ -114,9 +120,14 @@ const Order = ({ id }) => {
                   </span>
                 </div>
               </h1>
-              <Badge>{order.status}</Badge>
+              <div className="flex items-center gap-2">
+                {userInfo && userInfo.role === "admin" && (
+                  <Button variant='secondary' disabled={isUpdating} onClick={handleAcceptProject}>پذیرش</Button>
+                )}
+                <Badge>{order.status}</Badge>
+              </div>
             </div>
-            {/* <p>Support Time: {order.supportTime} months</p> */}
+
             <div className="w-full flex flex-col lg:flex-row items-start gap-4 ">
               <Card className="flex flex-col gap-3 w-full  lg:w-[55%] px-4 py-6">
                 <h1 className="text-2xl mb-7 mt-4 font-semibold text-white pr-4">
@@ -137,7 +148,7 @@ const Order = ({ id }) => {
                     <div key={feature._id} className="py-4 px-3 ">
                       <div className="flex items-center justify-between ">
                         <span>{feature.name}</span>
-                        {/* <span>تومان {feature.price.toLocaleString()}</span> */}
+
                         {userInfo && userInfo.role === "admin" && (
                           <select
                             className=" bg-transparent text-white border-zinc-800 border-[1px] rounded-md py-2 px-2"
@@ -146,9 +157,13 @@ const Order = ({ id }) => {
                               handleStatusChange(feature._id, e.target.value)
                             }
                           >
-                            <option value="در انتظار توسعه">در انتظار توسعه</option>
+                            <option value="در انتظار توسعه">
+                              در انتظار توسعه
+                            </option>
                             <option value="در حال توسعه">درحال توسعه</option>
-                            <option value="توسعه داده شده">توسعه داده شده</option>
+                            <option value="توسعه داده شده">
+                              توسعه داده شده
+                            </option>
                           </select>
                         )}
                         {userInfo && userInfo.role === "user" && (
@@ -187,12 +202,13 @@ const Order = ({ id }) => {
                   </h1>
                   <div className="flex flex-col gap-3">
                     <div className="flex w-full items-center justify-between">
-                      <span className="text-zinc-300 text-md">
-                        قسط اول
-                      </span>
+                      <span className="text-zinc-300 text-md">قسط اول</span>
                       <span>
-                      تومان {order?.installments[0]?.amount.toLocaleString(undefined, { maximumFractionDigits: 0 })}
-
+                        تومان{" "}
+                        {order?.installments[0]?.amount.toLocaleString(
+                          undefined,
+                          { maximumFractionDigits: 0 }
+                        )}
                       </span>
                     </div>
                     <div className="flex w-full items-center justify-between">
@@ -200,15 +216,16 @@ const Order = ({ id }) => {
                         تسویه حساب :‌
                       </span>
                       <span>
-                      تومان {order?.installments[1]?.amount.toLocaleString(undefined, { maximumFractionDigits: 0 })}
-
+                        تومان{" "}
+                        {order?.installments[1]?.amount.toLocaleString(
+                          undefined,
+                          { maximumFractionDigits: 0 }
+                        )}
                       </span>
                     </div>
                     <div className="flex w-full items-center justify-between ">
                       <span>پرداخت شده :</span>
-                      <span>
-                        تومان {order?.paymentStatus?.totalPaidPrice}
-                      </span>
+                      <span>تومان {order?.paymentStatus?.totalPaidPrice}</span>
                     </div>
                     <div className="flex items-center justify-between w-full">
                       <span className="text-zinc-300 text-md">کل قیمت :</span>
@@ -217,13 +234,13 @@ const Order = ({ id }) => {
                     <div className="border-t-[0.5px] mt-2 pt-3 bordr-zinc-800 w-full flex items-center justify-between">
                       <Link href={`/payment/${order._id}`}>
                         <Button>
-                          {order?.installments[0]?.paid === "true" ? "تسویه حساب"  : "پرداخت قسط اول"}
+                          {order?.installments[0]?.paid === "true"
+                            ? "تسویه حساب"
+                            : "پرداخت قسط اول"}
                         </Button>
                       </Link>
                       <Link href="/payments">
-                        <Button  variant='secondary'>
-                          مشاهده پرداخت ها
-                        </Button>
+                        <Button variant="secondary">مشاهده پرداخت ها</Button>
                       </Link>
                     </div>
                   </div>
