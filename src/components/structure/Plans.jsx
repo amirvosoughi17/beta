@@ -22,7 +22,7 @@ import { TfiHeadphoneAlt } from "react-icons/tfi";
 
 const Plans = () => {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-cnter gap-[70px] mt-[100px] min-h-screen mb-10">
+    <div className="w-full h-full flex flex-col items-center justify-cnter gap-[70px] mt-[100px] min-h-screen mb-[450px]">
       <div className="flex flex-col gap-1.5 items-center">
         <h1 className="text-[26px] md:text-2xl font-semibold text-[#364163] ">
           تعرفه های ویکسل
