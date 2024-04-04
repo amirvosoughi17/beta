@@ -146,9 +146,9 @@ const Order = ({ id }) => {
                               handleStatusChange(feature._id, e.target.value)
                             }
                           >
-                            <option value="todo">انجام نشده</option>
-                            <option value="inProgress">درحال انجام</option>
-                            <option value="completed">انجام شده</option>
+                            <option value="در انتظار توسعه">در انتظار توسعه</option>
+                            <option value="در حال توسعه">درحال توسعه</option>
+                            <option value="توسعه داده شده">توسعه داده شده</option>
                           </select>
                         )}
                         {userInfo && userInfo.role === "user" && (
