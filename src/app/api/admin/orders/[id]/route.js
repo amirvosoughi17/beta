@@ -73,13 +73,13 @@ export async function PUT(request, { params }) {
 
             order.supportExpiresAt.setMonth(order.supportExpiresAt.getMonth() + order.supportTime)
 
-            if (order.orderProgress === 100 && !order.paymentStatus.isFullPaid) {
-                const waitPayPriceNotification = await sendNotification(
-                    MESSAGE_CONTENT.WAIT_FOR_PAY_PRICE.title,
-                    MESSAGE_CONTENT.WAIT_FOR_PAY_PRICE.message
-                );
-                user.notifications.push(waitPayPriceNotification._id)
-            }
+            // if (order.orderProgress === 100 && !order.paymentStatus.isFullPaid) {
+            //     const waitPayPriceNotification = await sendNotification(
+            //         MESSAGE_CONTENT.WAIT_FOR_PAY_PRICE.title,
+            //         MESSAGE_CONTENT.WAIT_FOR_PAY_PRICE.message
+            //     );
+            //     user.notifications.push(waitPayPriceNotification._id)
+            // }
 
 
             const completedOrderStatusNotification = await sendNotification(
