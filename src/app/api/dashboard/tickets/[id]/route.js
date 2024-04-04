@@ -78,24 +78,24 @@ export async function PUT(request, { params }) {
 
         const NOTIFICATION_CONTENT = {
             IN_PROGRESS: {
-                title: "Ticket is checking",
-                message: "Ticket is checking when ticket checked you will inform"
+                title: "تیکت شما در حال برسی است",
+                message: ` درود, تیکت ${updatedTicket.subject} از سوی تیم ویکسل در حال برسی است`
             },
             CLOSED: {
-                title: "Ticket is closed",
-                message: "Ticket closed that mean your problem solved successfully"
+                title: "تیکت بسته شد",
+                message: `تیکت شما بسته شد, شما نمیتوانید پیامی در  تیکت ${updatedTicket.subject} بدهید`
             }
         };
 
         switch (updatedTicket.status) {
-            case "inProgress":
+            case "در حال برسی":
                 const inProgressTicketMessage = await sendNotification(
                     NOTIFICATION_CONTENT.IN_PROGRESS.title,
                     NOTIFICATION_CONTENT.IN_PROGRESS.message
                 );
                 user.notifications.push(inProgressTicketMessage._id)
                 break;
-            case "closed":
+            case "بسته شده":
                 const closedTicketMessage = await sendNotification(
                     NOTIFICATION_CONTENT.CLOSED.title,
                     NOTIFICATION_CONTENT.CLOSED.message
@@ -105,7 +105,7 @@ export async function PUT(request, { params }) {
                 break;
         }
         await user.save();
-        return NextResponse.json({ message: "Ticket updated" }, { status: 200 })
+        return NextResponse.json({ message: "وضعیت تیکت بروزرسانی شد" }, { status: 200 })
     } catch (error) {
         return NextResponse.json({
             success: false,
