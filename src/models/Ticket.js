@@ -16,8 +16,8 @@ const ticketSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["open", "inProgress", "closed"],
-        default: "open",
+        enum: ["باز شده", "در حال برسی", "بسته شده"],
+        default: "باز شده",
         required: true
     },
     responses: [{
