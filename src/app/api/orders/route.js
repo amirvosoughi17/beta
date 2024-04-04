@@ -11,36 +11,21 @@ connect();
 export async function POST(request) {
   try {
     const data = await request.json();
-    let { planName, supportTime, selectedFeatures } = data;
+    let { planName, selectedFeatures, totalPrice } = data;
 
     
     const user_id = await get_user_data_from_session(request);
     const user = await User.findOne({ _id: user_id });
 
-    const plan = await Plan.findOne({ name: planName });
-    const planBasePrice = plan.basePrice;
-
-    if (!selectedFeatures || selectedFeatures.length === 0) {
-      selectedFeatures = plan.features.filter(feature => feature.isNeseccary);
-    }
-    const supportFeaturePricePerMonth = 120;
-    const supportTotalPrice = supportFeaturePricePerMonth * supportTime;
-
-    const selectedFeaturesTotalPrice = selectedFeatures.reduce((total, feature) => {
-      return total + feature.price
-    }, 0);
-
-
     const newOrder = await Order.create({
       plan: planName,
       user,
-      supportTime,
       selectedFeatures,
       totalFeature: selectedFeatures.length,
       statusDates: {
         pending: new Date(Date.now())
       },
-      totalPrice: planBasePrice + selectedFeaturesTotalPrice + supportTotalPrice
+      totalPrice
     });
 
     if (!newOrder.installments.find(inst => inst.amount === newOrder.totalPrice * 0.4)) {
