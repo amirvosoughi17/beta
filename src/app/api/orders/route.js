@@ -16,7 +16,10 @@ export async function POST(request) {
     
     const user_id = await get_user_data_from_session(request);
     const user = await User.findOne({ _id: user_id });
-
+    
+    if (!selectedFeatures || selectedFeatures.length === 0) {
+      selectedFeatures = plan.features.filter(feature => feature.isNeseccary);
+    }
     const newOrder = await Order.create({
       plan: planName,
       user,
