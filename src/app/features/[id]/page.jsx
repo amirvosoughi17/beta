@@ -93,9 +93,10 @@ const PlanDetails = () => {
                 <h2 className="mb-10 text-lg font-semibold text-gray-600">
                   Features:{" "}
                 </h2>
-                {plan.features.map((feature) => (
+                { plan &&
+                plan.features.map((feature) => (
                   <div
-                    className="flex items-center gap-6 bg-violet-700 text-white px-7 py-3 rounded-xl"
+                    className={`flex items-center gap-6 ${feature.isNeseccary === "true" ? "bg-zinc-100" : "bg-violet-700" } text-white px-7 py-3 rounded-xl`}
                     key={feature._id}
                   >
                     <span>{feature.name}</span>

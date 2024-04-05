@@ -10,7 +10,7 @@ const nodeCache = new NodeCache();
 export async function POST(request) {
     try {
         const data = await request.json();
-        const { name, basePrice, description, ...features } = data;
+        const { name, basePrice, description, features } = data;
 
         const existsName = await Plan.findOne({ name });
 
@@ -19,7 +19,8 @@ export async function POST(request) {
                 message: "Plan name already exists!",
             }, { status: 400 });
         }
-        const newPlan = await Plan.create({ name, basePrice, description, ...features });
+
+        const newPlan = await Plan.create({ name, basePrice, description, features });
 
         return NextResponse.json({
             message: "New Plan created successfully!",
@@ -33,6 +34,8 @@ export async function POST(request) {
         }, { status: 500 });
     }
 }
+
+
 
 export async function GET() {
     try {
