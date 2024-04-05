@@ -77,6 +77,7 @@ const orderSchema = new mongoose.Schema({
             default: null
         }
     }],
+    lastReminderSentAt: Date,
     totalPrice: {
         type: Number,
         default: 0,

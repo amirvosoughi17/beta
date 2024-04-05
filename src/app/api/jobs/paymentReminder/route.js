@@ -6,10 +6,10 @@ import { NextResponse } from "next/server";
 import cron from 'node-cron';
 
 connect();
-
+// 0 */1 * * *
 export async function GET() {
     try {
-        cron.schedule('0 */1 * * *', async () => {
+        cron.schedule('* * * * *', async () => {
             console.log('paymentReminder job is running ...');
 
             const orders = await Order.find({
@@ -51,6 +51,12 @@ export async function GET() {
 }
 
 async function dayReminder(order, day) {
+    const lastReminderSentAt = order.lastReminderSentAt || new Date(0);
+
+    if ((new Date() - lastReminderSentAt) < (24 * 60 * 60 * 1000)) {
+        return;
+    }
+
     const user = await User.findById(order.user);
     let notificationMessage = "";
     switch (day) {
@@ -71,6 +77,8 @@ async function dayReminder(order, day) {
         "یادآوری پرداخت",
         notificationMessage
     );
+    order.lastReminderSentAt = new Date();
+    await order.save();
 
     user.notifications.push(reminderNotification._id);
     await user.save();
