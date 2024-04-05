@@ -81,22 +81,24 @@ const PlanDetails = () => {
   }, [selectedFeatures, plan, dispatch]);
 
   return (
-      <div className=" w-full min-h-screen py-9 px-10">
-        <h1 className="text-center my-10 text-2xl">Plan Details Page</h1>
-        {plan && (
-          <div className="flex flex-col items-center gap-5 py-10 px-10 rounded-xl">
-            <h1 className="font-bold text-slate-200 text-xl">
-              planName: {plan.name}
-            </h1>
-            <div>
-              <div className="flex flex-col gap-1 my-10">
-                <h2 className="mb-10 text-lg font-semibold text-gray-600">
-                  Features:{" "}
-                </h2>
-                { plan &&
+    <div className=" w-full min-h-screen py-9 px-10">
+      <h1 className="text-center my-10 text-2xl">Plan Details Page</h1>
+      {plan && (
+        <div className="flex flex-col items-center gap-5 py-10 px-10 rounded-xl">
+          <h1 className="font-bold text-slate-200 text-xl">
+            planName: {plan.name}
+          </h1>
+          <div>
+            <div className="flex flex-col gap-1 my-10">
+              <h2 className="mb-10 text-lg font-semibold text-gray-600">
+                Features:{" "}
+              </h2>
+              {plan &&
                 plan.features.map((feature) => (
                   <div
-                    className={`flex items-center gap-6 ${feature.isNeseccary === "true" ? "bg-zinc-100" : "bg-violet-700" } text-white px-7 py-3 rounded-xl`}
+                    className={`flex items-center gap-6 px-7 py-3 rounded-xl ${
+                      feature.isNeseccary ? "text-zinc-400" : "text-white"
+                    }`}
                     key={feature._id}
                   >
                     <span>{feature.name}</span>
@@ -107,21 +109,22 @@ const PlanDetails = () => {
                       checked={selectedFeatures.some(
                         (selectedFeature) => selectedFeature._id === feature._id
                       )}
+                      disabled={feature.isNeseccary}
                     />
                   </div>
                 ))}
-              </div>
-              <p>Total Price: ${totalPrice}</p>
-              <button
-                onClick={handleCheckout}
-                className="bg-blue-500 text-white py-2 px-4 mt-5 rounded"
-              >
-                Checkout
-              </button>
             </div>
+            <p>Total Price: ${totalPrice}</p>
+            <button
+              onClick={handleCheckout}
+              className="bg-blue-500 text-white py-2 px-4 mt-5 rounded"
+            >
+              Checkout
+            </button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
+    </div>
   );
 };
 
