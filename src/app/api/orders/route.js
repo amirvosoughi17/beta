@@ -11,7 +11,7 @@ connect();
 export async function POST(request) {
   try {
     const data = await request.json();
-    let { planName, selectedFeatures, totalPrice } = data;
+    let { planName, totalPrice } = data;
 
 
     const user_id = await get_user_data_from_session(request);
@@ -19,8 +19,11 @@ export async function POST(request) {
 
     const plan = await Plan.findOne({ name: planName });
 
-    if (!selectedFeatures || selectedFeatures.length === 0) {
-      selectedFeatures = plan.features.filter(feature => feature.isNeseccary);
+    const necessaryFeatures = plan.features.filter(feature => feature.isNeseccary);
+
+    let selectedFeatures = necessaryFeatures;
+    if (data.selectedFeatures) {
+      selectedFeatures = selectedFeatures.concat(data.selectedFeatures);
     }
 
     const newOrder = await Order.create({
