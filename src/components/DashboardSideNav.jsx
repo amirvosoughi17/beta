@@ -130,7 +130,6 @@ const DashboardSideNav = () => {
                             {userInfo && userInfo.role === "admin" && (
                                 <>
                                     <Link href='/dashboard/admin/overview' className="flex items-center gap-3" >
-
                                         <RxDashboard size={19} />
                                         <span className='text-[18px] font-semibold text-gray-200'>دشبورد</span>
                                     </Link>
@@ -283,7 +282,7 @@ const DashboardSideNav = () => {
                                                 </div>
                                                 <span className='text-[18px] font-semibold text-gray-200 hover:text-white duration-300'>مدیریت</span>
                                             </Link>
-                                            <Link href='/dashboard/overview' className="flex items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
+                                            <Link href='/dashboard/admin' className="flex items-center gap-4  py-[8px] 2xl:py-[10px]  duration-300 rounded-xl ">
                                                 <div className=" p-[6px] shadow-md rounded-lg">
                                                     <FiShoppingBag size={25} className='text-gray-100' />
                                                 </div>

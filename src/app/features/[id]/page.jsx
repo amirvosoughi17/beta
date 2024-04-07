@@ -5,11 +5,18 @@ import {
   setFeatures,
   setTotalPrice,
   setPlanName,
+  setNecessaryFeatures,
 } from "@/redux/features/featuresSlice";
 import { useRouter } from "next/navigation";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import Layout from "@/components/Layout";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { TiTick } from "react-icons/ti";
+import { AiOutlineNotification } from "react-icons/ai";
+import { BsStarFill } from "react-icons/bs";
 
 const fetchPlanDetails = async (id) => {
   const res = await fetch(`/api/plans/${id}`);
@@ -20,31 +27,28 @@ const fetchPlanDetails = async (id) => {
 const PlanDetails = () => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const selectedFeatures = useSelector(
-    (state) => state.features.selectedFeatures
-  );
+  const selectedFeatures = useSelector((state) => state.features.selectedFeatures);
+  const necessaryFeatures = useSelector((state) => state.features.necessaryFeatures);
+  
   const totalPrice = useSelector((state) => state.features.totalPrice);
   const planName = useSelector((state) => state.features.planName);
 
   const [plan, setPlan] = useState(null);
-
   useEffect(() => {
     const pathArray = window.location.pathname.split("/");
     const id = pathArray[pathArray.length - 1];
-
     const fetchPlanDetailsData = async () => {
       try {
         if (!id) {
           return;
         }
-
         const planDetails = await fetchPlanDetails(id);
         setPlan(planDetails);
+        dispatch(setNecessaryFeatures(planDetails.features.filter(feature => feature.isNeseccary)));
       } catch (error) {
         console.error("Error fetching plan details:", error);
       }
     };
-
     fetchPlanDetailsData();
   }, []);
 
@@ -64,11 +68,17 @@ const PlanDetails = () => {
     }
   };
 
-  const handleCheckout = () => {
-    dispatch(setPlanName(plan.name));
-    router.push("/checkout");
+  const handleChange = () => {
+    setIsChecked(!isChecked);
+    handleFeatureSelection(feature);
   };
 
+  const handleCheckout = () => {
+
+    dispatch(setPlanName(plan.name));
+
+    router.push("/checkout");
+  };
   useEffect(() => {
     const basePrice = plan ? plan.basePrice : 0;
     const featurePrices = selectedFeatures.map((feature) => feature.price);
@@ -76,54 +86,128 @@ const PlanDetails = () => {
       (sum, price) => sum + price,
       0
     );
-
     dispatch(setTotalPrice(basePrice + featuresTotalPrice));
   }, [selectedFeatures, plan, dispatch]);
 
   return (
-    <div className=" w-full min-h-screen py-9 px-10">
-      <h1 className="text-center my-10 text-2xl">Plan Details Page</h1>
-      {plan && (
-        <div className="flex flex-col items-center gap-5 py-10 px-10 rounded-xl">
-          <h1 className="font-bold text-slate-200 text-xl">
-            planName: {plan.name}
+    <div className=" w-full min-h-screen py-9 px-4 md:px-10 max-w-[1300px] mx-auto">
+      <div className="flex flex-col  items-start gap-10 mt-10">
+        <div className="flex flex-col mx-auto md:mx-0 gap-4 md:gap-6">
+          <h1 className="text-3xl text-center md:text-start text-white font-semibold">
+            سایت {plan?.name}
           </h1>
-          <div>
-            <div className="flex flex-col gap-1 my-10">
-              <h2 className="mb-10 text-lg font-semibold text-gray-600">
-                Features:{" "}
-              </h2>
-              {plan &&
-                plan.features.map((feature) => (
-                  <div
-                    className={`flex items-center gap-6 px-7 py-3 rounded-xl ${
-                      feature.isNeseccary ? "text-zinc-400" : "text-white"
-                    }`}
-                    key={feature._id}
-                  >
-                    <span>{feature.name}</span>
-                    <span>${feature.price}</span>
-                    <input
-                      type="checkbox"
-                      onChange={() => handleFeatureSelection(feature)}
-                      checked={selectedFeatures.some(
-                        (selectedFeature) => selectedFeature._id === feature._id
-                      )}
-                      disabled={feature.isNeseccary}
-                    />
-                  </div>
-                ))}
-            </div>
-            <p>Total Price: ${totalPrice}</p>
-            <button
-              onClick={handleCheckout}
-              className="bg-blue-500 text-white py-2 px-4 mt-5 rounded"
-            >
-              Checkout
-            </button>
+          <h1 className="text-xl text-center md:text-start text-zinc-300  max-w-[85%] mx-auto md:max-w-full">
+            نیاز به قابلیت های پیشرفته دارید ؟ ‌انتخاب کنید
+          </h1>
+        </div>
+        <div className="flex flex-col mx-auto md:mx-0 gap-2">
+          <div className="flex items-center gap-2 md:gap-3">
+            <span className="w-[12px] h-[12px] md:w-[16px] md:h-[16px] rounded-full bg-[#bab9e3]"></span>
+            <span className="md:text-[17px] text-md text-white font-medium">
+              امکانات پیشفرض
+            </span>
+          </div>
+          <div className="flex items-center gap-2 md:gap-3 duration-300">
+            <span className="w-[12px] h-[12px] md:w-[16px] md:h-[16px] rounded-full bg-[#5D5AFF]"></span>
+            <span className="md:text-[17px] text-md text-white font-medium">
+              امکانات پیشرفته
+            </span>
           </div>
         </div>
-      )}
+      </div>
+      <Card className="flex-col  flex md:grid grid-cols-2 mt-10  min-h-[200px] md:mt-[60px] p-3 sm:p-5 md:p-4 lg:p-10 gap-4 ">
+        {plan &&
+          plan.features.map((feature) => (
+            <div
+              key={feature._id}
+              className={`flex items-center justify-between gap-3  rounded-lg ${
+                feature.isNeseccary
+                  ? "bg-[#bab9e3] cursor-not-allowed"
+                  : "bg-[#5D5AFF]"
+              } px-3 py-4 sm:p-5 md:p-10 max-h-[80px]`}
+            >
+              <div className="flex items-center gap-6">
+                <h1 className="md:text-xl text-md font-medium flex items-center gap-2">
+                  <BsStarFill />
+                  {feature.name}
+                </h1>
+              </div>
+              {feature.isNeseccary ? (
+                <div className="flex items-center gap-2 px-4">
+                  <span className="md:text-xl text-md font-medium text-white">
+                    انتخاب شده
+                  </span>
+                  <input
+                    type="checkbox"
+                    onChange={() => handleFeatureSelection(feature)}
+                    checked={true} 
+                    disabled={feature.isNeseccary} 
+                    className={`w-[14px] h-[14px] bg-gray-500 border-1 border-zinc-500 rounded-lg ${
+                      feature.isNeseccary ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                  />
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 px-4">
+                  <span className="md:text-xl text-md font-medium text-white">
+                    انتخاب کنید
+                  </span>
+                  <input
+                    type="checkbox"
+                    onChange={() => handleFeatureSelection(feature)}
+                    checked={selectedFeatures.some(
+                      (selectedFeature) => selectedFeature._id === feature._id
+                    )}
+                    className="w-[14px] h-[14px] bg-gray-500 border-1 border-zinc-500 rounded-lg"
+                  />
+                </div>
+              )}
+            </div>
+          ))}
+      </Card>
+      <div className="my-8 flex items-center justify-between">
+        <div className="flex items-center  gap-1">
+          <span>مجموع :</span>
+          <span>{totalPrice?.toLocaleString()}</span>
+        </div>
+        <Button onClick={handleCheckout}>نهایی کردن سفارش</Button>
+      </div>
+      <div className="flex flex-col gap-5 py-4 my-5 border-t-[0.4px] border-zinc-800 px-2">
+        <div className="flex items-start gap-2 mt-4 ">
+          <span className="text-red-500 text-md flex items-center gap-1 min-w-[55px]">
+            <span>توجه :</span>
+          </span>
+          <p className="md:text-md text-sm text-zinc-300 ">
+            قابلیت های پیشفرض از قبل برای شما انتخاب شده است و نیاز به انتخاب
+            نیست ولی قابلیت های پیشرفته با توجه به نیاز شما قابل انتخاب است .
+          </p>
+        </div>
+        <div className="flex items-start  gap-2 ">
+          <span className="text-red-500 text-md flex items-center gap-1 min-w-[55px]">
+            <span>توجه :</span>
+          </span>
+          <p className="md:text-md text-sm text-zinc-300 ">
+            مبلغ پایه تعرفه برحسب قیمت قابلیت های پیشفرض است و با انتخاب قابلیت
+            های پیشرفته مبلغی به قیمت کل اضافه خواهد شد
+          </p>
+        </div>
+        <div className="flex items-start  gap-2 ">
+          <span className="text-red-500 text-md flex items-center gap-1 min-w-[55px]">
+            <span>توجه :</span>
+          </span>
+          <p className="md:text-md text-sm text-zinc-300 ">
+            هزینه دامنه , هاست و هزینه های جانبی وب سایت بر عهده ویکسل می باشد
+          </p>
+        </div>
+        <div className="flex items-start  gap-2 ">
+          <span className="text-red-500 text-md flex items-center gap-1 min-w-[55px]">
+            <span>توجه :</span>
+          </span>
+          <p className="md:text-md text-sm text-zinc-300 ">
+            پیشتبانی تعرفه های طراحی سایت ویکسل به طور پیشفرض سه ماهه است
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

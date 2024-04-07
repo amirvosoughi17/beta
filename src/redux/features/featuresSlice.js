@@ -1,16 +1,19 @@
-
 import { createSlice } from '@reduxjs/toolkit';
 
 const featuresSlice = createSlice({
   name: 'features',
   initialState: {
     selectedFeatures: [],
+    necessaryFeatures: [],
     totalPrice: 0,
-    planName: "",
+    planName: '',
   },
   reducers: {
     setFeatures: (state, action) => {
       state.selectedFeatures = action.payload;
+    },
+    setNecessaryFeatures: (state, action) => {
+      state.necessaryFeatures = action.payload;
     },
     setTotalPrice: (state, action) => {
       state.totalPrice = action.payload;
@@ -21,6 +24,6 @@ const featuresSlice = createSlice({
   },
 });
 
-export const { setFeatures, setTotalPrice, setPlanName } = featuresSlice.actions;
+export const { setFeatures, setNecessaryFeatures, setTotalPrice, setPlanName } = featuresSlice.actions;
 
 export default featuresSlice.reducer;
