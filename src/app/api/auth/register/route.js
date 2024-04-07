@@ -13,19 +13,19 @@ export async function POST(request) {
 
     if (!username || !email || !password || !phoneNumber) {
         return NextResponse.json({
-            message: "Please fill in all inputs"
+            message: "لطفا تمامی فیلد هارو پر کنید "
         }, { status: 400 })
     }
 
     if (username.length < 3) {
         return NextResponse.json({
-            message: "Username should be more that 3 characters"
+            message: "نام کاربری باید بیشتر از سه حرف تشکیل شده باشد"
         }, { status: 400 })
     }
     const existUser = await User.findOne({ email: email });
     if (existUser) {
         return NextResponse.json({
-            message: "user has already registerd in website"
+            message: "شما قبلا با این ایمیل ثبت نام کرده اید"
         }, { status: 400 })
     }
 

@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import Layout from '@/components/Layout';
+import { toast } from "sonner"
+
 
 const Checkout = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +18,7 @@ const Checkout = () => {
 
   const sendOrderToServer = async () => {
     setIsLoading(true);
-
+    
     try {
       const response = await fetch('/api/orders', {
         method: 'POST',

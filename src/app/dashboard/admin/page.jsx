@@ -32,7 +32,7 @@ const Admin = () => {
 
   useEffect(() => {
     if (userInfo && userInfo.role !== "admin") {
-      router.push("/login");
+      router.push("/dashbaord");
     }
   }, [userInfo, router]);
 

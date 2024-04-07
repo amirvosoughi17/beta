@@ -12,19 +12,19 @@ export async function POST(request) {
         const { email, password } = data;
         if (!email || !password) {
             return NextResponse.json({
-                message: "Please fill in all inputs"
+                message: "لطفا تمامی فیلد هارو پر کنید "
             }, { status: 400 })
         }
         const existsUser = await User.findOne({ email });
         if (!existsUser) {
             return NextResponse.json({
-                message: "Email does not exists !"
+                message: "ایمیل یافت نشد"
             }, { status: 400 });
         }
         const isValidPassword = bcrypt.compareSync(password, existsUser.password);
         if (!isValidPassword) {
             return NextResponse.json({
-                message: "Password does not match !"
+                message: "رمز عبور نادرست است"
             }, { status: 400 });
         }
         const nowDate = new Intl.DateTimeFormat(

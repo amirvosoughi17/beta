@@ -2,12 +2,26 @@
 import React, { useState, useEffect } from 'react'
 import DashboardLayout from '@/components/DashboardLayout'
 import Link from 'next/link';
+import { fetchUserData } from "@/utils/userActions";
+import {
+    selectUserInfo,
+  } from "@/redux/user/userSlice";
 //shadcn
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
 const Tickets = () => {
     const [tickets, setTickets] = useState([]);
-
+    const userInfo = useSelector(selectUserInfo);
+    useEffect(() => {
+      dispatch(fetchUserData());
+    }, [dispatch]);
+  
+  
+    useEffect(() => {
+      if (userInfo && userInfo.role !== "admin") {
+        router.push("/dashbaord");
+      }
+    }, [userInfo, router]);
     useEffect(() => {
         const fetchTickets = async () => {
             try {

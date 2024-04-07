@@ -21,6 +21,17 @@ const UserInfo = () => {
     dispatch(fetchUserData());
   }, [dispatch])
 
+  if (isOrderSent) {
+    toast("سفارش با موفقیت ارسال شد", {
+      description: "متن توضیحات ارسال سفارش",
+      action: {
+        label: "متوجه شدم",
+        onClick: () => console.log("تائید"),
+      },
+    });
+  }
+  
+
   return (
     <div>
       <DashboardLayout>

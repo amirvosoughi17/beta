@@ -79,6 +79,12 @@ const Overview = () => {
     dispatch(fetchUserData());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (userInfo && userInfo.role !== "admin") {
+      router.push("/dashbaord");
+    }
+  }, [userInfo, router]);
+  
   // over data
   useEffect(() => {
     const fetchOverData = async () => {

@@ -1,9 +1,26 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import DashboardLayout from '@/components/DashboardLayout';
+import {
+  selectUserInfo,
+} from "@/redux/user/userSlice";
+import { fetchUserData } from "@/utils/userActions";
+
+
 
 const Users = () => {
   const [users, setUsers] = useState([]);
+  const userInfo = useSelector(selectUserInfo);
+  useEffect(() => {
+    dispatch(fetchUserData());
+  }, [dispatch]);
+
+
+  useEffect(() => {
+    if (userInfo && userInfo.role !== "admin") {
+      router.push("/dashbaord");
+    }
+  }, [userInfo, router]);
 
   useEffect(() => {
     const fetchUsers = async () => {

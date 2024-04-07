@@ -32,7 +32,7 @@ import { RxDashboard } from "react-icons/rx";
 // shadcn
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import ActiveLink from "./ActiveLink";
+
 import {
   Sheet,
   SheetClose,
@@ -66,28 +66,33 @@ const Navbar = () => {
           <div className="">
             <Image alt="logo" className="w-[130px] " src={navLogo} />
           </div>
-          <nav className="items-center gap-8 hidden lg:flex">
-            <ActiveLink href="/">
-              <span>خانه</span>
-            </ActiveLink>
+          <nav className="items-center gap-8 hidden lg:flex ">
+            <Link href="/" className="flex flex-col items-center justify-center relative gap-2">
+              <span className="text-[16px] font-medium duration-300 relative text-[#5D5AFF]">خانه</span>
+              <div className="circle"></div>
+            </Link>
 
-            <ActiveLink href="#plans">
-              <span>تعرفه ها</span>
-            </ActiveLink>
-            <ActiveLink href="#faq">
-              <span>سوالات متداول</span>
-            </ActiveLink>
-            <ActiveLink href="contact">
-              <span>ارتباط باما</span>
-            </ActiveLink>
-            <ActiveLink href="/tariffs">
-              <span>مقالات</span>
-            </ActiveLink>
+            <Link href="#plans" className="flex flex-col items-center justify-center relative gap-2">
+              <span className="text-[16px] font-medium duration-300 relative text-[#313B78]">تعرفه ها</span>
+              <div className="circle"></div>
+            </Link>
+            <Link href="#faq" className="flex flex-col items-center justify-center relative gap-2">
+              <span className="text-[16px] font-medium duration-300 relative text-[#313B78]">سوالات متداول</span>
+              <div className="circle"></div>
+            </Link>
+            <Link href="contact" className="flex flex-col items-center justify-center relative gap-2">
+              <span className="text-[16px] font-medium duration-300 relative text-[#313B78]">ارتباط باما</span>
+              <div className="circle"></div>
+            </Link>
+            <Link href="/tariffs" className="flex flex-col items-center justify-center relative gap-2">
+              <span className="text-[16px] font-medium duration-300 relative text-[#313B78]">مقالات</span>
+              <div className="circle"></div>
+            </Link>
           </nav>
 
           <div className="flex items-center">
             {isAuthenticated ? (
-              <div className="flex items-center gap-5">
+              <div className="flex items-center gap-3 xl:gap-4">
                 <button className="bg-[#5D5AFF] z-50 rounded-[17px] hidden md:flex  py-[15px] w-[160px] h-[50px] pl-[13px] pr-[20px]  items-center justify-between shadow-md shadow-[#4E4AFF59] hover:opacity-85 duration-300">
                   <span className="text-white text-[14px] font-semibold">
                     ثبت سفارش
