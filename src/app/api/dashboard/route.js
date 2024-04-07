@@ -15,7 +15,7 @@ export async function GET(request) {
         } else {
             const userId = await get_user_data_from_session(request);
             user = await User.findOne({ _id: userId });
-            nodeCache.set("user", JSON.stringify(user), 300)
+            nodeCache.set("user", JSON.stringify(user), 3600)
         }
         return NextResponse.json({ user }, { status: 200 })
     } catch (error) {

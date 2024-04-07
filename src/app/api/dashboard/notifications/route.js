@@ -17,7 +17,7 @@ export async function GET(request) {
             myNotifications = JSON.parse(nodeCache.get("myNotifications"));
         } else {
             myNotifications = await Notification.find({ _id: { $in: user.notifications } });
-            nodeCache.set("myNotifications", JSON.stringify(myNotifications), 120)
+            nodeCache.set("myNotifications", JSON.stringify(myNotifications), 300)
         }
 
         return NextResponse.json({ myNotifications }, { status: 200 })

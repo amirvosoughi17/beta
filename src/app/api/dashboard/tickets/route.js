@@ -53,7 +53,7 @@ export async function GET(request) {
             myTickets = JSON.parse(nodeCache.get("myTickets"));
         } else {
             myTickets = await Ticket.find({ createdBy: { $in: userId } }).populate("createdBy", "_id username email phoneNumber");
-            nodeCache.set("myTickets", JSON.stringify(myTickets), 120);
+            nodeCache.set("myTickets", JSON.stringify(myTickets), 300);
         }
         return NextResponse.json({ myTickets }, { status: 200 });
     } catch (error) {
