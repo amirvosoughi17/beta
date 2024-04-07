@@ -2,12 +2,21 @@ import { connect } from "@/config/DB";
 import { User } from "@/models/User";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
+import NodeCache from "node-cache";
 
 connect();
+const nodeCache = new NodeCache();
+
 export async function GET(request) {
     try {
-        const userId = await get_user_data_from_session(request);
-        const user = await User.findOne({ _id: userId });
+        let user;
+        if(nodeCache.has("user")){
+            user = JSON.parse(nodeCache.get("user"))
+        } else {
+            const userId = await get_user_data_from_session(request);
+            user = await User.findOne({ _id: userId });
+            nodeCache.set("user", JSON.stringify(user), 3600)
+        }
         return NextResponse.json({ user }, { status: 200 })
     } catch (error) {
         return NextResponse.json({

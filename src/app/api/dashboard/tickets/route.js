@@ -4,8 +4,11 @@ import { User } from "@/models/User";
 import { sendNotification } from "@/utils/sendNotification";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
+import NodeCache from "node-cache";
 
 connect();
+
+const nodeCache = new NodeCache();
 
 export async function POST(request) {
     try {
@@ -43,9 +46,15 @@ export async function POST(request) {
 
 export async function GET(request) {
     try {
+
         const userId = await get_user_data_from_session(request);
-        const user = await User.findOne({ _id: userId }).select('tickets')
-        const myTickets = await Ticket.find({ _id: { $in: user.tickets } }).populate("createdBy", "_id username email phoneNumber");
+        let myTickets = [];
+        if (nodeCache.has("myTickets")) {
+            myTickets = JSON.parse(nodeCache.get("myTickets"));
+        } else {
+            myTickets = await Ticket.find({ createdBy: { $in: userId } }).populate("createdBy", "_id username email phoneNumber");
+            nodeCache.set("myTickets", JSON.stringify(myTickets), 300);
+        }
         return NextResponse.json({ myTickets }, { status: 200 });
     } catch (error) {
         return NextResponse.json({
