@@ -13,11 +13,10 @@ export async function GET(request) {
         let myOrders = [];
 
         const userId = await get_user_data_from_session(request)
-        const user = await User.findOne({ _id: userId }).populate('orders');
         if (nodeCache.has("myOrders")) {
             myOrders = JSON.parse(nodeCache.get("myOrders"))
         } else {
-            myOrders = await Order.find({ _id: { $in: user.orders } });
+            myOrders = await Order.find({ user: { $in: userId } });
             nodeCache.set("myOrders", JSON.stringify(myOrders), 300)
         }
 
