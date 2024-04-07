@@ -3,14 +3,22 @@ import Notification from "@/models/Notification";
 import { User } from "@/models/User";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
+import NodeCache from "node-cache";
 
 connect();
+const nodeCache = new NodeCache();
 
 export async function GET(request) {
     try {
+        let myNotifications = [];
         const userId = await get_user_data_from_session(request);
         const user = await User.findOne({ _id: userId });
-        const myNotifications = await Notification.find({ _id: { $in: user.notifications } });
+        if (nodeCache.has("myNotifications")) {
+            myNotifications = JSON.parse(nodeCache.get("myNotifications"));
+        } else {
+            myNotifications = await Notification.find({ _id: { $in: user.notifications } });
+            nodeCache.set("myNotifications", JSON.stringify(myNotifications), 120)
+        }
 
         return NextResponse.json({ myNotifications }, { status: 200 })
     } catch (error) {
