@@ -81,3 +81,41 @@
 .relative.active .circle {
   opacity: 1;
 }
+
+.blue-hero {
+  width: 160%;
+  margin-right: -105px;
+  height: auto;
+}
+
+@media only screen and (min-width : 431px) {
+  .blue-hero {
+    width: 100%;
+    margin-right: 0;
+
+  }
+}
+@media only screen and (min-width : 720px) {
+  .blue-hero {
+    width: 70%;
+    margin: auto 0;
+    margin-right: 0;
+
+  }
+}
+@media only screen and (min-width : 1220px) {
+  .blue-hero {
+    width: 96%;
+    margin: auto 0;
+    margin-right: 0;
+
+  }
+}
+@media only screen and (min-width : 1500px) {
+  .blue-hero {
+    width: 100%;
+    margin: auto 0;
+    margin-right: 0;
+
+  }
+}

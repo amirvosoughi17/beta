@@ -31,7 +31,7 @@ const Services = () => {
           </button>
         </div>
         <div className="lg:px-[110px] sm:px-[30px] px-[10px] md:px-[50px] sticky w-full h-full flex items-center justify-center gap-4 mt-[40px]">
-          <div className="lg:flex items-center justify-center gap-[10px] xl:gap-4 grid grid-cols-2 sm:grid-cols-2">
+          <div className="lg:flex items-center justify-center gap-[8px] xl:gap-4 grid grid-cols-2 sm:grid-cols-2">
             <div className="2xl:w-[320px] 2xl:h-[350px] xl:w-[300px] xl:h-[330px] sm:w-[250px] sm:h-[280px] w-[180px] h-[220px] bg-white xl:px-8 sm:px-6 sm:py-8 px-4 py-6  xl:py-10 rounded-[27px] flex flex-col gap-2 items-start justify-start">
               <div className=" rounded-full bg-[#0077ff1a] sm:w-[100px] sm:h-[100px] w-[50px] h-[50px] flex items-center p-3 lg:p-6 xl:p-8 justify-center ">
                 <Image alt="wixel" src={s1} />

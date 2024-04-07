@@ -4,8 +4,8 @@ import heroGreen from "@/assets/hero-green.png";
 import element from "@/assets/element.png";
 import Image from "next/image";
 import target from "@/assets/target.png";
-import blueItem from "@/assets/blue-item.png";
-import greenItem from '@/assets/green-item.png'
+import blueItem from "@/assets/bh.png";
+import greenItem from "@/assets/green-item.png";
 
 // react icons
 import { MdKeyboardArrowLeft } from "react-icons/md";
@@ -35,33 +35,33 @@ const Hero = () => {
               width={645}
               height={820}
             />
-             <Image 
-            alt="wixel"
-            src={greenItem}
-            width={246}
-            height={105}
-            className=" absolute top-[87px] right-[-20px]"
+            <Image
+              alt="wixel"
+              src={greenItem}
+              width={246}
+              height={105}
+              className=" absolute top-[87px] right-[-20px]"
             />
           </div>
         </div>
         {/* center  */}
         <div className="flex flex-col items-center md:mt-0 mt-[-80px]  z-50 max-w-[500px] xl:max-w-[405px] relative">
           <Image
-            className=" absolute top-10 left-1 rotate-90"
+            className=" absolute top-10 left-1 hidden sm:block rotate-90"
             src={element}
             width={33}
             height={33}
             alt="wixel"
           />
           <Image
-            className=" absolute bottom-[20px] right-0  rotate-[-90deg]"
+            className=" absolute bottom-[20px] right-0 hidden sm:block rotate-[-90deg]"
             src={element}
             width={33}
             height={33}
             alt="wixel"
           />
-          <div className="">
-            <Image alt="target" src={target} width={218} className="" />
+          <div className="mb-[-15px] sm:mb-0">
+            <Image alt="target" src={target} width={218} className="w-[210px]" />
           </div>
           <div className="flex flex-col gap-[3px]">
             <h1 className="text-[#313B78] md:text-[38px] text-[30px] sm:text-[38px]  lg:text-[38px] xl:text-[40px] font-semibold  ">
@@ -72,7 +72,7 @@ const Hero = () => {
               <span className="text-bold text-[#5D5AFF]">ویکسل</span>
             </h1>
           </div>
-          <div className="xl:mt-4 mt-8">
+          <div className="xl:mt-4 mt-5 max-w-[322px] sm:max-w-full sm:mt-8">
             <p className="text-[#313a7882] md:text-[15px] text-[13px] sm:text-[15px]  lg:text-[16px] xl:text-[15px] text-center">
               طراحی سایت اختصاصی و اماده با ظاهری چشم نواز و با بروزترین متد های
               روز برای کسب و کار شما با تیم ویکسل
@@ -91,21 +91,13 @@ const Hero = () => {
           </div>
         </div>
         {/* left  */}
-        <div className=" relative z-50 mt-[40px]">
-          <div className="relative">
+        <div className=" relative overflow-x-hidden sm:overflow-x-visible w-full 2xl:w-[45%] xl:w-[53%] block sm:flex items-center justify-center mt-[20px] sm:mt-[40px]">
+          <div className="blue-hero " >
             <Image
               src={heroBlue}
               alt="hero image"
               className="md:rotate-[-2.6deg] "
-              width={600}
-              height={807}
-            />
-            <Image
-              alt="wixel"
-              src={blueItem}
-              width={246}
-              height={105}
-              className=" absolute bottom-[135px] hidden sm:block right-[-20px]"
+              layout="responsive"
             />
           </div>
           <Image
