@@ -71,6 +71,7 @@ export async function PUT(request) {
                     orderedUser.notifications.push(
                         acceptedNotification._id,
                     )
+                    await order.save();
                     await orderedUser.save();
                     break;
                 case "پذیرفته نشده":
@@ -80,7 +81,10 @@ export async function PUT(request) {
                         MESSAGES_CONTENT.NOT_ACCEPTED.title,
                         MESSAGES_CONTENT.NOT_ACCEPTED.message
                     );
+                    orderedUser.orders.pull(orderId);
+                    await orderedUser.save();
                     orderedUser.notifications.push(notAcceptedNotification._id)
+                    await Order.findByIdAndDelete(orderId);
                     await orderedUser.save();
                     break;
             }

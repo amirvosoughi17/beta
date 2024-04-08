@@ -45,10 +45,10 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Notification',
     }],
-        discountCodes: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "DiscountCode"
-        }],
+    discountCodes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "DiscountCode"
+    }],
     password: {
         type: String,
         required: true,
@@ -63,5 +63,7 @@ const userSchema = new mongoose.Schema({
         default: false
     }
 }, { timestamps: true });
+
+
 
 export const User = mongoose.models.User || mongoose.model("User", userSchema);

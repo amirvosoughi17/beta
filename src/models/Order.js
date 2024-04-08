@@ -50,8 +50,7 @@ const orderSchema = new mongoose.Schema({
             "در انتظار پرداخت قسط اول",
             "در انتطار پرداخت قسط دوم",
             "در حال پیشرفت",
-            "تکمیل شده",
-            "لغو شده"
+            "تکمیل شده"
         ],
         default: "در انتظار تایید"
     },
@@ -84,7 +83,6 @@ const orderSchema = new mongoose.Schema({
         required: true
     }
 }, { timestamps: true });
-
 
 const Order = mongoose.models.Order || mongoose.model("Order", orderSchema);
 export default Order;
