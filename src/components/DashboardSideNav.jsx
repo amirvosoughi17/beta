@@ -6,6 +6,7 @@ import { fetchUserData } from "@/utils/userActions";
 import sideLogo from "@/assets/whit-logo.png";
 import Image from "next/image";
 import Link from "next/link";
+import { Loader2 } from "lucide-react";
 import logo from "@/assets/footer-logo.png";
 // react icons
 import { FiShoppingBag } from "react-icons/fi";
@@ -42,6 +43,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const DashboardSideNav = () => {
   const [open, setOpen] = useState(false);
@@ -90,9 +101,9 @@ const DashboardSideNav = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="fixed z-[100] rounded-full lg:rounded-none  flex mx-auto lg:w-[235px] w-[95%] sm:w-[88%] h-[62px] sm:h-[70px] top-5 lg:right-0 lg:top-0 lg:bottom-0 lg:h-[100%]  backdrop-blur-2xl  lg:border-l-[0.5px] lg:border-[#2f3033]">
+      <div className="fixed z-40 rounded-full bg-gray-900/20 lg:rounded-none  flex mx-auto lg:w-[235px]  w-[92%] sm:w-[88%] h-[58px] sm:h-[64px] top-5 lg:right-0 lg:top-0 lg:bottom-0 lg:h-[100%]  backdrop-blur-xl  lg:border-l-[0.5px] lg:border-[#2f3033]">
         <div className="flex lg:hidden items-center justify-between w-full px-2">
-          <Link href="/" className="p-2.5 bg-zinc-800 rounded-full">
+          <Link href="/" className="p-2.5 bg-gray-900 rounded-full">
             <Image
               src={sideLogo}
               alt="logo"
@@ -101,105 +112,153 @@ const DashboardSideNav = () => {
               className="w-[29px] h-[29px] sm:w-[33px] sm:h-[33px]  "
             />
           </Link>
-          <DropdownMenu dir="rtl">
-            <DropdownMenuTrigger asChild>
-              <div className="p-3.5 rounded-full bg-zinc-800 text-white cursor-pointer">
+          <Sheet className='z-50'>
+            <SheetTrigger asChild>
+            <div className="p-3.5  rounded-full bg-gray-900 text-white cursor-pointer">
                 <span className="">
                   <AiOutlineMenu className="text-lg sm:text-xl" />
                 </span>
               </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-45 mt-3 ml-4 flex flex-col gap-3 py-5 px-5">
-              <Link
-                href="/dashboard/userInfo"
-                className="flex items-center gap-3"
-              >
-                <FiUser size={19} />
-                <span className="text-[18px] font-semibold text-gray-200">
-                  حساب کاربری
-                </span>
-              </Link>
-
-              {userInfo && userInfo.role === "user" && (
-                <>
-                  <Link href="/" className="flex items-center gap-3">
-                    <FiShoppingBag size={19} />
-                    <span className="text-[18px] font-semibold text-gray-200">
-                      سفارشات
-                    </span>
-                  </Link>
-                  <Link href="/" className="flex items-center gap-3">
-                    <MdPayment size={19} />
-                    <span className="text-[18px] font-semibold text-gray-200">
-                      پرداخت
-                    </span>
-                  </Link>
-                  <Link href="/" className="flex items-center gap-3">
-                    <BiMessageDetail size={19} />
-                    <span className="text-[18px] font-semibold text-gray-200">
-                      پیام ها
-                    </span>
-                  </Link>
-                  <Link
-                    href="/dashboard/notifications"
-                    className="flex items-center gap-3"
-                  >
-                    <MdPayment size={19} />
-                    <span className="text-[18px] font-semibold text-gray-200">
-                      اعلانات
-                    </span>
-                  </Link>
-                </>
-              )}
-              {userInfo && userInfo.role === "admin" && (
-                <>
-                  <Link
-                    href="/dashboard/admin/overview"
-                    className="flex items-center gap-3"
-                  >
-                    <RxDashboard size={19} />
-                    <span className="text-[18px] font-semibold text-gray-200">
-                      دشبورد
-                    </span>
-                  </Link>
-                  <Link
-                    href="/dashboard/admin"
-                    className="flex items-center gap-3"
-                  >
-                    <FiShoppingBag size={19} />
-                    <span className="text-[18px] font-semibold text-gray-200">
-                      سفارشات
-                    </span>
-                  </Link>
-                  <Link
-                    href="/dashboard/admin/users"
-                    className="flex items-center gap-3"
-                  >
-                    <FaUsers size={19} />
-                    <span className="text-[18px] font-semibold text-gray-200">
-                      کاربران
-                    </span>
-                  </Link>
-                  <Link
-                    href="/dashboard/admin/tickets"
-                    className="flex items-center gap-3"
-                  >
-                    <BiMessageDetail size={19} />
-                    <span className="text-[18px] font-semibold text-gray-200">
-                      پیام ها
-                    </span>
-                  </Link>
-                </>
-              )}
-              <DropdownMenuSeparator />
-              <Link href="/" className="flex items-center gap-3">
-                <IoLogOutOutline size={19} />
-                <span className="text-[18px] font-semibold text-gray-200">
-                  خروج
-                </span>
-              </Link>
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetHeader>
+                <SheetTitle className="mt-8">
+                  <Image src={logo} width={150} height={50} />
+                </SheetTitle>
+              </SheetHeader>
+              <div className="flex flex-col items-start gap-6 px-5 mt-10">
+                <Link
+                  href="/dashboard/userInfo"
+                  className="flex items-center gap-3"
+                >
+                  <div className="w-[30px] h-[30px] shadow-md rounded-lg bg-[#5D5AFF] flex items-center justify-center p-1">
+                    <FiUser size={16} className="text-white " />
+                  </div>
+                  <span className="text-[18px] font-semibold text-gray-200">
+                    حساب کاربری
+                  </span>
+                </Link>
+                {userInfo ? (
+                  userInfo.role === "user" ? (
+                    <div className="flex flex-col items-start gap-6">
+                      <Link
+                        href="/dashboard/"
+                        className="flex items-center gap-3"
+                      >
+                        <div className="w-[30px] h-[30px] shadow-md rounded-lg bg-[#5D5AFF] flex items-center justify-center p-1">
+                          <FiShoppingBag size={16} className="text-white " />
+                        </div>
+                        <span className="text-[18px] font-semibold text-gray-200">
+                          سفارشات
+                        </span>
+                      </Link>
+                      <Link
+                        href="/dashboard/"
+                        className="flex items-center gap-3"
+                      >
+                        <div className="w-[30px] h-[30px] shadow-md rounded-lg bg-[#5D5AFF] flex items-center justify-center p-1">
+                          <MdPayment size={16} className="text-white " />
+                        </div>
+                        <span className="text-[18px] font-semibold text-gray-200">
+                          پرداخت
+                        </span>
+                      </Link>
+                      <Link
+                        href="/dashboard/"
+                        className="flex items-center gap-3"
+                      >
+                        <div className="w-[30px] h-[30px] shadow-md rounded-lg bg-[#5D5AFF] flex items-center justify-center p-1">
+                          <BiMessageDetail size={16} className="text-white " />
+                        </div>
+                        <span className="text-[18px] font-semibold text-gray-200">
+                          پیام ها
+                        </span>
+                      </Link>
+                      <Link
+                        href="/dashboard/"
+                        className="flex items-center gap-3"
+                      >
+                        <div className="w-[30px] h-[30px] shadow-md rounded-lg bg-[#5D5AFF] flex items-center justify-center p-1">
+                          <MdOutlineNotificationsActive
+                            size={16}
+                            className="text-white "
+                          />
+                        </div>
+                        <span className="text-[18px] font-semibold text-gray-200">
+                          اعلانات
+                        </span>
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-start gap-6">
+                      <Link
+                        href="/dashboard/admin/overview"
+                        className="flex items-center gap-3"
+                      >
+                        <div className="w-[30px] h-[30px] shadow-md rounded-lg bg-[#5D5AFF] flex items-center justify-center p-1">
+                          <RxDashboard size={16} className="text-white " />
+                        </div>
+                        <span className="text-[18px] font-semibold text-gray-200">
+                          دشبورد
+                        </span>
+                      </Link>
+                      <Link
+                        href="/dashboard/admin"
+                        className="flex items-center gap-3"
+                      >
+                        <div className="w-[30px] h-[30px] shadow-md rounded-lg bg-[#5D5AFF] flex items-center justify-center p-1">
+                          <FiShoppingBag size={16} className="text-white " />
+                        </div>
+                        <span className="text-[18px] font-semibold text-gray-200">
+                          سفارشات
+                        </span>
+                      </Link>
+                      <Link
+                        href="/dashboard/admin/users"
+                        className="flex items-center gap-3"
+                      >
+                        <div className="w-[30px] h-[30px] shadow-md rounded-lg bg-[#5D5AFF] flex items-center justify-center p-1">
+                          <FaUsers size={16} className="text-white " />
+                        </div>
+                        <span className="text-[18px] font-semibold text-gray-200">
+                          کاربران
+                        </span>
+                      </Link>
+                      <Link
+                        href="/dashboard/admin/tickets"
+                        className="flex items-center gap-3"
+                      >
+                        <div className="w-[30px] h-[30px] shadow-md rounded-lg bg-[#5D5AFF] flex items-center justify-center p-1">
+                          <BiMessageDetail size={16} className="text-white " />
+                        </div>
+                        <span className="text-[18px] font-semibold text-gray-200">
+                          پیا ها
+                        </span>
+                      </Link>
+                      <Link
+                        href="/dashboard/notifications"
+                        className="flex items-center gap-3"
+                      >
+                        <div className="w-[30px] h-[30px] shadow-md rounded-lg bg-[#5D5AFF] flex items-center justify-center p-1">
+                          <MdOutlineNotificationsActive
+                            size={16}
+                            className="text-white "
+                          />
+                        </div>
+                        <span className="text-[18px] font-semibold text-gray-200">
+                          اعلان ها
+                        </span>
+                      </Link>
+                    </div>
+                  )
+                ) : (
+                  <>
+                    <span>loading</span>
+                  </>
+                )}
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
         <div className="lg:py-[20px] xl:pb-[20px] pt-[30px] 2xl:pb-[25px] 2xl:pt-[35px] px-6 hidden lg:flex flex-col justify-between h-full ">
           <div className=" flex-col items- gap-[5px] flex">
@@ -481,7 +540,7 @@ const DashboardSideNav = () => {
               {userInfo ? (
                 <>
                   <Avatar className="w-[50px] h-[50px] shadow-md">
-                    <AvatarFallback className=''>
+                    <AvatarFallback className="">
                       <span className="text-lg">
                         {userInfo?.username?.charAt(0).toUpperCase()}
                       </span>
