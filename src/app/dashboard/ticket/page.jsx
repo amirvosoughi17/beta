@@ -44,11 +44,17 @@ const CustomTable = ({ tickets, handleTicketClick }) => (
     </TableHeader>
     <TableBody>
       {tickets?.length === 0 ? (
-        <TableRow>
-          <TableCell colSpan="3" className="font-medium w-[100px] text-[17px] text-zinc-300 ">هنوز پیامی ندارید !</TableCell>
-        </TableRow>
+          <TableRow  className="cursor-pointer border-[0.5px] border-gray-700 hover:bg-gray-600">
+            <TableCell className=" w-[100px] text-[15px] text-zinc-300">----</TableCell>
+            <TableCell className=" w-[100px] text-[15px] text-zinc-300">----</TableCell>
+            <TableCell className="text-[17px] text-zinc-300">
+              <Badge>
+               ---
+              </Badge>
+            </TableCell>
+          </TableRow>
       ) : (
-        tickets.map((ticket) => (
+        tickets?.map((ticket) => (
           <TableRow key={ticket._id} onClick={() => handleTicketClick(ticket._id)} className="cursor-pointer border-[0.5px] border-gray-700 hover:bg-gray-600">
             <TableCell className=" w-[100px] text-[15px] text-zinc-300">{ticket.subject}</TableCell>
             <TableCell className=" w-[100px] text-[15px] text-zinc-300">{moment(ticket.createdAt).format('jYYYY/jMM/jDD')}</TableCell>

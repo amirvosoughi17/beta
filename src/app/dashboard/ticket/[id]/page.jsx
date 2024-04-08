@@ -14,6 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 
 
 
@@ -111,9 +112,9 @@ const TicketPage = () => {
                                     <span className='text-light'>{moment(ticket.createdAt).format('jYYYY/jMM/jDD')}</span>
                                 </div>
                             </div>
-                            <div className='flex flex-col gap-5'>
+                            <div className='flex flex-col gap-5 '>
                                 {ticket && (
-                                    <div className="flex items-center gap-6 bg-[#242424] py-3 px-4 rounded-xl w-full">
+                                    <Card className="flex items-center gap-6 bg-transparent  py-3 px-4  w-full">
                                         <div className="flex gap-2 flex-col items-start py-3 px-4  ">
                                             <p className='text-zinc-200 text-md flex items-center gap-2'>
                                                 <BsQuestionCircleFill />
@@ -121,12 +122,11 @@ const TicketPage = () => {
                                             </p>
                                             <p className='text-zinc-200 text-lg'> {ticket.description}</p>
                                         </div>
-                                    </div>
+                                    </Card>
                                 )}
-
-                                <div className="flex flex-col gap-3 w-full">
+                                <div className="flex flex-col gap-3 w-full min-h-[200px]">
                                     {ticket.responses.map((res) => (
-                                        <div key={res._id} className={`flex flex-col  gap-4 py-5 px-2 sm:px-4 rounded-xl w-[270px] sm:w-[300px] lg:w-[350px] xl:w-[380px] ${userInfo?.username === res.user?.username ? 'items-start' : 'items-end justify-end'}`} style={{ alignSelf: userInfo.username === res.user?.username ? 'flex-start' : 'flex-end', backgroundColor: userInfo.username === res.user?.username ? '#1E1E1E' : '#303030' }}>
+                                        <div key={res._id} className={`flex flex-col  gap-4 py-5 px-2 sm:px-4 rounded-xl w-[270px] sm:w-[300px] lg:w-[350px] xl:w-[380px] border-[0.4px] border-gray-700 ${userInfo?.username === res.user?.username ? 'items-start' : 'items-end justify-end'}`} style={{ alignSelf: userInfo.username === res.user?.username ? 'flex-start' : 'flex-end', backgroundColor: userInfo.username === res.user?.username ? '#' : '#' }}>
                                             <div className="flex items-center gap-1">
 
                                                 {res.user && (
@@ -151,11 +151,11 @@ const TicketPage = () => {
                                 </div>
 
 
-                                <div className="flex sm:flex-row flex-col gap-5 items-end w-full border-t-[1px] border-zinc-500/60 py-4 mx-auto">
+                                <div className="flex sm:flex-row flex-col gap-5 items-end w-full  py-4 mx-auto">
                                     <div className="sm:w-[80%] w-full">
                                         <Textarea
                                             rows={4}
-                                            className=' bg-[#242424] text-zinc-200  w-full text-md p-3 rounded-xl'
+                                            className=' bg-transparent text-gray-100  w-full text-lg p-3 rounded-xl'
                                             placeholder='متن پیام را وارد کنید ...'
                                             onChange={handleResponseChange}
                                             value={responseMessage}
