@@ -222,7 +222,7 @@ const Navbar = () => {
                               </span>
                             </Link>
                               <Link
-                              href="/dashboard/admin/notifocations"
+                              href="/dashboard/notifications"
                               className="flex items-center gap-3"
                             >
                               <div className="w-[30px] h-[30px] shadow-md rounded-lg bg-[#5D5AFF] flex items-center justify-center p-1">
