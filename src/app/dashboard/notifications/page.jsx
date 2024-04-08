@@ -58,28 +58,25 @@ const Notifications = () => {
   };
 
   const handleMarkSelectedAsRead = async () => {
-    // Iterate over selectedNotifications and mark each notification as read
     for (const notificationId of selectedNotifications) {
       await markNotificationAsRead(notificationId);
     }
-    // After marking selected notifications as read, you can update the notifications state if needed.
     fetchData();
-    // Clear the selected notifications
     setSelectedNotifications([]);
   };
 
   return (
     <DashboardLayout>
       <div className="py-5 px-3 sm:px-5 md:px-7 lg:py-10 lg:px-10 w-full md:mt-0 mt-[70px]">
-        <div className="w-full lg:w-[80%] xl:w-[85%] lg:mr-[210px] flex flex-col gap-6">
+        <div className="w-full lg:w-[80%] xl:w-[85%] lg:mr-[250px] flex flex-col gap-6">
           <div className="w-full md:w-[85%] mx-auto">
             <div className="flex flex-col">
-              <h1 className='text-3xl text-gray-200 flex items-center gap-3 my-5'>
+              <h1 className='text-3xl text-white font-semibold flex items-center gap-3 my-5'>
                 <MdOutlineNotificationsActive />
                 <span>اعلانات</span>
               </h1>
             </div>
-            <div className="md:w-[85%] w-full bg-[#1b1b1b] flex items-center justify-between rounded-md my-3 py-4 pl-5 pr-5">
+            <div className="md:w-[85%] w-full bg-transparent border-[0.5px] border-gray-700  flex items-center justify-between rounded-md my-3 py-4 pl-5 pr-5">
               <div className="">
                 <span>متن اعلان</span>
               </div>
@@ -91,7 +88,7 @@ const Notifications = () => {
               {notifications && notifications.map((notification) => (
                 <div key={notification.id} className="flex flex-col gap-3 md:w-[85%] w-full border-[1px] border-zinc-700/60 py-5 px-5 rounded-lg">
                   <div className="flex items-center justify-between w-full">
-                    <h1 className='md:text-[20px] lg:text-[22px] text-[18px]  text-white flex items-center gap-3 '>
+                    <h1 className='md:text-[20px] lg:text-[22px] text-[16px]  text-white flex items-center gap-3 '>
                       <MdOutlineNotificationsActive size={23} className='text-gray-300' />
                       {notification.title}
                     </h1>
@@ -102,7 +99,7 @@ const Notifications = () => {
                     </div>
                   </div>
                   <div className="sm:pr-9 pr-5">
-                    <p className='text-[12px] sm:text-[14px] md:text-[16px] lg:text-[17px] text-zinc-300 '>{notification.message}</p>
+                    <p className='text-[11px] sm:text-[13px] md:text-[14px] lg:text-[15px] text-zinc-300 '>{notification.message}</p>
                   </div>
                 </div>
               ))}

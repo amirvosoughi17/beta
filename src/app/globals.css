@@ -132,3 +132,25 @@ a:hover .circle {
 
   }
 }
+
+body {
+  overflow-x: hidden; 
+  overflow-y: auto; 
+}
+
+::-webkit-scrollbar {
+  width: 6px; 
+}
+
+::-webkit-scrollbar-track {
+  background: #04071100; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #5D5AFF;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5D5AFF; 
+}
+

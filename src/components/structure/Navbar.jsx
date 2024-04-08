@@ -245,12 +245,12 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="">
-                <button className="bg-[#5D5AFF] z-50 rounded-[17px] hidden md:flex  py-[15px] w-[100px] h-[50px] pl-[15px] pr-[25px]  items-center justify-between shadow-md shadow-[#4E4AFF59] hover:opacity-85 duration-300">
+                <Link href='/auth/login' className="bg-[#5D5AFF] z-50 rounded-[17px] hidden md:flex  py-[15px] w-[100px] h-[50px] pl-[15px] pr-[25px]  items-center justify-between shadow-md shadow-[#4E4AFF59] hover:opacity-85 duration-300">
                   <span className="text-white text-[14px] font-semibold">
                     ورود
                   </span>
                   <IoLogInOutline className="text-[18px] text-white" />
-                </button>
+                </Link>
               </div>
             )}
           </div>

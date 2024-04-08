@@ -10,14 +10,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUserInfo } from "@/redux/user/userSlice";
 import { fetchUserData } from "@/utils/userActions";
 import Autoplay from "embla-carousel-autoplay";
+import { useRouter } from "next/navigation";
 // react icons
 import { LuUsers } from "react-icons/lu";
 import { MdOutlineAttachMoney } from "react-icons/md";
-import { MdOutlineCreditCard } from "react-icons/md";
-import { VscSymbolEvent } from "react-icons/vsc";
-import { VscTarget } from "react-icons/vsc";
-import { TbMessages } from "react-icons/tb";
-import { FaPhoneAlt } from "react-icons/fa";
+import { RiShoppingBag2Line } from "react-icons/ri";
 // shadcn
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -70,6 +67,7 @@ const Overview = () => {
   const [overData, setOverData] = useState(null);
   const [popularPlans, setPopularPlans] = useState([]);
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true })
@@ -84,7 +82,7 @@ const Overview = () => {
       router.push("/dashbaord");
     }
   }, [userInfo, router]);
-  
+
   // over data
   useEffect(() => {
     const fetchOverData = async () => {
@@ -140,7 +138,6 @@ const Overview = () => {
                       مدیریت
                     </h1>
                   </div>
-                  
                 </div>
               </div>
             </div>
@@ -168,7 +165,9 @@ const Overview = () => {
                                 <h1 className="text-lg text-slate-200 font-semibold h-8">
                                   کل درامد
                                 </h1>
-                                <MdOutlineAttachMoney size={22} />
+                                <div className="w-[35px] h-[35px] p-2 bg-[#5D5AFF] flex items-center justify-center rounded-md">
+                                  <MdOutlineAttachMoney size={22} />
+                                </div>
                               </div>
                               <div className="flex flex-col gap-[5px]">
                                 <h1 className="text-white text-[28px] font-bold">
@@ -195,7 +194,9 @@ const Overview = () => {
                                 <h1 className="text-lg text-slate-200 font-semibold">
                                   سفارشات
                                 </h1>
-                                <MdOutlineAttachMoney size={22} />
+                                <div className="w-[35px] h-[35px] p-2 bg-[#5D5AFF] flex items-center justify-center rounded-md">
+                                  <RiShoppingBag2Line size={22} />
+                                </div>
                               </div>
                               <div className="flex flex-col gap-[5px]">
                                 <h1 className="text-white text-[28px] font-bold h-10">
@@ -222,7 +223,9 @@ const Overview = () => {
                                 <h1 className="text-lg text-slate-200 font-semibold">
                                   کاربران
                                 </h1>
-                                <MdOutlineAttachMoney size={22} />
+                                <div className="w-[35px] h-[35px] p-2 bg-[#5D5AFF] flex items-center justify-center rounded-md">
+                                  <LuUsers size={22} />
+                                </div>
                               </div>
                               <div className="flex flex-col gap-[5px]">
                                 <h1 className="text-white text-[28px] font-bold h-10">
@@ -269,8 +272,11 @@ const Overview = () => {
                             </span>
                           </div>
                         </div>
-                        <span className="text-zinc-۲00 text-sm">
-                          تومان {lastpyment?.amount?.toLocaleString()}
+                        <span className="text-zinc-200 text-sm flex items-cetner gap-[3px]">
+                          <span>تومان</span>
+                          <span className="">
+                            {lastpyment?.amount?.toLocaleString()}
+                          </span>
                         </span>
                       </div>
                     ))
@@ -374,7 +380,7 @@ const Overview = () => {
                 <h1 className="text-lg font-semibold text-white mb-2">
                   سفارشات اخیر
                 </h1>
-                <div className="w-full flex items-center justify-between border-b-[0.4px] hover:bg-[#262626] bg-zinc-900 duration-300 border-zinc-800 py-3 px-4 rounded-md">
+                <div className="w-full flex items-center justify-between border-[0.4px]  duration-300 border-gray-800 py-3 px-4 rounded-md">
                   <div className="flex items-cetner gap-[90px]">
                     <span className="text-[14px] text-zinc-200">کاربر</span>
                     <span className="text-[14px] text-zinc-200 hidden sm:block">
@@ -392,7 +398,7 @@ const Overview = () => {
                       <Link
                         href={`/dashboard/order/${order._id}`}
                         key={order._id}
-                        className="flex justify-between items-center gap-3 border-b-[0.5px] border-zinc-800 py-3 px-3"
+                        className="flex justify-between items-center gap-3 border-[0.2px] border-gray-800 py-3 px-3"
                       >
                         <div className="flex items-center gap-[50px]">
                           <div className=" flex items-center gap-3">
@@ -416,13 +422,13 @@ const Overview = () => {
                         </div>
                         <div className="">
                           <span className="flex items-center justify-center  rotate-45 duration-300">
-                            <div className="w-[48px] h-[48px]  rounded-full flex items-center justify-center bg-[#1e1e1e] rotate-[-45deg] absolute top- z-50">
+                            <div className="w-[48px] h-[48px]  rounded-full flex items-center justify-center bg-[#1d1f2d] rotate-[-45deg] absolute top- z-50">
                               <span className="text-white text-[15px]">
                                 {`${Math.round(order.orderProgress)}%`}
                               </span>
                             </div>
                             <Progress
-                              className="w-[60px] h-[60px]  rounded-full flex items-center justify-center z-10 "
+                              className="w-[60px] h-[60px] bg-transparent border-[0.5px] rounded-full flex items-center justify-center z-10 "
                               value={order.orderProgress}
                             />
                           </span>

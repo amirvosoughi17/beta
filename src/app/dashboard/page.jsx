@@ -207,7 +207,7 @@ const Dashboard = () => {
                                     ) : (
                                         <>
                                         <Table className="">
-                                            <TableHeader className="bg-[#1b1b1b]">
+                                            <TableHeader className="bg-transparent] border-[0.4px] border-gray-700  rounded-md">
                                                 <TableRow className="">
                                                     <TableHead className="w-[150px] text-right">نوع سایت</TableHead>
                                                     <TableHead className="w-[250px] text-right">پیشرفت پروژه</TableHead>
@@ -216,8 +216,8 @@ const Dashboard = () => {
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody className="">
-                                                {orders && orders.map((order) => (
-                                                    <TableRow key={order._id} onClick={() => handleOrderClick(order._id)} className='cursor-pointer hover:bg-gray-600'>
+                                                {orders ? orders.map((order) => (
+                                                    <TableRow key={order._id} onClick={() => handleOrderClick(order._id)} className='cursor-pointer border-[0.4px] border-gray-700 rounded-md hover:bg-gray-600'>
                                                         <TableCell className="font-medium w-[100px] text-[17px] text-zinc-300">{order.plan}</TableCell>
                                                         <TableCell className="flex items-center h-[65px] gap-2 w-[200px]">
                                                             <span className='text-zinc-300 hover:text-white duration-300  tex-lg '>{`${Math.round(order.orderProgress)}%`}</span>
@@ -230,10 +230,24 @@ const Dashboard = () => {
                                                         </TableCell>
                                                         <TableCell className="text-[17px] text-zinc-300">{order.totalPrice}</TableCell>
                                                     </TableRow>
-                                                ))}
+                                                )) : (
+                                                    <TableRow  className='cursor-pointer hover:bg-gray-600'>
+                                                        <TableCell className="font-medium w-[100px] text-[17px] text-zinc-300">----</TableCell>
+                                                        <TableCell className="flex items-center h-[65px] gap-2 w-[200px]">
+                                                            <span className='text-zinc-300 hover:text-white duration-300  tex-lg '>0%</span>
+                                                            <Progress className='' value={0} />
+                                                        </TableCell>
+                                                        <TableCell className="text-[17px] text-zinc-300">
+                                                            <Badge>
+                                                                ----
+                                                            </Badge>
+                                                        </TableCell>
+                                                        <TableCell className="text-[17px] text-zinc-300">----</TableCell>
+                                                    </TableRow>
+                                                )}
                                             </TableBody>
                                         </Table>
-                                    <div className=" w-full flex items-center justify-between">
+                                    <div className=" w-full flex items-center justify-between mt-5">
                                         <Link href='/order'>
                                             <Button>
                                                 ثبت سفارش جدید

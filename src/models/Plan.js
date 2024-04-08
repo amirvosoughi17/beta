@@ -16,7 +16,7 @@ const planSchema = new mongoose.Schema({
             type: Number,
             required: true
         },
-        isNecessary: {
+        isNeseccary: {
             type: Boolean,
             default: false
         }

@@ -35,7 +35,7 @@ import { toast } from 'sonner';
 
 const CustomTable = ({ tickets, handleTicketClick }) => (
   <Table className="w-full ">
-    <TableHeader className='bg-[#1b1b1b]'>
+    <TableHeader className='bg-tranparent'>
       <TableRow>
         <TableHead className="w-[350px] text-right">عنوان</TableHead>
         <TableHead className="w-[100px] text-right">زمان ایجاد </TableHead>
@@ -49,7 +49,7 @@ const CustomTable = ({ tickets, handleTicketClick }) => (
         </TableRow>
       ) : (
         tickets.map((ticket) => (
-          <TableRow key={ticket._id} onClick={() => handleTicketClick(ticket._id)} className="cursor-pointer hover:bg-gray-600">
+          <TableRow key={ticket._id} onClick={() => handleTicketClick(ticket._id)} className="cursor-pointer border-[0.5px] border-gray-700 hover:bg-gray-600">
             <TableCell className=" w-[100px] text-[15px] text-zinc-300">{ticket.subject}</TableCell>
             <TableCell className=" w-[100px] text-[15px] text-zinc-300">{moment(ticket.createdAt).format('jYYYY/jMM/jDD')}</TableCell>
             <TableCell className="text-[17px] text-zinc-300">
