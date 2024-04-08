@@ -2,21 +2,24 @@ import { connect } from "@/config/DB";
 import Ticket from "@/models/Ticket";
 import { NextResponse } from "next/server";
 import User from '@/models/User';
+import NodeCache from "node-cache";
 
 connect()
 
+const nodeCache = new NodeCache();
+
 export async function GET() {
     try {
-        const tickets = await Ticket.find().populate("createdBy", "_id username email");
-        const ticketsCount = await Ticket.countDocuments();
-        if (ticketsCount === 0) {
-            return NextResponse.json({
-                message: "There is no Ticket here!"
-            }, { status: 404 });
+        let tickets = [];
+        if (nodeCache.has("tickets")) {
+            tickets = JSON.parse(nodeCache.get("tickets"))
+        } else {
+            tickets = await Ticket.find().populate("createdBy", "_id username email");
+            nodeCache.set("tickets", JSON.stringify(tickets), 300);
         }
         return NextResponse.json({
             tickets,
-            ticketsCount
+            ticketsCount: tickets.length
         }, { status: 200 })
     } catch (error) {
         return NextResponse.json({

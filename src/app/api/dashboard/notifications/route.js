@@ -53,7 +53,7 @@ export async function PUT(request) {
             user.notifications = user.notifications.filter(id => id !== notificationId);
 
         }
-
+        nodeCache.del("myNotifications");
         await user.save()
         return NextResponse.json({ message: "Update was Successfull" }, { status: 200 })
     } catch (error) {
