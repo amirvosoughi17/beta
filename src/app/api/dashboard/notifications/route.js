@@ -50,8 +50,7 @@ export async function PUT(request) {
                     $set: { isRead: true }
                 });
             await Notification.findByIdAndDelete(notificationId);
-            user.notifications = user.notifications.filter(id => id !== notificationId);
-
+            user.notifications.pull(notificationId);
         }
         nodeCache.del("myNotifications");
         await user.save()
