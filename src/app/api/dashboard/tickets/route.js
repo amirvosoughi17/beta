@@ -18,9 +18,11 @@ export async function POST(request) {
         const user = await User.findOne({ _id: userId }).select('_id email username tickets notifications')
 
         if (!subject || !description) {
-            return NextResponse.json({ message: "Please fill out all inputs" }, { status: 400 })
+            return NextResponse.json({ message: "لطفا همه مقادیر خواسته شده را وارد کنید" }, { status: 400 })
         }
-
+        if (!user) {
+            return NextResponse.json({ message: "به نظر میرسد مشکلی رخ داده, لطفا وارد وبسایت شوید" }, { status: 404 });
+        }
         const newTicket = await Ticket.create({
             subject,
             description,
