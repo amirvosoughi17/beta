@@ -4,7 +4,6 @@ import { connect } from "@/config/DB";
 import { User } from "@/models/User";
 import { generate_token } from "@/utils/session";
 import { sendNotification } from '@/utils/sendNotification';
-import { send_mail } from '@/utils/nodemailer';
 
 connect();
 
@@ -38,25 +37,19 @@ export async function POST(request) {
             phoneNumber,
             password: hashedPasss
         })
-        const nowDate = new Intl.DateTimeFormat(
-            'fa-IR', {
-            year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'
-        }).format(Date.now());
-
+        const nowDate = new Date().toLocaleString('fa-IR');
         const registerationNotification = await sendNotification(
             `خوش امدید ${newUser.username}`,
-            `  ${nowDate}  ${newUser.username} به ویکسل پیوستید  شما  در تاریخ`
+            ` ${newUser.username}%
+            شما در تاریخ  
+            ${nowDate} %
+            به ویکسل پیوستید
+            `
         );
         newUser.notifications.push(registerationNotification._id)
         await newUser.save();
-        send_mail({
-            email: newUser.email,
-            template: 'welcome',
-            subject: 'Welcome to Our Platform',
-            templateData: newUser
-        });
-        return generate_token("Registeration was successfull", 201, newUser);
 
+        return generate_token("Registeration was successfull", 201, newUser);
     } catch (error) {
         return NextResponse.json({
             message: error.message
