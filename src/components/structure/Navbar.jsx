@@ -9,7 +9,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import navLogo from "@/assets/logow.png";
+import navLogo from "@/assets/navlogo.svg";
 import logo from "@/assets/footer-logo.png";
 
 // react icons
@@ -64,7 +64,7 @@ const Navbar = () => {
       <div className="w-full max-w-[1560px] mx-auto z-50 px-[20px] sm:px-[40px] md:px-[100px] sticky">
         <div className="flex items-cetner justify-between w-full">
           <div className="">
-            <Image alt="logo" className="w-[130px] " src={navLogo} />
+            <Image alt="logo" className="w-[140px] " src={navLogo} />
           </div>
           <nav className="items-center gap-8 hidden lg:flex ">
             <Link href="/" className="flex flex-col items-center justify-center relative gap-2">
@@ -218,7 +218,7 @@ const Navbar = () => {
                                 <BiMessageDetail size={16} className="text-white " />
                               </div>
                               <span className="text-[18px] font-semibold text-gray-200">
-                                پیا ها
+                                پیام ها
                               </span>
                             </Link>
                               <Link

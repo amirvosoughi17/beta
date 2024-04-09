@@ -32,6 +32,7 @@ const Register = () => {
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true)
       const res = await fetch("/api/auth/register", {
         method: "POST",
         body: JSON.stringify(registerData),
@@ -39,7 +40,7 @@ const Register = () => {
           "Content-Type": "application/json",
         },
       });
-
+      setLoading(false)
       if (res.ok) {
         router.push("/");
       } else {
@@ -48,6 +49,8 @@ const Register = () => {
       }
     } catch (error) {
       console.error("An error occurred during registration:", error);
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -99,14 +102,21 @@ const Register = () => {
               />
             </div>
           </div>
-          <div>
-            <Button type="submit" className="w-full mt-8">
-              ثبت نام
-            </Button>
+          <div className="w-full">
+          {loading ? (
+                <Button disabled className="py-6 w-full mt-5">
+                  لطفا کمی صبر کنید
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                </Button>
+              ) : (
+                <Button type="submit" className="py-6 w-full mt-5">
+                  ثبت نام
+                </Button>
+              )}
             {error && (
               <Alert
                 variant="destructive"
-                className="bg-red-500 text-white border-red-600 mt-5"
+                className="bg-red-500 text-white border-red-600 mt-4"
               >
                 <AlertDescription>{error}</AlertDescription>
               </Alert>

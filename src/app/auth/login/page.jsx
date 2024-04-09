@@ -6,23 +6,19 @@ import { Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 
 const LoginPage = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [registerData, setRegisterData] = useState({
-    username: "",
-    email: "",
-    phoneNumber: "",
-    password: "",
-  });
+ 
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -31,33 +27,8 @@ const LoginPage = () => {
       [name]: value,
     }));
   };
-  const handleRegisterChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setRegisterData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-  const handleRegisterSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        body: JSON.stringify(registerData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (res.ok) {
-        router.push("/");
-      } else {
-      }
-    } catch (error) {
-      console.error("An error occurred during registration:", error);
-    }
-  };
+  
+ 
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -83,9 +54,7 @@ const LoginPage = () => {
     }
   };
 
-  const handlePhoneSubmit = (e) => {
-    e.preventDefault();
-  };
+  
   return (
     <div className="w-full h-full flex items-center justify-center">
       <div className="mx-auto w-[87%] sm:w-[60%] md:w-[50%] lg:w-[45%] xl:w-[27%] mt-[130px] ">

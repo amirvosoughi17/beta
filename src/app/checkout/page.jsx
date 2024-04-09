@@ -85,17 +85,13 @@ const Checkout = () => {
             قیمت کل : {totalPrice?.toLocaleString()} تومان
           </Card>
         </div>
-        {isOrderSent ? (
+        {isOrderSent && (
           <div className="flex items-center gap-3">
             <span className="text-green-600 font-medium text-xl">
               سفارش شما با موفقیت ثبت شد{" "}
             </span>
             <Loader2 className="h-6 w-6 animate-spin" />
           </div>
-        ) : (
-          <span className="text-red-600 font-medium text-xl">
-            خطا در ثبت سفارش
-          </span>
         )}
         <div className="flex items-start flex-col mt-10 gap-4">
           <div className="flex items-start gap-2">

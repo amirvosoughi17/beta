@@ -160,8 +160,6 @@ const PlanDetails = () => {
       </Card>
       <div className="my-8 flex items-center justify-between">
         <div className="flex items-center  gap-1">
-          <span>مجموع :</span>
-          <span>{totalPrice?.toLocaleString()}</span>
         </div>
         <Button onClick={handleCheckout}>نهایی کردن سفارش</Button>
       </div>

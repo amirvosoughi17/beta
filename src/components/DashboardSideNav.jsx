@@ -103,7 +103,7 @@ const DashboardSideNav = () => {
     <div className="flex items-center justify-center">
       <div className="fixed z-40 rounded-full bg-gray-900/20 lg:rounded-none  flex mx-auto lg:w-[235px]  w-[92%] sm:w-[88%] h-[58px] sm:h-[64px] top-5 lg:right-0 lg:top-0 lg:bottom-0 lg:h-[100%]  backdrop-blur-xl  lg:border-l-[0.5px] lg:border-[#2f3033]">
         <div className="flex lg:hidden items-center justify-between w-full px-2">
-          <Link href="/" className="p-2.5 bg-gray-900 rounded-full">
+          <Link href="/" className="p-2.5 bg-gray-950/40 rounded-full">
             <Image
               src={sideLogo}
               alt="logo"
@@ -114,7 +114,7 @@ const DashboardSideNav = () => {
           </Link>
           <Sheet className='z-50'>
             <SheetTrigger asChild>
-            <div className="p-3.5  rounded-full bg-gray-900 text-white cursor-pointer">
+            <div className="p-3.5  rounded-full bg-gray-950/80 text-white cursor-pointer">
                 <span className="">
                   <AiOutlineMenu className="text-lg sm:text-xl" />
                 </span>
@@ -232,7 +232,7 @@ const DashboardSideNav = () => {
                           <BiMessageDetail size={16} className="text-white " />
                         </div>
                         <span className="text-[18px] font-semibold text-gray-200">
-                          پیا ها
+                          پیام ها
                         </span>
                       </Link>
                       <Link
