@@ -2,9 +2,7 @@
 import React, { useState, useEffect } from "react";
 import DashboardLayout from "@/components/DashboardLayout";
 import { MdOutlineNotificationsActive } from "react-icons/md";
-// shadcn
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import Loading from "@/components/Loading";
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
@@ -22,7 +20,7 @@ const Notifications = () => {
         const jsonData = await response.json();
         setNotifications(jsonData.myNotifications);
       } else {
-        throw new Error("Failed to fetch notifications");
+        console.log("Failed to fetch notifications");
       }
     } catch (error) {
       console.error("Error fetching notifications:", error.message);
@@ -59,7 +57,7 @@ const Notifications = () => {
         }
       );
       if (!response.ok) {
-        throw new Error("Failed to mark notification as read");
+        console.log("Failed to mark notification as read");
       }
     } catch (error) {
       console.error("Error marking notification as read:", error.message);
@@ -69,7 +67,7 @@ const Notifications = () => {
 
   return (
     <DashboardLayout>
-      <div className="py-5 px-3 sm:px-5 md:px-7 lg:py-10 lg:px-10 w-full md:mt-0 mt-[70px]">
+      <div className="py-5 px-3 sm:px-5 md:px-7 lg:py-10 lg:px-10 w-full lg:mt-0 mt-[70px]">
         <div className="w-full lg:w-[80%] xl:w-[85%] lg:mr-[250px] flex flex-col gap-6">
           <div className="w-full md:w-[85%] mx-auto">
             <div className="flex flex-col">
@@ -87,7 +85,7 @@ const Notifications = () => {
               </div>
             </div>
             <div className="flex flex-col gap-3 ">
-              {notifications &&
+              {notifications ?
                 notifications.map((notification) => (
                   <div
                     key={notification.id}
@@ -120,7 +118,9 @@ const Notifications = () => {
                       </p>
                     </div>
                   </div>
-                ))}
+                )) : <>
+                <Loading />
+                </> }
             </div>
             <div className="flex items-center  md:w-[85%] w-full py-4">
               <div className="flex-1 text-sm text-muted-foreground">

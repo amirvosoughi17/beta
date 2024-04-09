@@ -1,22 +1,21 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Layout from "@/components/Layout";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import Installment from "@/components/Installment";
+import Loading from "@/components/Loading";
 
 const Payment = () => {
+
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [discount, setDiscount] = useState("");
   const installmentValue =
     order?.installments && order?.installments[0]?.paid === "true"
       ? order?.installments[1]?.amount
       : order?.installments[0]?.amount;
   const [installmentAmount, setInstallmentAmount] = useState(installmentValue);
-  const [discount, setDiscount] = useState("");
-  const [priceAfterDiscount, setPriceAfterDiscount] = useState(null);
-
+  
   useEffect(() => {
     setInstallmentAmount(installmentValue);
   }, [installmentValue]);
@@ -40,7 +39,6 @@ const Payment = () => {
         setLoading(false);
       }
     };
-
     fetchOrderDetails();
   }, []);
 
@@ -74,30 +72,33 @@ const Payment = () => {
   
   
   return (
-      <div className="min-h-screen w-full py-5 px-3 sm:py-6 sm:px-5 lg:px-10 lg:py-10">
+      <div className="min-h-screen w-full py-5 sm:py-6 sm:px-5 lg:px-10 lg:py-10">
         <Card className="w-[80%] border-none mx-auto flex flex-col gap-4 h-[650px] md:flex-row items-start mt-[50px]">
-          <Card className="w-full md:w-[60%] h-full p-5">
+          <Card className="w-full md:w-[60%] h-full p-3 sm:p-5">
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <Input
-                value={installmentAmount}
+                value={Math.floor(installmentAmount).toLocaleString()}
                 onChange={(e) => setInstallmentAmount(e.target.value)}
+                disabled
               />
               <div className="flex items-center w-full gap-2">
                 <span>کد تخفیف : </span>
                 <Input
-                  className="w-[30%]"
+                  className="w-[50%] sm:w-[30%]"
                   type="text"
                   value={discount}
                   onChange={(e) => setDiscount(e.target.value)}
                 />
               </div>
-              <Button type="submit">پرداخت</Button> {/* Submit button */}
+              <Button type="submit">پرداخت</Button> 
             </form>
           </Card>
           <Card className="w-full md:w-[40%] h- p-5 ">
             <div>
               {loading ? (
-                <p>Loading...</p>
+                <>
+                <Loading />
+                </>
               ) : order ? (
                 <div className="flex flex-col gap-3">
                   <h1 className="text-xl font-semibold text-white pb-5 mb-5 border-b-[0.4px] border-zinc-800">
@@ -145,7 +146,9 @@ const Payment = () => {
                   </div>
                 </div>
               ) : (
-                <p>No order found</p>
+                <>
+                <Loading />
+                </>
               )}
             </div>
           </Card>

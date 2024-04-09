@@ -1,9 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import DashboardLayout from "@/components/DashboardLayout";
-import { addDays, format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { DateRange } from "react-day-picker";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
@@ -17,44 +14,12 @@ import { MdOutlineAttachMoney } from "react-icons/md";
 import { RiShoppingBag2Line } from "react-icons/ri";
 // shadcn
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -62,8 +27,6 @@ const Overview = () => {
   const [loadingPP, setLoadingPP] = useState(false);
   const [LoadinglatestOrders, setLoadingLatestOrders] = useState(false);
   const userInfo = useSelector(selectUserInfo);
-  const [date, setDate] = useState();
-  const [oData, setoData] = useState(null);
   const [overData, setOverData] = useState(null);
   const [popularPlans, setPopularPlans] = useState([]);
   const dispatch = useDispatch();
@@ -83,7 +46,6 @@ const Overview = () => {
     }
   }, [userInfo, router]);
 
-  // over data
   useEffect(() => {
     const fetchOverData = async () => {
       setLoadingLatestOrders(true);

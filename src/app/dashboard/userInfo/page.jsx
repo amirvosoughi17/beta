@@ -24,12 +24,11 @@ const UserInfo = () => {
   return (
     <div>
       <DashboardLayout>
-        <div className='py-5 px-2 lg:px-5 xl:px-7 lg:py-8 w-full min-h-screen md:mt-0 mt-[70px]'>
+        <div className='py-5 px-2 lg:px-5 xl:px-7 lg:py-8 w-full min-h-screen lg:mt-0 mt-[70px]'>
           <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[220px] xl:mr-[230px]   flex flex-col items-center justify-center gap-6 h-full">
             <div className="xl:w-[90%] w-full lg:w-[95%]  md:h-[700px] py-4 sm:py-8 p-4 md:p-10 rounded-xl">
               <h1 className='sm:mb-10 mb-4 text-xl text-zinc-300 font-semibold'>اطلاعات حساب</h1>
               <div className="flex flex-col md:flex-row items-center md:items-start gap-[20px] sm:gap-[40px] lg:gap-[45px] xl:gap-[100px] lg:px-4 xl:px-10">
-                {/* profile */}
                 <div className="flex flex-col items-center  gap-3">
                   <Avatar className="md:w-[85px] md:h-[85px] w-[100px] h-[100px] shadow-md">
                     <AvatarFallback ><span className='text-3xl'>{userInfo?.username?.charAt(0).toUpperCase()}</span></AvatarFallback>
@@ -52,7 +51,6 @@ const UserInfo = () => {
                     </Button>
                   </div>
                 </div>
-                {/* end profile */}
                 <form className="flex flex-col  gap-2.5  xl:gap-5 w-[90%]">
                     <div className="flex flex-col gap-2 sm:gap-3">
                       <Label htmlFor="username" className='text-zinc-200 text-md'>نام کاربری</Label>

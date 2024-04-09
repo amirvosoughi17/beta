@@ -2,8 +2,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import Layout from "@/components/Layout";
-import { toast } from "sonner";
 import { Card } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 
@@ -83,24 +81,32 @@ const Checkout = () => {
           >
             {isLoading ? "لطفا منتظر بمانید ..." : "ثبت سفارش"}
           </button>
-            <Card className="text-lg sm:mt-5 text-center text-white px-5 py-4 w-full sm:w-[40%]">قیمت کل : {totalPrice?.toLocaleString()} تومان</Card>
-        </div> 
-        {isOrderSent && (
+          <Card className="text-lg sm:mt-5 text-center text-white px-5 py-4 w-full sm:w-[40%]">
+            قیمت کل : {totalPrice?.toLocaleString()} تومان
+          </Card>
+        </div>
+        {isOrderSent ? (
           <div className="flex items-center gap-3">
             <span className="text-green-600 font-medium text-xl">
               سفارش شما با موفقیت ثبت شد{" "}
             </span>
-              <Loader2 className="h-6 w-6 animate-spin" />
+            <Loader2 className="h-6 w-6 animate-spin" />
           </div>
+        ) : (
+          <span className="text-red-600 font-medium text-xl">
+            خطا در ثبت سفارش
+          </span>
         )}
         <div className="flex items-start flex-col mt-10 gap-4">
           <div className="flex items-start gap-2">
-            <span className="text-red-500 font-medium text-sm sm:text-lg min-w-[40px] sm:min-w-[50px]">توجه :</span>
+            <span className="text-red-500 font-medium text-sm sm:text-lg min-w-[40px] sm:min-w-[50px]">
+              توجه :
+            </span>
             <p className="sm:text-lg text-sm text-gray-100">
-            پس از ثبت سفارش تیم ویکسل تا ۴۸ ساعت بعد با شما در تماس خواهد بود تا هماهنگی لازم برای ادامه روند پروژه صورت گیرد
+              پس از ثبت سفارش تیم ویکسل تا ۴۸ ساعت بعد با شما در تماس خواهد بود
+              تا هماهنگی لازم برای ادامه روند پروژه صورت گیرد
             </p>
           </div>
-          
         </div>
       </Card>
     </div>

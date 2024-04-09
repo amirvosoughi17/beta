@@ -90,7 +90,7 @@ const TicketPage = () => {
 
     return (
         <DashboardLayout>
-            <div className='min-h-screen  w-full md:mt-0 mt-[70px]'>
+            <div className='min-h-screen  w-full lg:mt-0 mt-[70px]'>
                 <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[210px] md:py-10 md:px-10">
                     <div className="w-full lg:w-[95%] xl:w-[90%]  mx-auto rounded-xl min-h-[700px] py-10 px-6 sm:px-8 md:px-10 relative">
                         <div className="flex flex-col gap-4  ">

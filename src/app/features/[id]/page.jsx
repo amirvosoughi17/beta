@@ -1,22 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setFeatures,
-  setTotalPrice,
-  setPlanName,
-  setNecessaryFeatures,
-} from "@/redux/features/featuresSlice";
+import {setFeatures,setTotalPrice,setPlanName,setNecessaryFeatures,} from "@/redux/features/featuresSlice";
 import { useRouter } from "next/navigation";
-import Box from "@mui/material/Box";
-import LinearProgress from "@mui/material/LinearProgress";
-import Layout from "@/components/Layout";
-import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { TiTick } from "react-icons/ti";
-import { AiOutlineNotification } from "react-icons/ai";
 import { BsStarFill } from "react-icons/bs";
+import Loading from '@/components/Loading'
 
 const fetchPlanDetails = async (id) => {
   const res = await fetch(`/api/plans/${id}`);
@@ -25,15 +15,15 @@ const fetchPlanDetails = async (id) => {
 };
 
 const PlanDetails = () => {
+  const [plan, setPlan] = useState(null);
   const router = useRouter();
   const dispatch = useDispatch();
+
   const selectedFeatures = useSelector((state) => state.features.selectedFeatures);
   const necessaryFeatures = useSelector((state) => state.features.necessaryFeatures);
-  
   const totalPrice = useSelector((state) => state.features.totalPrice);
   const planName = useSelector((state) => state.features.planName);
 
-  const [plan, setPlan] = useState(null);
   useEffect(() => {
     const pathArray = window.location.pathname.split("/");
     const id = pathArray[pathArray.length - 1];
@@ -74,11 +64,10 @@ const PlanDetails = () => {
   };
 
   const handleCheckout = () => {
-
     dispatch(setPlanName(plan.name));
-
     router.push("/checkout");
   };
+
   useEffect(() => {
     const basePrice = plan ? plan.basePrice : 0;
     const featurePrices = selectedFeatures.map((feature) => feature.price);
@@ -116,7 +105,7 @@ const PlanDetails = () => {
         </div>
       </div>
       <Card className="flex-col  flex md:grid grid-cols-2 mt-10  min-h-[200px] md:mt-[60px] p-3 sm:p-5 md:p-4 lg:p-10 gap-4 ">
-        {plan &&
+        {plan ?
           plan.features.map((feature) => (
             <div
               key={feature._id}
@@ -163,7 +152,11 @@ const PlanDetails = () => {
                 </div>
               )}
             </div>
-          ))}
+          )) : 
+          <>
+          <Loading />
+          </>
+          }
       </Card>
       <div className="my-8 flex items-center justify-between">
         <div className="flex items-center  gap-1">

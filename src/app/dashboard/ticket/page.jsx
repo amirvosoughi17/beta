@@ -17,11 +17,9 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -30,7 +28,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 import { toast } from 'sonner';
 
 const CustomTable = ({ tickets, handleTicketClick }) => (
@@ -131,7 +129,7 @@ const Ticket = () => {
   return (
     <div>
       <DashboardLayout>
-        <div className="py-5 px-2 lg:px-5 xl:px-7 lg:py-8 w-full min-h-screen md:mt-0 mt-[70px]">
+        <div className="py-5 px-2 lg:px-5 xl:px-7 lg:py-8 w-full min-h-screen lg:mt-0 mt-[70px]">
           <div className="w-full lg:w-[80%] xl:w-[85%] lg:mr-[230px] xl:mr-[250px] flex flex-col items-center justify-center gap-6 h-full">
             <div className="md:w-[80%] w-[95%] sm:w-[90%]  flex flex-col gap-5">
               <div className="flex flex-col   gap-3 border-b-[0.5px] border-zinc-700/60 pb-5">

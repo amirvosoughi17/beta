@@ -8,12 +8,12 @@ import { fetchUserData } from "@/utils/userActions";
 import moment from "moment";
 import "moment/locale/fa";
 import Link from "next/link";
-import { setOrder } from "@/redux/user/userSlice";
 //shadcn
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
+import Loading from "@/components/Loading";
 
 const Order = ({ id }) => {
   
@@ -96,13 +96,15 @@ const Order = ({ id }) => {
   };
 
   if (!order) {
-    return <p>Loading...</p>;
+    return <span className="w-full min-h-full fixed top-[50%] left-[50%] translate-x-[-50%] ">
+      <Loading />
+      </span>;
   }
   
   return (
     <DashboardLayout>
-      <div className="p-2 sm:p-8 w-full  md:mt-0 mt-[120px]">
-        <div className="w-full lg:w-[80%] xl:w-[85%] lg:mr-[220px] md:mt-0 mt-[140px]">
+      <div className="p-2 sm:p-8 w-full  lg:mt-0 mt-[70px]">
+        <div className="w-full lg:w-[80%] xl:w-[85%] lg:mr-[220px] ">
           <div className="w-full  min-h-screen  py-5 sm:px-4 md:px-8 flex flex-col gap-5 ">
             <div className="flex w-full items-center justify-between border-b-[1px] border-zinc-800 pb-5 ">
               <h1 className=" flex flex-col gap-4">
@@ -124,51 +126,7 @@ const Order = ({ id }) => {
             </div>
 
             <div className="w-full flex flex-col lg:flex-row items-start gap-4 ">
-              <Card className="flex flex-col gap-3 w-full  lg:w-[55%] px-4 py-6">
-                <h1 className="text-2xl mb-7 mt-4 font-semibold text-white pr-4">
-                  امکانات
-                </h1>
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-center justify-between w-full px-4 border-b-[0.5px] border-zinc-800 pb-4">
-                    <span className="text-zinc-300 text-sm font-medium">
-                      نام امکان
-                    </span>
-                    {userInfo && userInfo.role === "admin" && (
-                      <span className="text-zinc-300 text-sm font-medium">
-                        وضعیت
-                      </span>
-                    )}
-                  </div>
-                  {order.selectedFeatures.map((feature) => (
-                    <div key={feature._id} className="py-4 px-3 ">
-                      <div className="flex items-center justify-between ">
-                        <span>{feature.name}</span>
-
-                        {userInfo && userInfo.role === "admin" && (
-                          <select
-                            className=" bg-transparent text-white border-zinc-800 border-[1px] rounded-md py-2 px-2"
-                            value={feature.status}
-                            onChange={(e) =>
-                              handleStatusChange(feature._id, e.target.value)
-                            }
-                          >
-                            <option value="در انتظار توسعه">
-                              در انتظار توسعه
-                            </option>
-                            <option value="در حال توسعه">درحال توسعه</option>
-                            <option value="توسعه داده شده">
-                              توسعه داده شده
-                            </option>
-                          </select>
-                        )}
-                        {userInfo && userInfo.role === "user" && (
-                          <Badge>{feature.status}</Badge>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </Card>
+            
               <div className="flex flex-col w-full lg:w-[45%] gap-4">
                 <Card className="flex flex-col gap-3 w-full   px-4 py-6">
                   <h1 className="text-2xl mb-7 mt-4 font-semibold text-white pr-4">
@@ -241,6 +199,51 @@ const Order = ({ id }) => {
                   </div>
                 </Card>
               </div>
+              <Card className="flex flex-col gap-3 w-full  lg:w-[55%] px-4 py-6">
+                <h1 className="text-2xl mb-7 mt-4 font-semibold text-white pr-4">
+                  امکانات
+                </h1>
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between w-full px-4 border-b-[0.5px] border-zinc-800 pb-4">
+                    <span className="text-zinc-300 text-sm font-medium">
+                      نام امکان
+                    </span>
+                    {userInfo && userInfo.role === "admin" && (
+                      <span className="text-zinc-300 text-sm font-medium">
+                        وضعیت
+                      </span>
+                    )}
+                  </div>
+                  {order.selectedFeatures.map((feature) => (
+                    <div key={feature._id} className="py-4 px-3 ">
+                      <div className="flex items-center justify-between ">
+                        <span>{feature.name}</span>
+
+                        {userInfo && userInfo.role === "admin" && (
+                          <select
+                            className=" bg-transparent text-white border-zinc-800 border-[1px] rounded-md py-2 px-2"
+                            value={feature.status}
+                            onChange={(e) =>
+                              handleStatusChange(feature._id, e.target.value)
+                            }
+                          >
+                            <option value="در انتظار توسعه">
+                              در انتظار توسعه
+                            </option>
+                            <option value="در حال توسعه">درحال توسعه</option>
+                            <option value="توسعه داده شده">
+                              توسعه داده شده
+                            </option>
+                          </select>
+                        )}
+                        {userInfo && userInfo.role === "user" && (
+                          <Badge>{feature.status}</Badge>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
             </div>
           </div>
         </div>

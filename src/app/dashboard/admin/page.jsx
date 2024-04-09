@@ -103,7 +103,7 @@ const Admin = () => {
   return (
     <DashboardLayout>
       <div className="p-2 sm:p-8 w-full">
-        <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[295px] md:mt-0 mt-[70px]">
+        <div className="w-full  lg:w-[80%] xl:w-[85%] lg:mr-[295px] lg:mt-0 mt-[70px]">
           <div className="w-[100%] min-h-screen  mx-auto  shadow-md rounded-xl py-7 px-1 lg:px-4 xl:px-8">
             <div className="flex flex-col gap-2 mb-10">
               <h1 className="text-3xl font-semibold text-white">
