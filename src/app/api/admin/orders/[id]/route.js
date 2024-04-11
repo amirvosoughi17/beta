@@ -1,9 +1,9 @@
 import { connect } from "@/config/DB";
 import Order from "@/models/Order";
+import { User } from "@/models/User";
 import { calculateOrderProgress } from "@/utils/calculateOrderProgress";
 import { sendNotification } from "@/utils/sendNotification";
 import { NextResponse } from "next/server";
-
 connect()
 
 export async function GET(request, { params }) {
@@ -29,57 +29,57 @@ export async function PUT(request, { params }) {
         const data = await request.json();
         const { featureName, newStatus } = data;
 
-        const order = await Order.findByIdAndUpdate(id, {
-            $set: { [`selectedFeatures.$[elem].status`]: newStatus },
-        }, { arrayFilters: [{ "elem.name": featureName }], new: true }).populate('user');
-
+        const order = await Order.findById(id).populate('user');
         if (!order) {
             return NextResponse.json({
                 success: false,
-                message: 'Order not found',
+                message: 'سفارش پیدا نشد!',
             }, { status: 404 });
+        } else if (order.installments[0].paid !== true) {
+            return NextResponse.json({
+                success: false,
+                message: 'قسط نخست این سفارش پرداخت نشده است , نمیتوان پروژه را پیش برد',
+            }, { status: 400 });
         }
+        const updatedOrder = await Order.findByIdAndUpdate(
+            id,
+            { $set: { [`selectedFeatures.$[elem].status`]: newStatus } },
+            {
+                arrayFilters: [{ "elem.name": featureName }],
+                new: true
+            }
+        ).populate('user');
 
-        const user = order.user;
+        const user = updatedOrder.user;
 
         const MESSAGE_CONTENT = {
             COMPLETED_ORDER_MESSAGE: {
                 title: "اتمام توسعه وبسایت",
                 message: "وبسایت شما با موفقیت تکمیل شد"
             },
-            FIRST_INSTALLMENT_MESSAGE: {
-                title: "قسط اول سفارش",
-                message: ` ${user.username}  مهلت پرداخت قسط اول شما فرا رسیده است لطفا برای ادامه فرایند توسعه قسط اول خود را پرداخت کنید`
-
-            },
-            SECOND_INSTALLMENT_MESSAGE: {
-                title: "قسط دوم سفارش",
-                message: `${user.username} مهلت پرداخت قسط دوم شما فرا رسیده است لطفا برای ادامه فرایند توسعه قسط دوم خود را پرداخت کنید`
-            },
             WAIT_FOR_PAY_PRICE: {
                 title: "پرداخت هزینه سفارش",
                 message: "فرایند توسعه وبسایت شما به اتمام رسیده است, خواهش مند هستیم نسبت به پرداخت هزینه باقی مانده اقدام کنید"
             }
         }
+        const saveOrderProgress = calculateOrderProgress(updatedOrder);
+        updatedOrder.orderProgress = saveOrderProgress;
+        if (updatedOrder.orderProgress === 100) {
+            updatedOrder.status = "تکمیل شده";
 
-        const saveOrderProgress = calculateOrderProgress(order);
-        order.orderProgress = saveOrderProgress;
-        if (order.orderProgress === 100) {
-            order.status = "تکمیل شده";
+            updatedOrder.statusDates.completed = new Date()
+            updatedOrder.supportStartedAt = new Date();
+            updatedOrder.supportExpiresAt = new Date();
 
-            order.statusDates.completed = new Date()
-            order.supportStartedAt = new Date();
-            order.supportExpiresAt = new Date();
+            updatedOrder.supportExpiresAt.setMonth(updatedOrder.supportExpiresAt.getMonth() + updatedOrder.supportTime)
 
-            order.supportExpiresAt.setMonth(order.supportExpiresAt.getMonth() + order.supportTime)
-
-            // if (order.orderProgress === 100 && !order.paymentStatus.isFullPaid) {
-            //     const waitPayPriceNotification = await sendNotification(
-            //         MESSAGE_CONTENT.WAIT_FOR_PAY_PRICE.title,
-            //         MESSAGE_CONTENT.WAIT_FOR_PAY_PRICE.message
-            //     );
-            //     user.notifications.push(waitPayPriceNotification._id)
-            // }
+            if (updatedOrder.orderProgress === 100 && !updatedOrder.installments[1].paid) {
+                const waitPayPriceNotification = await sendNotification(
+                    MESSAGE_CONTENT.WAIT_FOR_PAY_PRICE.title,
+                    MESSAGE_CONTENT.WAIT_FOR_PAY_PRICE.message
+                );
+                user.notifications.push(waitPayPriceNotification._id)
+            }
 
 
             const completedOrderStatusNotification = await sendNotification(
@@ -89,26 +89,19 @@ export async function PUT(request, { params }) {
 
             user.notifications.push(completedOrderStatusNotification._id)
 
-        } else if (order.orderProgress >= 40) {
-            order.status = "در انتظار پرداخت قسط اول"
-            const waitForFirstInstallmentNotification = await sendNotification(
-                MESSAGE_CONTENT.FIRST_INSTALLMENT_MESSAGE.title,
-                MESSAGE_CONTENT.FIRST_INSTALLMENT_MESSAGE.message
+        } else if (updatedOrder.orderProgress >= 80) {
+            const eighteenPercentCompleted = await sendNotification(
+                "خبری خوش",
+                `عالیقدر ${user.username}%
+                خبری خوش , هشتاد درصد از وبسایت شما توسط تیم ویکسل توسعه داده شده است, زمانی تا اتمام آن باقی نمانده
+                `
             );
-            user.notifications.push(waitForFirstInstallmentNotification._id)
-        } else if (order.orderProgress >= 60) {
-            order.status = "در انتطار پرداخت قسط دوم"
-            const waitForSecondInstallmentNotification = await sendNotification(
-                MESSAGE_CONTENT.SECOND_INSTALLMENT_MESSAGE.title,
-                MESSAGE_CONTENT.SECOND_INSTALLMENT_MESSAGE.message
-            );
-            user.notifications.push(waitForSecondInstallmentNotification._id)
+            user.notifications.push(eighteenPercentCompleted._id)
         } else {
             order.status = "در حال پیشرفت"
         }
-
         await Promise.all([
-            order.save(),
+            updatedOrder.save(),
             user.save()
         ]);
 
