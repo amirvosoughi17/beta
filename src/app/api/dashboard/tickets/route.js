@@ -1,7 +1,7 @@
 import { connect } from "@/config/DB";
 import Ticket from "@/models/Ticket";
 import { User } from "@/models/User";
-import { sendNotification } from "@/utils/sendNotification";
+import { sendNotification, sendNotificationToAdmins } from "@/utils/sendNotification";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
 import NodeCache from "node-cache";
@@ -30,9 +30,15 @@ export async function POST(request) {
         });
 
         const newNotification = await sendNotification(
-            "تیکت جدید ایجاد شد",
-            `تیکت جدیدی را ایجاد  ${user.username}`
+            `${user.username} تیکت شما ثبت شد`,
+            `تیکت شما با مقصود ${newTicket.subject} ایجاد شد , تیم ویکسل پس از برسی به آن پاسخ خواهند داد`
         );
+        const ticketSinglePageUrl = `http://localhost:3000/dashboard/ticket/${newTicket._id}`
+        await sendNotificationToAdmins(
+            `${user.username} تیکت جدیدی را ایجاد کردند`,
+            `تیکت جدید با هدف ${newTicket.subject} ایجاد شد , %
+            ${ticketSinglePageUrl}  برای اضافه کردن پاسخ:`
+        )
         user.tickets.push(newTicket._id)
         user.notifications.push(newNotification._id)
         await user.save();
