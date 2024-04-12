@@ -3,7 +3,7 @@ import bcrpyt from 'bcryptjs';
 import { connect } from "@/config/DB";
 import { User } from "@/models/User";
 import { generate_token } from "@/utils/session";
-import { sendNotification } from '@/utils/sendNotification';
+import { sendNotification, sendNotificationToAdmins } from '@/utils/sendNotification';
 
 connect();
 
@@ -46,6 +46,10 @@ export async function POST(request) {
             به ویکسل پیوستید
             `
         );
+        await sendNotificationToAdmins(
+            `${newUser.username} به ویکسل اضافه شد`,
+            "اطلاع ثبت نامی جدید , کاربر جدیدی به ویکسل افزوده شد"
+        )
         newUser.notifications.push(registerationNotification._id)
         await newUser.save();
 
