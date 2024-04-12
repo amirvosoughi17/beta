@@ -2,7 +2,7 @@ import { connect } from "@/config/DB";
 import Order from "@/models/Order";
 import Plan from "@/models/Plan";
 import { User } from "@/models/User";
-import { sendNotification } from "@/utils/sendNotification";
+import { sendNotification, sendNotificationToAdmins } from "@/utils/sendNotification";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
 
@@ -33,17 +33,24 @@ export async function POST(request) {
       selectedFeatures,
       statusDates: { pending: new Date() },
       totalPrice,
-      installments: [ 
+      installments: [
         { amount: firstInstallmentAmount },
         { amount: secondInstallmentAmount }
       ]
     });
 
     const newNotification = await sendNotification(
-      "سفارش جدید با موفقیت ثبت شد",
-      "شما یک وبسایت جدید ثبت کردید. پس از بررسی آن، به شما وضعیت آنرا اطلاع خواهیم داد."
+      `${user.username} گرانقدر%
+      سفارش جدید شما با موفقیت ثبت شد
+      `,
+      "با سپاس از ثبت سفارش جدید شما! تیم ویکسل در حال بررسی اطلاعات ارسالی است. به زودی وضعیت سفارش شما را به اطلاع خواهیم رساند."
     );
-
+    const orderSinglePageUrl = `http://localhost:3000/dashboard/order/${newOrder._id}`
+    await sendNotificationToAdmins(
+      `${user.username} سفارشی را ثبت کرد%`,
+      `سفارش جدید  دریافت شد برای دیدن اطلاعات آن سفارش %
+      ${orderSinglePageUrl}`
+    );
     user.notifications.push(newNotification._id);
     user.orders.push(newOrder._id);
 
