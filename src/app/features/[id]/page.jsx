@@ -111,7 +111,7 @@ const PlanDetails = () => {
               key={feature._id}
               className={`flex items-center justify-between gap-3  rounded-lg ${
                 feature.isNeseccary
-                  ? "bg-[#bab9e3] cursor-not-allowed"
+                  ? "border-[0.5px] border-gray-700 cursor-not-allowed"
                   : "bg-[#5D5AFF]"
               } px-3 py-4 sm:p-5 md:p-10 max-h-[80px]`}
             >

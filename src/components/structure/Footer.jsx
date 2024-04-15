@@ -21,16 +21,15 @@ const Footer = () => {
               <Link className="text-md text-zinc-300 duration-300 hover:text-white" href="/">ارتباط باما</Link>
             </div>
             <div className="flex items-cente gap-3">
-              <Link href='/' className="w-[35px] h-[35px] rounded-lg bg-[#bfbebe49] flex items-center justify-center">
+              <Link href='https://www.instagram.com/wixel_org/?igsh=bzA5a2h2NWR6cGRh&utm_source=qr'  target='_blank' className="w-[35px] h-[35px] rounded-lg bg-[#bfbebe49] flex items-center justify-center">
                 <span>
-
                 <FaInstagram />
                 </span>
               </Link>
-              <Link href='/' className="w-[35px] h-[35px] rounded-lg bg-[#bfbebe49] flex items-center justify-center">
+              <Link href='https://t.me/wixel_support'  target='_blank' className="w-[35px] h-[35px] rounded-lg bg-[#bfbebe49] flex items-center justify-center">
                 <FaTelegram />
               </Link>
-              <Link href='/' className="w-[35px] h-[35px] rounded-lg bg-[#bfbebe49] flex items-center justify-center">
+              <Link href='https://www.linkedin.com/in/%D9%88%DB%8C%DA%A9%D8%B3%D9%84-wixel-85a4b62aa/'  target='_blank' className="w-[35px] h-[35px] rounded-lg bg-[#bfbebe49] flex items-center justify-center">
                 <IoLogoLinkedin />
               </Link>
             </div>
@@ -41,10 +40,7 @@ const Footer = () => {
               <p className="text-md text-zinc-300 text-center md:text-start">طراحی سایت اختصاصی و اماده با ظاهری چشم نواز و با بروزترین متد های روز برای کسب و کار شما با تیم ویکسل</p>
             </div>
             <div className="flex gap-2">
-              <Image 
-              src={img}
-              className="w-[90px] h-[120px]"
-              />
+             
               <Link referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=481604&Code=RHA4UazYbiCWxbaQbJG9YwXT8AX2aaT0'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=481604&Code=RHA4UazYbiCWxbaQbJG9YwXT8AX2aaT0' alt=''  Code='RHA4UazYbiCWxbaQbJG9YwXT8AX2aaT0'/></Link>
             </div>
           </div>

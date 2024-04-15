@@ -99,7 +99,7 @@ const Dashboard = () => {
               ) : (
                 <>
                   <Table className="">
-                    <TableHeader className="bg-transparent] border-[0.4px] border-gray-700  rounded-md">
+                    <TableHeader className="bg-transparent border-[0.4px] border-gray-700  rounded-md">
                       <TableRow className="">
                         <TableHead className="w-[150px] text-right">
                           نوع سایت
