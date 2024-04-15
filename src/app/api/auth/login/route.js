@@ -8,8 +8,7 @@ import { sendNotification } from "@/utils/sendNotification";
 connect();
 export async function POST(request) {
     try {
-        const data = await request.json();
-        const { email, password } = data;
+        const { email, password } = await request.json();
         if (!email || !password) {
             return NextResponse.json({
                 message: "لطفا تمامی فیلد هارو پر کنید "
@@ -27,14 +26,15 @@ export async function POST(request) {
                 message: "رمز عبور نادرست است"
             }, { status: 400 });
         }
-        const nowDate = new Intl.DateTimeFormat(
-            'fa-IR', {
-            year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'
-        }).format(Date.now());
+
+        const nowDate = new Date().toLocaleString('fa-IR');
 
         const loggedinNotification = await sendNotification(
             "اعلام ورودی",
-            `${nowDate}  وارد ویکسل شدید  شما در ساعت  ${existsUser.username}`
+            `${existsUser.username} %
+            شما در ساعت
+            ${nowDate} 
+             وارد ویکسل شدید `
         )
         existsUser.notifications.push(loggedinNotification._id);
         await existsUser.save()

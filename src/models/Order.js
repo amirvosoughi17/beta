@@ -57,10 +57,6 @@ const orderSchema = new mongoose.Schema({
     statusDates: {
         pending: { type: Date, default: null },
         accepted: { type: Date, default: null },
-        notAccepted: { type: Date, default: null },
-        inProgress: { type: Date, default: null },
-        completed: { type: Date, default: null },
-        canceled: { type: Date, default: null },
     },
     installments: [{
         amount: {

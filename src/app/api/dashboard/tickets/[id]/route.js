@@ -1,7 +1,7 @@
 import { connect } from "@/config/DB";
 import Ticket from "@/models/Ticket";
 import { User } from "@/models/User";
-import { sendNotification } from "@/utils/sendNotification";
+import { sendNotification, sendNotificationToAdmins } from "@/utils/sendNotification";
 import { get_user_data_from_session } from "@/utils/session";
 import { NextResponse } from "next/server";
 connect()
@@ -23,15 +23,26 @@ export async function POST(request, { params }) {
             user,
             message
         })
-        if (user.role === "admin") {
-            const notificationMessage = await sendNotification(
-                ` ${ticket.subject} پاسخ جدید برای تیکت`,
-                "تیکت شما توسط ویکسل پاسخ داده شده"
-            )
+        switch (user.role) {
+            case "admin":
+                const notificationMessage = await sendNotification(
+                    ` پاسخ جدید برای تیکت ${ticket.subject}`,
+                    "تیکت شما توسط ویکسل پاسخ داده شده"
+                )
 
-            const createdByUser = await User.findById(ticket.createdBy._id);
-            createdByUser.notifications.push(notificationMessage._id)
-            await createdByUser.save()
+                const createdByUser = await User.findById(ticket.createdBy._id);
+                createdByUser.notifications.push(notificationMessage._id)
+                await createdByUser.save()
+                break;
+            case "user":
+                const ticketSinglePageUrl = `http://localhost:3000/dashboard/ticket/${ticket._id}`;
+                await sendNotificationToAdmins(
+                    `پاسخ جدید از سمت تیکت ${ticket.subject} `,
+                    `${user.username} پاسخ جدیدی برای تیکت ${ticket.subject} ارسال کرد% 
+                    ${ticketSinglePageUrl} برای مشاهده پیام و پاسخ :
+                    `
+                )
+                break;
         }
         await ticket.save()
         return NextResponse.json({ ticket }, { status: 200 })

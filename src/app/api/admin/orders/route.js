@@ -51,18 +51,24 @@ export async function PUT(request) {
 
         const MESSAGES_CONTENT = {
             ACCEPTED: {
-                title: "سفارش شما از سمت ویکسل دریافت و قبول شد",
-                message: "سفارش شما از سمت ویکسل قبول گردید , ما به زودی فرایند توسعه را شروع خواهیم کرد"
+                title: `گرامی ${orderedUser.username} %
+                سفارش شما از سوی ویکسل دریافت و پذیرفته شده`, 
+                message: `عالیقدر ${orderedUser.username} %
+                سفارش شما از سوی ویکسل پذیرفته شده است , پس از پرداخت قست اول تیم ویکسل توسعه وبسایت شما را آغاز خواهد کرد`
             },
             NOT_ACCEPTED: {
-                title: "سفارش شما از سمت ویکسل رد شد",
-                message: "با برسی های صورت گرفته از سمت تیم ویکسل بنا بر دلایلی سفارش شما مورد قبول ویکسل نبود"
+                title: `گرامی ${orderedUser.username}%
+                سفارش شما از سمت ویکسل رد شد`,
+                message: `عالیقدر ${orderedUser.username} %
+                سفارش شما به دلیل برخی ملاحظات و شرایطی توسط تیم ما در ویکسل مورد پذیرش نمی‌باشد. با عرض پوزش از این موضوع، از صبر و درک شما سپاس‌گزاریم و منتظر همکاری‌های بعدی با شما هستیم.%
+                `
             }
         }
         if (order) {
             switch (newStatus) {
+
                 case "پذیرفته شده":
-                    order.status = "پذیرفته شده"
+                    order.status = "در انتظار پرداخت قسط اول"
                     order.statusDates.accepted = Date.now()
                     const acceptedNotification = await sendNotification(
                         MESSAGES_CONTENT.ACCEPTED.title,
@@ -76,7 +82,6 @@ export async function PUT(request) {
                     break;
                 case "پذیرفته نشده":
                     order.status = "پذیرفته نشده"
-                    order.statusDates.notAccepted = Date.now()
                     const notAcceptedNotification = await sendNotification(
                         MESSAGES_CONTENT.NOT_ACCEPTED.title,
                         MESSAGES_CONTENT.NOT_ACCEPTED.message

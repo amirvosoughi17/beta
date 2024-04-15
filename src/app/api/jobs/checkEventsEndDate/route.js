@@ -1,8 +1,7 @@
 import { connect } from "@/config/DB";
 import Event from "@/models/Event";
 import Plan from "@/models/Plan";
-import { User } from "@/models/User";
-import { sendNotification } from "@/utils/sendNotification";
+import { sendNotificationToAdmins } from "@/utils/sendNotification";
 import { NextResponse } from "next/server";
 import cron from 'node-cron';
 
@@ -23,15 +22,7 @@ export async function GET() {
                 _id: { $in: expiredEvents.map(event => event._id) }
             })
             if (removeEndedEventsIdFromPlans && deleteEndedEvents) {
-                const admins = await User.find({ role: "admin" });
-                for (const admin of admins) {
-                    const endedEventsNotification = await sendNotification(
-                        "رویداد ها پاک شدند",
-                        "پاکسازی رویداد های اتمام شده انجام شد"
-                    )
-                    admin.notifications.push(endedEventsNotification._id);
-                    await admin.save();
-                }
+                await sendNotificationToAdmins("رویداد ها پاک شدند", "پاکسازی رویداد های اتمام شده انجام شد")
             }
         })
         return NextResponse.json({
