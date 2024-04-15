@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import planP from "@/assets/plan-p.png";
 import peP from "@/assets/pur-p.svg";
 import poG from '@/assets/green-p.svg'
 import poO from '@/assets/red-p.svg'

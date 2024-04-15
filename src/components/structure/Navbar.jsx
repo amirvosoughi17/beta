@@ -1,7 +1,6 @@
 "use client";
 
 import { useDispatch, useSelector } from "react-redux";
-import { forwardRef } from "react";
 import { fetchUserData } from "@/utils/userActions";
 import { selectUserInfo, selectIsAuthenticated } from "@/redux/user/userSlice";
 import { useEffect, useState } from "react";
@@ -10,8 +9,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import navLogo from "@/assets/navlogo.svg";
-import logo from "@/assets/footer-logo.png";
-
+import logo from "@/assets/darklogo.svg";
 // react icons
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { IoLogInOutline } from "react-icons/io5";
@@ -21,24 +19,13 @@ import { FaUsers } from "react-icons/fa";
 import { BiMessageDetail } from "react-icons/bi";
 import { MdOutlineNotificationsActive } from "react-icons/md";
 import { MdPayment } from "react-icons/md";
-import { IoLogOutOutline } from "react-icons/io5";
 import { FiUser } from "react-icons/fi";
-import { IoIosHelpCircleOutline } from "react-icons/io";
-import { IoHomeOutline } from "react-icons/io5";
-import { RiAdminLine } from "react-icons/ri";
-import { AiOutlineMenu } from "react-icons/ai";
 import { RxDashboard } from "react-icons/rx";
-
 // shadcn
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -236,7 +223,7 @@ const Navbar = () => {
                         )
                       ) : (
                         <>
-                          <span>loading</span>
+                          <span>لطفا منتظر بمانید ...</span>
                         </>
                       )}
                     </div>
@@ -245,7 +232,7 @@ const Navbar = () => {
               </div>
             ) : (
               <div className="">
-                <Link href='/auth/login' className="bg-[#5D5AFF] z-50 rounded-[17px] mb-3 md:mb-0  flex py-[15px] w-[100px] h-[50px] pl-[15px] pr-[25px]  items-center justify-between shadow-md shadow-[#4E4AFF59] hover:opacity-85 duration-300">
+                <Link href='/auth/login' className="bg-[#5D5AFF] z-50 rounded-[17px] mb-3 md:mb-0  flex py-[15px] w-[100px] h-[45px] sm:h-[50px] pl-[15px] pr-[25px]  items-center justify-between shadow-md shadow-[#4E4AFF59] hover:opacity-85 duration-300">
                   <span className="text-white text-[14px] font-semibold">
                     ورود
                   </span>

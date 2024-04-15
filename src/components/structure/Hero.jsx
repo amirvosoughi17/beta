@@ -91,7 +91,7 @@ const Hero = () => {
           </div>
         </div>
         {/* left  */}
-        <div className=" relative  w-full 2xl:w-[42%] lg:w-[55%] xl:w-[43%] block sm:flex sm:w-[75%] md:w-[65%] items-center justify-center mt-[20px] xl:mt-[35px] 2xl:mt-[10px]">
+        <div className=" relative  w-full 2xl:w-[42%] lg:w-[55%] xl:w-[43%] block sm:flex sm:w-[75%] md:w-[65%] items-center justify-center mt-[20px] xl:mt-[22px] 2xl:mt-[10px]">
           <div className=" " >
             <Image
               src={heroBlue}

@@ -7,7 +7,7 @@ import sideLogo from "@/assets/whit-logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import { Loader2 } from "lucide-react";
-import logo from "@/assets/footer-logo.png";
+import logo from "@/assets/darklogo.svg";
 // react icons
 import { FiShoppingBag } from "react-icons/fi";
 import { FaUsers } from "react-icons/fa";
@@ -103,7 +103,7 @@ const DashboardSideNav = () => {
     <div className="flex items-center justify-center">
       <div className="fixed z-40 rounded-full bg-gray-900/20 lg:rounded-none  flex mx-auto lg:w-[235px]  w-[92%] sm:w-[88%] h-[58px] sm:h-[64px] top-5 lg:right-0 lg:top-0 lg:bottom-0 lg:h-[100%]  backdrop-blur-xl  lg:border-l-[0.5px] lg:border-[#2f3033]">
         <div className="flex lg:hidden items-center justify-between w-full px-2">
-          <Link href="/" className="p-2.5 bg-gray-950/40 rounded-full">
+          <Link href="/" className="p-2.5 bg-gray-950/40 rounded-full ">
             <Image
               src={sideLogo}
               alt="logo"
@@ -262,87 +262,17 @@ const DashboardSideNav = () => {
         </div>
         <div className="lg:py-[20px] xl:pb-[20px] pt-[30px] 2xl:pb-[25px] 2xl:pt-[35px] px-6 hidden lg:flex flex-col justify-between h-full ">
           <div className=" flex-col items- gap-[5px] flex">
-            <div className="w-full flex items-center justify-between ">
+            <div className="w-full flex items-center mt-2 justify-between ">
               <Image
                 src={logo}
                 alt="logo"
                 width={150}
                 height={50}
-                className=""
+                className="pr-1 mb-6 mt-3"
               />
             </div>
-            <div className=" border-b-[0.5px] border-zinc-600/50 pb-3 w-full">
-              <div className="flex items-end justify-between w-full">
-                <p className="text-sm text-muted-foreground flex gap-1 ">
-                  <kbd className="pointer-events-none inline-flex h-[30px] select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[13px] font-medium text-muted-foreground opacity-100">
-                    <span className="flex items-center gap-1">
-                      <span className="text-lg">⌘</span>K
-                    </span>
-                    <span>press</span>
-                  </kbd>
-                </p>
-                <Link href="/dashboard/tickets" className="">
-                  <Button
-                    variant="secondary"
-                    size="icon"
-                    className="w-[35px] h-[35px]"
-                  >
-                    <BiMessageDetail size={16} />
-                  </Button>
-                </Link>
-              </div>
-              <CommandDialog open={open} onOpenChange={setOpen} dir="rtl">
-                <CommandList>
-                  <CommandEmpty>نتیجه ای یافت نشد</CommandEmpty>
-                  <CommandGroup>
-                    <Link href="/dashboard">
-                      <CommandItem className="flex items-center gap-3">
-                        <FiShoppingBag className="mr-2 h-4 w-4" />
-                        <span>سفارش ها</span>
-                      </CommandItem>
-                    </Link>
-                    <Link href="/dashboard/payment">
-                      <CommandItem className="flex items-center gap-3">
-                        <MdPayment className="mr-2 h-4 w-4" />
-                        <span>پرداخت </span>
-                      </CommandItem>
-                    </Link>
-                    <Link href="/dashboard/tickets">
-                      <CommandItem className="flex items-center gap-3">
-                        <BiMessageDetail className="mr-2 h-4 w-4" />
-                        <span>پیام ها</span>
-                      </CommandItem>
-                    </Link>
-                    <Link href="/dashboard/profile">
-                      <CommandItem className="flex items-center gap-3">
-                        <FaUsers className="mr-2 h-4 w-4" />
-                        <span>حساب</span>
-                      </CommandItem>
-                    </Link>
-                    <Link href="/dashboard/notifications">
-                      <CommandItem className="flex items-center gap-3">
-                        <MdOutlineNotificationsActive className="mr-2 h-4 w-4" />
-                        <span>اعلانات</span>
-                      </CommandItem>
-                    </Link>
-                  </CommandGroup>
-                  <CommandSeparator />
-                  <CommandGroup>
-                    <Link href="/order">
-                      <CommandItem className="flex items-center gap-3">
-                        <span className="bg-indigo-500 text-white py-2 px-5 rounded-md">
-                          ثبت سفارش
-                        </span>
-                        <span className="bg-red-500 text-white py-2 px-5 rounded-md">
-                          خروج
-                        </span>
-                      </CommandItem>
-                    </Link>
-                  </CommandGroup>
-                </CommandList>
-              </CommandDialog>
-            </div>
-            <div className="flex flex-col gap-2.5 mt-3 ">
+           
+            <div className="flex flex-col gap-1.5 mt-3 ">
               {userInfo ? (
                 <>
                   <Link

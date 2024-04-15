@@ -37,7 +37,7 @@ const Services = () => {
                 <Image alt="wixel" src={s1} />
               </div>
               <div className="flex flex-col gap-1 sm:gap-2 mt-1 sm:mt-2 xl:mt-2 xl:gap-3">
-                <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-medium">
+                <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-semibold">
                   سئو و بهینه سازی
                 </h1>
                 <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
@@ -48,7 +48,7 @@ const Services = () => {
                 <Image alt="wixel" src={s2} className="" />
               </div>
               <div className="flex flex-col gap-1 sm:gap-2 mt-1 sm:mt-2 xl:mt-2 xl:gap-3">
-                <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-medium">
+                <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-semibold">
                   طراحی واکنشگرا
                 </h1>
                 <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
@@ -59,7 +59,7 @@ const Services = () => {
                 <Image alt="wixel" src={s3} className="" />
               </div>
               <div className="flex flex-col gap-1 sm:gap-2 mt-1 sm:mt-2 xl:mt-2 xl:gap-3">
-                <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-medium">
+                <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-semibold">
                   ازادی انتخاب
                 </h1>
                 <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
@@ -70,7 +70,7 @@ const Services = () => {
                 <Image alt="wixel" src={s4} className="" />
               </div>
               <div className="flex flex-col gap-1 sm:gap-2 mt-1 sm:mt-2 xl:mt-2 xl:gap-3">
-                <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-medium">
+                <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-semibold">
                   تخصص
                 </h1>
                 <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
