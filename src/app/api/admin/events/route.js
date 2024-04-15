@@ -18,18 +18,14 @@ export async function POST(request) {
             startDate,
             endDate,
             applicablePlans,
-            applicableUsers,
             discountPercentage
         } = data;
-
-        if (applicableUsers && Array.isArray(applicableUsers) && applicableUsers.some(user => user.isAllUsers === true)) {
-            const allUsers = await User.find({ role: "user" }).select("_id notifications discountCodes");
-            for (const user of allUsers) {
-                const discountCode = await generateDiscountCode(user._id, endDate, discountPercentage);
-                const findUser = await User.findById(user._id);
-                findUser.discountCodes.push(discountCode._id);
-                await findUser.save()
-            }
+        let applicableUsers = await User.find({ role: "user" }).select("_id notifications discountCodes");
+        for (const user of applicableUsers) {
+            const discountCode = await generateDiscountCode(user._id, endDate, discountPercentage);
+            const findUser = await User.findById(user._id);
+            findUser.discountCodes.push(discountCode._id);
+            await findUser.save()
         }
 
         if (applicablePlans && applicablePlans.isAllPlans === true) {
@@ -39,12 +35,12 @@ export async function POST(request) {
             }
         }
 
-        for (const user of applicableUsers) {
-            const discountCode = await generateDiscountCode(user.user, endDate, discountPercentage);
-            const findUser = await User.findById(user.user);
-            findUser.discountCodes.push(discountCode._id);
-            await findUser.save()
-        }
+        // for (const user of applicableUsers) {
+        //     const discountCode = await generateDiscountCode(user.user, endDate, discountPercentage);
+        //     const findUser = await User.findById(user.user);
+        //     findUser.discountCodes.push(discountCode._id);
+        //     await findUser.save()
+        // }
 
         const newEvent = await Event.create({
             name,
@@ -55,21 +51,18 @@ export async function POST(request) {
             applicableUsers,
             discountPercentage
         });
+
         for (const userId of newEvent.applicableUsers) {
-            const user = await User.findById(userId.user);
+            const user = await User.findById(userId._id);
             if (user) {
                 const findDiscountCode = await DiscountCode.findById(user.discountCodes)
-                const nowDate = new Intl.DateTimeFormat(
-                    'fa-IR', {
-                    year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'
-                }).format(newEvent.endDate);
-
+                const eventEndDate = new Date(newEvent.endDate).toLocaleString('fa-IR');
                 const newEventNotification = await sendNotification(
                     `دعوت شدید ${newEvent.name} شما به جشنواره`,
                     `جشنواره: ${newEvent.description}
                     درصد تخفیف: ${newEvent.discountPercentage}%
                     کد تخفیف شما: ${findDiscountCode.code}
-                    مهلت استفاده: ${nowDate}`
+                    مهلت استفاده: ${eventEndDate}`
                 );
 
                 user.notifications.push(newEventNotification._id)
