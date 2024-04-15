@@ -43,13 +43,13 @@ const Navbar = () => {
 
   return (
     <div className="w-full  z-50 bg-[#F4F9FF] text-black">
-      <div className="w-full mx-auto bg-[#5D5AFF] md:h-[60px] h-[55px] mb-[15px] md:mb-[30px] flex items-center justify-center ">
+      <div className="w-full mx-auto bg-[#5D5AFF] md:h-[60px] h-[55px] mb-[5px] md:mb-[30px] flex items-center justify-center ">
         <p className="text-white text-md font-semibold">
           ۳۰ درصد تخفیف به مناسب نوروز
         </p>
       </div>
       <div className="w-full max-w-[1560px] mx-auto z-50 px-[20px] sm:px-[40px] md:px-[100px] sticky">
-        <div className="flex items-cetner justify-between w-full">
+        <div className="flex items-cetner justify-between pt-5 w-full">
           <div className="">
             <Image alt="logo" className="w-[140px] " src={navLogo} />
           </div>

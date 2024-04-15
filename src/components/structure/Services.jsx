@@ -40,7 +40,8 @@ const Services = () => {
                 <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-semibold">
                   سئو و بهینه سازی
                 </h1>
-                <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
+                <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">با تمرکز بر بهبود نمره و عملکرد سایت، ویکسل از اصول بهینه‌سازی متنوع بهره می‌برد تا رتبه و دسترسی بهتری در موتورهای جستجو برای شما فراهم کن
+</p>
               </div>
             </div>
             <div className="2xl:w-[320px] 2xl:h-[350px] xl:w-[300px] xl:h-[330px] sm:w-[250px] sm:h-[280px] w-[180px] h-[220px] bg-white xl:px-8 sm:px-6 sm:py-8 px-4 py-6  xl:py-10 rounded-[27px] flex flex-col gap-2 items-start justify-start">
@@ -49,9 +50,11 @@ const Services = () => {
               </div>
               <div className="flex flex-col gap-1 sm:gap-2 mt-1 sm:mt-2 xl:mt-2 xl:gap-3">
                 <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-semibold">
-                  طراحی واکنشگرا
+                پشتیبانی 
+
                 </h1>
-                <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
+                <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">با ارائه پشتیبانی تیم ما در هر زمان از روز و شب بهره مند شوید تا به شما کمک کنیم و سوالات شما را پاسخ دهیم.
+</p>
               </div>
             </div>
             <div className="2xl:w-[320px] 2xl:h-[350px] xl:w-[300px] xl:h-[330px] sm:w-[250px] sm:h-[280px] w-[180px] h-[220px] bg-white xl:px-8 sm:px-6 sm:py-8 px-4 py-6  xl:py-10 rounded-[27px] flex flex-col gap-2 items-start justify-start">
@@ -60,9 +63,11 @@ const Services = () => {
               </div>
               <div className="flex flex-col gap-1 sm:gap-2 mt-1 sm:mt-2 xl:mt-2 xl:gap-3">
                 <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-semibold">
-                  ازادی انتخاب
+                فرآیند سفارش ساده
+
                 </h1>
-                <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
+                <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">با ورود به داشبورد، می‌توانید به راحتی وب‌سایت مورد نظر خود را سفارش دهید و مراحل توسعه آن را به‌صورت ساده و شفاف پیگیری کنید.
+</p>
               </div>
             </div>
             <div className="2xl:w-[320px] 2xl:h-[350px] xl:w-[300px] xl:h-[330px] sm:w-[250px] sm:h-[280px] w-[180px] h-[220px] bg-white xl:px-8 sm:px-6 sm:py-8 px-4 py-6  xl:py-10 rounded-[27px] flex flex-col gap-2 items-start justify-start">
@@ -71,9 +76,10 @@ const Services = () => {
               </div>
               <div className="flex flex-col gap-1 sm:gap-2 mt-1 sm:mt-2 xl:mt-2 xl:gap-3">
                 <h1 className="xl:text-[24px] sm:text-[22px] text-[18px] text-[#313B78] font-semibold">
-                  تخصص
+                طراحی واکنشگرا
+
                 </h1>
-                <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">در ویکسل ما با تمرکز ویژه بر سعو تکنیکال به کمک اصول بهینه سازی متنوع به بهبود عملکرد و نمره سایت شما میپردازد</p>
+                <p className="text-[#313a787f] text-[11px] sm:text-[14px] lg:text-[13px] xl:text-[16px]">با ارائه تجربه‌ای سرشار از خلاقیت و ظرافت، ویکسل به طراحی‌هایی اختصاصی متناسب با هر دستگاه، از دسکتاپ تا موبایل، می‌پردازد. </p>
               </div>
             </div>
           </div>

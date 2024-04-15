@@ -20,34 +20,116 @@ const Acc = () => {
       </div>
       <div className="mt-[70px] w-[94%] sm:w-[85%] lg:w-[65%] xl:w-[55%] mx-auto ">
         <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="item-1" className='border-b-0 bg-[#5D5AFF] text-start text-white py-1.5 px-3 rounded-xl mb-3'>
-            <AccordionTrigger className=' hover:underline-offset-0'>تفاوت طراحی اختصاصی و اماده چیست ؟</AccordionTrigger>
-            <AccordionContent className=' tracking-wider  leading-[30px] '>
-            طراحی اختصاصی و اماده دو رویکرد مختلف در زمینه طراحی وب هستند. طراحی اختصاصی به معنای ایجاد یک وبسایت منحصر به فرد و بر اساس نیازها و خصوصیات خاص کسب‌وکار مشتری است. در این حالت، هر قسمت از وبسایت با دقت ویژه طراحی می‌شود تا بهترین تجربه کاربری را ارائه دهد.از طرف دیگر، طراحی اماده یک راهکار سریع‌تر و براساس قالب‌ها و ساختارهای آماده برای ایجاد وبسایت‌ها است. این رویکرد معمولاً از قالب‌ها، افزونه‌ها و تنظیمات پیش‌فرض برای سرعت بخشیدن به فرآیند ساخت وبسایت استفاده می‌کند. هرکدام از این رویکردها مزایا و معایب خود را دارند، و انتخاب بین آنها بستگی به اهداف، زمان، و بودجه پروژه دارد
+          <AccordionItem
+            value="item-1"
+            className="border-b-0 bg-[#5D5AFF] text-start text-white py-1.5 px-3 rounded-xl mb-3"
+          >
+            <AccordionTrigger className=" hover:underline-offset-0 text-start text-sm sm:text-base lg:text-lg">
+              چگونه می توانم یک وب سایت در ویکسل سفارش دهم؟
+            </AccordionTrigger>
+            <AccordionContent className=" tracking-wider  leading-[30px] ">
+              برای سفارش وب سایت، ابتدا باید در وب سایت ما ثبت نام کنید. پس از
+              ثبت نام، می توانید به داشبورد خود دسترسی داشته باشید که در آن
+              گزینه هایی برای سفارش وب سایت ها بر اساس نیازها و ترجیحات خود پیدا
+              خواهید کرد.
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-2" className='border-b-0 bg-transparent border-[0.5px] border-gray-700 py-1.5 px-3 rounded-xl mb-3'>
-            <AccordionTrigger className='text-start'>پشتیبانی سایت بعد از طراحی چگونه خواهد بود ؟</AccordionTrigger>
-            <AccordionContent className=' tracking-wider  leading-[30px] '>
-            پس از راه‌اندازی وب‌سایت، به مدت سه ماه تا یک سال پشتیبانی جامع ارائه می‌شود. این پشتیبانی شامل رفع مشکلات فنی، پاسخ به سوالات مرتبط با استفاده از وب‌سایت، و ارائه راهنمایی‌های فنی می‌باشد. همچنین، تیم پشتیبانی ما آماده است تا در مواقع اضطراری و درخواست‌های اساسی به سرعت به شما کمک کند. هدف ما اطمینان حاصل کردن از عملکرد بهتر وب‌سایت شما و ارائه خدماتی که باعث رضایت شما می‌شود.
+          <AccordionItem
+            value="item-2"
+            className="border-b-0 bg-transparent border-[0.5px] border-gray-700 py-1.5 px-3 rounded-xl mb-3"
+          >
+            <AccordionTrigger className="text-start text-sm sm:text-base lg:text-lg">
+              چه گزینه هایی برای توسعه وب سایت وجود دارد؟
+            </AccordionTrigger>
+            <AccordionContent className=" tracking-wider  leading-[30px] ">
+              در هر تعرفه، شما می توانید بین دو روش توسعه انتخاب کنید: طراحی
+              اختصاصی (کدنویسی) یا استفاده از قالب های آماده (وردپرس). شما می
+              توانید روشی را انتخاب کنید که به بهترین وجه با ترجیحات و نیازهای
+              شما مطابقت دارد
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-3" className='border-b-0 py-1.5 px-3 border-[0.5px] border-gray-700 rounded-xl mb-3'>
-            <AccordionTrigger className='text-start'>ایا ویکسل سعو سایت من را تقویت میکند ؟</AccordionTrigger>
-            <AccordionContent className=' tracking-wider  leading-[30px] '>
-            بله، بهینه‌سازی وب سایت های ساخته شده در ویکسل جزءی اساسی از فرآیند توسعه وب‌سایت ما می‌باشد. ما خدمات SEO فنی ارائه می‌دهیم تا وب‌سایت شما با برتری در نتایج جستجو بدرخشد. این بهینه‌سازی از جمله بهبود ساختار، بهینه‌سازی محتوا، و استفاده از استراتژی‌های سئویی پیشرفته را دربرمی‌گیرد. هدف ما افزایش دید‌پذیری و جلب ترافیک از طریق موتورهای جستجو است تا کسب و کار شما در دنیای دیجیتال به موفقیت برسد.
+          <AccordionItem
+            value="item-3"
+            className="border-b-0 py-1.5 px-3 border-[0.5px] border-gray-700 rounded-xl mb-3"
+          >
+            <AccordionTrigger className="text-start text-sm sm:text-base lg:text-lg">
+              چگونه تعرفه مورد نیاز خود را انتخاب کنم ؟
+            </AccordionTrigger>
+            <AccordionContent className=" tracking-wider  leading-[30px] ">
+              وب سایت ما اطلاعات دقیقی در مورد هر تعرفه و روش توسعه ارائه می دهد
+              تا به شما در تصمیم گیری آگاهانه کمک کند. علاوه بر این، تیم
+              پشتیبانی مشتری ما برای کمک به شما در انتخاب گزینه هایی که به
+              بهترین وجه با نیازهای شما مطابقت دارند، در دسترس هستند.
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-4" className='border-b-0 py-1.5 px-3 border-[0.5px] border-gray-700 rounded-xl mb-3'>
-            <AccordionTrigger className='text-start'> آموزش مدیریت وب سایت را دریافت خواهم کرد؟</AccordionTrigger>
-            <AccordionContent className=' tracking-wider  leading-[30px] '>
-            بله، پس از اتمام پروژه، ما یک جلسه آموزشی برگزار خواهیم کرد که به صورت تصویری ارائه می‌شود. این جلسه به منظور یادآوری کامل و جزئیات بیشتر از نحوه مدیریت وب‌سایت شما خواهد بود. هدف ما اطمینان حاصل کردن از این است که شما پس از اتمام پروژه به طور کامل توانایی مدیریت و بهره‌مندی از ویژگی‌های وب‌سایت خود را داشته باشید.
+          <AccordionItem
+            value="item-4"
+            className="border-b-0 py-1.5 px-3 border-[0.5px] border-gray-700 rounded-xl mb-3"
+          >
+            <AccordionTrigger className="text-start text-sm sm:text-base lg:text-lg">
+              پس از ثبت سفارش مراحل طراحی چگونه انجام میشود ؟
+            </AccordionTrigger>
+            <AccordionContent className=" tracking-wider  leading-[30px] ">
+              پس از ثبت سفارش تیم ویکسل اطلاعات ارائه شده در سفارش شما را به دقت
+              بررسی می کند. ما اطمینان می دهیم که تمام جزئیات لازم کامل و دقیق
+              هستند. اگر همه چیز خوب به نظر برسد و هیچ مشکلی در اطلاعات ارائه
+              شده وجود نداشته باشد، سفارش شما را می پذیریم. شما تاییدیه ای
+              دریافت خواهید کرد که سفارش شما پذیرفته شده است.
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem value="item-5" className='border-b-0 py-1.5 px-3  border-[0.5px] border-gray-700 rounded-xl mb-3'>
-            <AccordionTrigger className='text-start'> مدت زمان تکمیل سایت چقدر است ؟</AccordionTrigger>
-            <AccordionContent className=' tracking-wider  leading-[30px] '>
-            مدت زمان تکمیل یک پروژه وب‌سایت به عوامل متعددی بستگی دارد. این عوامل شامل اندازه پروژه، پیچیدگی طراحی و توسعه، تعداد ویژگی‌ها و نیازهای ویژه، سطح سفارشی‌سازی مورد نظر مشتری می‌شود. بنابراین، زمان تکمیل پروژه ممکن است از چند روز تا چند ماه متغیر باشد.
+          <AccordionItem
+            value="item-5"
+            className="border-b-0 py-1.5 px-3  border-[0.5px] border-gray-700 rounded-xl mb-3"
+          >
+            <AccordionTrigger className="text-start text-sm sm:text-base lg:text-lg">
+              چگونه وضعیت پیشرفت سفارش خود را پیگیری کنم؟
+            </AccordionTrigger>
+            <AccordionContent className=" tracking-wider  leading-[30px] ">
+              در طول فرآیند توسعه، بروزرسانی‌های منظم در مورد پیشرفت وب‌سایت خود
+              دریافت خواهید کرد. می توانید وضعیت سفارش خود را پیگیری کنید و از
+              نقاط عطف به دست آمده مطلع شوید. این به‌روزرسانی‌ها شامل جزئیاتی
+              درباره قابلیت هایی است که پیاده‌سازی شده‌اند و قابلیت هایی که در
+              حال حاضر در حال انجام هستند.
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem
+            value="item-7"
+            className="border-b-0 py-1.5 px-3  border-[0.5px] border-gray-700 rounded-xl mb-3"
+          >
+            <AccordionTrigger className="text-start text-sm sm:text-base lg:text-lg">
+              زمان طراحی یک وبسایت چقدر است ؟
+            </AccordionTrigger>
+            <AccordionContent className=" tracking-wider  leading-[30px] ">
+              زمان توسعه یک وب سایت به عوامل مختلفی مانند پیچیدگی آن، ویژگی های
+              انتخاب شده و حجم کاری فعلی ما بستگی دارد. به طور معمول، ما یک بازه
+              زمانی تخمینی را برای تکمیل پس از ثبت سفارش ارائه می دهیم و تلاش می
+              کنیم تا وب سایت شما را در آن بازه زمانی تحویل دهیم
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem
+            value="item-6"
+            className="border-b-0 py-1.5 px-3  border-[0.5px] border-gray-700 rounded-xl mb-3"
+          >
+            <AccordionTrigger className="text-start text-sm sm:text-base lg:text-lg">
+              چه زمانی وب سایت خود را دریافت خواهم کرد؟
+            </AccordionTrigger>
+            <AccordionContent className=" tracking-wider  leading-[30px] ">
+              هنگامی که توسعه کامل شد و وب سایت شما با استانداردهای کیفیت ما
+              مطابقت داشت، وب سایت نهایی را دریافت خواهید کرد. و دستورالعمل هایی
+              در مورد نحوه دسترسی و مدیریت وب سایت جدید به شما ارائه می شود.
+              لطفاً توجه داشته باشید که تحویل وب سایت مشروط به پرداخت هزینه
+              توسعه انتخاب شده. است
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem
+            value="item-8"
+            className="border-b-0 py-1.5 px-3  border-[0.5px] border-gray-700 rounded-xl mb-3"
+          >
+            <AccordionTrigger className="text-start text-sm sm:text-base lg:text-lg">
+              چگونگی راهنمایی برای ثبت سفارش 
+            </AccordionTrigger>
+            <AccordionContent className=" tracking-wider  leading-[30px] ">
+            برای راهنمایی در مورد سفارش وب سایت خود یا هر سؤال دیگری، می توانید از طریق ایمیل، تلفن یا چت زنده با تیم پشتیبانی مشتری ما تماس بگیرید. تیم پشتیبانی اختصاصی ما برای کمک به شما در مورد هر گونه سوال یا نگرانی در دسترس است. علاوه بر این، می‌توانید به راحتی تیکت  از داشبورد خود برای کمک ارسال کنید.
             </AccordionContent>
           </AccordionItem>
         </Accordion>
