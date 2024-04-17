@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import moment from 'moment';
 
 const eventSchema = new mongoose.Schema({
     name: {
@@ -11,10 +10,11 @@ const eventSchema = new mongoose.Schema({
     },
     startDate: {
         type: Date,
-        default: () => moment().format('YYYY-MM-DD HH:mm:ss')
+        required: true
     },
     endDate: {
-        type: String,
+        type: Date,
+        required: true
     },
     discountPercentage: {
         type: Number,

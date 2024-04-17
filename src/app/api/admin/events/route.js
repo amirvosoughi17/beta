@@ -5,6 +5,7 @@ import { User } from "@/models/User";
 import DiscountCode from "@/models/discountCode";
 import { generateDiscountCode } from "@/utils/generateDiscount";
 import { sendNotification } from "@/utils/sendNotification";
+import moment from "moment";
 import { NextResponse } from "next/server";
 
 connect();
@@ -20,6 +21,9 @@ export async function POST(request) {
             applicablePlans,
             discountPercentage
         } = data;
+        const parsedStartDate = moment(startDate, 'jYYYY/jM/jD').toDate();
+        const parsedEndDate = moment(endDate, 'jYYYY/jM/jD').toDate();
+
         let applicableUsers = await User.find({ role: "user" }).select("_id notifications discountCodes");
         for (const user of applicableUsers) {
             const discountCode = await generateDiscountCode(user._id, endDate, discountPercentage);
@@ -35,18 +39,11 @@ export async function POST(request) {
             }
         }
 
-        // for (const user of applicableUsers) {
-        //     const discountCode = await generateDiscountCode(user.user, endDate, discountPercentage);
-        //     const findUser = await User.findById(user.user);
-        //     findUser.discountCodes.push(discountCode._id);
-        //     await findUser.save()
-        // }
-
         const newEvent = await Event.create({
             name,
             description,
-            startDate,
-            endDate,
+            startDate: parsedStartDate,
+            endDate: parsedEndDate,
             applicablePlans,
             applicableUsers,
             discountPercentage
