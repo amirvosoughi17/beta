@@ -12,7 +12,7 @@ export default function Article1() {
     const startupBlogLink = 'https://ponisha.ir/blog/%d8%a7%d8%b3%d8%aa%d8%a7%d8%b1%d8%aa-%d8%a2%d9%be/';
     const responsiveDesignBlogLink = 'https://fa.wikipedia.org/wiki/%D8%B7%D8%B1%D8%A7%D8%AD%DB%8C_%D9%88%D8%A8_%D9%88%D8%A7%DA%A9%D9%86%D8%B4%E2%80%8C%DA%AF%D8%B1%D8%A7#:~:text=%D8%B7%D8%B1%D8%A7%D8%AD%DB%8C%20%D9%88%D8%A8%20%D9%88%D8%A7%DA%A9%D9%86%D8%B4%E2%80%8C%DA%AF%D8%B1%D8%A7%20%DB%8C%D8%A7%20%D8%B1%DB%8C%D8%B3%D9%BE%D8%A7%D9%86%D8%B3%DB%8C%D9%88%20%28%D8%A8%D9%87%20%D8%A7%D9%86%DA%AF%D9%84%DB%8C%D8%B3%DB%8C%3A%20responsive,%DA%A9%D9%88%D8%A6%D8%B1%DB%8C%E2%80%8C%D9%87%D8%A7%DB%8C%20CSS3%20%D8%B3%D8%A7%D8%B2%DA%AF%D8%A7%D8%B1%20%D8%A7%D8%B3%D8%AA.%20%5B%DB%B1%5D%20%5B%DB%B2%5D%20%5B%DB%B3%5D%20%5B%DB%B4%5D';
     const seoBlogLink = 'https://wixel.org/articles/technical-seo-optimization';
-    const exclusiveDesignAndReadyDifferentBlogLink = 'https://wixel.org/articles/different-between-ready-design-website-with-custom';
+    const exclusiveDesignAndReadyDifferentBlogLink = 'https://wixel.org/articles/exclusive-design-vs-ready-template';
     return (
         <div className='w-full min-h-[5000px] bg-[#e5e7ef] max-w-full  overflow-x-hidden'>
             <div className="w-full h-full flex items-start   justify-start gap-5 px-0 md:px-4 lg:px-[40px] py-8">
