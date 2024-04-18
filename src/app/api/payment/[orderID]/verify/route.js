@@ -1,7 +1,7 @@
 import { verify } from "@/utils/vandar";
 import { NextResponse } from "next/server";
 
-export async function GET(request) {
+export async function POST(request) {
     try {
         const api = process.env.VANDAR_API_KEY;
         const { token, status } = request.query;
