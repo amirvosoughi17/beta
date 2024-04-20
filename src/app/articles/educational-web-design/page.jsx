@@ -4,6 +4,17 @@ import React from 'react'
 import HostImage from '@/assets/01.svg'
 
 
+export const metadata = {
+    title: 'مقالات ویکسل / طراحی وبسایت آموزشی',
+    charset: 'UTF-8',
+    description: 'وبسایت آموزشی مناسب چه کسانی است؟‌ آشنایی با امکانات وبسایت آموزشی و ویژگی های یک وبسایت آموزشی',
+    openGraph: {
+        title: 'مقالات ویکسل /طراحی وبسایت آموزشی',
+        description: 'وبسایت آموزشی مناسب چه کسانی است؟‌ آشنایی با امکانات وبسایت آموزشی و ویژگی های یک وبسایت آموزشی',
+        images: HostImage,
+        charset: 'UTF-8'
+    },
+};
 
 import { FaRegDotCircle } from "react-icons/fa";
 import Link from 'next/link'

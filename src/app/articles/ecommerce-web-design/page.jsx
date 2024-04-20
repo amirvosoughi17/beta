@@ -4,6 +4,17 @@ import React from 'react'
 import HostImage from '@/assets/01.svg'
 
 
+export const metadata = {
+    title: 'مقالات ویکسل / طراحی وبسایت فروشگاهی ',
+    charset: 'UTF-8',
+    description: 'آشنایی با وبسایت فروشگاهی و امکانات مورد نیاز یک وبسایت فروشگاهی',
+    openGraph: {
+        title: 'مقالات ویکسل / طراحی وبسایت فروشگاهی ',
+        description: 'آشنایی با وبسایت فروشگاهی و امکانات مورد نیاز یک وبسایت فروشگاهی',
+        images: HostImage,
+        charset: 'UTF-8'
+    },
+};
 
 import { FaRegDotCircle } from "react-icons/fa";
 import Link from 'next/link'

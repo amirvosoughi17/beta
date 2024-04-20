@@ -6,7 +6,7 @@ const orderSchema = new mongoose.Schema({
     },
     supportTime: {
         type: Number,
-        default: 1,
+        default: 5,
     },
     supportStartedAt: {
         type: Date,

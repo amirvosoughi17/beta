@@ -3,7 +3,17 @@ import React from 'react'
 
 import HostImage from '@/assets/01.svg'
 
-
+export const metadata = {
+    title: 'مقالات ویکسل / طراحی وبسایت شخصی',
+    charset: 'UTF-8',
+    description: 'وبسایت شخصی چیست و مناسب چه اشخاصی است؟',
+    openGraph: {
+        title: 'مقالات ویکسل / طراحی وبسایت شخصی ',
+        description: 'وبسایت شخصی چیست و مناسب چه اشخاصی است؟',
+        images: HostImage,
+        charset: 'UTF-8'
+    },
+};
 
 import { FaRegDotCircle } from "react-icons/fa";
 import Link from 'next/link'
@@ -33,9 +43,9 @@ export default function Article1() {
                                     />
                                 </div>
                                 <div className="flex flex-col gap-7">
-                                    <h1 
-                                    id='introduction'
-                                    className='md:text-3xl text-2xl font-bold text-[--color-priamry]'>پیش گفتار</h1>
+                                    <h1
+                                        id='introduction'
+                                        className='md:text-3xl text-2xl font-bold text-[--color-priamry]'>پیش گفتار</h1>
                                     <h3 className='md:text-lg text-[16px] font-normal tracking-[1px] md:leading-[45px]   text-gray-600 '>
                                         طراحی یک وبسایت شخصی، نه تنها یک ابزار است برای نمایش هویت و شخصیت شما در دنیای دیجیتال، بلکه یک فرصت است برای ارتباط با دیگران و به اشتراک گذاری ایده‌ها، تجربیات و اطلاعات شما. این رسانه هماره به عنوان یک پلتفرم شخصی برای بیان خود و ارتباط با دیگران به کار می‌رود. در این مقاله، به بررسی اهمیت و منافع طراحی یک وبسایت شخصی، همچنین راهنمایی‌هایی برای شروع این فرآیند خواهیم پرداخت
                                     </h3>
@@ -102,9 +112,9 @@ export default function Article1() {
                                     </h3>
                                 </div>
                                 <div className="flex flex-col gap-7" >
-                                    <h1 
-                                    id='personal-website-benefits'
-                                    className='md:text-3xl text-2xl font-bold text-[--color-priamry]'>
+                                    <h1
+                                        id='personal-website-benefits'
+                                        className='md:text-3xl text-2xl font-bold text-[--color-priamry]'>
                                         برتری های وبسایت شخصی</h1>
                                     <h3 className='md:text-lg text-[16px] font-normal tracking-[1px] leading-[38px] md:leading-[45px]  text-gray-600'>
                                         <strong>شناخت برند شخصی</strong>: وبسایت شخصی به شما اجازه می‌دهد تا برند و شخصیت خود را در فضای آنلاین بنا کنید و به افراد دیگر نشان دهید که کیستید و به چه می‌پردازید.
@@ -121,8 +131,8 @@ export default function Article1() {
                                 </div>
                                 <div className="flex flex-col gap-7"  >
                                     <h1
-                                    id='personal-website-facilities'
-                                     className='md:text-3xl text-2xl font-bold text-[--color-priamry]'>
+                                        id='personal-website-facilities'
+                                        className='md:text-3xl text-2xl font-bold text-[--color-priamry]'>
                                         امکانات وبسایت شخصی</h1>
                                     <h3 className='md:text-lg text-[16px] font-normal tracking-[1px] leading-[38px] md:leading-[45px]  text-gray-600'>
                                         مکانات وبسایت شخصی با ویژگی‌های منحصر به فرد خود، به شما امکانات متنوعی را برای ایجاد یک حضور آنلاین قدرتمند و موثر فراهم می‌کند. در زیر به برخی از این امکانات اشاره می‌کنیم:
@@ -140,9 +150,9 @@ export default function Article1() {
                                 </div>
 
                                 <div className="flex flex-col gap-7" >
-                                    <h1 
-                                    id='personal-website-design-in-wixel'
-                                    className='md:text-3xl text-2xl font-bold text-[--color-priamry]'>
+                                    <h1
+                                        id='personal-website-design-in-wixel'
+                                        className='md:text-3xl text-2xl font-bold text-[--color-priamry]'>
                                         طراحی سایت شخصی در ویکسل
                                     </h1>
                                     <h3 className='md:text-lg text-[16px] font-normal tracking-[1px] leading-[38px] md:leading-[45px]   text-gray-600'>
@@ -159,9 +169,9 @@ export default function Article1() {
                                 </div>
 
                                 <div className="flex flex-col gap-7" >
-                                    <h1 
-                                    id='conclusion'
-                                    className='md:text-3xl text-2xl font-bold text-[--color-priamry]'>
+                                    <h1
+                                        id='conclusion'
+                                        className='md:text-3xl text-2xl font-bold text-[--color-priamry]'>
                                         سخن آخر
                                     </h1>
                                     <h3 className='md:text-lg text-[16px] font-normal tracking-[1px] leading-[38px] md:leading-[45px]   text-gray-600'>
