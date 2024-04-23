@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 
-import HostImage from '@/assets/01.svg'
+import CorporateBanner from '@/assets/educational-banner.svg'
 
 
 export const metadata = {
@@ -11,7 +11,7 @@ export const metadata = {
     openGraph: {
         title: 'مقالات ویکسل /طراحی وبسایت آموزشی',
         description: 'وبسایت آموزشی مناسب چه کسانی است؟‌ آشنایی با امکانات وبسایت آموزشی و ویژگی های یک وبسایت آموزشی',
-        images: HostImage,
+        images: CorporateBanner,
         charset: 'UTF-8'
     },
 };
@@ -34,8 +34,8 @@ export default function Article1() {
                             <div className="flex flex-col gap-[70px] ">
                                 <div className="">
                                     <Image
-                                        src={HostImage}
-                                        className='md:w-full rounded-3xl mb-10 '
+                                        src={CorporateBanner}
+                                        className='md:w-full  mb-10 '
                                         alt='طراحی سایت آموزشی'
                                     />
                                 </div>

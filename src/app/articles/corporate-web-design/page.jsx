@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 
-import HostImage from '@/assets/01.svg'
+import EducationalBanner from '@/assets/corporate-banner.svg'
 
 
 
@@ -15,7 +15,7 @@ export const metadata = {
     openGraph: {
         title: 'مقالات ویکسل / طراحی وبسایت شرکتی',
         description: 'وبسایت شرکتی چیست؟ , برسی ویژگی های وبسایت شرکتی , طراحی وبسایت شرکتی در ویکسل',
-        images: HostImage,
+        images: EducationalBanner,
         charset: 'UTF-8'
     },
 };
@@ -36,8 +36,8 @@ export default function CorporateBlog() {
                             <div className="flex flex-col gap-[70px] ">
                                 <div className="">
                                     <Image
-                                        src={HostImage}
-                                        className='md:w-full rounded-3xl mb-10 '
+                                        src={EducationalBanner}
+                                        className='md:w-full  mb-10 '
                                         alt='طراحی سایت شرکتی'
                                     />
                                 </div>
