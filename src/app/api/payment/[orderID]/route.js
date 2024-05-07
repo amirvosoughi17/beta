@@ -10,7 +10,7 @@ export async function POST(request, { params }) {
         const data = await request.json();
         const { installment: amount } = data;
         const api = process.env.VANDAR_API_KEY;
-        const redirect = 'http://localhost:3000/';
+        const redirect = 'http://localhost:3000/api/payment';
         const result = await send(api, amount, redirect);
         if (result.status === 1) {
             return NextResponse.json({ redirectUrl: `https://ipg.vand.ar/v3/\${result.token}` }, { status: 200 });
