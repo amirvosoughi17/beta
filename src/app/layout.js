@@ -1,9 +1,7 @@
 
 import "./globals.css";
 import Navbar from "@/components/structure/Navbar";
-import ReduxProvider from "@/redux/ReduxProvider";
-import { Toaster } from "@/components/ui/sonner"
-import { ThemeProvider } from "@/components/theme-provider"
+
 
 export const metadata = {
   title: "wixel",
@@ -19,14 +17,11 @@ export default function RootLayout({children}) {
       <meta name="theme-color" content="#5D5AFF"></meta>
       </head>
       <body className='font-vazirmatn min-h-screen bg-background font-sans antialiased'>
-        <ReduxProvider>
           <div className="mx-auto ">
-            <Toaster />
             <div className="">
              {children}
             </div>
           </div>
-        </ReduxProvider>
       </body>
     </html>
   );

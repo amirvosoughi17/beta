@@ -40,7 +40,7 @@ const Footer = () => {
                 ارتباط باما
               </Link>
             </div>
-            <div className="flex items-cente gap-3">
+            <div className="flex items-cente gap-3 mt-4">
               <Link
                 href="https://www.instagram.com/wixel_org/?igsh=bzA5a2h2NWR6cGRh&utm_source=qr"
                 target="_blank"
@@ -77,7 +77,7 @@ const Footer = () => {
               </p>
             </div>
             <div className="flex gap-2">
-            <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=481604&Code=RHA4UazYbiCWxbaQbJG9YwXT8AX2aaT0'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=481604&Code=RHA4UazYbiCWxbaQbJG9YwXT8AX2aaT0' alt='' className="cursor-pointer" Code='RHA4UazYbiCWxbaQbJG9YwXT8AX2aaT0' /></a>
+
             </div>
           </div>
         </div>

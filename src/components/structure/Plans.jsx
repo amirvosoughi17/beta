@@ -1,8 +1,9 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import peP from "@/assets/pur-p.svg";
-import poG from '@/assets/green-p.svg'
-import poO from '@/assets/red-p.svg'
+import poG from "@/assets/green-p.svg";
+import poO from "@/assets/red-p.svg";
 // react icons
 import { PiPlanetBold } from "react-icons/pi";
 import { TbServer2 } from "react-icons/tb";
@@ -18,8 +19,46 @@ import { PiDevicesBold } from "react-icons/pi";
 import { RiShieldUserLine } from "react-icons/ri";
 import { TbNotes } from "react-icons/tb";
 import { TfiHeadphoneAlt } from "react-icons/tfi";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import logo from "@/assets/navlogo.svg";
+import { FaWhatsapp } from "react-icons/fa6";
+import { FaTelegram } from "react-icons/fa";
+import { LuPhone } from "react-icons/lu";
+import Link from "next/link";
+import { IoClose } from "react-icons/io5";
 
 const Plans = () => {
+  const [open, setOpen] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleClickOpen2 = () => {
+    setOpen(true);
+  };
+
+  const handleClose2 = () => {
+    setOpen(false);
+  };
+  const handleClickOpen3 = () => {
+    setOpen(true);
+  };
+
+  const handleClose3 = () => {
+    setOpen(false);
+  };
+
   return (
     <div className="w-full h-full flex flex-col items-center justify-cnter gap-[70px] mt-[100px] min-h-screen mb-[205px]">
       <div className="flex flex-col gap-1.5 items-center">
@@ -181,23 +220,58 @@ const Plans = () => {
             </div>
             {/* end row  */}
           </div>
-          <div className="px-8 w-full flex items-center justify-between mt-6" >
-            <span className="text-md font-medium text-[#020056]">شروع از</span>
-            <div className="flex items-end">
-              <div className="flex items-end ">
-                <span className="text-2xl font-bold text-[#FF5E5D]">
-                  ۰۰۰,۰۰۰,
-                </span>
-                <span className="text-5xl font-semibold text-[#FF5E5D]">
-                  ۳۵
-                </span>
+          <button
+            onClick={handleClickOpen}
+            className="mt-7 w-[200px] h-[62px] flex items-center justify-center mx-auto text-white text-lg font-medium  rounded-[14px] bg-[#FF5E5D]"
+          >
+            ثبت سفارش
+          </button>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+            className="w-[95%] mx-auto rounded-lg"
+          >
+            <DialogContent className="sm:w-[450px] ">
+              <div className="flex flex-col gap-4">
+                <div className="w-full items-center flex justify-between">
+                  <Image src={logo} alt="logo" width={130} height={50} />
+                  <button onClick={handleClose}>
+                    <IoClose  size={27}/>
+                  </button>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <h1 className="text-lg font-medium text-gray-700">
+                    ارتباط باما از طریق شبکه های اجتماعی :
+                  </h1>
+                  <div className="flex items-center justify-end gap-2">
+                    <Link href="">
+                      <FaWhatsapp size={30} className="text-green-500" />
+                    </Link>
+                    <Link href="https://t.me/wixel_support">
+                      <FaTelegram size={30} className="text-blue-500" />
+                    </Link>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-3">
+                  <h1 className="text-lg font-medium text-gray-700">
+                    شماره تماس :
+                  </h1>
+                  <div className="flex items-end flex-col justify-end gap-2">
+                    <div className="flex  items-center gap-2">
+                      <span className="text-gray-600">09391167835</span>
+                      <LuPhone size={18} className="text-gray-600" />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-gray-600">09024927209</span>
+                      <LuPhone size={18} className="text-gray-600" />
+                    </div>
+                  </div>
+                </div>
               </div>
-              <span className="text-[#FF5E5D] font-medium text-sm">تومان</span>
-            </div>
-          </div>
-            <button className="mt-7 w-[200px] h-[62px] flex items-center justify-center mx-auto text-white text-lg font-medium  rounded-[14px] bg-[#FF5E5D]">
-              ثبت سفارش
-            </button>
+            </DialogContent>
+          </Dialog>
         </div>
         {/* end oprange  */}
         {/* purple  */}
@@ -205,7 +279,7 @@ const Plans = () => {
           <div className=" relative">
             <Image src={peP} className="w-[full] h-[200px] mt-[-10px]" />
             <h1 className="text-3xl font-bold text-white absolute top-[66px] left-[33%]">
-              فروشگاهی
+              av
             </h1>
           </div>
           <div className="flex flex-col w-full gap-2 px-6 sm:px-8 md:px-6 xl:px-8">
@@ -349,23 +423,30 @@ const Plans = () => {
             </div>
             {/* end row  */}
           </div>
-          <div className="px-8 w-full flex items-center justify-between mt-6" >
-            <span className="text-md font-medium text-[#020056]">شروع از</span>
-            <div className="flex items-end">
-              <div className="flex items-end ">
-                <span className="text-2xl font-bold text-[#5D5AFF]">
-                  ۰۰۰,۰۰۰,
-                </span>
-                <span className="text-5xl font-semibold text-[#5D5AFF]">
-                  ۳۵
-                </span>
+          <button
+            onClick={handleClickOpen2}
+            className="mt-7 w-[200px] h-[62px] flex items-center justify-center mx-auto text-white text-lg font-medium  rounded-[14px] bg-[#5D5AFF]"
+          >
+            ثبت سفارش
+          </button>
+          <Dialog
+            open={open2}
+            onClose={handleClose2}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {"Use Google's location service?"}
+            </DialogTitle>
+            <DialogContent>
+              <div className="flex flex-col gap-4">
+                <div className="w-full items-center justify-between">
+                  <Image src={logo} alt="logo" width={150} height={50} />
+                  <button onClick={handleClose2}></button>
+                </div>
               </div>
-              <span className="text-[#5D5AFF] font-medium text-sm">تومان</span>
-            </div>
-          </div>
-            <button className="mt-7 w-[200px] h-[62px] flex items-center justify-center mx-auto text-white text-lg font-medium  rounded-[14px] bg-[#5D5AFF]">
-              ثبت سفارش
-            </button>
+            </DialogContent>
+          </Dialog>
         </div>
         {/* purple  */}
         {/* green  */}
@@ -517,26 +598,30 @@ const Plans = () => {
             </div>
             {/* end row  */}
           </div>
-          <div className="px-8 w-full flex items-center justify-between mt-6" >
-            <span className="text-md font-medium text-[#020056]">شروع از</span>
-            <div className="flex items-end">
-              <div className="flex items-end ">
-                <span className="text-2xl font-bold text-[#4EC881]">
-                  ۰۰۰,۰۰۰,
-                </span>
-                <span className="text-5xl font-semibold text-[#4EC881]">
-                  ۳۵
-                </span>
+          <button
+            onClick={handleClickOpen3}
+            className="mt-7 w-[200px] h-[62px] flex items-center justify-center mx-auto text-white text-lg font-medium  rounded-[14px] bg-[#4EC881]"
+          >
+            ثبت سفارش
+          </button>
+          <Dialog
+            open={open3}
+            onClose={handleClose3}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title"></DialogTitle>
+            <DialogContent>
+              <div className="flex flex-col gap-4">
+                <div className="w-full items-center justify-between">
+                  <Image src={logo} alt="logo" width={150} height={50} />
+                  <button onClick={handleClose3}></button>
+                </div>
               </div>
-              <span className="text-[#4EC881] font-medium text-sm">تومان</span>
-            </div>
-          </div>
-            <button className="mt-7 w-[200px] h-[62px] flex items-center justify-center mx-auto text-white text-lg font-medium  rounded-[14px] bg-[#4EC881]">
-              ثبت سفارش
-            </button>
+            </DialogContent>
+          </Dialog>
         </div>
         {/* green  */}
-
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 
 const Hero = () => {
   return (
-    <div className="w-full py-10 max-w-[1560px] mx-auto  relative  mt-6 mb-[80px]">
+    <div className="w-full py-10 max-w-[1560px] mx-auto  relative  mt-6 mb-[80px] min-h-[600px]">
       <div className="w-full items-start z-10 flex mt-[-160px] md:mt-[-185px]  justify-between md:pl-[120px] px-10 md:pr-[125px]">
         <div className="w-[2px] h-[550px] z-10 bg-gradient-to-b  from-[#e3e3e35c] to-[#f0efef04"></div>
         <div className="w-[2px] h-[550px] z-10 bg-gradient-to-b hidden md:block from-[#e3e3e35c] to-[#f0efef04"></div>
