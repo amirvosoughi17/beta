@@ -6,7 +6,6 @@ import { fetchUserData } from "@/utils/userActions";
 import sideLogo from "@/assets/whit-logo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { Loader2 } from "lucide-react";
 import logo from "@/assets/darklogo.svg";
 // react icons
 import { FiShoppingBag } from "react-icons/fi";
@@ -17,38 +16,16 @@ import { MdPayment } from "react-icons/md";
 import { IoLogOutOutline } from "react-icons/io5";
 import { FiUser } from "react-icons/fi";
 import { IoIosHelpCircleOutline } from "react-icons/io";
-import { IoHomeOutline } from "react-icons/io5";
 import { RiAdminLine } from "react-icons/ri";
 import { AiOutlineMenu } from "react-icons/ai";
 import { RxDashboard } from "react-icons/rx";
 // shadcn
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import {
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  CommandShortcut,
-} from "@/components/ui/command";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -101,9 +78,9 @@ const DashboardSideNav = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="fixed z-40 rounded-full bg-gray-900/20 lg:rounded-none  flex mx-auto lg:w-[235px]  w-[92%] sm:w-[88%] h-[58px] sm:h-[64px] top-5 lg:right-0 lg:top-0 lg:bottom-0 lg:h-[100%]  backdrop-blur-xl  lg:border-l-[0.5px] lg:border-[#2f3033]">
+      <div className="fixed z-40 rounded-full bg-gray-900/30 border-[0.4px] border-gray-800 lg:border-none lg:rounded-none  flex mx-auto lg:w-[235px]  w-[92%] sm:w-[88%] h-[58px] sm:h-[64px] top-5 lg:right-0 lg:top-0 lg:bottom-0 lg:h-[100%]  backdrop-blur-xl  lg:border-l-[0.5px] lg:border-[#2f3033]">
         <div className="flex lg:hidden items-center justify-between w-full px-2">
-          <Link href="/" className="p-2.5 bg-gray-950/40 rounded-full ">
+          <Link href="/" className="p-2.5 bg-gray-900 rounded-full ">
             <Image
               src={sideLogo}
               alt="logo"
@@ -114,7 +91,7 @@ const DashboardSideNav = () => {
           </Link>
           <Sheet className='z-50'>
             <SheetTrigger asChild>
-            <div className="p-3.5  rounded-full bg-gray-950/80 text-white cursor-pointer">
+            <div className="p-3.5  rounded-full bg-gray-900 text-white cursor-pointer">
                 <span className="">
                   <AiOutlineMenu className="text-lg sm:text-xl" />
                 </span>

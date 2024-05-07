@@ -2,7 +2,6 @@ import Image from "next/image";
 import React from "react";
 import logo from "@/assets/darklogo.svg";
 import Link from "next/link";
-import img from "@/assets/smn.png";
 // reacticons
 import { FaInstagram } from "react-icons/fa";
 import { FaTelegram } from "react-icons/fa";
@@ -78,18 +77,7 @@ const Footer = () => {
               </p>
             </div>
             <div className="flex gap-2">
-              <Link
-                referrerpolicy="origin"
-                target="_blank"
-                href="https://trustseal.enamad.ir/?id=481604&Code=RHA4UazYbiCWxbaQbJG9YwXT8AX2aaT0"
-              >
-                <img
-                  referrerpolicy="origin"
-                  src="https://trustseal.enamad.ir/logo.aspx?id=481604&Code=RHA4UazYbiCWxbaQbJG9YwXT8AX2aaT0"
-                  alt=""
-                  Code="RHA4UazYbiCWxbaQbJG9YwXT8AX2aaT0"
-                />
-              </Link>
+            <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=481604&Code=RHA4UazYbiCWxbaQbJG9YwXT8AX2aaT0'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=481604&Code=RHA4UazYbiCWxbaQbJG9YwXT8AX2aaT0' alt='' className="cursor-pointer" Code='RHA4UazYbiCWxbaQbJG9YwXT8AX2aaT0' /></a>
             </div>
           </div>
         </div>

@@ -145,7 +145,7 @@ const Admin = () => {
                                     ? "bg-blue-600"
                                     : order.status ===
                                       "در انتظار پرداخت قسط اول"
-                                    ? "bg-purple-600"
+                                    ? "bg-orange-600"
                                     : order.status ===
                                       "در انتظار پرداخت قسط دوم"
                                     ? "bg-violet-600"
