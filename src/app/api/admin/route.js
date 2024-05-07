@@ -27,9 +27,9 @@ export async function GET(request) {
             return NextResponse.json(users, { status: 200 });
 
         } else {
-            return NextResponse.json({
+            return NextResponse.redirect(new URL('/', request.url)).json({
                 success: false,
-                message: "You don't have Permission to be here!"
+                message: "شما نمیتوانید در اینجا باشید"
             }, { status: 401 })
         }
     } catch (error) {

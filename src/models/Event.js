@@ -10,11 +10,11 @@ const eventSchema = new mongoose.Schema({
     },
     startDate: {
         type: Date,
-        required: true,
+        required: true
     },
     endDate: {
         type: Date,
-        required: true,
+        required: true
     },
     discountPercentage: {
         type: Number,
@@ -37,15 +37,9 @@ const eventSchema = new mongoose.Schema({
     ],
     applicableUsers: [
         {
-            user: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
-            },
-            isAllUsers: {
-                type: Boolean,
-                default: false
-            }
-        },
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
     ],
 }, { timestamps: true });
 
