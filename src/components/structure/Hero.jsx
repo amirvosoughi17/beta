@@ -13,17 +13,20 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 const Hero = () => {
   return (
     <div className="w-full py-10 max-w-[1560px] mx-auto  relative  mt-6 mb-[80px] min-h-[600px]">
-      <div className="w-full items-start z-10 flex mt-[-160px] md:mt-[-185px]  justify-between md:pl-[120px] px-10 md:pr-[125px]">
+      <div className="w-full items-start z-10 flex mt-[-160px] md:mt-[-165px]  justify-between md:pl-[120px] px-10 md:pr-[125px]">
         <div className="w-[2px] h-[550px] z-10 bg-gradient-to-b  from-[#e3e3e35c] to-[#f0efef04"></div>
         <div className="w-[2px] h-[550px] z-10 bg-gradient-to-b hidden md:block from-[#e3e3e35c] to-[#f0efef04"></div>
         <div className="w-[2px] h-[550px] z-10  bg-gradient-to-b  from-[#e3e3e35c] to-[#f0efef04"></div>
         <div className="w-[2px] h-[550px] z-10  bg-gradient-to-b hidden md:block from-[#e3e3e35c] to-[#f0efef04]"></div>
         <div className="w-[2px] h-[550px] z-10  bg-gradient-to-b  from-[#e3e3e35c] to-[#f0efef04"></div>
       </div>
-      <div className="flex z-50 gap-1 px-[20px] sm:px-[50px] justify-center flex-col xl:flex-row items-center xl:items-start mt-[-365px] sm:mt-[-390px]">
+      <div className="flex z-50 gap-1 px-[20px] sm:px-[50px] justify-center flex-col lg:flex-row items-center xl:items-start mt-[-365px] sm:mt-[-390px]">
         {/* right  */}
-        <div className=" relative hidden xl:block xl:w-[43%]  mt-[35px] 2xl:mt-[10px] z-50 ">
+        <div className=" relative hidden lg:block lg:w-[43%]  mt-[35px] 2xl:mt-[10px] z-50 ">
           <Image
+          alt="elemet"
+          width={33}
+          height={33}
             className=" absolute top-[120px] w-[33px] h-[33px] "
             src={element}
           />
@@ -31,7 +34,7 @@ const Hero = () => {
             <Image
               src={heroGreen}
               alt="hero image"
-              className=" rotate-[3deg] xl:w-[75%]  mx-auto"
+              className=" rotate-[3deg] lg:w-[75%]  mx-auto"
               width={645}
               height={820}
             />
@@ -45,7 +48,7 @@ const Hero = () => {
           </div>
         </div>
         {/* center  */}
-        <div className="flex flex-col items-center md:mt-0 mt-[-80px]  z-50 max-w-[500px] xl:max-w-[405px] relative">
+        <div className="flex flex-col lg:mb-[200px] xl:mb-0 items-center md:mt-0 mt-[-80px]  z-50 max-w-[500px] xl:max-w-[405px] relative">
           <Image
             className=" absolute top-10 left-1 hidden sm:block rotate-90"
             src={element}
@@ -64,16 +67,16 @@ const Hero = () => {
             <Image alt="target" src={target} width={218} height={100} className="sm:w-[210px] w-[200px]" />
           </div>
           <div className="flex flex-col sm:gap-[3px]">
-            <h1 className="text-[#313B78] md:text-[38px] text-[27px] sm:text-[38px]  lg:text-[38px] xl:text-[40px] font-semibold  ">
+            <h1 className="text-[#313B78] md:text-[38px] text-[27px] sm:text-[38px]  lg:text-[31px] xl:text-[40px] font-semibold  ">
               طراحی پیکسل به پیسکل
             </h1>
-            <h1 className="text-[#313B78] md:text-[38px] text-[27px] sm:text-[38px] lg:text-[38px] xl:text-[40px] font-semibold flex items-center gap-[6px] ">
+            <h1 className="text-[#313B78] md:text-[38px] text-[27px] sm:text-[38px] lg:text-[31px] xl:text-[40px] font-semibold flex items-center gap-[6px] ">
               <span>وب سایت شما با</span>
               <span className="text-bold text-[#5D5AFF]">ویکسل</span>
             </h1>
           </div>
           <div className="xl:mt-4 mt-4 max-w-[300px]  sm:max-w-full  xl:max-w-[500px] sm:mt-8">
-            <p className="text-[#313a7882] md:text-[15px] text-[12.5px] md:max-w-[390px] xl:max-w-[500px] sm:text-[15px]  lg:text-[16px] xl:text-[17px] text-center">
+            <p className="text-[#313a7882] md:text-[15px] text-[12.5px] md:max-w-[390px] xl:max-w-[500px] sm:text-[15px]  lg:text-[14.5px] xl:text-[17px] text-center">
               طراحی سایت اختصاصی و اماده با ظاهری چشم نواز و با بروزترین متد های
               روز برای کسب و کار شما با تیم ویکسل
             </p>
@@ -91,7 +94,7 @@ const Hero = () => {
           </div>
         </div>
         {/* left  */}
-        <div className=" relative  w-full 2xl:w-[42%] lg:w-[55%] xl:w-[43%] block sm:flex sm:w-[75%] md:w-[65%] items-center justify-center mt-[20px] xl:mt-[22px] 2xl:mt-[10px]">
+        <div className=" relative  w-full 2xl:w-[42%]  lg:w-[43%] block sm:flex sm:w-[75%] md:w-[65%] items-center justify-center mt-[20px] xl:mt-[22px] 2xl:mt-[10px]">
           <div className=" " >
             <Image
               src={heroBlue}

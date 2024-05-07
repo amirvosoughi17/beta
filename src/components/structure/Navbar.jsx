@@ -3,19 +3,18 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import navLogo from "@/assets/navlogo.svg";
-import telegram from '@/assets/telegram.svg'
-import whatsapp from '@/assets/whatsapp.svg'
 // react icons
-import { MdKeyboardArrowLeft } from "react-icons/md";
+import { FaWhatsapp } from "react-icons/fa6";
+import { FaTelegramPlane } from "react-icons/fa";
 
 const Navbar = () => {
   return (
     <div className="w-full  z-50 bg-[#F4F9FF] text-black">
-      <div className="w-full mx-auto bg-[#5D5AFF] md:h-[60px] h-[55px] mb-[5px] md:mb-[30px] flex items-center justify-center ">
+      <div className="w-full mx-auto bg-[#5D5AFF] md:h-[50px] h-[45px] mb-[5px] md:mb-[5px] flex items-center justify-center ">
         <p className="text-white text-md font-semibold"></p>
       </div>
-      <div className="w-full max-w-[1560px] mx-auto z-50 pr-[10px] pl-[15px] sm:px-[40px] md:px-[100px] sticky">
-        <div className="flex items-cetner justify-between pt-5 w-full">
+      <div className="w-full max-w-[1560px] mx-auto z-50 pb-3  px-[20px] sm:px-[40px] md:px-[100px] sticky">
+        <div className="flex items-cetner justify-between pt-3 w-full">
           <div className="">
             <Image alt="logo" className="w-[135px] " src={navLogo} />
           </div>
@@ -63,24 +62,12 @@ const Navbar = () => {
             </Link>
           </nav>
 
-          <div className="mb-1 md:mt-0 flex items-center gap-1 sm:gap-2">
-            
-            <Link href='/'>
-            <Image 
-            src={whatsapp}
-            alt="whatsapp"
-            width={130}
-            height={50}
-            className="ml-[0px]"
-            />
+          <div className="mb-2 md:mt-0 flex items-center gap-1 sm:gap-2">
+            <Link href="https://t.me/wixel_support" target="_blank" className="rounded-2xl w-[45px] h-[45px] bg-blue-500 text-white flex items-center justify-center">
+              <FaTelegramPlane  size={23}/>
             </Link>
-            <Link href='https://t.me/wixel_support' target="_blank">
-            <Image 
-            src={telegram}
-            alt="whatsapp"
-            width={41}
-            height={45}
-            />
+            <Link href="/"  className=" rounded-2xl w-[45px] h-[45px] bg-green-500 text-white flex items-center justify-center">
+              <FaWhatsapp size={25} />
             </Link>
           </div>
         </div>
