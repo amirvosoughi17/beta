@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 
-import HostImage from '@/assets/01.svg'
+import CorporateBanner from '@/assets/educational-banner.svg'
 
 
 export const metadata = {
@@ -11,7 +11,7 @@ export const metadata = {
     openGraph: {
         title: 'مقالات ویکسل /طراحی وبسایت آموزشی',
         description: 'وبسایت آموزشی مناسب چه کسانی است؟‌ آشنایی با امکانات وبسایت آموزشی و ویژگی های یک وبسایت آموزشی',
-        images: HostImage,
+        images: CorporateBanner,
         charset: 'UTF-8'
     },
 };
@@ -34,8 +34,8 @@ export default function Article1() {
                             <div className="flex flex-col gap-[70px] ">
                                 <div className="">
                                     <Image
-                                        src={HostImage}
-                                        className='md:w-full rounded-3xl mb-10 '
+                                        src={CorporateBanner}
+                                        className='md:w-full  mb-10 '
                                         alt='طراحی سایت آموزشی'
                                     />
                                 </div>
@@ -180,8 +180,6 @@ export default function Article1() {
                                         وردپرس یک سیستم مدیریت محتوا (CMS) محبوب است که امکانات فراوانی برای طراحی سایت‌های آموزشی ارائه می‌ده
                                         با استفاده از وردپرس، می‌توانید به سرعت و با هزینه کمتر یک وب‌سایت آموزشی راه‌اندازی کنید و از امکانات مدیریت محتوا و گسترش آسان آن بهره‌مند شوید.
                                         این روش برای کسب و کارها و فردی که به دنبال یک راه حرفه‌ای و سریع برای طراحی و مدیریت وب‌سایت آموزشی خود هستند، مناسب است.
-                                        <br />
-                                        <b><u>با ثبت‌نام و ورود به پنل کاربری خود در وب‌سایت ما، شما می‌توانید نوع طراحی مورد نظر خود را انتخاب کنید و با انتخاب ویژگی‌ها و امکانات مورد نیاز، طراحی وب‌سایت آموزشی خود را سفارش دهید. این روش ساده و کارآمد به شما امکان می‌دهد تا وب‌سایت آموزشی خود را به دلخواه و با توجه به نیازهای خود ایجاد کنید.</u></b>
                                     </h3>
                                 </div>
                                 <div className="flex flex-col gap-7" >

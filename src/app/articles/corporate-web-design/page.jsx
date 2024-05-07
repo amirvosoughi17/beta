@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 
-import HostImage from '@/assets/01.svg'
+import EducationalBanner from '@/assets/corporate-banner.svg'
 
 
 
@@ -15,7 +15,7 @@ export const metadata = {
     openGraph: {
         title: 'مقالات ویکسل / طراحی وبسایت شرکتی',
         description: 'وبسایت شرکتی چیست؟ , برسی ویژگی های وبسایت شرکتی , طراحی وبسایت شرکتی در ویکسل',
-        images: HostImage,
+        images: EducationalBanner,
         charset: 'UTF-8'
     },
 };
@@ -36,8 +36,8 @@ export default function CorporateBlog() {
                             <div className="flex flex-col gap-[70px] ">
                                 <div className="">
                                     <Image
-                                        src={HostImage}
-                                        className='md:w-full rounded-3xl mb-10 '
+                                        src={EducationalBanner}
+                                        className='md:w-full  mb-10 '
                                         alt='طراحی سایت شرکتی'
                                     />
                                 </div>
@@ -142,8 +142,6 @@ export default function CorporateBlog() {
                                         <strong>طراحی اختصاصی (کد نویسی)</strong>: اگر شما به دنبال یک وبسایت شرکتی منحصر به فرد با امکانات خاص و اختصاصی هستید، ما توانایی طراحی یک وبسایت اختصاصی با استفاده از کد نویسی را داریم. این راهکار به شما امکان می‌دهد تا یک وبسایت کاملاً سفارشی و با دقت بالا با توجه به نیازها و الزامات شما راه‌اندازی کنید.
                                         <br />
                                         <strong>طراحی با وردپرس</strong>: اگر به دنبال یک راه حل سریع‌تر و مدیریت آسان‌تر هستید، ما قابلیت طراحی وبسایت شما با استفاده از وردپرس را نیز داریم. با استفاده از این روش، شما می‌توانید به سرعت وبسایت خود را راه‌اندازی کنید و با افزودن محتوا و افزونه‌های متنوع، آن را به دلخواه خود شخصی‌سازی کنید.
-                                        <br />
-                                        <b>کاربران می‌توانند با ورود به پنل کاربری خود در وبسایت ما، نوع وبسایت مورد نظر خود را انتخاب کرده و با انتخاب ویژگی‌های مورد نیاز، سفارش خود را ثبت کنند. این امکان به شما این اطمینان را می‌دهد که وبسایت شما با دقت و با توجه به نیازهای ویژه شما طراحی شده است.</b>
                                         <br />
                                         <b> <Link className='underline text-blue-700' href={exclusiveDesignAndReadyDifferentBlogLink}>تفاوت های طراحی اختصاصی با آماده را در اینجا بخوانید</Link> </b>
                                     </h3>

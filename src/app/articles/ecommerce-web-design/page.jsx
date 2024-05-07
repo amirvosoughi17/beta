@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 
-import HostImage from '@/assets/01.svg'
+import EcommerceBanner from '@/assets/ecommerce-banner.svg'
 
 
 export const metadata = {
@@ -11,7 +11,7 @@ export const metadata = {
     openGraph: {
         title: 'مقالات ویکسل / طراحی وبسایت فروشگاهی ',
         description: 'آشنایی با وبسایت فروشگاهی و امکانات مورد نیاز یک وبسایت فروشگاهی',
-        images: HostImage,
+        images: EcommerceBanner,
         charset: 'UTF-8'
     },
 };
@@ -19,7 +19,7 @@ export const metadata = {
 import { FaRegDotCircle } from "react-icons/fa";
 import Link from 'next/link'
 
-export default function Article1() {
+export default function EcommerceBlog() {
     const seoBlogLink = 'https://wixel.org/articles/technical-seo-optimization'
     const wordpressBlogLink = 'https://fa.wikipedia.org/wiki/%D9%88%D8%B1%D8%AF%D9%BE%D8%B1%D8%B3'
     const codingBlogLink = 'https://blog.faradars.org/%DA%A9%D8%AF-%D9%86%D9%88%DB%8C%D8%B3%DB%8C-%DA%86%DB%8C%D8%B3%D8%AA/';
@@ -37,8 +37,8 @@ export default function Article1() {
                             <div className="flex flex-col gap-[70px] ">
                                 <div className="">
                                     <Image
-                                        src={HostImage}
-                                        className='md:w-full rounded-3xl mb-10 '
+                                        src={EcommerceBanner}
+                                        className='md:w-full mb-10 '
                                         alt='طراحی سایت فروشگاهی'
                                     />
                                 </div>
@@ -156,8 +156,6 @@ export default function Article1() {
                                         طراحی با استفاده از <Link className='underline text-blue-700' href={wordpressBlogLink}>وردپرس</Link>: <b>وردپرس یک سیستم مدیریت محتوا</b> (CMS) محبوب است که امکانات فراوانی برای طراحی سایت‌های آموزشی ارائه می‌دهد
                                         با استفاده از وردپرس، می‌توانید به سرعت و با هزینه کمتر یک وب‌سایت فروشگاهی راه‌اندازی کنید و از امکانات مدیریت محتوا و گسترش آسان آن بهره‌مند شوید.
                                         این روش برای کسب و کارها و فردی که به دنبال یک راه حرفه‌ای و سریع برای طراحی و مدیریت وب‌سایت فروشگاهی خود هستند، مناسب است.
-                                        <br />
-                                        کاربران می‌توانند با ثبت‌نام در وبسایت ما و ورود به پنل کاربری خود، نوع ویژگی‌های مورد نیاز برای وبسایت فروشگاهی خود را انتخاب کنند و به راحتی سفارش دهند. سپس، تیم ما با شروع به کار بر اساس درخواست شما، وبسایت فروشگاهی مورد نظر شما را به طور دقیق و با کیفیت بالا طراحی و اجرا خواهد کرد.
                                     </h3>
                                 </div>
                                 <div className="flex flex-col gap-7" >

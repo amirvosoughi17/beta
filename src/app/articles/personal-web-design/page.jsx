@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 
-import HostImage from '@/assets/01.svg'
+import PersonalBanner from '@/assets/personal-banner.svg'
 
 export const metadata = {
     title: 'مقالات ویکسل / طراحی وبسایت شخصی',
@@ -10,7 +10,7 @@ export const metadata = {
     openGraph: {
         title: 'مقالات ویکسل / طراحی وبسایت شخصی ',
         description: 'وبسایت شخصی چیست و مناسب چه اشخاصی است؟',
-        images: HostImage,
+        images: PersonalBanner,
         charset: 'UTF-8'
     },
 };
@@ -37,8 +37,8 @@ export default function Article1() {
                             <div className="flex flex-col gap-[70px] ">
                                 <div className="">
                                     <Image
-                                        src={HostImage}
-                                        className='md:w-full rounded-3xl mb-10 '
+                                        src={PersonalBanner}
+                                        className='md:w-full mb-10 '
                                         alt='طراحی سایت شخصی'
                                     />
                                 </div>
