@@ -4,8 +4,8 @@ import Navbar from "@/components/structure/Navbar";
 
 
 export const metadata = {
-  title: "wixel",
-  description: "",
+  title: "ویکسل",
+  description: "طراحی سایت اختصاصی و اماده",
 };
 
 export default function RootLayout({children}) {
