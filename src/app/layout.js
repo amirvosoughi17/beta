@@ -1,13 +1,18 @@
 
 import "./globals.css";
-import Navbar from "@/components/structure/Navbar";
-
+import MainOpenGraphImage from '@/assets/main-open-graph-image.jpg';
 
 export const metadata = {
-  title: "ویکسل",
-  description: "طراحی سایت اختصاصی و اماده",
+  title: 'Wixel | ویکسل',
+  charset: 'UTF-8',
+  description: 'طراحی پیکسل به پیکسل وب سایت شما با ویکسل,  طراحی وبسایت اختصاصی و اماده با ظاهری چشم نواز و با بروزترین متد های روز برای کسب و کار شما با تیم ویکسل',
+  openGraph: {
+    title: 'Wixel | ویکسل',
+    description: 'طراحی پیکسل به پیکسل وب سایت شما با ویکسل,  طراحی وبسایت اختصاصی و اماده با ظاهری چشم نواز و با بروزترین متد های روز برای کسب و کار شما با تیم ویکسل',
+    images: MainOpenGraphImage,
+    charset: 'UTF-8'
+  },
 };
-
 export default function RootLayout({children}) {
 
   return (

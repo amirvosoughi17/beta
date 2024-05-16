@@ -77,7 +77,7 @@ const Footer = () => {
               </p>
             </div>
             <div className="flex gap-2">
-
+            <Link referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=481604&Code=RHA4UazYbiCWxbaQbJG9YwXT8AX2aaT0'><img referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=481604&Code=RHA4UazYbiCWxbaQbJG9YwXT8AX2aaT0' alt='' Code='RHA4UazYbiCWxbaQbJG9YwXT8AX2aaT0'/></Link>
             </div>
           </div>
         </div>
