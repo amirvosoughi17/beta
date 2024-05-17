@@ -5,9 +5,7 @@ import element from "@/assets/element.svg";
 import Image from "next/image";
 import target from "@/assets/top-hero.svg";
 import blueItem from "@/assets/be.svg";
-import greenItem from "@/assets/ge.svg";
-
-// react icons
+import greenItem from "@/assets/ge.svg";``
 import { MdKeyboardArrowLeft } from "react-icons/md";
 
 const Hero = () => {
@@ -48,7 +46,7 @@ const Hero = () => {
           </div>
         </div>
         {/* center  */}
-        <div className="flex flex-col lg:mb-[200px] xl:mb-0 items-center md:mt-0 mt-[-80px]  z-50 max-w-[500px] xl:max-w-[405px] relative">
+        <div className="flex flex-col lg:mb-[200px] xl:mb-0 items-center md:mt-0 mt-[-80px]  z-50 max-w-[400px] xl:max-w-[405px] relative">
           <Image
             className=" absolute top-10 left-1 hidden sm:block rotate-90"
             src={element}
@@ -67,16 +65,16 @@ const Hero = () => {
             <Image alt="target" src={target} width={218} height={100} className="sm:w-[210px] w-[200px]" />
           </div>
           <div className="flex flex-col sm:gap-[3px]">
-            <h1 className="text-[#313B78] md:text-[38px] text-[27px] sm:text-[38px]  lg:text-[31px] xl:text-[40px] font-semibold  ">
+            <h1 className="text-[#313B78] md:text-[36px] text-[27px] sm:text-[38px]  lg:text-[29px] xl:text-[36px] font-semibold  ">
               طراحی پیکسل به پیسکل
             </h1>
-            <h1 className="text-[#313B78] md:text-[38px] text-[27px] sm:text-[38px] lg:text-[31px] xl:text-[40px] font-semibold flex items-center gap-[6px] ">
+            <h1 className="text-[#313B78] md:text-[36px] text-[27px] sm:text-[38px] lg:text-[29px] xl:text-[36px] font-semibold flex items-center gap-[6px] ">
               <span>وب سایت شما با</span>
               <span className="text-bold text-[#5D5AFF]">ویکسل</span>
             </h1>
           </div>
           <div className="xl:mt-4 mt-4 max-w-[300px]  sm:max-w-full  xl:max-w-[500px] sm:mt-8">
-            <p className="text-[#313a7882] md:text-[15px] text-[12.5px] md:max-w-[390px] xl:max-w-[500px] sm:text-[15px]  lg:text-[14.5px] xl:text-[17px] text-center">
+            <p className="text-[#313a7882] md:text-[14px] text-[12.5px] md:max-w-[390px] xl:max-w-[500px] sm:text-[15px]  lg:text-[13.5px] xl:text-[17px] text-center">
               طراحی سایت اختصاصی و اماده با ظاهری چشم نواز و با بروزترین متد های
               روز برای کسب و کار شما با تیم ویکسل
             </p>
