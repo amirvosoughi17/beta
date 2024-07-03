@@ -14,26 +14,27 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { registerFormInput } from "@/types";
+import Spinner from "../Spinner";
 
-interface registerFormInput {
-  username: string;
-  phoneNumber: string;
-  password: string;
-}
 
 const RegisterForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
   const router = useRouter();
   const { register, handleSubmit } = useForm<registerFormInput>();
   const onSubmit: SubmitHandler<registerFormInput> = async (data) => {
+    setMessage("")
     try {
-      const response = await axiosInstance.post("/api/register", data);
+      const response = await axiosInstance.post("/api/user/sign-up", data);
       setIsLoading(true);
+      setMessage(response.data.message)
       console.log("Registration successful", response.data);
-      router.push(`/auth/verify?phoneNumber=${data.phoneNumber}`);
-    } catch (error) {
+      router.push(`/auth/verify/${data.phoneNumber}`);
+    } catch (error : any) {
       console.error("Error registering user:", error);
       setIsLoading(false);
+      setMessage(error?.response?.data?.message)
     } finally {
       setIsLoading(false);
     }
@@ -84,8 +85,9 @@ const RegisterForm: React.FC = () => {
         </CardContent>
         <CardFooter>
           <Button disabled={isLoading} className="w-full" type="submit">
-            {isLoading ? "لطفا منتظر بمانید ..." : "ثبت نام"}
+            {isLoading ? <Spinner /> : "ثبت نام"}
           </Button>
+          {message && <span className=" text-orange-400">{message}</span>}
         </CardFooter>
       </Card>
     </form>

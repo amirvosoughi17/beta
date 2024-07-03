@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axiosInstance from "@/utils/axiosInstance";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams , useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,16 +20,18 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-
+import Spinner from "../Spinner";
 interface VerifyFormInput {
   verificationCode: string;
 }
 
+
 const VerifyForm: React.FC = () => {
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit, setError } = useForm<VerifyFormInput>();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const phoneNumber = searchParams.get("phoneNumber");
+  const { phoneNumber } = useParams(); 
 
   const [otp, setOtp] = useState("");
 
@@ -39,7 +41,8 @@ const VerifyForm: React.FC = () => {
 
   const onSubmit: SubmitHandler<VerifyFormInput> = async (data) => {
     try {
-      const response = await axiosInstance.post("/api/verify-code", {
+      setLoading(true);
+      const response = await axiosInstance.post("/api/user/check-otp", {
         phoneNumber,
         code: otp,
       });
@@ -52,8 +55,11 @@ const VerifyForm: React.FC = () => {
           message: "Invalid verification code",
         });
       }
-    } catch (error) {
+      setLoading(false);
+    } catch (error: any) {
+      setLoading(false);
       console.error("Error verifying code:", error);
+      setMessage(error.response?.data?.message || "An error occurred");
     }
   };
 
@@ -90,8 +96,9 @@ const VerifyForm: React.FC = () => {
         </CardContent>
         <CardFooter>
           <Button className="w-full" type="submit">
-            Verify
+            {loading ? <Spinner /> : "راستی ازمایی"}
           </Button>
+          {message && <span className=" text-orange-400">{message}</span>}
         </CardFooter>
       </Card>
     </form>

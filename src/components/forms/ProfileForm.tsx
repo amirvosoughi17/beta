@@ -4,41 +4,48 @@ import { useForm } from "react-hook-form";
 import axiosInstance from "@/utils/axiosInstance";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import Spinner from "../Spinner";
 
 interface ProfileFormProps {
   username: string;
-  phoneNumber: string;
+  phoneNumber : string
+}
+interface PasswordFormProps {
   password: string;
+  newPassword: string;
 }
 const ProfileForm = () => {
   const { register, handleSubmit, setValue } = useForm<ProfileFormProps>();
+  const { register: registerPassword, handleSubmit: handlePasswordSubmit } =
+    useForm<PasswordFormProps>();
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [userInfo, setUserInfo] = useState<ProfileFormProps | null>(null);
-  const [isEditable, setIsEditable] = useState(false);
+  const [userInfo, setUserInfo] = useState<any>({
+    username: "",
+  });
+  const [passwordError, setPasswordError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
         const response = await axiosInstance.get("/api/user/profile");
-        const userInfo = response.data;
-        setUserInfo(userInfo);
-
+        const userInfoData = response.data.data.user;
+        setUserInfo(userInfoData);
+        setValue("username", userInfoData.username);
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch user info");
         setLoading(false);
       }
     };
-
     fetchUserInfo();
-  }, []);
+  }, [setValue]);
 
-  const onSubmit = async (data: ProfileFormProps) => {
+  const onSubmitProfile = async (data: ProfileFormProps) => {
     try {
       setError(null);
-      const response = await axiosInstance.put("/api/user/profile", data);
+      const response = await axiosInstance.patch("/api/user/update", data);
       if (response.status === 200) {
         alert("Profile updated successfully");
       }
@@ -46,45 +53,60 @@ const ProfileForm = () => {
       setError("Failed to update profile");
     }
   };
+
+  const onSubmitPassword = async (data: PasswordFormProps) => {
+    try {
+      setPasswordError(null);
+      const response = await axiosInstance.post(
+        "/api/user/change-password",
+        data
+      );
+      if (response.status === 200) {
+        alert("Password changed successfully");
+      }
+    } catch (err) {
+      setPasswordError("Failed to change password");
+    }
+  };
+
+  if (loading) {
+    return <Spinner />;
+  }
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 min-w-[350px]">
-      <div className="flex flex-col gap-2">
-        <label className="text-neutral-400 text-md ">نام کاربری</label>
-        <Input
-          placeholder={userInfo?.username}
-          {...register("username")}
-          disabled={!isEditable}
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <label className="text-neutral-400 text-md ">شماره تماس</label>
-        <Input
-          placeholder={userInfo?.phoneNumber}
-          {...register("phoneNumber")}
-          disabled={!isEditable}
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <label className="text-neutral-400 text-md ">کلمه عبور</label>
-        <Input
-          placeholder={userInfo?.password}
-          type="password"
-          {...register("password")}
-          disabled={!isEditable}
-        />
-      </div>
-      <Button disabled={!isEditable} type="submit">
-        بروزرسانی{" "}
-      </Button>
-      <div className="flex items-center gap-3">
-        <Checkbox
-          name="enableEdit"
-          checked={isEditable}
-          onClick={() => setIsEditable(!isEditable)}
-        />
-        <label className="text-neutral-200 text-md " htmlFor="">تغییر اطلاعات</label>
-      </div>
-    </form>
+    <div className="flex flex-col gap-3 w-full lg:w-[30%]">
+      <form
+        onSubmit={handleSubmit(onSubmitProfile)}
+        className="flex flex-col gap-3"
+      >
+        <div className="flex flex-col gap-2">
+          <label className="text-neutral-400 text-md ">نام کاربری</label>
+          <Input defaultValue={userInfo.username} {...register("username")} />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-neutral-400 text-md ">شماره تماس</label>
+          <Input disabled={true} 
+          placeholder={userInfo.phoneNumber}
+          />
+        </div>
+        <Button type="submit">بروزرسانی </Button>
+        {error && <p className="text-red-500">{error}</p>}
+      </form>
+      <form
+        onSubmit={handlePasswordSubmit(onSubmitPassword)}
+        className="flex flex-col gap-3"
+      >
+        <div className="flex flex-col gap-2">
+          <label className="text-neutral-400 text-md ">کلمه عبور فعلی</label>
+          <Input type="password" {...registerPassword("password")} />
+        </div>
+        <div className="flex flex-col gap-2">
+          <label className="text-neutral-400 text-md ">کلمه عبور جدید</label>
+          <Input type="password" {...registerPassword("newPassword")} />
+        </div>
+        <Button type="submit">تغییر کلمه عبور </Button>
+        {passwordError && <p className="text-red-500">{passwordError}</p>}
+      </form>
+    </div>
   );
 };
 

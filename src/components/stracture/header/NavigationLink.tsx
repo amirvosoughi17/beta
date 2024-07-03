@@ -13,7 +13,7 @@ const NavigationLink : React.FC<navigationLinkProps> = ({ href , label }) => {
 
   return (
     <Link href={href}>
-        <span className={` text-gray-300 font-normal tracking-wider ${activeLink && "text-purple-500"} hover:text-gray-100 duration-200`}>
+        <span className={` text-neutral-400 font-normal tracking-wider ${activeLink && "text-white"} hover:text-gray-100 duration-200`}>
             {label}
         </span>
     </Link>

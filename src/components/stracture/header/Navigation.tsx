@@ -3,9 +3,11 @@ import NavigationLink from "./NavigationLink";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Nav from "./Nav/Nav";
-import Button from "./Nav/Button";
+import Buttonn from "./Nav/Buttonn";
 import Image from "next/image";
-import wixelLogo from '@/assets/f.png'
+import wixelLogo from '@/assets/white-logo.svg'
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const menu = {
   open: {
@@ -32,22 +34,28 @@ const menu = {
 const Navigation = () => {
   const [isActive, setIsActive] = useState(false);
   return (
-    <div className="hidden">
-      <div className="w-full mx-auto  h-[65px] flex items-center justify-between fixed top-[40px]">
-        <div className="w-[85%] relative bg-neutral-600/40  rounded-3xl h-full  flex items-center justify-between mx-auto px-4">
+    <div className=" flex items-center justify-center z-50">
+      <div className="w-full mx-auto  h-[80px] flex items-center justify-between ">
+        <div className="w-full bg-transparent h-full border-b-[0.4px] border-neutral-700  flex items-center justify-between mx-auto px-6 lg:px-[50px]">
           <div>
             <Image 
             src={wixelLogo}
             alt="logo"
-            className="w-[40px]"
+            className="w-[35px]"
             />
           </div>
-          <nav className="items-center gap-4 hidden lg:flex">
+          <nav className="items-center gap-6 hidden lg:flex">
             <NavigationLink href="/" label="خانه" />
-            <NavigationLink href="/auth/register" label="ثبت نام" />
+            <NavigationLink href="/#services" label="خدمات" />
+            <NavigationLink href="/#showcases" label="نمونه کارها" />
+            <NavigationLink href="/#contactUs" label="ارتباط باما" />
           </nav>
-          <span></span>
-          <div className="flex absolute left-[10px] top-2 lg:hidden   ">
+          <Link href='' className="">
+            <Button className=" bg-transparent border-[0.5px] border-neutral-700 text-neutral-300 hover:text-white hover:bg-neutral-800">
+              ورود / ثبت نام
+            </Button>
+          </Link>
+          <div className=" absolute left-[10px] top-2 z-100 hidden ">
             <motion.div
               className="w-[330px] h-[650px] bg-[#4b4b4b] rounded-[10px] relative"
               variants={menu}
@@ -56,7 +64,7 @@ const Navigation = () => {
             >
               <AnimatePresence>{isActive && <Nav />}</AnimatePresence>
             </motion.div>
-            <Button
+            <Buttonn
               isActive={isActive}
               toggleMenu={() => {
                 setIsActive(!isActive);

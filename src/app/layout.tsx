@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/provider/theme-provider";
 
-const inter = Inter({ subsets: ["latin"] });
+
 
 export const metadata: Metadata = {
   title: "ویکسل",
@@ -29,13 +28,19 @@ export default function RootLayout({
           rel="stylesheet"
           type="text/css"
         />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Italiana&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Vazirmatn:wght@100..900&display=swap"
+          rel="stylesheet"
+        ></link>
+        <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Lalezar&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet"></link>
         <meta name="theme-color" content="#5D5AFF"></meta>
       </head>
+
       <body className="font-vazirmatn min-h-screen bg-neutral-900 text-white">
         <ThemeProvider
-         attribute="class"
-         defaultTheme="dark"
-         disableTransitionOnChange
+          attribute="class"
+          defaultTheme="dark"
+          disableTransitionOnChange
         >
           {children}
         </ThemeProvider>

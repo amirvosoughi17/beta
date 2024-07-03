@@ -1,13 +1,10 @@
+import { PiSpinnerBold } from "react-icons/pi";
 
 
-interface spinnerProps {
-  size?: number;
-}
-
-const Spinner : React.FC<spinnerProps> = ({size = 20}) => {
+const Spinner : React.FC = () => {
   return (
-<div></div>
+    <PiSpinnerBold size={24}  className="animate-spin"/>
   )
 }
 
-export default Spinner
+export default Spinner;

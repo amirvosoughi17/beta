@@ -1,14 +1,19 @@
 import AppLayout from "@/components/provider/AppLayout";
+import Blogs from "@/components/stracture/Blogs/Blogs";
+import Light from "@/components/stracture/Lamp/Light";
+import Grid from "@/components/stracture/ServicesGrid/Grid";
 import Hero from "@/components/stracture/hero/Hero";
-import { Button } from "@/components/ui/button";
-
-
+import ShowCases from "@/components/stracture/showcases/ShowCases";
 
 export default function Home() {
   return (
     <AppLayout>
-      <div className="min-h-screen w-full px-4">
+      <div className="w-full lg:px-[50px]">
         <Hero />
+        <Grid />
+        <Light />
+        <ShowCases />
+        <Blogs />
       </div>
     </AppLayout>
   );

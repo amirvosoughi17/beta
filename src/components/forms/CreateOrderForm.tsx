@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import axiosInstance from "@/utils/axiosInstance";
 import { Button } from "@/components/ui/button";
@@ -20,23 +20,30 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-
-interface FormData {
-  companyName: string;
-  description: string;
-  websiteType: string;
-  monthlyUsersCount: string;
-  likedWebsiteUrls: string;
-}
+import { OrderFormData } from "@/types";
+import Spinner from "../Spinner";
 
 const CreateOrderForm = () => {
-  const { control, handleSubmit, register } = useForm<FormData>();
-  const onSubmit = async (data: FormData) => {
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const { control, handleSubmit, register } = useForm<OrderFormData>();
+  const onSubmit = async (data: OrderFormData) => {
     try {
-      const response = await axiosInstance.post("/api/", data);
-      console.log("Success:", response.data);
-    } catch (error) {
+      if (typeof data.likedWebsiteUrls === "string") {
+        data.likedWebsiteUrls = data.likedWebsiteUrls
+          .split(",")
+          .map((url: any) => url.trim());
+      }
+      setLoading(true);
+      const response = await axiosInstance.post("/api/order/register", data);
+      setMessage(response.data.message);
+      setLoading(false);
+    } catch (error: any) {
       console.error("Error:", error);
+      setMessage(error.response?.data?.message || "An error occurred");
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -54,7 +61,7 @@ const CreateOrderForm = () => {
             <Input
               placeholder="نام شرکت / گروه فعالیت خود را وارد کنید"
               className="w-full py-6"
-              {...register("companyName")}
+              {...register("websiteName")}
             />
           </div>
           <div className="flex flex-col gap-3">
@@ -121,12 +128,10 @@ const CreateOrderForm = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="lessThan50">کمتر از ۵۰ </SelectItem>
-                      <SelectItem value="moreThan100">بیشتر از ۱۰۰</SelectItem>
-                      <SelectItem value="moreThan500">بیشتر از ۵۰۰</SelectItem>
-                      <SelectItem value="moreThan1000">
-                        بیشتر از ۱۰۰۰
-                      </SelectItem>
+                      <SelectItem value="10">کمتر از ۱۰ </SelectItem>
+                      <SelectItem value="50">بیشتر از ۵۰</SelectItem>
+                      <SelectItem value="500">بیشتر از ۱۰۰</SelectItem>
+                      <SelectItem value="1000">بیشتر از ۱۰۰۰</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -134,15 +139,17 @@ const CreateOrderForm = () => {
             />
           </div>
           <div className="flex flex-col gap-3 ">
-            <label htmlFor="">وب سایت نمونه</label>
+            <label htmlFor="likedWebsiteUrls">وب سایت نمونه</label>
             <Input
-              placeholder="نمونه : www.digikala.com"
+              type="text"
+              id="likedWebsiteUrls"
+              placeholder="نمونه : www.example.com, www.another-example.com"
               className="w-full py-6"
-              {...register("likedWebsiteUrls")}
+              {...register("likedWebsiteUrls", { required: true })}
             />
           </div>
-          <Button type="submit" className=" mt-4 ">
-            ایجاد سفارش
+          <Button disabled={loading} type="submit" className=" mt-4 ">
+            {loading ? <Spinner /> : <span>ایجاد سفارش</span>}
           </Button>
         </form>
         <DialogFooter className=""></DialogFooter>

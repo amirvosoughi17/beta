@@ -1,32 +1,34 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axiosInstance from "@/utils/axiosInstance";
+import { LoginFormInput } from "@/types";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-interface LoginFormInput {
-  phoneNumber: string;
-  password: string;
-}
+import { useRouter } from "next/navigation";
+import Spinner from "../Spinner";
 
 const LoginForm: React.FC = () => {
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const { register, handleSubmit } = useForm<LoginFormInput>();
   const onSubmit: SubmitHandler<LoginFormInput> = async (data) => {
     try {
-      const response = await axiosInstance.post("/api/login", data);
+      setLoading(true);
+      const response = await axiosInstance.post("/api/user/sign-in", data);
+      setMessage(response.data.message);
       console.log("Registration successful", response.data);
-    } catch (error) {
+      router.push("/profile");
+      setLoading(false);
+    } catch (error: any) {
       console.error("Error registering user:", error);
+      setMessage(error.response.data.message);
+      setLoading(false);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -62,9 +64,10 @@ const LoginForm: React.FC = () => {
           </div>
         </CardContent>
         <CardFooter>
-          <Button className="w-full" type="submit">
-            ورود
+          <Button disabled={loading} className="w-full" type="submit">
+            {loading ? <Spinner /> : <span>ورود</span>}
           </Button>
+          {message && <span className="text-orange-400">{message}</span>}
         </CardFooter>
       </Card>
     </form>

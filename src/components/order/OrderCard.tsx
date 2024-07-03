@@ -17,18 +17,20 @@ import {
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 interface orderCardProps {
-  user: any;
+  phoneNumber: any;
+  username: any;
   websiteName: string;
   description: string;
   websiteType: string;
-  monthlyUserCount: string;
+  monthlyUserCount: any;
   likedWebsiteUrls: string;
   status: string;
   orderId: string;
 }
 
 const OrderCard: React.FC<orderCardProps> = ({
-  user,
+  phoneNumber,
+  username,
   websiteName,
   websiteType,
   description,
@@ -43,9 +45,9 @@ const OrderCard: React.FC<orderCardProps> = ({
     try {
       setCurrentStatus(newStatus);
       const response = await axiosInstance.patch(
-        `/api/orders/${orderId}/status`,
+        `/api/admin/order/update-status/${orderId}`,
         {
-          status: newStatus,
+          updateTo: newStatus,
         }
       );
 
@@ -63,8 +65,10 @@ const OrderCard: React.FC<orderCardProps> = ({
         <h1 className="text-2xl text-white font-semibold">{websiteName}</h1>
         <Badge
           className={` py-[5px] ${
-            status === "تکمیل شده" && "bg-emerald-600 text-white"
-          } ${status === "لغو شده" && "bg-rose-600 text-white"}`}
+            status === "completed" && "bg-emerald-600 text-white"
+          } ${status === "cancelled" && "bg-rose-600 text-white"}
+          ${status === "inProgress" && "bg-blue-600 text-white"}
+          `}
         >
           {status}
         </Badge>
@@ -78,8 +82,8 @@ const OrderCard: React.FC<orderCardProps> = ({
         <p className="text-md text-neutral-200 ">{monthlyUserCount} </p>
       </div>
       <div className="pt-2 mt-2 border-t-[0.4px] border-neutral-500/50 flex items-center justify-between mb-2">
-        <span>{user}</span>
-        <span>09123998400</span>
+        <span>{username}</span>
+        <span>{phoneNumber}</span>
       </div>
       <div className="flex items-center gap-3">
         <Dialog>
@@ -134,7 +138,7 @@ const OrderCard: React.FC<orderCardProps> = ({
                 <label className="text-neutral-300 text-sm">نام کاربری</label>
                 <Input
                   disabled={true}
-                  placeholder={user}
+                  placeholder={username}
                   className="text-neutral-300 text-lg"
                 />
               </div>
@@ -142,7 +146,7 @@ const OrderCard: React.FC<orderCardProps> = ({
                 <label className="text-neutral-300 text-sm">شماره تماس</label>
                 <Input
                   disabled={true}
-                  placeholder={"0929584030"}
+                  placeholder={phoneNumber}
                   className="text-neutral-300 text-lg"
                 />
               </div>
@@ -158,9 +162,10 @@ const OrderCard: React.FC<orderCardProps> = ({
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectItem value="تکمیل شده">تکمیل شده</SelectItem>
-              <SelectItem value="درحال انتظار">درحال انتظار</SelectItem>
-              <SelectItem value="لغو شده">لغو شده</SelectItem>
+              <SelectItem value="completed">تکمیل شده</SelectItem>
+              <SelectItem value="pending">درحال انتظار</SelectItem>
+              <SelectItem value="inProgress">درحال انجام</SelectItem>
+              <SelectItem value="cancelled">لغو شده</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
