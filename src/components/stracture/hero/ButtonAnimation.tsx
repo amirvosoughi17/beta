@@ -9,7 +9,7 @@ const ButtonAnimation: React.FC = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentWord((prevWord) => (prevWord + 1) % words.length);
-    }, 3000); 
+    }, 3000);
 
     return () => clearInterval(intervalId);
   }, []);
@@ -21,8 +21,17 @@ const ButtonAnimation: React.FC = () => {
   };
 
   return (
-    <div className="relative mx-2">
-     
+    <div className="container max-w-[250px] ">
+      <a href="#" className="button py-2  ">
+        <div className="button__content ">
+          <span className="button__text  ">wixel</span>
+
+          <div className="button__shape-1"></div>
+          <div className="button__shape-2"></div>
+          <div className="button__shape-3"></div>
+          <div className="button__shape-4"></div>
+        </div>
+      </a>
     </div>
   );
 };

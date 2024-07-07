@@ -17,8 +17,14 @@ const Parallax: React.FC = () => {
   useEffect(() => {
     const scrollDuration = 45;
 
-    const animateScroll = (motionValue: any, startFrom: number, direction: "up" | "down", height: number) => {
-      const animationDirection = direction === "up" ? -height - startFrom : startFrom + height;
+    const animateScroll = (
+      motionValue: any,
+      startFrom: number,
+      direction: "up" | "down",
+      height: number
+    ) => {
+      const animationDirection =
+        direction === "up" ? -height - startFrom : startFrom + height;
 
       animate(motionValue, animationDirection, {
         ease: "linear",
@@ -39,12 +45,12 @@ const Parallax: React.FC = () => {
   }, [yTranslation1, yTranslation2, height1, height2]);
 
   return (
-    <div className="relative h-[550px] z-10 w-full px-10 flex items-center justify-center overflow-hidden py-10 mb-[140px] ">
+    <div className="relative h-[450px] lg:h-[700px] z-10 w-full px-[60px] flex items-center justify-center overflow-hidden py-10 mb-[140px] ">
       <div className="w-full h-[100px] bg-gradient-to-b from-neutral-900  to-transparent absolute top-0 z-40"></div>
       <div className="w-full h-[100px] bg-gradient-to-b to-neutral-900  from-transparent absolute bottom-0 z-40"></div>
       <motion.div
         style={{ y: yTranslation1 }}
-        className="absolute top-0 flex w-[320px] lg:w-[500px] lg:ml-[550px] flex-col gap-[30px] md:top-[110px]"
+        className="absolute top-0 flex w-[320px] lg:w-[500px] lg:ml-[130px] flex-col gap-[30px] md:top-[110px]"
         ref={ref1}
       >
         {[...Images1, ...Images1].map((item, index) => (
@@ -53,7 +59,7 @@ const Parallax: React.FC = () => {
       </motion.div>
       <motion.div
         style={{ y: yTranslation2 }}
-        className="absolute bottom-0 w-[320px] lg:w-[500px] lg:mr-[550px] items-center justify-center hidden md:flex flex-col gap-[30px] md:bottom-[110px]"
+        className="absolute bottom-0 w-[320px] lg:w-[500px] lg:mr-[540px] items-center justify-center hidden md:flex flex-col gap-[30px] md:bottom-[110px]"
         ref={ref2}
       >
         {[...Images2, ...Images2].map((item, index) => (

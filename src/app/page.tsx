@@ -8,12 +8,14 @@ import ShowCases from "@/components/stracture/showcases/ShowCases";
 export default function Home() {
   return (
     <AppLayout>
-      <div className="w-full lg:px-[50px]">
+      <div className="w-full h-[1000px]">
         <Hero />
-        <Grid />
-        <Light />
-        <ShowCases />
-        <Blogs />
+        <div className="hidden">
+          <Grid />
+          <Light />
+          <ShowCases />
+          <Blogs />
+        </div>
       </div>
     </AppLayout>
   );

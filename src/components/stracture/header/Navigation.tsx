@@ -5,10 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import Nav from "./Nav/Nav";
 import Buttonn from "./Nav/Buttonn";
 import Image from "next/image";
-import wixelLogo from '@/assets/white-logo.svg'
+import wixelLogo from "@/assets/navigation-logo.svg";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-
+import { GiStarShuriken } from "react-icons/gi";
+import { FaUser } from "react-icons/fa";
+import HamburgerMenu from "./menu/HumbergerMenu";
 const menu = {
   open: {
     width: "350px",
@@ -34,42 +36,33 @@ const menu = {
 const Navigation = () => {
   const [isActive, setIsActive] = useState(false);
   return (
-    <div className=" flex items-center justify-center z-50">
-      <div className="w-full mx-auto  h-[80px] flex items-center justify-between ">
-        <div className="w-full bg-transparent h-full border-b-[0.4px] border-neutral-700  flex items-center justify-between mx-auto px-6 lg:px-[50px]">
-          <div>
-            <Image 
-            src={wixelLogo}
-            alt="logo"
-            className="w-[35px]"
-            />
+    <div className=" flex relative items-center justify-center z-50">
+      <div className="w-full h-[35px] lg:h-[40px]  bg-indigo-400 text-black absolute top-0 flex items-center gap-5 sm:gap-6 lg:gap-10 justify-center mx-auto ">
+        <GiStarShuriken size={20} className=" w-[15px] " />
+        <span className="bboard text-[13px] lg:text-[14px]  font-medium">
+          تخفیف ۲۰ درصدی به مناسبت نوروز
+        </span>
+        <GiStarShuriken size={20} className=" w-[15px]" />
+      </div>
+      <div className="w-full mx-auto  h-[80px] mt-[35px] lg:mt-[40px]  flex items-center justify-between ">
+        <div className="w-full bg-transparent h-full border-b-[0.4px] border-neutral-700  flex items-center justify-between mx-auto px-10 md:px-6 lg:px-[50px]">
+          <div className="">
+            <Image src={wixelLogo} alt="logo" className="w-[120px] lg:w-[120px] mt-2 mr-[-4px]" />
           </div>
-          <nav className="items-center gap-6 hidden lg:flex">
+          <nav className="items-center gap-8 h-full juc hidden lg:flex">
             <NavigationLink href="/" label="خانه" />
             <NavigationLink href="/#services" label="خدمات" />
             <NavigationLink href="/#showcases" label="نمونه کارها" />
             <NavigationLink href="/#contactUs" label="ارتباط باما" />
           </nav>
-          <Link href='' className="">
-            <Button className=" bg-transparent border-[0.5px] border-neutral-700 text-neutral-300 hover:text-white hover:bg-neutral-800">
-              ورود / ثبت نام
-            </Button>
-          </Link>
-          <div className=" absolute left-[10px] top-2 z-100 hidden ">
-            <motion.div
-              className="w-[330px] h-[650px] bg-[#4b4b4b] rounded-[10px] relative"
-              variants={menu}
-              animate={isActive ? "open" : "closed"}
-              initial="closed"
-            >
-              <AnimatePresence>{isActive && <Nav />}</AnimatePresence>
-            </motion.div>
-            <Buttonn
-              isActive={isActive}
-              toggleMenu={() => {
-                setIsActive(!isActive);
-              }}
-            />
+          <div className="flex items-center gap-4">
+            <Link href="/" className="hidden lg:block">
+              <Button className=" bg-transparent flex items-center gap-2 border-[0.5px] border-neutral-700 text-neutral-300 hover:text-white px-5 hover:bg-neutral-800">
+                <span>حساب کاربری</span>
+                <FaUser size={14} />
+              </Button>
+            </Link>
+            <HamburgerMenu />
           </div>
         </div>
       </div>

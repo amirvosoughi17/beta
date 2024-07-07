@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export default function AnimateButton({ isActive, toggleMenu }: any) {
   return (
-    <div className="absolute top-0 left-0 w-[45px] h-[45px] cursor-pointer rounded-[10px] overflow-hidden">
+    <div className=" absolute top-[50px] w-[45px] h-[45px] cursor-pointer rounded-[10px] overflow-hidden">
       <motion.div
         className="relative w-full h-full "
         animate={{ top: isActive ? "-100%" : "0%" }}

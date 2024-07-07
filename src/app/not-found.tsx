@@ -1,9 +1,14 @@
-import React from 'react'
+"use client";
+import React, { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const NotFound = () => {
-  return (
-    <div className='flex items-center justify-center min-h-screen'>404</div>
-  )
-}
+  const router = useRouter();
 
-export default NotFound
+  useEffect(() => {
+    router.push("/");
+  }, []);
+  return null;
+};
+
+export default NotFound;
