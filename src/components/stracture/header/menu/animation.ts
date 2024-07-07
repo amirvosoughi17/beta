@@ -5,7 +5,7 @@ export const linkVariants = {
     opacity: 1,
     rotateX: 0,
     transition: {
-      delay: 0.5 + i * 0.12,
+      delay: 0.4 + i * 0.12,
       type: "spring",
       stiffness: 300,
       damping: 135,

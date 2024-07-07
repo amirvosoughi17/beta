@@ -40,7 +40,7 @@ const Navigation = () => {
       <div className="w-full h-[35px] lg:h-[40px]  bg-indigo-400 text-black absolute top-0 flex items-center gap-5 sm:gap-6 lg:gap-10 justify-center mx-auto ">
         <GiStarShuriken size={20} className=" w-[15px] " />
         <span className="bboard text-[13px] lg:text-[14px]  font-medium">
-          تخفیف ۲۰ درصدی به مناسبت نوروز
+          تخفیف ۲۰ درصدی برای اولین سفارش
         </span>
         <GiStarShuriken size={20} className=" w-[15px]" />
       </div>

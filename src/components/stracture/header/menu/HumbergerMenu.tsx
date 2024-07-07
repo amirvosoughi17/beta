@@ -53,14 +53,14 @@ const HamburgerMenu: React.FC = () => {
           initial={{ rotate: 0 }}
           animate={{ rotate: isOpen ? 45 : 0 }}
           className={`w-8 h-[2.5px] rounded-md bg-white mb-[6px] ${
-            isOpen && "w-[30px] mb-[-2px]"
+            isOpen && "w-[30px] mb-[-3px]"
           }`}
         ></motion.div>
         <motion.div
           initial={{ opacity: 1 }}
           animate={{ rotate: isOpen ? -45 : 0 }}
           className={`w-7 h-[2.5px] rounded-md bg-white mb-[6px] ${
-            isOpen && "w-[30px]"
+            isOpen && "w-[30px] mb-[]"
           }`}
         ></motion.div>
       </div>
