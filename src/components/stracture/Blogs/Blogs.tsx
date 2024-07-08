@@ -52,18 +52,18 @@ const blogs = [
 ];
 const Blogs = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-10">
+    <section className="flex flex-col items-center justify-center gap-10 mb-[200px]">
       <span>مقالات</span>
       <Carousel
         dir="ltr"
         opts={{
           align: "start",
         }}
-        className="w-full "
+        className="md:w-[80%] w-[75%]"
       >
-        <CarouselContent className="flex gap-4 w-full">
+        <CarouselContent>
           {blogs.map((blog, index) => (
-            <div key={index} className="w-full md:w-1/3 px-2">
+            <CarouselItem key={index} className="md:basis-1/2 ">
               <BlogCard
                 title={blog.title}
                 description={blog.description}
@@ -74,13 +74,13 @@ const Blogs = () => {
               {index < blogs.length - 1 && (
                 <div className="border-b border-gray-300 dark:border-gray-700 my-4 md:hidden"></div>
               )}
-            </div>
+            </CarouselItem>
           ))}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-    </div>
+    </section>
   );
 };
 

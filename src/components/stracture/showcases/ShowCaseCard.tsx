@@ -38,11 +38,11 @@ const ShowCaseCard: React.FC<ShowCaseCardProps> = ({
   image,
 }) => {
   return (
-    <div className="w-[95%] mx-auto lg:w-full relative mt-[0px] lg:mt-[60px] h-[500px] lg:h-[600px]  lg:border-x-[0.5px] border-neutral-700/60">
+    <div className="w-[340px] md:w-[380px] mx-auto  lg:w-full relative mt-[0px] sm:mt-[40px] lg:mt-[60px] h-[450px] md:h-[500px] lg:h-[600px]  lg:border-x-[0.5px] border-neutral-700/60">
       <div className=" hidden lg:block absolute top-[-45px] left-[-13px]">
         <TfiPlus size={23} className="text-neutral-300" />
       </div>
-      <div className=" hidden lg:block absolute bottom-[-38px] left-[-13px]">
+      <div className=" hidden lg:block  absolute bottom-[-38px] left-[-13px]">
         <TfiPlus size={23} className="text-neutral-300" />
       </div>
       <div className=" hidden lg:block absolute bottom-[-38px] right-[-11px]">
@@ -51,8 +51,8 @@ const ShowCaseCard: React.FC<ShowCaseCardProps> = ({
       <span className=" hidden lg:block absolute top-[-30px] w-[87%] left-10 right-10 h-[0.5px] bg-neutral-700/60 mx-auto"></span>
       <span className=" hidden lg:block absolute bottom-[-30px] w-[87%] left-10 right-10 h-[0.5px] bg-neutral-700/60 mx-auto"></span>
       <CardContainer className="  relative flex items-center justify-center">
-        <CardBody className="bg-gray-50 relative group/card  flex flex-col gap-2 dark:hover:shadow-2xl dark:hover:shadow-neutral-600/[0.2] dark:bg-neutral-800/20 dark:border-white/[0.2] border-black/[0.1] w-auto h-[450px] md:h-[500px] rounded-lg p-6 border  ">
-          <CardItem translateZ="120" translateY={10} className="w-full mt-4 ">
+        <CardBody className="bg-gray-50 relative group/card  flex flex-col gap-2 dark:hover:shadow-2xl dark:hover:shadow-neutral-600/[0.2] dark:bg-neutral-800/20 dark:border-white/[0.2] border-black/[0.1] w-auto h-[420px] md:h-[460px] max-w-[500px] xl:h-[520px] lg:h-[490px] rounded-lg px-4 py-3 lg:py-4 lg:px-6  border  ">
+          <CardItem translateZ="100" className="w-full mt-2 ">
             <Image
               src={image}
               height="1000"
@@ -63,7 +63,7 @@ const ShowCaseCard: React.FC<ShowCaseCardProps> = ({
           </CardItem>
           <CardItem
             translateZ="50"
-            className="text-2xl mt-5 font-bold text-neutral-600 dark:text-white"
+            className=" text-xl md:text-2xl mt-5 font-bold text-neutral-200"
           >
             {title}
           </CardItem>
@@ -74,14 +74,14 @@ const ShowCaseCard: React.FC<ShowCaseCardProps> = ({
           >
             {description}
           </CardItem>
-          <div className="flex justify-between items-center mt-4">
+          <div className="flex justify-between items-center mt-4 lg:mt-6">
             <CardItem
               translateZ={60}
               translateY={-6}
               as={Link}
               href="https://twitter.com/mannupaaji"
               target="__blank"
-              className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
+              className="lg:px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
             >
               <div className="flex items-center gap-0">
                 {teches.map((tech, idx) => (
@@ -94,13 +94,7 @@ const ShowCaseCard: React.FC<ShowCaseCardProps> = ({
                 ))}
               </div>
             </CardItem>
-            <CardItem
-              translateZ={20}
-              as="button"
-              className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
-            >
-              Sign up
-            </CardItem>
+
           </div>
         </CardBody>
       </CardContainer>

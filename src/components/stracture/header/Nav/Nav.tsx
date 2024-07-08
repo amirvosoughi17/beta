@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Nav() {
   return (
     <div className="flex flex-col justify-between pt-[100px] pr-[30px] pb-[50px] pl-[40px] h-full box-border">
-      <div className="flex gap-[10px] flex-col ">
+      <div className="flex gap-[10px] flex-col  ">
         {links.map((link, i) => {
           const { title, href } = link;
           return (

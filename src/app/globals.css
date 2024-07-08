@@ -186,3 +186,9 @@ body {
   font-family: "IBM Plex Sans Arabic", sans-serif;
   color: hsl(240, 54%, 12%);
 }
+
+
+section {
+  max-width: 1440px;
+  margin: 50px auto;
+}

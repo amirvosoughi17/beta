@@ -18,10 +18,10 @@ const showcases = [
     image: "/showcase.png",
   },
   {
-    title: "فروشگاه اراد",
+    title: "اژانس دیجیتال مارکتینگ پلن",
     description:
       "اژانس دیجیتال مارکتینگ پلن با اراعه خدمات مارکتینگ , سعو , تولید متحوا",
-    teches: ["wordpress", "figma"],
+    teches: ["react", "nodejs", "nextjs", "mongodb", "figma"],
     image: "/showcase.png",
   },
   {
@@ -35,10 +35,10 @@ const showcases = [
 
 const ShowCases = () => {
   return (
-    <div className="w-full min-h-[2000px]  lg:min-h-[1500px] flex flex-col gap-10 relative">
+    <section className="lg:w-[93%] w-full mx-auto min-h-[2000px]  lg:min-h-[1500px] flex flex-col gap-10 relative">
       <div className="">
       </div>
-      <div className=" hidden lg:block absolute top-[85px] right-[-13px]">
+      <div className=" hidden lg:block absolute top-[58px] right-[-13px]">
         <TfiPlus size={23} className="text-neutral-300" />
       </div>
      
@@ -53,7 +53,7 @@ const ShowCases = () => {
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
