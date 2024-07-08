@@ -45,7 +45,7 @@ const Parallax: React.FC = () => {
   }, [yTranslation1, yTranslation2, height1, height2]);
 
   return (
-    <div className="relative h-[450px] lg:h-[700px] z-10 w-full px-[60px] flex items-center justify-center overflow-hidden py-10 mb-[140px] ">
+    <div className="relative  bg-neutral-900/40 backdrop-blur-lg h-[450px] lg:h-[700px] z-10 w-full px-[60px] flex items-center justify-center overflow-hidden py-10 mb-[140px] ">
       <div className="w-full h-[100px] bg-gradient-to-b from-neutral-900  to-transparent absolute top-0 z-40"></div>
       <div className="w-full h-[100px] bg-gradient-to-b to-neutral-900  from-transparent absolute bottom-0 z-40"></div>
       <motion.div

@@ -53,14 +53,14 @@ const HamburgerMenu: React.FC = () => {
           initial={{ rotate: 0 }}
           animate={{ rotate: isOpen ? 45 : 0 }}
           className={`w-8 h-[2.5px] rounded-md bg-white mb-[6px] ${
-            isOpen && "w-[30px] mb-[-3px]"
+            isOpen && "w-[30px] mb-[-4px]"
           }`}
         ></motion.div>
         <motion.div
           initial={{ opacity: 1 }}
           animate={{ rotate: isOpen ? -45 : 0 }}
           className={`w-7 h-[2.5px] rounded-md bg-white mb-[6px] ${
-            isOpen && "w-[30px] mb-[]"
+            isOpen && "w-[30px] mt-[2px]"
           }`}
         ></motion.div>
       </div>
@@ -69,7 +69,7 @@ const HamburgerMenu: React.FC = () => {
           initial={{ y: "-100%" }}
           animate={{ y: isOpen ? 0 : "-100%" }}
           transition={{ type: "spring", stiffness: 120, damping: 20 }}
-          className="fixed top-0 right-0 w-full h-full bg-neutral-950 text-white z-40"
+          className="fixed top-0 right-0 w-full h-full bg-neutral-900 text-white z-40"
         >
           <div className="w-full flex-col gap-10 h-full p-10 py-[90px] justify-between items-center flex ">
             <div className=""></div>
@@ -105,7 +105,7 @@ const HamburgerMenu: React.FC = () => {
             >
               <div>
                 <span className="text-md text-neutral-400 font-light">
-                  Social Networks
+                  
                 </span>
               </div>
               <div className="flex items-center gap-4 text-neutral-300">
