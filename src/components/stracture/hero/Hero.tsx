@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Parllax from "./Parllax";
 import HeroText from "./HeroText";
