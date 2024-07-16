@@ -15,8 +15,8 @@ export interface OrderFormData {
   typeOfWeb: string;
   monthlyUsersCount: string;
   likedWebsiteUrls: string | string[];
-  name: string ;
-  phoneNumber: string ;
+  name: string;
+  phoneNumber: string;
 }
 
 export interface User {
@@ -27,7 +27,7 @@ export interface User {
 }
 
 export interface Order {
-  user: any; 
+  user: any;
   websiteName: string;
   description: string;
   websiteType: string;
@@ -36,3 +36,14 @@ export interface Order {
   status: string;
   orderId: string;
 }
+
+export type FetchOrder = {
+  id: number;
+  name: string;
+  phoneNumber: string;
+  companyName: string;
+  description: string;
+  typeOfWeb: string;
+  monthlyUsersCount: string;
+  likedWebsiteUrls: string[];
+};
