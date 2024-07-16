@@ -2,7 +2,22 @@
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import axiosInstance from "@/utils/axiosInstance";
+import { MdOutlineShoppingBag } from "react-icons/md";
 import { Button } from "@/components/ui/button";
+import { FiAlertTriangle } from "react-icons/fi";
+import { MdOutlineDone } from "react-icons/md";
+import ShinyButton from "../magicui/shiny-button";
+import { ConfettiButton } from "@/components/magicui/confetti";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import {
   Dialog,
   DialogContent,
@@ -24,137 +39,234 @@ import { OrderFormData } from "@/types";
 import Spinner from "../Spinner";
 
 const CreateOrderForm = () => {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
   const { control, handleSubmit, register } = useForm<OrderFormData>();
   const onSubmit = async (data: OrderFormData) => {
     try {
+      setIsSuccess(false);
       if (typeof data.likedWebsiteUrls === "string") {
         data.likedWebsiteUrls = data.likedWebsiteUrls
           .split(",")
           .map((url: any) => url.trim());
       }
-      setLoading(true);
-      const response = await axiosInstance.post("/api/order/register", data);
-      setMessage(response.data.message);
-      setLoading(false);
+      setIsLoading(true);
+      const response = await axiosInstance.post("/api/orders", data);
+      setIsLoading(false);
+      setIsSuccess(true);
     } catch (error: any) {
       console.error("Error:", error);
       setMessage(error.response?.data?.message || "An error occurred");
-      setLoading(false);
+      setIsLoading(false);
+      setIsSuccess(false);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="secondary">order</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] w-[360px] md:w-[420px] h-[520px] overflow-y-auto rounded-xl">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex   flex-col gap-4 mt-2 w-full h-full relative"
-        >
-          <div className="flex flex-col gap-3">
-            <label htmlFor="">نام شرکت </label>
-            <Input
-              placeholder="نام شرکت / گروه فعالیت خود را وارد کنید"
-              className="w-full py-6"
-              {...register("websiteName")}
-            />
-          </div>
-          <div className="flex flex-col gap-3">
-            <label htmlFor="">توضیحات </label>
-            <Textarea
-              rows={4}
-              placeholder="توضیحات را وارد کنید"
-              className="w-full py-6"
-              {...register("description")}
-            />
-          </div>
-          <div className="flex flex-col gap-3">
-            <label htmlFor="websiteType" className="text-lg font-medium">
-              نوع وبسایت خود را انتخاب کنید
-            </label>
-            <Controller
-              name="websiteType"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <RadioGroup
-                  value={field.value}
-                  onValueChange={field.onChange}
-                  className="flex flex-col gap-3"
+    <div className="flex flex-col">
+      <Drawer>
+        <DrawerTrigger asChild>
+          <button>ثبت سفارش</button>
+        </DrawerTrigger>
+        <DrawerContent>
+          <div className="mx-auto w-full max-h-[650px] overflow-y-auto  ">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="flex max-w-[370px] md:max-w-[450px] lg:max-w-[500px] mx-auto  flex-col gap-4  w-full h-full relative my-5 px-4"
+            >
+              <div className="flex flex-col gap-2 mb-4">
+                <h1 className="  flex items-center gap-2.5">
+                  <MdOutlineShoppingBag size={25} />
+                  <h1 className="lg:text-2xl text-xl font-extrabold text-neutral-200">
+                    ثبت سفارش
+                  </h1>
+                </h1>
+                <span className=" text-sm lg:text-lg text-neutral-400">
+                  اطلاعات زیر را برای درک بهتر ما از کسب و کار شما پرکنید
+                </span>
+              </div>
+              <div className="w-full flex items-center gap-2">
+                <div className="flex w-1/2 flex-col gap-3">
+                  <label
+                    className="text-neutral-300 text-[15px] lg:text-md"
+                    htmlFor=""
+                  ></label>
+                  <Input
+                    placeholder="نام و نام خانوادگی"
+                    className="w-full py-6"
+                    {...register("name")}
+                  />
+                </div>
+                <div className="flex w-1/2 flex-col gap-3">
+                  <label
+                    className="text-neutral-300 text-[15px] lg:text-md"
+                    htmlFor=""
+                  ></label>
+                  <Input
+                    className="w-full py-6"
+                    {...register("phoneNumber")}
+                    placeholder="شماره تماس"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col gap-3">
+                <label
+                  className="text-neutral-300 text-[15px] lg:text-md"
+                  htmlFor=""
+                ></label>
+                <Input
+                  placeholder="نام شرکت"
+                  className="w-full py-6"
+                  {...register("companyName")}
+                />
+              </div>
+              <div className="flex flex-col gap-3">
+                <label
+                  className="text-neutral-300 text-[15px] lg:text-md"
+                  htmlFor=""
+                ></label>
+                <Textarea
+                  rows={4}
+                  placeholder="توضیحات را وارد کنید"
+                  className="w-full py-3"
+                  {...register("description")}
+                />
+              </div>
+              <div className="flex flex-col gap-3">
+                <label
+                  className="text-neutral-400 text-sm lg:text-md"
+                  htmlFor="websiteType"
                 >
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <div className="flex items-center gap-2">
-                      <RadioGroupItem value="ecommerce" id="r1" />
-                      <label htmlFor="r1">فروشگاهی</label>
+                  نوع وبسایت خود را انتخاب کنید
+                </label>
+                <Controller
+                  name="typeOfWeb"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <div className="flex flex-col gap-3">
+                      <div className="flex items-center gap-3 flex-wrap">
+                        {[
+                          { value: "ecommerce", label: "فروشگاهی", id: "btn1" },
+                          { value: "learning", label: "اموزشی", id: "btn2" },
+                          { value: "company", label: "شرکتی", id: "btn3" },
+                          { value: "personal", label: "شخصی", id: "btn4" },
+                          { value: "startup", label: "استارت اپ", id: "btn5" },
+                        ].map((option) => (
+                          <button
+                            key={option.id}
+                            id={option.id}
+                            type="button"
+                            onClick={() => field.onChange(option.value)}
+                            className={`px-4 py-2 rounded-lg text-sm lg:text-md ${
+                              field.value === option.value
+                                ? "bg-indigo-600 text-white"
+                                : "bg-neutral-700/50 border-[0.6px] border-neutral-600/80 text-neutral-200"
+                            }`}
+                          >
+                            {option.label}
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <RadioGroupItem value="learning" id="r2" />
-                      <label htmlFor="r2">اموزشی</label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <RadioGroupItem value="company" id="r3" />
-                      <label htmlFor="r3">شرکتی</label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <RadioGroupItem value="personal" id="r4" />
-                      <label htmlFor="r4">شخصی</label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <RadioGroupItem value="startup" id="r5" />
-                      <label htmlFor="r5">استارت اپ</label>
-                    </div>
+                  )}
+                />
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <label
+                  className="text-neutral-300 text-[15px] lg:text-md"
+                  htmlFor="monthlyUsers"
+                >
+                  تعداد کاربر ماهانه
+                </label>
+                <Controller
+                  name="monthlyUsersCount"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <SelectTrigger className="w-full py-6">
+                        <SelectValue placeholder="تعداد حدودی کاربران" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectItem value="TEN">کمتر از ۱۰ </SelectItem>
+                          <SelectItem value="FIFTY">بیشتر از ۵۰</SelectItem>
+                          <SelectItem value="FIVE_HUNDRED">
+                            بیشتر از ۱۰۰
+                          </SelectItem>
+                          <SelectItem value="ONE_THOUSAND">
+                            بیشتر از ۱۰۰۰
+                          </SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  )}
+                />
+              </div>
+              <div className="flex flex-col gap-3 ">
+                <label
+                  className="text-neutral-300 text-[15px] lg:text-md"
+                  htmlFor="likedWebsiteUrls"
+                >
+                  وب سایت نمونه
+                </label>
+                <Input
+                  type="text"
+                  id="likedWebsiteUrls"
+                  placeholder="www.example.com"
+                  className="w-full py-6"
+                  {...register("likedWebsiteUrls", { required: true })}
+                />
+              </div>
+              <ConfettiButton
+                disabled={isLoading}
+                className={` w-full ${isSuccess && ""}`}
+                type="submit"
+                isSuccess={isSuccess}
+              >
+                {isLoading ? (
+                  <div className="flex w-full items-center justify-between">
+                    <Spinner />
+                    <span>لطفا صبر کنید ..</span>
+                    <span className="w-[25px]"></span>
                   </div>
-                </RadioGroup>
+                ) : (
+                  <span>{!isSuccess && "ثبت سفارش"}</span>
+                )}
+                {isSuccess && (
+                  <div className="flex w-full  items-center justify-between">
+                    <div className="w-[25px] h-[25px] rounded-full flex items-center justify-center  text-green-600">
+                      <MdOutlineDone size={25} />
+                    </div>
+                    <span className="text-[13px] lg:text-[14px] text-green-600">
+                      ثبت سفارش با موفقیت انجام شد
+                    </span>
+                    <span className="w-[25px]"></span>
+                  </div>
+                )}
+              </ConfettiButton>
+              {message && (
+                <div className=" flex items-center gap-3 w-full rounded-lg bg-red-500 py-3 px-4 text-sm lg:text-md">
+                  <FiAlertTriangle size={17} />
+                  <span>{message}</span>
+                </div>
               )}
-            />
+
+              <div className="flex flex-col gap-2">
+                <p className="text-neutral-400 text-sm lg:text-md leading-6">
+                  پس از ثبت سفارش تیم ویکسل در ۴۸ ساعت اینده با شما برای هماهنگی
+                  بیشتر تماس خواهد گرفت
+                </p>
+              </div>
+            </form>
           </div>
-          <div className="flex flex-col gap-3">
-            <label htmlFor="monthlyUsers" className="text-lg font-medium">
-              تعداد کاربر ماهانه
-            </label>
-            <Controller
-              name="monthlyUsersCount"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <SelectTrigger className="w-full py-6">
-                    <SelectValue placeholder="تعداد حدودی کاربران" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="10">کمتر از ۱۰ </SelectItem>
-                      <SelectItem value="50">بیشتر از ۵۰</SelectItem>
-                      <SelectItem value="500">بیشتر از ۱۰۰</SelectItem>
-                      <SelectItem value="1000">بیشتر از ۱۰۰۰</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              )}
-            />
-          </div>
-          <div className="flex flex-col gap-3 ">
-            <label htmlFor="likedWebsiteUrls">وب سایت نمونه</label>
-            <Input
-              type="text"
-              id="likedWebsiteUrls"
-              placeholder="نمونه : www.example.com, www.another-example.com"
-              className="w-full py-6"
-              {...register("likedWebsiteUrls", { required: true })}
-            />
-          </div>
-          <Button disabled={loading} type="submit" className=" mt-4 ">
-            {loading ? <Spinner /> : <span>ایجاد سفارش</span>}
-          </Button>
-        </form>
-        <DialogFooter className=""></DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </DrawerContent>
+      </Drawer>
+    </div>
   );
 };
 

@@ -1,9 +1,6 @@
 "use client";
 import NavigationLink from "./NavigationLink";
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Nav from "./Nav/Nav";
-import Buttonn from "./Nav/Buttonn";
 import Image from "next/image";
 import wixelLogo from "@/assets/navigation-logo.svg";
 import Link from "next/link";
@@ -11,6 +8,9 @@ import { Button } from "@/components/ui/button";
 import { GiStarShuriken } from "react-icons/gi";
 import { FaUser } from "react-icons/fa";
 import HamburgerMenu from "./menu/HumbergerMenu";
+import ShinyButton from "@/components/magicui/shiny-button";
+import CreateOrderForm from "@/components/forms/CreateOrderForm";
+
 const menu = {
   open: {
     width: "350px",
@@ -45,30 +45,25 @@ const Navigation = () => {
         <GiStarShuriken size={20} className=" w-[15px]" />
       </div>
       <div className="w-full mx-auto  h-[80px] mt-[35px] lg:mt-[40px]  flex items-center justify-between ">
-        <div className="w-full bg-transparent h-full border-b-[0.4px] border-neutral-700  flex items-center justify-between mx-auto px-10 md:px-6 lg:px-[50px]">
+        <div className="w-full bg-transparent h-full border-b-[0.4px] border-neutral-700  flex items-center justify-between mx-auto px-5 md:px-6 lg:px-[50px]">
           <div className="flex w-full items-center justify-between max-w-[1440px] mx-auto">
-          <div className="">
-            <Image
-              src={wixelLogo}
-              alt="logo"
-              className="w-[120px] lg:w-[120px] mt-2 mr-[-4px]"
-            />
-          </div>
-          <nav className="items-center gap-8 h-full juc hidden lg:flex">
-            <NavigationLink href="/" label="خانه" />
-            <NavigationLink href="/#services" label="خدمات" />
-            <NavigationLink href="/#showcases" label="نمونه کارها" />
-            <NavigationLink href="/#contactUs" label="ارتباط باما" />
-          </nav>
-          <div className="flex items-center gap-4">
-            <Link href="/" className="hidden lg:block">
-              <Button className=" bg-transparent flex items-center gap-2 border-[0.5px] border-neutral-700 text-neutral-300 hover:text-white px-5 hover:bg-neutral-800">
-                <span>حساب کاربری</span>
-                <FaUser size={14} />
-              </Button>
-            </Link>
-            <HamburgerMenu />
-          </div>
+            <div className="">
+              <Image
+                src={wixelLogo}
+                alt="logo"
+                className="w-[120px] lg:w-[120px] mt-2 mr-[-4px]"
+              />
+            </div>
+            <nav className="items-center gap-8 h-full juc hidden lg:flex">
+              <NavigationLink href="/" label="خانه" />
+              <NavigationLink href="/#services" label="خدمات" />
+              <NavigationLink href="/#showcases" label="نمونه کارها" />
+              <NavigationLink href="/#contactUs" label="ارتباط باما" />
+            </nav>
+            <div className="flex items-center gap-3">
+              <CreateOrderForm />
+              <HamburgerMenu />
+            </div>
           </div>
         </div>
       </div>

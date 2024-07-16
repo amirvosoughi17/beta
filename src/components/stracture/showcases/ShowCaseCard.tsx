@@ -11,7 +11,7 @@ import { FaWordpressSimple } from "react-icons/fa";
 import Image from "next/image";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import Link from "next/link";
-import { TfiPlus } from "react-icons/tfi";
+import { GoDotFill } from "react-icons/go";
 
 interface ShowCaseCardProps {
   title: string;
@@ -39,19 +39,19 @@ const ShowCaseCard: React.FC<ShowCaseCardProps> = ({
 }) => {
   return (
     <div className="w-[340px] md:w-[380px] mx-auto  lg:w-full relative mt-[0px] sm:mt-[40px] lg:mt-[60px] h-[450px] md:h-[500px] lg:h-[600px]  lg:border-x-[0.5px] border-neutral-700/60">
-      <div className=" hidden lg:block absolute top-[-45px] left-[-13px]">
-        <TfiPlus size={23} className="text-neutral-300" />
+      <div className=" hidden lg:block absolute top-[-37px] left-[-8px]">
+        <GoDotFill size={15} className="text-neutral-500" />
       </div>
-      <div className=" hidden lg:block  absolute bottom-[-38px] left-[-13px]">
-        <TfiPlus size={23} className="text-neutral-300" />
+      <div className=" hidden lg:block  absolute bottom-[-38px] left-[-8px]">
+        <GoDotFill size={15} className="text-neutral-500" />
       </div>
-      <div className=" hidden lg:block absolute bottom-[-38px] right-[-11px]">
-        <TfiPlus size={23} className="text-neutral-300" />
+      <div className=" hidden lg:block absolute bottom-[-38px] right-[-8px]">
+        <GoDotFill size={15} className="text-neutral-500" />
       </div>
-      <span className=" hidden lg:block absolute top-[-30px] w-[87%] left-10 right-10 h-[0.5px] bg-neutral-700/60 mx-auto"></span>
-      <span className=" hidden lg:block absolute bottom-[-30px] w-[87%] left-10 right-10 h-[0.5px] bg-neutral-700/60 mx-auto"></span>
+      <span className=" hidden lg:block absolute top-[-30px] w-[87%] left-10 right-10 h-[0.5px] bg-neutral-700/80 mx-auto"></span>
+      <span className=" hidden lg:block absolute bottom-[-30px] w-[87%] left-10 right-10 h-[0.5px] bg-neutral-700/80 mx-auto"></span>
       <CardContainer className="  relative flex items-center justify-center">
-        <CardBody className="bg-gray-50 relative group/card  flex flex-col gap-2 dark:hover:shadow-2xl dark:hover:shadow-neutral-600/[0.2] dark:bg-neutral-800/20 dark:border-white/[0.2] border-black/[0.1] w-auto h-[420px] md:h-[460px] max-w-[500px] xl:h-[520px] lg:h-[490px] rounded-lg px-4 py-3 lg:py-4 lg:px-6  border  ">
+        <CardBody className="bg-gray-50 relative group/card  flex flex-col gap-2 dark:hover:shadow-2xl dark:hover:shadow-neutral-600/[0.2] dark:bg-neutral-800/20 dark:border-white/[0.2] border-black/[0.1] w-auto h-[420px] md:h-[460px] max-w-[500px] xl:h-[490px] lg:h-[490px] rounded-lg px-4 py-3 lg:py-4 lg:px-6  border  ">
           <CardItem translateZ="100" className="w-full mt-2 ">
             <Image
               src={image}
@@ -94,7 +94,6 @@ const ShowCaseCard: React.FC<ShowCaseCardProps> = ({
                 ))}
               </div>
             </CardItem>
-
           </div>
         </CardBody>
       </CardContainer>

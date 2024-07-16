@@ -4,7 +4,7 @@ import Footer from "../stracture/Footer";
 
 const AppLayout = ({ children }: any) => {
   return (
-    <div className="mx overflow-hidden ">
+    <div className="">
       <Navigation />
       {children}
       <Footer />

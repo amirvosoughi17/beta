@@ -10,11 +10,13 @@ export interface registerFormInput {
 }
 
 export interface OrderFormData {
-  websiteName: string;
+  companyName: string;
   description: string;
-  websiteType: string;
+  typeOfWeb: string;
   monthlyUsersCount: string;
   likedWebsiteUrls: string | string[];
+  name: string ;
+  phoneNumber: string ;
 }
 
 export interface User {

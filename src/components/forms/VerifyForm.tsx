@@ -4,6 +4,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axiosInstance from "@/utils/axiosInstance";
 import { useRouter, useSearchParams , useParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { MdOutlineDone } from "react-icons/md";
+import { FiAlertTriangle } from "react-icons/fi";
 import {
   Card,
   CardContent,
@@ -27,8 +29,9 @@ interface VerifyFormInput {
 
 
 const VerifyForm: React.FC = () => {
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [isSuccess, setIsSuccess] = useState(false);
   const { register, handleSubmit, setError } = useForm<VerifyFormInput>();
   const router = useRouter();
   const { phoneNumber } = useParams(); 
@@ -70,9 +73,9 @@ const VerifyForm: React.FC = () => {
     >
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">Verify</CardTitle>
+          <CardTitle className="text-2xl">کد یک بار مصرف</CardTitle>
           <CardDescription>
-            Enter the verification code sent to your phone
+            برای ورود به اکانت کدی که را که به شما ارسال شده در فیلد های زیر قرار دهید
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
@@ -94,11 +97,39 @@ const VerifyForm: React.FC = () => {
             </InputOTP>
           </div>
         </CardContent>
-        <CardFooter>
-          <Button className="w-full" type="submit">
-            {loading ? <Spinner /> : "راستی ازمایی"}
+        <CardFooter className="flex flex-col gap-3">
+        <Button
+            disabled={loading}
+            className={` w-full ${isSuccess && "bg-emerald-600 text-white"}`}
+            type="submit"
+          >
+            {loading ? (
+              <div className="flex w-full items-center justify-between">
+                <Spinner />
+                <span>ورود </span>
+                <span className="w-[25px]"></span>
+              </div>
+            ) : (
+              <span>{!isSuccess && "ورود"}</span>
+            )}
+            {isSuccess && (
+              <div className="flex w-full  items-center justify-between">
+                <div className="w-[25px] h-[25px] rounded-full flex items-center justify-center  text-white">
+                  <MdOutlineDone size={25} />
+                </div>
+                <span className="text-[13px] lg:text-[14px]">
+                  ورود به حساب با موفقیت انجام شد
+                </span>
+                <span className="w-[25px]"></span>
+              </div>
+            )}
           </Button>
-          {message && <span className=" text-orange-400">{message}</span>}
+          {message && (
+            <div className=" flex items-center gap-3 w-full rounded-lg bg-red-500 py-3 px-4 text-sm lg:text-md">
+              <FiAlertTriangle size={17} />
+              <span>{message}</span>
+            </div>
+          )}
         </CardFooter>
       </Card>
     </form>

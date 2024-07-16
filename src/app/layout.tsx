@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/provider/theme-provider";
-
+import { ToastProvider } from "@/components/ui/toast";
 export const metadata: Metadata = {
   title: "ویکسل",
   description:
@@ -22,13 +22,15 @@ export default function RootLayout({
     <html lang="en" dir="rtl">
       <head></head>
       <body className=" bg-neutral-900 text-white">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <ToastProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </ToastProvider>
       </body>
     </html>
   );

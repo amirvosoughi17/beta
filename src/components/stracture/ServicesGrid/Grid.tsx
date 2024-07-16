@@ -20,6 +20,7 @@ import { BentoCard, BentoGrid } from "@/components/magicui/bento-grid";
 import Marquee from "@/components/magicui/marquee";
 import { IconCloudDemo } from "./Teches";
 import { FileTreeDemo } from "./FileTree";
+import GridTitle from "./GridTitle";
 
 const files = [
   {
@@ -185,7 +186,8 @@ const features = [
 
 export function Grid() {
   return (
-    <section dir="ltr" className="lg:px-10">
+    <section dir="ltr" className="lg:px-10 flex flex-col gap-[70px] ">
+      <GridTitle />
       <BentoGrid>
         {features.map((feature, idx) => (
           <BentoCard key={idx} {...feature} />
