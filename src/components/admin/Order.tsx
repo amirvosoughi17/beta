@@ -41,7 +41,7 @@ const Order = ({ order , onDelete }: any) => {
     }
   };
   return (
-    <TableRow key={order.id}>
+    <TableRow >
       <TableCell className="font-medium ">{order.name}</TableCell>
       <TableCell>{order.phoneNumber}</TableCell>
       <TableCell className="invisible  xl:visible">

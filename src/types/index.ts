@@ -32,7 +32,7 @@ export interface Order {
   description: string;
   websiteType: string;
   monthlyUserCount: string;
-  likedWebsiteUrls: string[];
+  likedWebsiteUrls: string | string[];
   status: string;
   orderId: string;
 }
@@ -45,5 +45,5 @@ export type FetchOrder = {
   description: string;
   typeOfWeb: string;
   monthlyUsersCount: string;
-  likedWebsiteUrls: string[];
+  likedWebsiteUrls: string | string[];
 };

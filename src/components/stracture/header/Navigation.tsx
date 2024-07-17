@@ -2,7 +2,7 @@
 import NavigationLink from "./NavigationLink";
 import React, { useState } from "react";
 import Image from "next/image";
-import wixelLogo from "@/assets/navigation-logo.svg";
+import wixelLogo from "@/assets/navigate.svg";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { GiStarShuriken } from "react-icons/gi";

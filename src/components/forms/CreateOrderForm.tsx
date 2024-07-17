@@ -8,22 +8,7 @@ import { FiAlertTriangle } from "react-icons/fi";
 import { MdOutlineDone } from "react-icons/md";
 import ShinyButton from "../magicui/shiny-button";
 import { ConfettiButton } from "@/components/magicui/confetti";
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import {
   Select,
   SelectContent,
@@ -96,7 +81,7 @@ const CreateOrderForm = () => {
                   <Input
                     placeholder="نام و نام خانوادگی"
                     className="w-full py-6"
-                    {...register("name")}
+                    {...register("name", { required: true })}
                   />
                 </div>
                 <div className="flex w-1/2 flex-col gap-3">
@@ -108,6 +93,7 @@ const CreateOrderForm = () => {
                     className="w-full py-6"
                     {...register("phoneNumber")}
                     placeholder="شماره تماس"
+                    {...register("phoneNumber", { required: true })}
                   />
                 </div>
               </div>
@@ -119,7 +105,7 @@ const CreateOrderForm = () => {
                 <Input
                   placeholder="نام شرکت"
                   className="w-full py-6"
-                  {...register("companyName")}
+                  {...register("companyName", { required: true })}
                 />
               </div>
               <div className="flex flex-col gap-3">
@@ -131,7 +117,7 @@ const CreateOrderForm = () => {
                   rows={4}
                   placeholder="توضیحات را وارد کنید"
                   className="w-full py-3"
-                  {...register("description")}
+                  {...register("description", { required: true })}
                 />
               </div>
               <div className="flex flex-col gap-3">
@@ -144,7 +130,7 @@ const CreateOrderForm = () => {
                 <Controller
                   name="typeOfWeb"
                   control={control}
-                  defaultValue=""
+                  defaultValue="ecommerce"
                   render={({ field }) => (
                     <div className="flex flex-col gap-3">
                       <div className="flex items-center gap-3 flex-wrap">
@@ -160,10 +146,10 @@ const CreateOrderForm = () => {
                             id={option.id}
                             type="button"
                             onClick={() => field.onChange(option.value)}
-                            className={`px-4 py-2 rounded-lg text-sm lg:text-md ${
+                            className={`px-4 py-2 rounded-md text-sm lg:text-md ${
                               field.value === option.value
                                 ? "bg-indigo-600 text-white"
-                                : "bg-neutral-700/50 border-[0.6px] border-neutral-600/80 text-neutral-200"
+                                : "bg-neutral-700/50 border-[0.6px] border-neutral-800/80 shadow-md text-neutral-200"
                             }`}
                           >
                             {option.label}
@@ -185,11 +171,11 @@ const CreateOrderForm = () => {
                 <Controller
                   name="monthlyUsersCount"
                   control={control}
-                  defaultValue=""
+                  defaultValue="TEN"
                   render={({ field }) => (
                     <Select onValueChange={field.onChange} value={field.value}>
                       <SelectTrigger className="w-full py-6">
-                        <SelectValue placeholder="تعداد حدودی کاربران" />
+                        <SelectValue placeholder="تعداد کاربران ماهانه" />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>

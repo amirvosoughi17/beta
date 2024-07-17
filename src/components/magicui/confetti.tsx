@@ -41,6 +41,7 @@ const Confetti = forwardRef<ConfettiRef, Props>((props, ref) => {
     ...rest
   } = props;
   const instanceRef = useRef<ConfettiInstance | null>(null); // confetti instance
+  Confetti.displayName = "Confetti";
 
   const canvasRef = useCallback(
     // https://react.dev/reference/react-dom/components/common#ref-callback
@@ -61,20 +62,20 @@ const Confetti = forwardRef<ConfettiRef, Props>((props, ref) => {
         }
       }
     },
-    [globalOptions],
+    [globalOptions]
   );
 
   // `fire` is a function that calls the instance() with `opts` merged with `options`
   const fire = useCallback(
     (opts = {}) => instanceRef.current?.({ ...options, ...opts }),
-    [options],
+    [options]
   );
 
   const api = useMemo(
     () => ({
       fire,
     }),
-    [fire],
+    [fire]
   );
 
   useImperativeHandle(ref, () => api, [api]);
@@ -93,27 +94,28 @@ const Confetti = forwardRef<ConfettiRef, Props>((props, ref) => {
   );
 });
 
-
 interface ConfettiButtonProps extends ButtonProps {
-  options?: confetti.Options & confetti.GlobalOptions & { canvas?: HTMLCanvasElement };
+  options?: confetti.Options &
+    confetti.GlobalOptions & { canvas?: HTMLCanvasElement };
   isSuccess?: boolean;
   children?: React.ReactNode;
 }
 
-
-function ConfettiButton({ options, isSuccess, children, ...props }: ConfettiButtonProps) {
+function ConfettiButton({
+  options,
+  isSuccess,
+  children,
+  ...props
+}: ConfettiButtonProps) {
   useEffect(() => {
     if (isSuccess) {
       confetti(options);
     }
   }, [isSuccess, options]);
 
-  return (
-    <Button {...props}>
-      {children}
-    </Button>
-  );
+  return <Button {...props}>{children}</Button>;
 }
+ConfettiButton.displayName = "ConfettiButton";
 
 export { ConfettiButton };
 
