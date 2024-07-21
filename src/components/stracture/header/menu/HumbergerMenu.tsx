@@ -6,7 +6,12 @@ import Link from "next/link";
 import { linkVariants, footerVariants } from "./animation";
 import { FaHome, FaUser, FaBriefcase, FaPhone } from "react-icons/fa";
 import { GrArticle } from "react-icons/gr";
-import { FaInstagram, FaTelegram, FaLinkedin } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { FaTelegram } from "react-icons/fa";
+import { ImLinkedin } from "react-icons/im";
+import { CiMenuKebab } from "react-icons/ci";
+import { CgClose } from "react-icons/cg";
+import { TbMenu } from "react-icons/tb";
 
 const links = [
   {
@@ -49,20 +54,7 @@ const HamburgerMenu: React.FC = () => {
         className="cursor-pointer z-50 relative top-0 mt-1 "
         onClick={toggleMenu}
       >
-        <motion.div
-          initial={{ rotate: 0 }}
-          animate={{ rotate: isOpen ? 45 : 0 }}
-          className={`w-8 h-[2.5px] rounded-md bg-white mb-[6px] ${
-            isOpen && "w-[30px] mb-[-4px]"
-          }`}
-        ></motion.div>
-        <motion.div
-          initial={{ opacity: 1 }}
-          animate={{ rotate: isOpen ? -45 : 0 }}
-          className={`w-7 h-[2.5px] rounded-md bg-white mb-[6px] ${
-            isOpen && "w-[30px] mt-[2px]"
-          }`}
-        ></motion.div>
+        {isOpen ? <CgClose size={30} /> : <TbMenu size={30} />}
       </div>
       <div className="relative top-0 left-0 right-0 bottom-0 z-100">
         <motion.div
@@ -104,20 +96,18 @@ const HamburgerMenu: React.FC = () => {
               className="flex w-full items-center justify-between"
             >
               <div>
-                <span className="text-md text-neutral-400 font-light">
-                  
-                </span>
+                <span className="text-md text-neutral-400 font-light"></span>
               </div>
-              <div className="flex items-center gap-4 text-neutral-300">
-                <button>
-                  <FaLinkedin size={27} />
-                </button>
-                <button>
-                  <FaTelegram size={27} />
-                </button>
-                <button>
-                  <FaInstagram size={27} />
-                </button>
+              <div className="flex items-center gap-2">
+                <div className="w-[45px] h-[45px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-700/60 p-1">
+                  <FaInstagram size={23} />
+                </div>
+                <div className="w-[45px] h-[45px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-700/60 p-1">
+                  <FaTelegram size={23} />
+                </div>
+                <div className="w-[45px] h-[45px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-700/60 p-1">
+                  <ImLinkedin  size={23}/>
+                </div>
               </div>
             </motion.div>
           </div>

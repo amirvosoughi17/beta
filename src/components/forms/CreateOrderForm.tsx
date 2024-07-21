@@ -53,15 +53,17 @@ const CreateOrderForm = () => {
     <div className="flex flex-col">
       <Drawer>
         <DrawerTrigger asChild>
-          <button>ثبت سفارش</button>
+          <div className="">
+            <ShinyButton text="ثبت سفارش" />
+          </div>
         </DrawerTrigger>
         <DrawerContent>
-          <div className="mx-auto w-full max-h-[650px] overflow-y-auto  ">
+          <div className="mx-auto w-full max-h-[600px] overflow-y-auto  ">
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex max-w-[370px] md:max-w-[450px] lg:max-w-[500px] mx-auto  flex-col gap-4  w-full h-full relative my-5 px-4"
             >
-              <div className="flex flex-col gap-2 mb-4">
+              <div className="flex flex-col gap-2 mb-4 ">
                 <h1 className="  flex items-center gap-2.5">
                   <MdOutlineShoppingBag size={25} />
                   <h1 className="lg:text-2xl text-xl font-extrabold text-neutral-200">
@@ -79,6 +81,7 @@ const CreateOrderForm = () => {
                     htmlFor=""
                   ></label>
                   <Input
+                    autoFocus={false}
                     placeholder="نام و نام خانوادگی"
                     className="w-full py-6"
                     {...register("name", { required: true })}

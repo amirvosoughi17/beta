@@ -1,12 +1,17 @@
 "use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FaInstagram, FaTelegram, FaLinkedin } from "react-icons/fa";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Button } from "@/components/ui/button";
-import { MdArrowBackIos } from "react-icons/md";
 import LoadingScreen from "@/components/LoadScreen";
 import { HeroIcons } from "./Icons";
+import CreateOrderForm from "@/components/forms/CreateOrderForm";
+import { ArrowLeftIcon } from "@radix-ui/react-icons";
+import { cn } from "@/lib/utils";
+import AnimatedShinyText from "@/components/magicui/animated-shiny-text";
+import AnimatedGradientText from "@/components/magicui/animated-gradient-text";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 const HeroText = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -15,27 +20,32 @@ const HeroText = () => {
     <>
       {isLoading && <LoadingScreen setIsLoading={setIsLoading} />}
       {!isLoading && (
-        <div className="flex flex-col gap-7 relative z-20 mt-[10px] lg:mt-[20px] px-[13px] lg:px-6 w-full lg:max-w-[100%]">
-          <div className="gap-4 px-4 flex justify-start flex-col w-full items-start">
+        <div className="flex flex-col pb-7 gap-7 relative z-20 mt-[20px] xl:mt-[40px] lg:mt-[20px] px-[13px] lg:px-6 w-full lg:max-w-[100%]">
+          <div className="gap-4  flex justify-start flex-col w-full items-start">
             <motion.button
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               className="bg-neutral-700/40 mt-5 no-underline group cursor-pointer relative shadow-2xl shadow-zinc-900 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block"
             >
-              <div className="bg-neutral-900/80 rounded-full h-8 px-4 w-[280px] flex items-center justify-center gap-2">
-                <span className="text-gradient font-light">
-                  طراحی وبسایت و اپلیکیشن کدنویسی شده
-                </span>
-                <IoIosArrowRoundBack size={16} className="text-neutral-400" />
+              <div
+                className={cn(
+                  "group rounded-full border border-black/5 py-[3px] bg-neutral-100 text-base text-white transition-all ease-in hover:cursor-pointer hover:bg-neutral-200 dark:border-white/5 dark:bg-neutral-900 dark:hover:bg-neutral-800 px-2 md:px-4"
+                )}
+              >
+                <AnimatedShinyText className="inline-flex font-normal items-center gap-4 justify-center px-4 py-1 transition ease-out hover:text-neutral-600 hover:duration-300 hover:dark:text-neutral-400">
+                  <span className=" text-xs">
+                    ✨ شبکه های اجتماعی ویکسل را دنبال کنید
+                  </span>
+                  <ArrowLeftIcon className="ml-1 size-3 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
+                </AnimatedShinyText>
               </div>
             </motion.button>
-
             <motion.h1
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex items-center max-w-[99%] text-neutral-200 flex-wrap lg:tracking-wide text-start sm:max-w-[80%] lg:max-w-[450px] font-medium text-[36px] leading-[60px] lg:leading-[70px] md:text-[30px] lg:text-[46px]"
+              className="flex items-center max-w-[97%] text-neutral-200 flex-wrap lg:tracking-wide text-start sm:max-w-[80%] lg:max-w-[450px] font-medium text-[36px] leading-[60px] lg:leading-[70px] md:text-[30px] lg:text-[46px]"
             >
               طراحی سایت اختصاصی با بهترین تکنولوژی های روز با ویکسل
             </motion.h1>
@@ -56,24 +66,21 @@ const HeroText = () => {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="w-[97%] md:w-[90%] mt-3 lg:mt-8"
             >
-              <div className="w-[100%] bg-neutral-900/80  backdrop-blur-md f py-[8px] rounded-xl px-2 mx-auto">
-                <div className="flex items-start gap-3 md:items-center flex-col md:flex-row w-full justify-between ">
+              <div className="w-[100%] bg-neutral-900/30 flex flex-col gap-6 py-[8px] rounded-xl px-2 mx-auto">
+                <div className="flex items-start md gap-4 flex-col  w-full justify-between ">
                   <div className="flex items-center gap-3">
-                    <Button className="w-[135px] flex items-center gap-2 bg-indigo-400">
-                      <span>ثبت سفارش</span>
-                      <MdArrowBackIos size={12} />
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      className="bg-transparent hidden md:flex"
+                    <CreateOrderForm />
+                    <Link
+                      href="/#showcases"
+                      className="bg-neutral-800 flex items-center gap-3 border py-[11px] px-4  rounded-lg "
                     >
-                      <span>نمونه کارها</span>
-                    </Button>
+                      <span className=" text-sm">نمونه کارها</span>
+                      <IoIosArrowRoundBack />
+                    </Link>
                   </div>
-                  <div className="flex items-center justify-between mt-[-30px] w-full">
-                    <span></span>
-                    <HeroIcons />
-                  </div>
+                </div>
+                <div className="flex items-center justify-between mt-[-30px] w-full">
+                  <HeroIcons />
                 </div>
               </div>
             </motion.div>

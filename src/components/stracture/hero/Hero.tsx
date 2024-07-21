@@ -1,21 +1,27 @@
 "use client";
-import React from "react";
+
+import { cn } from "@/lib/utils";
+import DotPattern from "@/components/magicui/dot-pattern";
 import Parllax from "./Parllax";
 import HeroText from "./HeroText";
 
 const Hero = () => {
   return (
-    <section className=" flex flex-col lg:flex-row w-full  mx-auto ">
-      <div className=" w-full flex flex-col lg:flex-row  dark:bg-neutral-900/40 bg-white  dark:bg-dot-white/[0.16] bg-dot-black/[1.7] relative ">
-        <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-neutral-900 bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_10%,black)]"></div>
-        <div className="w-full h-[470px] ">
+    <div className=" flex flex-col lg:flex-row w-full mx-auto mb-[-60px] ">
+      <div className="w-full flex flex-col lg:flex-row  dark:bg-neutral-900/40 bg-white    relative   ">
+        <DotPattern
+          className={cn(
+            "[mask-image:linear-gradient(to_bottom_left,black,transparent,transparent)]"
+          )}
+        />
+        <div className="w-full h-auto ">
           <HeroText />
         </div>
         <div className="w-full  lg:pl-10 ">
           <Parllax />
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

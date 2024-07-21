@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import BlogCard from "./BlogCard";
+import BlogsTitle from "./BlogsTitle";
 
 const blogs = [
   {
@@ -58,7 +59,7 @@ const Blogs = () => {
 
   return (
     <section className="flex flex-col items-center justify-center gap-10 mb-[200px]">
-      <span>مقالات</span>
+      <BlogsTitle />
       <Carousel
         plugins={[plugin.current]}
         onMouseEnter={plugin.current.stop}

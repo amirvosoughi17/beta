@@ -3,12 +3,8 @@ import NavigationLink from "./NavigationLink";
 import React, { useState } from "react";
 import Image from "next/image";
 import wixelLogo from "@/assets/navigate.svg";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { GiStarShuriken } from "react-icons/gi";
-import { FaUser } from "react-icons/fa";
 import HamburgerMenu from "./menu/HumbergerMenu";
-import ShinyButton from "@/components/magicui/shiny-button";
 import CreateOrderForm from "@/components/forms/CreateOrderForm";
 
 const menu = {
@@ -45,13 +41,13 @@ const Navigation = () => {
         <GiStarShuriken size={20} className=" w-[15px]" />
       </div>
       <div className="w-full mx-auto  h-[80px] mt-[35px] lg:mt-[40px]  flex items-center justify-between ">
-        <div className="w-full bg-transparent h-full border-b-[0.4px] border-neutral-700  flex items-center justify-between mx-auto px-5 md:px-6 lg:px-[50px]">
+        <div className="w-full bg-transparent h-full border-b-[0.4px] border-neutral-700  flex items-center justify-between mx-auto px-8 md:px-6 lg:px-[50px]">
           <div className="flex w-full items-center justify-between max-w-[1440px] mx-auto">
             <div className="">
               <Image
                 src={wixelLogo}
                 alt="logo"
-                className="w-[120px] lg:w-[120px] mt-2 mr-[-4px]"
+                className="w-[95px] lg:w-[105px] mt-2 mr-[-4px]"
               />
             </div>
             <nav className="items-center gap-8 h-full juc hidden lg:flex">
@@ -61,7 +57,9 @@ const Navigation = () => {
               <NavigationLink href="/#contactUs" label="ارتباط باما" />
             </nav>
             <div className="flex items-center gap-3">
-              <CreateOrderForm />
+              <div className=" hidden lg:block">
+                <CreateOrderForm />
+              </div>
               <HamburgerMenu />
             </div>
           </div>
