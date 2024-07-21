@@ -10,45 +10,93 @@ import AnimatedGridPattern from "@/components/magicui/animated-grid-pattern";
 
 const Footer = () => {
   return (
-    <div className="relative flex h-[300px] w-full items-center justify-center overflow-hidden rounded-lg border bg-background p-20 md:shadow-xl">
-      <div className="w-full flex flex-col md:flex-row items-center justify-center gap-4 md:justify-between px-5 lg:px-10 py-5">
-        <Image src={Logo} alt="wixel" className="w-[130px]" width={100} />
-        <div className="flex flex-col gap-4 md:gap-10 items-center  justify-center md:flex-row">
-          <div className=" flex items-center gap-6">
-            <Link
-              href="/"
-              className=" text-neutral-400 text-[15px] lg:text-[17px] hover:text-white duration-200"
-            >
-              خانه
-            </Link>
-            <Link
-              href="/"
-              className=" text-neutral-400 text-[15px] lg:text-[17px] hover:text-white duration-200"
-            >
-              خدمات{" "}
-            </Link>
-            <Link
-              href="/"
-              className=" text-neutral-400 text-[15px] lg:text-[17px] hover:text-white duration-200"
-            >
-              نمونه کارها
-            </Link>
-            <Link
-              href="/"
-              className=" text-neutral-400 text-[15px] lg:text-[17px] hover:text-white duration-200"
-            >
-              مقالات
-            </Link>
+    <div className="relative flex md:h-[300px] w-full items-center justify-center overflow-hidden rounded-lg border bg-background py-10 md:p-20 md:shadow-xl">
+      <div className="w-full flex flex-col md:flex-row items-center md:items-start  justify-center gap-[50px] md:justify-between  lg:px-[70px] py-5">
+        <div className="flex flex-col items-start gap-2 md:mt-[-10px]">
+          <Image src={Logo} alt="wixel" className="w-[130px]" width={100} />
+          <div className="flex items-center gap-2 mr-[5px]">
+            <div className="w-[35px] h-[35px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-700/60 p-1.5 hover:bg-neutral-700 duration-300 cursor-pointer">
+              <FaInstagram size={20} />
+            </div>
+            <div className="w-[35px] h-[35px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-700/60 p-1.5 hover:bg-neutral-700 duration-300 cursor-pointer">
+              <FaTelegram size={20} />
+            </div>
+            <div className="w-[35px] h-[35px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-700/60 p-1.5 hover:bg-neutral-700 duration-300 cursor-pointer">
+              <ImLinkedin size={18} />
+            </div>
+            <div className="w-[35px] h-[35px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-700/60 p-1.5 hover:bg-neutral-700 duration-300 cursor-pointer">
+              <FaTelegram size={20} />
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-[35px] h-[35px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-700/60 p-1">
-              <FaInstagram size={22} />
+        </div>
+        <div className="flex items-start gap-4">
+          <div className="flex flex-col gap-4">
+            <span className=" text-md md:text-lg  text-neutral-200 font-medium">
+              خدمات
+            </span>
+            <div className="flex flex-col gap-2.5">
+              <Link
+                href="/"
+                className=" text-[14px] md:text-[15px]  text-neutral-400 "
+              >
+                طراحی سایت
+              </Link>
+              <Link
+                href="/"
+                className=" text-[14px] md:text-[15px]  text-neutral-400 "
+              >
+                دیجیتال مارکتینگ
+              </Link>
+              <Link
+                href="/"
+                className=" text-[14px] md:text-[15px]  text-neutral-400 "
+              >
+                {" "}
+                سعو سایت
+              </Link>
+              <Link
+                href="/"
+                className=" text-[14px] md:text-[15px]  text-neutral-400 "
+              >
+                {" "}
+                گرافیک دیزایین
+              </Link>
             </div>
-            <div className="w-[35px] h-[35px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-700/60 p-1">
-              <FaTelegram />
-            </div>
-            <div className="w-[35px] h-[35px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-700/60 p-1">
-              <ImLinkedin />
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <span className=" text-md md:text-lg  text-neutral-200 font-medium">
+              طراحی سایت
+            </span>
+            <div className="flex flex-col gap-2.5">
+              <Link
+                href="/"
+                className=" text-[14px] md:text-[15px]  text-neutral-400 "
+              >
+                {" "}
+                سایت فروشگاهی
+              </Link>
+              <Link
+                href="/"
+                className=" text-[14px] md:text-[15px]  text-neutral-400 "
+              >
+                {" "}
+                سایت اموزشی
+              </Link>
+              <Link
+                href="/"
+                className=" text-[14px] md:text-[15px]  text-neutral-400 "
+              >
+                {" "}
+                سایت شرکتی
+              </Link>
+              <Link
+                href="/"
+                className=" text-[14px] md:text-[15px]  text-neutral-400 "
+              >
+                {" "}
+                سایت شخصی
+              </Link>
             </div>
           </div>
         </div>

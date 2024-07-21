@@ -45,28 +45,34 @@ const Parallax: React.FC = () => {
   }, [yTranslation1, yTranslation2, height1, height2]);
 
   return (
-    <div  className="relative  bg-neutral-900/40 backdrop-blur-lg h-[450px] lg:h-[700px] z-10 w-full px-[60px] flex items-center justify-center overflow-hidden py-10 mb-[140px] ">
-      <div className="w-full h-[100px] bg-gradient-to-b from-neutral-900  to-transparent absolute top-0 z-40"></div>
-      <div className="w-full h-[100px] bg-gradient-to-b to-neutral-900  from-transparent absolute bottom-0 z-40"></div>
-      <motion.div
-        style={{ y: yTranslation1 }}
-        className="absolute top-0 flex w-[320px] lg:w-[500px] lg:ml-[130px] flex-col gap-[30px] md:top-[110px]"
-        ref={ref1}
-      >
-        {[...Images1, ...Images1].map((item, index) => (
-          <Img image={item} key={index} />
-        ))}
-      </motion.div>
-      <motion.div
-        style={{ y: yTranslation2 }}
-        className="absolute bottom-0 w-[320px] lg:w-[500px] lg:mr-[540px] items-center justify-center hidden md:flex flex-col gap-[30px] md:bottom-[110px]"
-        ref={ref2}
-      >
-        {[...Images2, ...Images2].map((item, index) => (
-          <Img image={item} key={index} />
-        ))}
-      </motion.div>
-    </div>
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: 0.7 }}
+    >
+      <div className="relative  bg-neutral-900/40 backdrop-blur-lg h-[450px] lg:h-[700px] z-10 w-full px-[60px] flex items-center justify-center overflow-hidden py-10 mb-[140px] ">
+        <div className="w-full h-[100px] bg-gradient-to-b from-neutral-900  to-transparent absolute top-0 z-40"></div>
+        <div className="w-full h-[100px] bg-gradient-to-b to-neutral-900  from-transparent absolute bottom-0 z-40"></div>
+        <motion.div
+          style={{ y: yTranslation1 }}
+          className="absolute top-0 flex w-[320px] lg:w-[500px] lg:ml-[130px] flex-col gap-[30px] md:top-[110px]"
+          ref={ref1}
+        >
+          {[...Images1, ...Images1].map((item, index) => (
+            <Img image={item} key={index} />
+          ))}
+        </motion.div>
+        <motion.div
+          style={{ y: yTranslation2 }}
+          className="absolute bottom-0 w-[320px] lg:w-[500px] lg:mr-[540px] items-center justify-center hidden md:flex flex-col gap-[30px] md:bottom-[110px]"
+          ref={ref2}
+        >
+          {[...Images2, ...Images2].map((item, index) => (
+            <Img image={item} key={index} />
+          ))}
+        </motion.div>
+      </div>
+    </motion.div>
   );
 };
 
