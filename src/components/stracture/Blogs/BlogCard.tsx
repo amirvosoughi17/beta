@@ -25,10 +25,10 @@ const BlogCard: React.FC<BlogCardProps> = ({
       className="md:basis-1/2  w-full h-full  rounded-lg shadow-lg"
     >
       <Card
-        className="w-full  px-4 py-4 lg:py-6 flex flex-col justify-between  sm:h-[470px] h-[400px]  md:h-[380px] lg:h-[460px] xl:h-[490px]"
+        className="w-full bg-transparent border border-none px-4 py-4 lg:py-6 flex flex-col justify-between  sm:h-[470px] h-[400px]  md:h-[380px] lg:h-[460px] xl:h-[490px]"
         dir="rtl"
       >
-        <div className=" relative w-full flex flex-col gap-6 ">
+        <div className=" relative w-full flex flex-col gap-4 lg:gap-6 ">
           <Image
             src={image}
             alt="image"
@@ -36,22 +36,18 @@ const BlogCard: React.FC<BlogCardProps> = ({
             width={300}
             height={200}
           />
-          <Badge className=" absolute top-4 right-4 bg-indigo-600 px-4 text-white">
+          <Badge className=" absolute top-4 py-1.5 px-5 right-4 bg-gradient-to-r from-neutral-900 backdrop-blur-lg to-neutral-700/70 border-[0.7px] border-neutral-700  text-neutral-300">
             {badge}
           </Badge>
-          <div className="flex flex-col gap-2 lg:gap-4">
-            <h1 className="text-xl lg:text-2xl font-bold text-white tracking-wide">
+          <div className="flex flex-col gap-2 lg:gap-3">
+            <h1 className="text-[20px] md:text-2xl lg:text-[24px] font-bold text-white tracking-wide">
               {title}
             </h1>
-            <p className=" text-xs lg:text-sm max-w-[80%] text-neutral-400 tracking-wide leading-6">
+            <p className=" text-[13px] lg:text-sm max-w-[88%] md:max-w-[85%] text-neutral-400 md:tracking-wide leading-6">
               {description}
             </p>
           </div>
         </div>
-        <Button className=" w-full flex items-center justify-between" variant='outline'>
-          <span>مشاهده</span>
-          <IoIosArrowRoundBack  size={20}/>
-        </Button>
       </Card>
     </Link>
   );

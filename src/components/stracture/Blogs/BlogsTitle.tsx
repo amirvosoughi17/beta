@@ -9,7 +9,7 @@ const BlogsTitle = () => {
     <div className=" w-full flex  justify-center items-center px-3 md:px-6">
       <div className="flex flex-col w-full gap-3 md:gap-4 xl:gap-6 items-center">
         <SparklesText text="مقالات ویکسل" />
-        <p className=" text-[14.5px] md:text-[15.5px] text-neutral-400 ">
+        <p className=" text-[14.5px] md:text-[15.5px] xl:text-[16.5px] lg:tracking-wide text-neutral-400 ">
         اخبار , مقالات  و  به‌روزرسانی‌ها برای آگاهی بیشتر شما
         </p>
       </div>
