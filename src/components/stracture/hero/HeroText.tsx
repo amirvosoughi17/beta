@@ -2,23 +2,19 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { Button } from "@/components/ui/button";
-import LoadingScreen from "@/components/LoadScreen";
 import { HeroIcons } from "./Icons";
 import CreateOrderForm from "@/components/forms/CreateOrderForm";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 import AnimatedShinyText from "@/components/magicui/animated-shiny-text";
-import AnimatedGradientText from "@/components/magicui/animated-gradient-text";
-import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 const HeroText = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className="flex flex-col pb-7 gap-7 relative z-20 mt-[20px] xl:mt-[40px] lg:mt-[20px] px-[13px] lg:px-6 w-full lg:max-w-[100%]">
-      <div className="gap-4  flex justify-start flex-col w-full items-start">
+    <div className="flex flex-col pb-7 gap-7 relative z-20 mt-[20px] xl:mt-[20px] lg:mt-[20px] px-[13px] lg:px-6 w-full lg:max-w-[100%]">
+      <div className="gap-4  flex justify-center flex-col w-full items-center">
         <motion.button
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -42,7 +38,7 @@ const HeroText = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="flex items-center max-w-[97%] text-neutral-200 flex-wrap lg:tracking-wide text-start sm:max-w-[80%] lg:max-w-[450px] font-medium text-[36px] leading-[60px] lg:leading-[70px] md:text-[30px] lg:text-[46px]"
+          className="flex items-center max-w-[360px] xs:max-w-[360px] sm:max-w-[500px] text-neutral-200 flex-wrap lg:tracking-wide text-center lg:max-w-[700px] font-semibold text-[36px] leading-[60px] lg:leading-[70px]  lg:text-[46px]"
         >
           طراحی سایت اختصاصی با بهترین تکنولوژی های روز با ویکسل
         </motion.h1>
@@ -51,7 +47,7 @@ const HeroText = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="text-neutral-400 font-light text-[14.5px] lg:text-[18px] sm:max-w-[84%] max-w-[92%] text-start leading-7 tracking-wide lg:max-w-[85%] lg:leading-8"
+          className="text-neutral-500 font-light text-[14.5px] md:text-[15px] lg:text-[17px] sm:max-w-[450px] max-w-[360px] text-center leading-7 tracking-wide lg:max-w-[36%] xl:max-w-[35%] 2xl:max-w-[33%]  lg:leading-8"
         >
           طراحی سایت و اپلیکیشن اختصاصی , بهبود سعو سایت , خدمات دیجیتال
           مارکتینگ با مشاوره تخصصی
@@ -61,10 +57,10 @@ const HeroText = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.6 }}
-          className="w-[97%] md:w-[90%] mt-3 lg:mt-8"
+          className="w-[97%] md:w-[90%]"
         >
-          <div className="w-[100%] bg-neutral-900/30 flex flex-col gap-6 py-[8px] rounded-xl px-2 mx-auto">
-            <div className="flex items-start md gap-4 flex-col  w-full justify-between ">
+          <div className="w-full bg-neutral-900/30 flex flex-col gap-6 py-[8px] rounded-xl px-2 mx-auto">
+            <div className="flex items-center  gap-4 flex-col lg:flex-row mx-auto  w-full lg:w-[60%] xl:w-[50%] justify-between ">
               <div className="flex items-center gap-3">
                 <CreateOrderForm />
                 <Link
@@ -75,9 +71,9 @@ const HeroText = () => {
                   <IoIosArrowRoundBack />
                 </Link>
               </div>
-            </div>
-            <div className="flex items-center justify-between mt-[-30px] w-full">
-              <HeroIcons />
+              <div className="flex items-center mt-[-30px]">
+                <HeroIcons />
+              </div>
             </div>
           </div>
         </motion.div>

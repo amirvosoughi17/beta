@@ -32,7 +32,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
           <Image
             src={image}
             alt="image"
-            className="w-full rounded-xl "
+            className="w-full rounded-xl min-h-[200px] max-h-[250px] object-cover "
             width={300}
             height={200}
           />
@@ -40,10 +40,10 @@ const BlogCard: React.FC<BlogCardProps> = ({
             {badge}
           </Badge>
           <div className="flex flex-col gap-2 lg:gap-3">
-            <h1 className="text-[20px] md:text-2xl lg:text-[24px] font-bold text-white tracking-wide">
+            <h1 className="text-[20px] md:text-2xl mt-2 md:mt-0 lg:text-[24px] font-bold text-white tracking-wide">
               {title}
             </h1>
-            <p className=" text-[13px] lg:text-sm max-w-[88%] md:max-w-[85%] text-neutral-400 md:tracking-wide leading-6">
+            <p className=" text-[13px] lg:text-sm max-w-[95%] md:max-w-[85%] lg:max-w-[88.5%] text-neutral-400 md:tracking-wide leading-7 lg:leading-[29px]">
               {description}
             </p>
           </div>

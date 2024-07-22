@@ -14,10 +14,14 @@ const config: Config = {
       center: true,
       padding: "2rem",
       screens: {
+        xs: "420px",
         "2xl": "1400px",
       },
     },
     extend: {
+      screens: {
+        xs: "420px",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -110,7 +114,6 @@ const config: Config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        
       },
       animation: {
         shimmer: "shimmer 8s infinite",

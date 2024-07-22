@@ -14,8 +14,8 @@ interface DotPatternProps {
   [key: string]: any;
 }
 export function DotPattern({
-  width = 21,
-  height = 21,
+  width = 26,
+  height = 26,
   x = 0,
   y = 0,
   cx = 1,
@@ -30,7 +30,7 @@ export function DotPattern({
     <svg
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-0 h-full w-full fill-neutral-600/80",
+        "pointer-events-none absolute inset-0 h-full w-full fill-neutral-500/60",
         className,
       )}
       {...props}
