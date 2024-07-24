@@ -12,38 +12,27 @@ const showcases = [
     teches: ["react", "nodejs", "nextjs", "mongodb", "figma"],
     image: "/showcase.png",
     category: "شرکتی",
-    instagramHref : "instagram.com" ,
-    webHref : "www.planagency.ir"
+    instagramHref: "instagram.com",
+    webHref: "www.planagency.ir",
   },
   {
-    title: "اژانس نکست",
-    description:
-      "اژانس دیجیتال مارکتینگ پلن با اراعه خدمات مارکتینگ , سعو , تولید متحوا",
-    teches: ["wordpress", "figma"],
+    title: "خدمات ویکیپدیا با ویکیتوری",
+    description: " ویکیتوری , اولین اژانس اراعه دهنده ویکیپدیا فارسی",
+    teches: ["react", "nodejs", "nextjs", "figma"],
     image: "/showcase.png",
     category: "شرکتی",
-    instagramHref : "instagram.com",
-    webHref : "www.planagency.ir"
+    instagramHref: "instagram.com",
+    webHref: "www.planagency.ir",
   },
   {
-    title: "اژانس دیجیتال مارکتینگ پلن",
+    title: "اژانس دیجیتال مارکتینگ نکست",
     description:
       "اژانس دیجیتال مارکتینگ پلن با اراعه خدمات مارکتینگ , سعو , تولید متحوا",
-    teches: ["react", "nodejs", "nextjs", "mongodb", "figma"],
+    teches: ["wordpress", "elementor", "figma"],
     image: "/showcase.png",
     category: "شرکتی",
-    instagramHref : "instagram.com",
-    webHref : "www.planagency.ir"
-  },
-  {
-    title: "اژانس نکست",
-    description:
-      "اژانس دیجیتال مارکتینگ پلن با اراعه خدمات مارکتینگ , سعو , تولید متحوا",
-    teches: ["wordpress", "figma"],
-    image: "/showcase.png",
-    category: "آموزشی",
-    instagramHref : "instagram.com",
-    webHref : "www.planagency.ir"
+    instagramHref: "instagram.com",
+    webHref: "www.planagency.ir",
   },
 ];
 
@@ -55,7 +44,7 @@ const ShowCases = () => {
       selectedCategory === "همه" || showcase.category === selectedCategory
   );
   return (
-    <section className="lg:w-[93%] w-full mx-auto min-h-[2000px] lg:min-h-[1500px] mb-[210px] flex flex-col gap-10 relative">
+    <section className="lg:w-[93%] w-full mx-auto min-h-auto mb-[210px] flex flex-col py-[130px] gap-10 relative">
       <div className="hidden lg:block absolute top-[242px] right-[2px]">
         <GoDotFill size={15} className="text-neutral-500" />
       </div>
@@ -68,7 +57,7 @@ const ShowCases = () => {
               onClick={() => setSelectedCategory(category)}
               className={`sm:px-4 sm:py-2 text-sm px-3 py-2 rounded-lg border-[1.3px] border-neutral-800 shadow-md  duration-300 ${
                 selectedCategory === category
-                  ? "bg-indigo-700   text-white"
+                  ? "bg-neutral-800 border-[2px] border-neutral-500   text-white"
                   : "bg-gradient-to-tr from-neutral-800 to-neutral-900/50 text-gray-200"
               }`}
             >
@@ -76,7 +65,7 @@ const ShowCases = () => {
             </button>
           ))}
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 mt-[-50px] md:mt-0 gap-4 sm:gap-8 lg:gap-0">
+        <div className="grid grid-cols-1 md:grid-cols-2 mt-[-80px]  md:mt-0 gap-4 sm:gap-8 lg:gap-0">
           {filteredShowcases.map((showcase, index) => (
             <ShowCaseCard
               key={index}

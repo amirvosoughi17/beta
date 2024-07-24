@@ -71,7 +71,7 @@ const HeroText = () => {
                   <IoIosArrowRoundBack />
                 </Link>
               </div>
-              <div className="flex items-center mt-[-30px]">
+              <div className="flex items-center   mt-[-30px]">
                 <HeroIcons />
               </div>
             </div>

@@ -1,4 +1,9 @@
-import { CalendarIcon, FileTextIcon, InputIcon , CodeIcon  } from "@radix-ui/react-icons";
+import {
+  CalendarIcon,
+  FileTextIcon,
+  InputIcon,
+  CodeIcon,
+} from "@radix-ui/react-icons";
 import { Share2Icon } from "lucide-react";
 
 import { AnimatedBeamMultipleOutputDemo } from "./ABeam";
@@ -124,13 +129,13 @@ const Notification = ({ name, description, icon, color, time }: Item) => {
 const features = [
   {
     Icon: CalendarIcon,
-    name: "تکنولوژی های بروز",
-    description: "ویکسل با بهرگیری از بهترین تکنولوژی کیفیت سایت شما را تضمین میکند",
-    className: "col-span-3 lg:col-span-1",
+    name: "",
+    description: "",
+    className: "col-span-3 lg:col-span-1 ",
     href: "/",
     cta: "Learn more",
     background: (
-      <div className="w-full absolute top-[-30px]">
+      <div className="w-full  absolute top-0 left-0 right-0 bottom-0 h-full flex items-center justify-center">
         <IconCloudDemo />
       </div>
     ),
@@ -150,40 +155,41 @@ const features = [
   },
   {
     Icon: Share2Icon,
-    name: "طراحی سایت و اپلیکیشن",
-    description: "طراحی سایت کدنویسی شده , طراحی اپلیکیشن اندروید و ای او اس ",
+    name: "طراحی سایت ",
+    description: "طراحی انواع سایت فروشگاهی , شرکتی , اموزشی , شخصی با ویکسل",
     href: "/",
     cta: "Learn more",
     className: "col-span-3 lg:col-span-2",
     background: (
-      <AnimatedBeamMultipleOutputDemo className="absolute right-[0%] md:left-[10%] lg:left-0 top-4 h-[300px] w-[600px] border-none transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] group-hover:scale-105" />
+      <AnimatedBeamMultipleOutputDemo className="absolute right-[-30px] md:left-[10%] lg:left-0 top-4 h-[300px] w-[600px] border-none transition-all duration-300 ease-out [mask-image:linear-gradient(to_top,transparent_10%,#000_100%)] group-hover:scale-105" />
     ),
   },
 
   {
     Icon: FileTextIcon,
-    name: "سایت بین المللی",
-    description:
-      "سایت های چند زبانه بین و المللی برای تعامل با شرکت های خارج از کشور",
+    name: "",
+    description: "",
     href: "/",
     cta: "",
     className: "col-span-3 lg:col-span-1",
     background: (
-      <div className="absolute h-full  z-0 flex w-full mx-auto  items-center justify-center overflow-hidden rounded-lg border bg-background px-40 pb-40 pt-8 md:pb-60 md:shadow-xl">
+      <div className="absolute h-full  z-0 flex w-full mx-auto  items-center justify-center  rounded-lg border bg-background px-40 pb-40 pt-8 md:pb-60 md:shadow-xl">
         <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10">
           Globe
         </span>
-        <Globe className="top-28" />
+        <Globe className="lg:top-[15%] top-[40%] lg:left-[5%] ] flex items-center justify-center " />
         <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]" />
       </div>
     ),
   },
 ];
 
-
 export function Grid() {
   return (
-    <section dir="ltr" className="lg:px-10 px-4 flex flex-col gap-[70px] mb-[140px] ">
+    <section
+      dir="ltr"
+      className="lg:px-10 px-4 flex flex-col gap-[70px] mb-[140px] mt-[100px] "
+    >
       <GridTitle />
       <BentoGrid>
         {features.map((feature, idx) => (

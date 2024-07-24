@@ -9,7 +9,9 @@ const ShowCasesTitle = () => {
     <div className=" w-full flex  justify-center items-center px-3 md:px-6">
       <div className="flex flex-col w-full gap-3 md:gap-4 xl:gap-5 items-center">
         <SparklesText text="نمونه کارها" />
-       <p className=" text-[14.5px] md:text-[15.5px] text-neutral-400 ">نمونه کارهای اختصاصی تیم طراحی سایت ویکسل</p>
+        <p className=" text-[14.5px] md:text-[15.5px] text-neutral-400 ">
+          نمونه کارهای اختصاصی تیم طراحی سایت ویکسل
+        </p>
       </div>
     </div>
   );

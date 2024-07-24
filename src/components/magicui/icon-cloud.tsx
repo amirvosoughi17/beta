@@ -17,6 +17,7 @@ export const cloudProps: Omit<ICloud, "children"> = {
       justifyContent: "center",
       alignItems: "center",
       width: "100%",
+      height: "100%" ,
       paddingTop: 40,
     },
   },
@@ -80,7 +81,7 @@ export default function IconCloud({ iconSlugs }: DynamicCloudProps) {
 
   return (
     // @ts-ignore
-    <Cloud {...cloudProps}>
+    <Cloud {...cloudProps} >
       <>{renderedIcons}</>
     </Cloud>
   );

@@ -1,24 +1,25 @@
 import React from "react";
-
+import Image from "next/image";
 import { Dock, DockIcon } from "@/components/magicui/dock";
 
 export type IconProps = React.HTMLAttributes<SVGElement>;
 
 export function HeroIcons() {
   return (
-    <div className="relative">
+    <div className="relative mt-1">
       <Dock magnification={60} distance={100}>
-        <DockIcon className="bg-black/10 dark:bg-white/10 p-3">
+        <DockIcon className="bg-black/10 dark:bg-white/10 p-2.5">
+          <Image src="/linkedin.png" width={50} height={50} alt="" />
           <Icons.gitHub className="size-full" />
         </DockIcon>
-        <DockIcon className="bg-black/10 dark:bg-white/10 p-3">
-          <Icons.googleDrive className="size-full" />
+        <DockIcon className="bg-black/10 dark:bg-white/10 p-2.5">
+          <Image src="/telegram.svg" width={50} height={50} alt="" />
         </DockIcon>
-        <DockIcon className="bg-black/10 dark:bg-white/10 p-3">
-          <Icons.notion className="size-full" />
+        <DockIcon className="bg-black/10 dark:bg-white/10 p-2.5">
+          <Image src="/whatsapp.svg" width={50} height={50} alt="" />
         </DockIcon>
-        <DockIcon className="bg-black/10 dark:bg-white/10 p-3">
-          <Icons.whatsapp className="size-full" />
+        <DockIcon className="bg-black/10 dark:bg-white/10 p-2.5">
+          <Image src="/Instagram.png" width={50} height={50} alt="" />
         </DockIcon>
       </Dock>
     </div>

@@ -9,6 +9,7 @@ import { FaInstagram } from "react-icons/fa";
 import { SiExpress } from "react-icons/si";
 import { TbWorldSearch } from "react-icons/tb";
 import { FaFigma } from "react-icons/fa";
+import { FaElementor } from "react-icons/fa6";
 import { FaWordpressSimple } from "react-icons/fa";
 import Image from "next/image";
 import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
@@ -33,6 +34,7 @@ const techIcons: { [key: string]: JSX.Element } = {
   express: <SiExpress className="text-white" />,
   figma: <FaFigma className=" text-white" />,
   wordpress: <FaWordpressSimple className="text-blue-500" />,
+  elementor : <FaElementor  className=" text-pink-600"/>
 };
 
 const ShowCaseCard: React.FC<ShowCaseCardProps> = ({
