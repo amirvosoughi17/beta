@@ -17,8 +17,9 @@ import {
 import { MdEdit } from "react-icons/md";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { Badge } from "../ui/badge";
 
-const Order = ({ order , onDelete }: any) => {
+const Order = ({ order, onDelete }: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -41,14 +42,17 @@ const Order = ({ order , onDelete }: any) => {
     }
   };
   return (
-    <TableRow >
+    <TableRow>
       <TableCell className="font-medium ">{order.name}</TableCell>
       <TableCell>{order.phoneNumber}</TableCell>
-      <TableCell className="invisible  xl:visible">
+      <TableCell className="hidden lg:table-cell">
         {order.companyName}
       </TableCell>
-      <TableCell className=" hidden ">{order.description}</TableCell>
-      <TableCell className="">{order.typeOfWeb}</TableCell>
+      <TableCell className="hidden lg:table-cell">
+        {" "}
+        <Badge variant="outline">{order.typeOfWeb}</Badge>
+      </TableCell>
+
       <TableCell className=" ">
         <Dialog>
           <DialogTrigger asChild>
@@ -115,7 +119,7 @@ const Order = ({ order , onDelete }: any) => {
             </div>
             <DialogFooter>
               <Button
-              onClick={handleOrderDelete}
+                onClick={handleOrderDelete}
                 disabled={isLoading}
                 className={` w-full hover:bg-red-500/70 bg-red-500 text-white ${
                   isSuccess && "bg-rose-600 text-white"

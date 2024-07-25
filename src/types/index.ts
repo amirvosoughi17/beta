@@ -47,3 +47,13 @@ export type FetchOrder = {
   monthlyUsersCount: string;
   likedWebsiteUrls: string | string[];
 };
+
+export interface CreateShowcaseFormData {
+  title: string;
+  description: string;
+  teches: string[];
+  image: string;
+  category: string;
+  instagramHref: string;
+  webHref: string;
+}
