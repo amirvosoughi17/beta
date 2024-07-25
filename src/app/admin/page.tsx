@@ -65,6 +65,7 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from "@/components/ui/tooltip";
+import ShowCasesList from "@/components/admin/ShowCasesList";
 
 const AdminPage: React.FC = () => {
   return (
@@ -216,18 +217,14 @@ const AdminPage: React.FC = () => {
                 <BreadcrumbList>
                   <BreadcrumbItem>
                     <BreadcrumbLink asChild>
-                      <Link href="#">Dashboard</Link>
+                      <Link href="/">Home</Link>
                     </BreadcrumbLink>
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />
                   <BreadcrumbItem>
                     <BreadcrumbLink asChild>
-                      <Link href="#">Products</Link>
+                      <Link href="/admin">Admin Dashboard</Link>
                     </BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>All Products</BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
@@ -245,28 +242,12 @@ const AdminPage: React.FC = () => {
                     variant="outline"
                     size="icon"
                     className="overflow-hidden rounded-full"
-                  >
-                    <Image
-                      src="/placeholder-user.jpg"
-                      width={36}
-                      height={36}
-                      alt="Avatar"
-                      className="overflow-hidden rounded-full"
-                    />
-                  </Button>
+                  ></Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
-                  <DropdownMenuItem>Support</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Logout</DropdownMenuItem>
-                </DropdownMenuContent>
               </DropdownMenu>
             </header>
             <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-              <Tabs defaultValue="سفارشات">
+              <Tabs defaultValue="all">
                 <div className="flex items-center" dir="ltr">
                   <TabsList>
                     <TabsTrigger value="all">سفارشات</TabsTrigger>
@@ -279,14 +260,14 @@ const AdminPage: React.FC = () => {
                         <Button size="sm" className="h-8 gap-1">
                           <PlusCircle className="h-3.5 w-3.5" />
                           <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                            افزدون 
+                            افزدون
                           </span>
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>افزدون</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuCheckboxItem >
+                        <DropdownMenuCheckboxItem>
                           نمونه کار
                         </DropdownMenuCheckboxItem>
                         <DropdownMenuCheckboxItem>
@@ -336,71 +317,23 @@ const AdminPage: React.FC = () => {
                   <Card x-chunk="dashboard-06-chunk-1">
                     <CardHeader>
                       <CardTitle>نمونه کارها</CardTitle>
+
                       <CardDescription>
-                        View your portfolio projects.
+                        نمایش , ایجاد ,حذف ویا تغییر نمونه کارها
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
                       <Table dir="ltr">
                         <TableHeader>
                           <TableRow>
-                            <TableHead className="hidden w-[100px] sm:table-cell">
-                              <span className="sr-only">Image</span>
-                            </TableHead>
                             <TableHead>Title</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead className="hidden md:table-cell">
-                              Date
-                            </TableHead>
-                            <TableHead>
-                              <span className="sr-only">Actions</span>
+                            <TableHead>Teches</TableHead>
+                            <TableHead className="hidden lg:table-cell">
+                              Category
                             </TableHead>
                           </TableRow>
                         </TableHeader>
-                        <TableBody>
-                          {/* Portfolio rows */}
-                          {/* Example row */}
-                          <TableRow>
-                            <TableCell className="hidden sm:table-cell">
-                              <Image
-                                alt="Portfolio image"
-                                className="aspect-square rounded-md object-cover"
-                                height="64"
-                                src="/placeholder.svg"
-                                width="64"
-                              />
-                            </TableCell>
-                            <TableCell className="font-medium">
-                              Project Alpha
-                            </TableCell>
-                            <TableCell>
-                              <Badge variant="outline">Completed</Badge>
-                            </TableCell>
-                            <TableCell className="hidden md:table-cell">
-                              2024-01-15
-                            </TableCell>
-                            <TableCell>
-                              <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                  <Button
-                                    aria-haspopup="true"
-                                    size="icon"
-                                    variant="ghost"
-                                  >
-                                    <MoreHorizontal className="h-4 w-4" />
-                                    <span className="sr-only">Toggle menu</span>
-                                  </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                  <DropdownMenuItem>Edit</DropdownMenuItem>
-                                  <DropdownMenuItem>Delete</DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            </TableCell>
-                          </TableRow>
-                          {/* Additional portfolio rows */}
-                        </TableBody>
+                        <ShowCasesList />
                       </Table>
                     </CardContent>
                     <CardFooter>
@@ -497,25 +430,7 @@ const AdminPage: React.FC = () => {
       </TooltipProvider>
     </div>
   );
-  // <div className="w-full h-full flex flex-col gap-10">
-  //   <div className="flex flex-col items-start gap-4">
-  //     <h1>افزدون نمونه کار </h1>
-  //     <div className="">
-  //       <CreateShowcaseForm />
-  //     </div>
-  //   </div>
-  //   <div className="flex flex-col gap-6 p-3 pt-10 w-full md:max-w-[70%] mx-auto 2xl:max-w-[60%]">
-  //     <div className="flex flex-col gap-3">
-  //       <h1 className=" text-xl md:text-2xl font-bold text-white">
-  //         سفارش ها
-  //       </h1>
-  //       <p className=" text-neutral-400 text-sm md:text-md">
-  //         سفارش های اخیر ویکسل
-  //       </p>
-  //     </div>
-  //     <OrdersList />
-  //   </div>
-  // </div>
+  
 };
 
 export default AdminPage;
