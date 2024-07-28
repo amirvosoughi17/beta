@@ -1,36 +1,23 @@
 "use client";
 import NavigationLink from "./NavigationLink";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import wixelLogo from "@/assets/navigate.svg";
 import { GiStarShuriken } from "react-icons/gi";
 import HamburgerMenu from "./menu/HumbergerMenu";
+import { Button } from "@/components/ui/button";
 import CreateOrderForm from "@/components/forms/CreateOrderForm";
-
-const menu = {
-  open: {
-    width: "350px",
-    height: "630px",
-    top: "-25px",
-    left: "-25px",
-    transition: { duration: 0.75, type: "tween", ease: [0.76, 0, 0.24, 1] },
-  },
-  closed: {
-    width: "45px",
-    height: "45px",
-    top: "0px",
-    left: "0px",
-    transition: {
-      duration: 0.75,
-      delay: 0.35,
-      type: "tween",
-      ease: [0.76, 0, 0.24, 1],
-    },
-  },
-};
+import { useAuthRedirect } from "@/utils/authUtils";
 
 const Navigation = () => {
-  const [isActive, setIsActive] = useState(false);
+const [isAdmin , setIsAdmin] = useState(false)
+  useEffect(() => {
+    const token = localStorage.getItem("auth_token"); 
+    if(token) {
+      setIsAdmin(true)
+    }
+  }, []);
   return (
     <div className=" flex relative items-center justify-center z-50">
       <div className="w-full h-[35px] lg:h-[40px]   bg-indigo-400 text-black absolute top-0 flex items-center gap-5 sm:gap-6 lg:gap-10 justify-center mx-auto ">
@@ -57,9 +44,15 @@ const Navigation = () => {
               <NavigationLink href="/#contactUs" label="ارتباط باما" />
             </nav>
             <div className="flex items-center gap-3">
-              <div className=" hidden lg:block">
-                <CreateOrderForm />
-              </div>
+              {isAdmin ? (
+                <Button> dashbaord</Button>
+              ) : (
+                <>
+                  <div className=" hidden lg:block">
+                    <CreateOrderForm />
+                  </div>
+                </>
+              )}
               <HamburgerMenu />
             </div>
           </div>

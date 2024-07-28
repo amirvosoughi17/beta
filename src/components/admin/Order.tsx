@@ -19,7 +19,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Badge } from "../ui/badge";
 
-const Order = ({ order, onDelete }: any) => {
+const Order = ({ order, onDelete, loading }: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);

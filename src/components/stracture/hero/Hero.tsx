@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import DotPattern from "@/components/magicui/dot-pattern";
 import { motion } from "framer-motion";
-import Parllax from "./Parllax";
 import { VelocityScroll } from "@/components/magicui/scroll-based-velocity";
 import LoadingScreen from "@/components/LoadScreen";
 import HeroText from "./HeroText";
@@ -56,8 +55,6 @@ const Hero = () => {
 
   return (
     <div className="">
-      {isLoading && <LoadingScreen setIsLoading={setIsLoading} />}
-      {!isLoading && (
         <div className=" flex flex-col  w-full mx-auto mb-[-60px] ">
           <div className="dark:bg-neutral-900/40 bg-white    relative   ">
             <DotPattern
@@ -69,10 +66,7 @@ const Hero = () => {
               <div className="w-full h-auto ">
                 <HeroText />
               </div>
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.7 }}
+              <div
               >
                 <div className="w-full mt-[-65px] xs:mt-[-40px] md:mt-[-25px]  relative h-auto">
                   <div className="w-[100px] sm:w-[150px] lg:w-[250px] xl:w-[450px] h-full bg-gradient-to-l from-neutral-900  to-transparent absolute right-0 z-40"></div>
@@ -83,11 +77,10 @@ const Hero = () => {
                     className="font-display text-center text-4xl font-bold tracking-[-0.02em] text-black drop-shadow-sm dark:text-white md:text-7xl md:leading-[5rem]"
                   />
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
-      )}
     </div>
   );
 };

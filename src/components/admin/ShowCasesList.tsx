@@ -31,6 +31,7 @@ import { PiFigmaLogo } from "react-icons/pi";
 import { Badge } from "../ui/badge";
 import { MdEdit } from "react-icons/md";
 import ShowCase from "./ShowCase";
+import { Skeleton } from "@/components/ui/skeleton";
 export const technologies = [
   {
     name: "typescript",
@@ -69,14 +70,20 @@ interface Showcase {
 
 const ShowCasesList: React.FC = () => {
   const [showcases, setShowcases] = useState<Showcase[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getShowcases = async () => {
       try {
+        setLoading(true);
         const response = await axiosInstance.get("/api/showcases");
         setShowcases(response.data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching showcases:", error);
+        setLoading(false);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -84,11 +91,64 @@ const ShowCasesList: React.FC = () => {
   }, []);
 
   return (
-    <TableBody>
-      {showcases.map((showcase: Showcase) => (
-        <ShowCase showcase={showcase} />
-      ))}
-    </TableBody>
+    <>
+      {loading ? (
+        <>
+          <TableRow>
+            <TableCell className="font-medium ">
+              <Skeleton className="h-8 w-[60px] lg:w-[80px]" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-8 w-[100px] lg:w-[120px]" />
+            </TableCell>
+            <TableCell className="hidden lg:table-cell">
+              <Skeleton className="h-8 w-[60px] lg:w-[80px]" />
+            </TableCell>
+            <TableCell className="">
+              <Skeleton className="h-8 w-[35px]" />
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="font-medium ">
+              <Skeleton className="h-8 w-[60px] lg:w-[80px]" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-8 w-[100px] lg:w-[120px]" />
+            </TableCell>
+            <TableCell className="hidden lg:table-cell">
+              <Skeleton className="h-8 w-[60px] lg:w-[80px]" />
+            </TableCell>
+
+            <TableCell className="">
+              <Skeleton className="h-8 w-[35px]" />
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className="font-medium ">
+              <Skeleton className="h-8 w-[60px] lg:w-[80px]" />
+            </TableCell>
+            <TableCell>
+              <Skeleton className="h-8 w-[100px] lg:w-[120px]" />
+            </TableCell>
+            <TableCell className="hidden lg:table-cell">
+              <Skeleton className="h-8 w-[60px] lg:w-[80px]" />
+            </TableCell>
+
+            <TableCell className="">
+              <Skeleton className="h-8 w-[35px]" />
+            </TableCell>
+          </TableRow>
+        </>
+      ) : (
+        <TableBody>
+          <>
+            {showcases.map((showcase: Showcase) => (
+              <ShowCase showcase={showcase} />
+            ))}
+          </>
+        </TableBody>
+      )}
+    </>
   );
 };
 

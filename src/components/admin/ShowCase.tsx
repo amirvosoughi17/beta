@@ -163,8 +163,8 @@ const ShowCase = ({ showcase }: { showcase: any }) => {
                       className=" bg-transparent flex items-center gap-3 justify-start w-full hover:bg-transparent text-white"
                       onClick={() => setIsDialogOpen(true)}
                     >
-                        <MdEdit  size={15}/>
-                        <span>تغییر</span>
+                      <MdEdit size={15} />
+                      <span>تغییر</span>
                     </Button>
                   </DropdownMenuItem>
                   <DropdownMenuItem className=" bg-red-500/50">
@@ -173,8 +173,8 @@ const ShowCase = ({ showcase }: { showcase: any }) => {
                       className=" bg-transparent w-full flex items-center gap-3 justify-start hover:bg-transparent text-white"
                       onClick={() => handleDelete()}
                     >
-                        <FaRegTrashAlt size={15} />
-                        <span>حذف</span>
+                      <FaRegTrashAlt size={15} />
+                      <span>حذف</span>
                     </Button>
                   </DropdownMenuItem>
                 </DropdownMenuContent>

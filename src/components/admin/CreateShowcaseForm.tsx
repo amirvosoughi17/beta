@@ -1,4 +1,4 @@
-"use clinet";
+"use client";
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { CreateShowcaseFormData } from "@/types/index";
@@ -21,6 +21,7 @@ import { BiLogoTypescript } from "react-icons/bi";
 import { RiJavascriptFill } from "react-icons/ri";
 import { PiFigmaLogo } from "react-icons/pi";
 import { Button } from "../ui/button";
+import { Textarea } from "../ui/textarea";
 
 export const technologies = [
   {
@@ -103,7 +104,7 @@ const CreateShowcaseForm: React.FC = () => {
 
       <div className=" flex flex-col gap-3">
         <label htmlFor="description">توضیحات</label>
-        <textarea
+        <Textarea
           rows={4}
           id="description"
           {...register("description", { required: "Description is required" })}
@@ -119,8 +120,8 @@ const CreateShowcaseForm: React.FC = () => {
               type="button"
               key={tech.name}
               onClick={() => handleTechSelect(tech.name)}
-              className={`w-[50px] relative h-[50px] flex items-center justify-center p-2  rounded-lg bg-neutral-950 ${
-                selectedTeches.includes(tech.name) ? "bg-neutral-900" : ""
+              className={`w-[50px] relative h-[50px] flex items-center justify-center p-2  rounded-lg bg-neutral-900 ${
+                selectedTeches.includes(tech.name) ? "bg-neutral-800" : ""
               }`}
             >
               {selectedTeches.includes(tech.name) && (

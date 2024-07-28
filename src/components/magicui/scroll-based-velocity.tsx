@@ -91,7 +91,7 @@ export function VelocityScroll({
 
     return (
       <div
-      dir="ltr"
+        dir="ltr"
         className="w-full overflow-hidden whitespace-nowrap"
         ref={containerRef}
       >

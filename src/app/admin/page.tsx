@@ -1,15 +1,22 @@
-"use client";
 import React from "react";
-
 import OrdersList from "@/components/admin/OrdersList";
 import CreateShowcaseForm from "@/components/admin/CreateShowcaseForm";
 import Image from "next/image";
+import { checkUserIsAdmin } from "@/utils/authUtils";
 import Link from "next/link";
 import {
-  File,
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import {
   Home,
   LineChart,
-  ListFilter,
   MoreHorizontal,
   Package,
   Package2,
@@ -84,62 +91,50 @@ const AdminPage: React.FC = () => {
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link
-                    href="#"
+                    href="/"
                     className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                   >
                     <Home className="h-5 w-5" />
-                    <span className="sr-only">Dashboard</span>
+                    <span className="sr-only">خانه</span>
                   </Link>
                 </TooltipTrigger>
-                <TooltipContent side="right">Dashboard</TooltipContent>
+                <TooltipContent side="right">خانه</TooltipContent>
               </Tooltip>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link
-                    href="#"
+                    href="/admin"
                     className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                   >
                     <ShoppingCart className="h-5 w-5" />
                     <span className="sr-only">Orders</span>
                   </Link>
                 </TooltipTrigger>
-                <TooltipContent side="right">Orders</TooltipContent>
+                <TooltipContent side="right">سفارشات</TooltipContent>
               </Tooltip>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link
-                    href="#"
+                    href="/admin"
                     className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                   >
                     <Package className="h-5 w-5" />
                     <span className="sr-only">Products</span>
                   </Link>
                 </TooltipTrigger>
-                <TooltipContent side="right">Products</TooltipContent>
+                <TooltipContent side="right">نمونه کارها</TooltipContent>
               </Tooltip>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Link
-                    href="#"
+                    href="/admin"
                     className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
                   >
                     <Users2 className="h-5 w-5" />
                     <span className="sr-only">Customers</span>
                   </Link>
                 </TooltipTrigger>
-                <TooltipContent side="right">Customers</TooltipContent>
-              </Tooltip>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Link
-                    href="#"
-                    className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8"
-                  >
-                    <LineChart className="h-5 w-5" />
-                    <span className="sr-only">Analytics</span>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent side="right">Analytics</TooltipContent>
+                <TooltipContent side="right">بلاگ ها</TooltipContent>
               </Tooltip>
             </nav>
             <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
@@ -252,7 +247,9 @@ const AdminPage: React.FC = () => {
                   <TabsList>
                     <TabsTrigger value="all">سفارشات</TabsTrigger>
                     <TabsTrigger value="active">نمونه کارها</TabsTrigger>
-                    <TabsTrigger value="draft">بلاگ ها</TabsTrigger>
+                    <TabsTrigger value="draft" disabled>
+                      بلاگ ها
+                    </TabsTrigger>
                   </TabsList>
                   <div className="ml-auto flex items-center gap-2">
                     <DropdownMenu>
@@ -267,11 +264,25 @@ const AdminPage: React.FC = () => {
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>افزدون</DropdownMenuLabel>
                         <DropdownMenuSeparator />
+                        <Drawer>
+                          <DrawerTrigger asChild>
+                            <Button className=" bg-transparent w-full h-8 flex items-start justify-start text-white hover:bg-neutral-700">
+                              نمونه کار
+                            </Button>
+                          </DrawerTrigger>
+                          <DrawerContent className="mx-auto w-full  ">
+                            <div className="mx-auto w-full max-w-sm md:max-w-md max-h-[550px] overflow-y-auto p-8">
+                              <CreateShowcaseForm />
+                            </div>
+                          </DrawerContent>
+                        </Drawer>
                         <DropdownMenuCheckboxItem>
-                          نمونه کار
-                        </DropdownMenuCheckboxItem>
-                        <DropdownMenuCheckboxItem>
-                          مقاله
+                          <Button
+                            disabled
+                            className="bg-transparent w-full h-8 flex items-start justify-start text-white hover:bg-neutral-700"
+                          >
+                            مقاله
+                          </Button>
                         </DropdownMenuCheckboxItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
@@ -305,12 +316,6 @@ const AdminPage: React.FC = () => {
                         <OrdersList />
                       </Table>
                     </CardContent>
-                    <CardFooter>
-                      <div className="text-xs text-muted-foreground">
-                        Showing <strong>1-10</strong> of <strong>32</strong>{" "}
-                        products
-                      </div>
-                    </CardFooter>
                   </Card>
                 </TabsContent>
                 <TabsContent dir="rtl" value="active">
@@ -336,12 +341,6 @@ const AdminPage: React.FC = () => {
                         <ShowCasesList />
                       </Table>
                     </CardContent>
-                    <CardFooter>
-                      <div className="text-xs text-muted-foreground">
-                        Showing <strong>1-5</strong> of <strong>10</strong>{" "}
-                        projects
-                      </div>
-                    </CardFooter>
                   </Card>
                 </TabsContent>
                 <TabsContent dir="rtl" value="draft">
@@ -415,12 +414,6 @@ const AdminPage: React.FC = () => {
                         </TableBody>
                       </Table>
                     </CardContent>
-                    <CardFooter>
-                      <div className="text-xs text-muted-foreground">
-                        Showing <strong>1-3</strong> of <strong>7</strong> blog
-                        posts
-                      </div>
-                    </CardFooter>
                   </Card>
                 </TabsContent>
               </Tabs>
@@ -430,7 +423,6 @@ const AdminPage: React.FC = () => {
       </TooltipProvider>
     </div>
   );
-  
 };
 
 export default AdminPage;
