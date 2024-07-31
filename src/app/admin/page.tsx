@@ -2,7 +2,6 @@ import React from "react";
 import OrdersList from "@/components/admin/OrdersList";
 import CreateShowcaseForm from "@/components/admin/CreateShowcaseForm";
 import Image from "next/image";
-import { checkUserIsAdmin } from "@/utils/authUtils";
 import Link from "next/link";
 import {
   Drawer,

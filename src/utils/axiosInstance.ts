@@ -1,13 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:4000/',
-  withCredentials: true, 
+  baseURL: "https://wixel-server.liara.run",
+  withCredentials: true,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
-
-
 
 export default axiosInstance;

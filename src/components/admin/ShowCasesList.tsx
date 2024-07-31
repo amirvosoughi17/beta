@@ -94,7 +94,7 @@ const ShowCasesList: React.FC = () => {
     <>
       {loading ? (
         <>
-          <TableRow>
+          <TableRow >
             <TableCell className="font-medium ">
               <Skeleton className="h-8 w-[60px] lg:w-[80px]" />
             </TableCell>
@@ -143,7 +143,7 @@ const ShowCasesList: React.FC = () => {
         <TableBody>
           <>
             {showcases.map((showcase: Showcase) => (
-              <ShowCase showcase={showcase} />
+              <ShowCase key={showcase.id} showcase={showcase} />
             ))}
           </>
         </TableBody>

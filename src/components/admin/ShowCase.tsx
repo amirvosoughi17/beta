@@ -134,7 +134,7 @@ const ShowCase = ({ showcase }: { showcase: any }) => {
   };
 
   return (
-    <TableRow key={showcase.id}>
+    <TableRow>
       <TableCell className="font-medium">{showcase.title}</TableCell>
       <TableCell className="">
         <div className="flex space-x-2 overflow-x-auto max-w-[110px]">
