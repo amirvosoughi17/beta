@@ -1,3 +1,7 @@
+"use clinet";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 import React from "react";
 import OrdersList from "@/components/admin/OrdersList";
 import CreateShowcaseForm from "@/components/admin/CreateShowcaseForm";
@@ -74,6 +78,14 @@ import {
 import ShowCasesList from "@/components/admin/ShowCasesList";
 
 const AdminPage: React.FC = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = Cookies.get("auth_token");
+    if (!token) {
+      router.push("/"); 
+    }
+  }, [router]);
   return (
     <div className="" dir="ltr">
       <TooltipProvider>
