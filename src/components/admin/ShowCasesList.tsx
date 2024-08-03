@@ -32,6 +32,7 @@ import { Badge } from "../ui/badge";
 import { MdEdit } from "react-icons/md";
 import ShowCase from "./ShowCase";
 import { Skeleton } from "@/components/ui/skeleton";
+
 export const technologies = [
   {
     name: "typescript",
@@ -61,38 +62,17 @@ export const technologies = [
     icon: <FaElementor className="text-pink-600" size={30} />,
   },
 ];
-interface Showcase {
-  id: number;
-  title: string;
-  teches: string[];
-  category: string;
+
+interface ShowCasesListProps {
+  showcases: any[];
+  showCasesLoading: boolean;
 }
 
-const ShowCasesList: React.FC = () => {
-  const [showcases, setShowcases] = useState<Showcase[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const getShowcases = async () => {
-      try {
-        setLoading(true);
-        const response = await axiosInstance.get("/api/showcases");
-        setShowcases(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching showcases:", error);
-        setLoading(false);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getShowcases();
-  }, []);
+const ShowCasesList: React.FC<ShowCasesListProps> = ({ showcases , showCasesLoading }) => {
 
   return (
     <>
-      {loading ? (
+      {showCasesLoading ? (
         <>
           <TableRow >
             <TableCell className="font-medium ">
@@ -142,7 +122,7 @@ const ShowCasesList: React.FC = () => {
       ) : (
         <TableBody>
           <>
-            {showcases.map((showcase: Showcase) => (
+            {showcases.map((showcase: any) => (
               <ShowCase key={showcase.id} showcase={showcase} />
             ))}
           </>
@@ -153,3 +133,4 @@ const ShowCasesList: React.FC = () => {
 };
 
 export default ShowCasesList;
+

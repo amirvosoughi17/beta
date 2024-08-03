@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { TableCell, TableRow } from "@/components/ui/table";
 import axiosInstance from "@/utils/axiosInstance";
@@ -83,6 +84,7 @@ const ShowCase = ({ showcase }: { showcase: any }) => {
   const [succecc, setSuccess] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [error, setError] = useState<any>("");
+  const router = useRouter();
   const { control, handleSubmit, setValue } = useForm({
     defaultValues: {
       title: showcase.title,

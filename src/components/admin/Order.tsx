@@ -19,7 +19,12 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Badge } from "../ui/badge";
 
-const Order = ({ order, onDelete, loading }: any) => {
+interface OrderProps {
+  order: any;
+  onDelete: (id: number) => void;
+}
+
+const Order: React.FC<OrderProps> = ({ order, onDelete }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
@@ -34,26 +39,23 @@ const Order = ({ order, onDelete, loading }: any) => {
       setIsSuccess(true);
     } catch (error: any) {
       setMessage(error.response.message);
-      console.log("falied to delete order !");
+      console.log("failed to delete order!");
       setIsSuccess(false);
       setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
   };
+
   return (
     <TableRow>
-      <TableCell className="font-medium ">{order.name}</TableCell>
+      <TableCell className="font-medium">{order.name}</TableCell>
       <TableCell>{order.phoneNumber}</TableCell>
+      <TableCell className="hidden lg:table-cell">{order.companyName}</TableCell>
       <TableCell className="hidden lg:table-cell">
-        {order.companyName}
-      </TableCell>
-      <TableCell className="hidden lg:table-cell">
-        {" "}
         <Badge variant="outline">{order.typeOfWeb}</Badge>
       </TableCell>
-
-      <TableCell className=" ">
+      <TableCell>
         <Dialog>
           <DialogTrigger asChild>
             <Button size="icon" variant="outline">
@@ -63,55 +65,37 @@ const Order = ({ order, onDelete, loading }: any) => {
           <DialogContent className="max-w-[365px] sm:max-w-[430px] max-h-[550px] overflow-y-auto">
             <div className="flex flex-col gap-5 mt-8">
               <div className="flex flex-col gap-3">
-                <label
-                  htmlFor=""
-                  className=" text-neutral-300 text-sm lg:text-md"
-                >
+                <label className="text-neutral-300 text-sm lg:text-md">
                   نام و نام خانوادگی
                 </label>
                 <Input value={order.name} disabled />
               </div>
               <div className="flex flex-col gap-3">
-                <label
-                  htmlFor=""
-                  className=" text-neutral-300 text-sm lg:text-md"
-                >
+                <label className="text-neutral-300 text-sm lg:text-md">
                   شماره تماس
                 </label>
                 <Input value={order.phoneNumber} disabled />
               </div>
               <div className="flex flex-col gap-3">
-                <label
-                  htmlFor=""
-                  className=" text-neutral-300 text-sm lg:text-md"
-                >
+                <label className="text-neutral-300 text-sm lg:text-md">
                   نام شرکت
                 </label>
                 <Input value={order.companyName} disabled />
               </div>
               <div className="flex flex-col gap-3">
-                <label
-                  htmlFor=""
-                  className=" text-neutral-300 text-sm lg:text-md"
-                >
+                <label className="text-neutral-300 text-sm lg:text-md">
                   نوع وبسایت
                 </label>
                 <Input value={order.typeOfWeb} disabled />
               </div>
               <div className="flex flex-col gap-3">
-                <label
-                  htmlFor=""
-                  className=" text-neutral-300 text-sm lg:text-md"
-                >
+                <label className="text-neutral-300 text-sm lg:text-md">
                   تعداد کاربر
                 </label>
                 <Input value={order.monthlyUsersCount} disabled />
               </div>
               <div className="flex flex-col gap-3">
-                <label
-                  htmlFor=""
-                  className=" text-neutral-300 text-sm lg:text-md"
-                >
+                <label className="text-neutral-300 text-sm lg:text-md">
                   وبسایت مورد علاقه
                 </label>
                 <Input value={order.likedWebsiteUrls} disabled />
@@ -121,7 +105,7 @@ const Order = ({ order, onDelete, loading }: any) => {
               <Button
                 onClick={handleOrderDelete}
                 disabled={isLoading}
-                className={` w-full hover:bg-red-500/70 bg-red-500 text-white ${
+                className={`w-full hover:bg-red-500/70 bg-red-500 text-white ${
                   isSuccess && "bg-rose-600 text-white"
                 }`}
                 type="submit"
@@ -136,8 +120,8 @@ const Order = ({ order, onDelete, loading }: any) => {
                   <span>{!isSuccess && "حذف سفارش"}</span>
                 )}
                 {isSuccess && (
-                  <div className="flex w-full  items-center justify-between">
-                    <div className="w-[25px] h-[25px] rounded-full flex items-center justify-center  text-white">
+                  <div className="flex w-full items-center justify-between">
+                    <div className="w-[25px] h-[25px] rounded-full flex items-center justify-center text-white">
                       <MdOutlineDone size={25} />
                     </div>
                     <span className="text-[13px] lg:text-[14px]">
@@ -148,7 +132,7 @@ const Order = ({ order, onDelete, loading }: any) => {
                 )}
               </Button>
               {message && (
-                <div className=" flex items-center gap-3 w-full rounded-lg bg-red-500 py-3 px-4 text-sm lg:text-md">
+                <div className="flex items-center gap-3 w-full rounded-lg bg-red-500 py-3 px-4 text-sm lg:text-md">
                   <FiAlertTriangle size={17} />
                   <span>{message}</span>
                 </div>
