@@ -8,7 +8,6 @@ import { GiStarShuriken } from "react-icons/gi";
 import HamburgerMenu from "./menu/HumbergerMenu";
 import { Button } from "@/components/ui/button";
 import CreateOrderForm from "@/components/forms/CreateOrderForm";
-import { useAuthRedirect } from "@/utils/authUtils";
 
 const Navigation = () => {
 const [isAdmin , setIsAdmin] = useState(false)
