@@ -68,7 +68,7 @@ const Hero = () => {
               </div>
               <div
               >
-                <div className="w-full mt-[-65px] xs:mt-[-40px] md:mt-[-25px]  relative h-auto">
+                <div className="w-full mt-[-65px] xs:mt-[-40px] md:mt-[-25px] lg:mt-[-50px]  relative h-auto">
                   <div className="w-[100px] sm:w-[150px] lg:w-[250px] xl:w-[450px] h-full bg-gradient-to-l from-neutral-900  to-transparent absolute right-0 z-40"></div>
                   <div className="w-[100px] sm:w-[150px] lg:w-[250px] xl:w-[450px] h-full bg-gradient-to-l to-neutral-900  from-transparent absolute left-0 z-40"></div>
                   <VelocityScroll

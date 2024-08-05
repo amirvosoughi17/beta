@@ -12,6 +12,8 @@ import { ImLinkedin } from "react-icons/im";
 import { CiMenuKebab } from "react-icons/ci";
 import { CgClose } from "react-icons/cg";
 import { TbMenu } from "react-icons/tb";
+import { HiMenuAlt2 } from "react-icons/hi";
+import { RiFunctionLine } from "react-icons/ri";
 
 const links = [
   {
@@ -20,9 +22,9 @@ const links = [
     icon: <FaHome />,
   },
   {
-    href: "/profile",
-    label: "حساب کاربری",
-    icon: <FaUser />,
+    href: "/#services",
+    label: "خدمات",
+    icon: <RiFunctionLine />,
   },
   {
     href: "/#showcases",
@@ -35,7 +37,7 @@ const links = [
     icon: <GrArticle />,
   },
   {
-    href: "/#hero",
+    href: "/#cantact",
     label: "تماس باما",
     icon: <FaPhone />,
   },
@@ -54,7 +56,11 @@ const HamburgerMenu: React.FC = () => {
         className="cursor-pointer z-50 relative top-0 mt-1 "
         onClick={toggleMenu}
       >
-        {isOpen ? <CgClose size={30} /> : <TbMenu size={30} />}
+        {isOpen ? (
+          <CgClose size={30} />
+        ) : (
+          <TbMenu size={33} className=" text-neutral-400" />
+        )}
       </div>
       <div className="relative top-0 left-0 right-0 bottom-0 z-100">
         <motion.div
@@ -70,22 +76,26 @@ const HamburgerMenu: React.FC = () => {
                 const isActive = pathname === link.href;
 
                 return (
-                  <Link href={link.href} key={`b_${i}`} className="text-4xl">
-                    <motion.div
-                      custom={i}
-                      initial="hidden"
-                      animate={isOpen ? "visible" : "hidden"}
-                      variants={linkVariants}
-                      className={`flex items-center w-full justify-between pb-4 gap-4 duration-200 hover:border-b-[0.7px] border-neutral-700 ${
-                        isActive ? "" : ""
-                      }`}
-                    >
-                      <span className=" text-neutral-300">{link.label}</span>
-                      <span className=" text-2xl text-neutral-400">
-                        {link.icon}
-                      </span>
-                    </motion.div>
-                  </Link>
+                  <button onClick={toggleMenu} key={`b_${i}`}>
+                    <Link href={link.href}  className="text-4xl">
+                      <motion.div
+                        custom={i}
+                        initial="hidden"
+                        animate={isOpen ? "visible" : "hidden"}
+                        variants={linkVariants}
+                        className={`flex items-center w-full justify-between pb-4 gap-4 duration-200 hover:border-b-[0.7px] border-neutral-700 ${
+                          isActive ? "" : ""
+                        }`}
+                      >
+                        <span className=" text-neutral-300 text-3xl">
+                          {link.label}
+                        </span>
+                        <span className=" text-2xl text-neutral-400">
+                          {link.icon}
+                        </span>
+                      </motion.div>
+                    </Link>
+                  </button>
                 );
               })}
             </div>
@@ -99,15 +109,27 @@ const HamburgerMenu: React.FC = () => {
                 <span className="text-md text-neutral-400 font-light"></span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-[45px] h-[45px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-700/60 p-1">
+                <Link
+                  href="https://www.instagram.com/wixel_org?igsh=MWc5eWVqaWluc2oxbQ=="
+                  target="_blank"
+                  className="w-[45px] h-[45px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-600/80 p-1"
+                >
                   <FaInstagram size={23} />
-                </div>
-                <div className="w-[45px] h-[45px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-700/60 p-1">
+                </Link>
+                <Link
+                  href="https://t.me/vosooughi"
+                  target="_blank"
+                  className="w-[45px] h-[45px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-600/80 p-1"
+                >
                   <FaTelegram size={23} />
-                </div>
-                <div className="w-[45px] h-[45px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-700/60 p-1">
-                  <ImLinkedin  size={23}/>
-                </div>
+                </Link>
+                <Link
+                  href="https://www.linkedin.com/company/wixelorg"
+                  target="_blank"
+                  className="w-[45px] h-[45px] flex items-center justify-center rounded-lg shadow-md bg-transparent border-[0.6px] border-neutral-600/80 p-1"
+                >
+                  <ImLinkedin size={23} />
+                </Link>
               </div>
             </motion.div>
           </div>

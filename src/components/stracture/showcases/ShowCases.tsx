@@ -12,8 +12,8 @@ const showcases = [
     teches: ["react", "nodejs", "nextjs", "mongodb", "figma"],
     image: "/plan-showcase.jpg",
     category: "شرکتی",
-    instagramHref: "instagram.com",
-    webHref: "www.planagency.ir",
+    instagramHref: "https://www.instagram.com/p/C9vWZ1au8L6/?igsh=MWE3ODVwNndydWp2cg==",
+    webHref: "/",
   },
   {
     title: "خدمات ویکیپدیا با ویکیتوری",
@@ -21,8 +21,8 @@ const showcases = [
     teches: ["react", "nodejs", "nextjs", "figma"],
     image: "/wikitori-showcase.jpg",
     category: "شرکتی",
-    instagramHref: "instagram.com",
-    webHref: "www.planagency.ir",
+    instagramHref: "https://www.instagram.com/p/C95D-GtovXD/?igsh=azdiYWM0eml2ZHJr",
+    webHref: "/",
   },
   {
     title: "اژانس دیجیتال مارکتینگ نکست",
@@ -31,8 +31,8 @@ const showcases = [
     teches: ["wordpress", "elementor", "figma"],
     image: "/next-showcase.jpg",
     category: "شرکتی",
-    instagramHref: "instagram.com",
-    webHref: "www.planagency.ir",
+    instagramHref: "https://www.instagram.com/p/C91ptwCoqQ3/?igsh=MXVvYnppcW5nbXB5OQ==",
+    webHref: "/",
   },
 ];
 
@@ -45,11 +45,11 @@ const ShowCases = () => {
   );
   return (
     <section className="lg:w-[93%] max-w-[1440px] w-full mx-auto min-h-auto mb-[210px] flex flex-col py-[130px] gap-10 relative">
-      <div className="flex flex-col gap-6 md:gap-[30px]">
+      <div className="flex flex-col  gap-6 md:gap-[30px]">
         <div className="flex flex-col lg:flex-row  gap-5 lg:justify-between w-full">
           <ShowCasesTitle />
-          <div className="flex justify-start items-end  gap-2 sm:gap-4 mb-8 px-2 md:px-6">
-            {["همه", "فروشگاهی", "شرکتی", "آموزشی", "شخصی"].map((category) => (
+          <div className="flex justify-start items-end  gap-2 sm:gap-4 mb-8 px-2 md:px-6 z-20">
+            {["همه", "شرکتی", "فروشگاهی", "آموزشی", "شخصی"].map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}

@@ -148,7 +148,7 @@ const features = [
     cta: "Learn more",
     className: "col-span-3 lg:col-span-2",
     background: (
-      <div className=" absolute top-10 w-[530px] left-[15%]">
+      <div className=" absolute top-7 md:top-10 w-[530px] left-[10%] md:left-[15%]">
         <FileTreeDemo />
       </div>
     ),
@@ -188,7 +188,7 @@ export function Grid() {
   return (
     <section
       dir="ltr"
-      className="lg:px-10 px-4 flex flex-col gap-[70px] mb-[140px] mt-[100px] "
+      className="lg:px-10 px-4 flex flex-col gap-[70px] mb-[140px] mt-[100px] max-w-[99%] sm:max-w-full "
     >
       <GridTitle />
       <BentoGrid>

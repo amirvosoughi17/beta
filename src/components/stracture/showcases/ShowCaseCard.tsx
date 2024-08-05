@@ -34,7 +34,7 @@ const techIcons: { [key: string]: JSX.Element } = {
   express: <SiExpress className="text-white" />,
   figma: <FaFigma className=" text-white" />,
   wordpress: <FaWordpressSimple className="text-blue-500" />,
-  elementor : <FaElementor  className=" text-pink-600"/>
+  elementor: <FaElementor className=" text-pink-600" />,
 };
 
 const ShowCaseCard: React.FC<ShowCaseCardProps> = ({
@@ -46,17 +46,19 @@ const ShowCaseCard: React.FC<ShowCaseCardProps> = ({
   WebsiteHref,
 }) => {
   return (
-    <div className="w-[95%] md:w-[380px]  lg:w-full relative mt-[0px] sm:mt-[40px] lg:mt-[40px] h-[450px] md:h-[500px] lg:h-[600px]   ">
+    <div className="w-[95%] md:w-[380px] mx-auto  lg:w-full relative mt-[0px] sm:mt-[40px] lg:mt-[40px] h-[450px] md:h-[500px] lg:h-[600px]   ">
       <CardContainer className="  relative flex items-center justify-center">
         <CardBody className="bg-gray-50 relative group/card  flex flex-col gap-2 dark:hover:shadow-2xl dark:hover:shadow-neutral-600/[0.2] dark:bg-neutral-800/20 dark:border-white/[0.2] border-black/[0.1] w-auto h-auto md:h-[460px] lg:max-w-[90%] xl:h-auto lg:h-auto rounded-lg px-4 py-3 pb-5  border-[1px] border-neutral-900  ">
           <CardItem translateZ="50" className="w-full mt-2 ">
-            <Image
-              src={image}
-              height="1000"
-              width="1000"
-              className="h- w-full object-cover rounded-xl group-hover/card:shadow-xl"
-              alt="thumbnail"
-            />
+            <div className=" ">
+              <Image
+                src={image}
+                height="1000"
+                width="1000"
+                className=" w-full min-w-full min-h-full object-cover rounded-xl group-hover/card:shadow-xl"
+                alt="thumbnail"
+              />
+            </div>
           </CardItem>
           <CardItem
             translateZ="50"
@@ -89,12 +91,14 @@ const ShowCaseCard: React.FC<ShowCaseCardProps> = ({
               </div>
               <div className="flex items-center gap-1.5">
                 <Link
+                target="_blank"
                   href={InstagramHref}
                   className=" bg-transparent p-1.5 sm:p-2 rounded-lg border-[1px] border-neutral-700 hover:bg-neutral-700 duration-300 "
                 >
                   <FaInstagram size={23} />
                 </Link>
                 <Link
+                      target="_blank"
                   href={WebsiteHref}
                   className=" bg-transparent p-1.5 sm:p-2 rounded-lg border-[1px] border-neutral-700 hover:bg-neutral-700 duration-300"
                 >
