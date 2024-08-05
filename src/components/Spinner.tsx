@@ -1,8 +1,9 @@
 import { PiSpinnerBold } from "react-icons/pi";
+import { ImSpinner8 } from "react-icons/im";
 
 const Spinner : React.FC = () => {
   return (
-    <PiSpinnerBold size={24}  className="animate-spin"/>
+    <ImSpinner8 size={24}  className="animate-spin"/>
   )
 }
 

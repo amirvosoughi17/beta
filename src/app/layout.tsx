@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/provider/theme-provider";
+import { UserProvider } from "@/context/UserContext";
 
 export const metadata: Metadata = {
   title: "ویکسل",
@@ -29,13 +30,15 @@ export default function RootLayout({
   return (
     <html lang="IR-fa" dir="rtl">
       <body className=" bg-neutral-900 text-white">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <UserProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </UserProvider>
       </body>
     </html>
   );

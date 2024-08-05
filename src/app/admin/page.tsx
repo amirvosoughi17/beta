@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/utils/axiosInstance";
+import { useUser } from "@/context/UserContext";
 import React from "react";
 import OrdersList from "@/components/admin/OrdersList";
 import CreateShowcaseForm from "@/components/admin/CreateShowcaseForm";
@@ -79,6 +80,7 @@ import ShowCasesList from "@/components/admin/ShowCasesList";
 import Spinner from "@/components/Spinner";
 
 const AdminPage: React.FC = () => {
+  const { user } = useUser();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [showCasesLoading, setShowCasesLoading] = useState(false);
@@ -86,61 +88,48 @@ const AdminPage: React.FC = () => {
   const [ordersLoading, setOrdersLoading] = useState(false);
   const [orders, setOrders] = useState<any>();
   const [isAdmin, setIsAdmin] = useState(false);
+
   useEffect(() => {
-    const checkAdmin = async () => {
-      try {
-        const response = await axiosInstance.get("/api/admin/check");
-
-        if (response.status === 200) {
+    const fetchData = async () => {
+      if (user?.role !== "ADMIN") {
+        return <div className=""></div>;
+        setIsAdmin(false);
+      } else {
+        if (user?.role === "ADMIN") {
           setIsAdmin(true);
-          fetchShowcases();
-          fetchOrders();
-        } else {
-          throw new Error("Not authorized");
         }
-      } catch (error) {
-        router.push("/");
-      } finally {
-        setLoading(false);
       }
+      setIsAdmin(true);
+      await fetchShowcases();
+      await fetchOrders();
+
+      setLoading(false);
     };
-
-    checkAdmin();
-  }, [router]);
-
+    fetchData();
+  }, [user, router]);
   const fetchShowcases = async () => {
     try {
       setShowCasesLoading(true);
       const response = await axiosInstance.get("/api/showcases");
       setShowcases(response.data);
-      setShowCasesLoading(false);
     } catch (error) {
       console.error("Error fetching showcases:", error);
-      setShowCasesLoading(false);
     } finally {
       setShowCasesLoading(false);
     }
   };
+
   const fetchOrders = async () => {
     try {
       setOrdersLoading(true);
       const response = await axiosInstance.get("/api/orders");
       setOrders(response.data);
-      setOrdersLoading(false);
     } catch (error) {
-      console.error("Error fetching orders");
-      setOrdersLoading(false);
+      console.error("Error fetching orders:", error);
     } finally {
       setOrdersLoading(false);
     }
   };
-  if (loading) {
-    return (
-      <div className=" flex items-center justify-center h-screen">
-        <Spinner />
-      </div>
-    );
-  }
 
   return (
     <>
