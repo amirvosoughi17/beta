@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import axiosInstance from "@/utils/axiosInstance";
 import { MdOutlineShoppingBag } from "react-icons/md";
 import { Button } from "@/components/ui/button";
@@ -19,23 +20,60 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { OrderFormData } from "@/types";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Spinner from "../Spinner";
+import * as z from "zod";
+
+// Iranian phone number validation regex
+const iranianPhoneNumberRegex = /^(\+98|0)?9\d{9}$/;
+
+// Zod schema for form validation
+const schema = z.object({
+  name: z.string().min(1, { message: "نام و نام خانوادگی الزامی است" }),
+  phoneNumber: z
+    .string()
+    .regex(iranianPhoneNumberRegex, { message: "شماره تماس معتبر نیست" }),
+  companyName: z.string().min(1, { message: "نام شرکت الزامی است" }),
+  description: z.string().min(1, { message: "توضیحات الزامی است" }),
+  typeOfWeb: z.enum([
+    "ecommerce",
+    "learning",
+    "company",
+    "personal",
+    "startup",
+  ]),
+  monthlyUsersCount: z.enum([
+    "TEN",
+    "FIFTY",
+    "FIVE_HUNDRED",
+    "ONE_THOUSAND",
+  ]),
+  likedWebsiteUrls: z
+    .string()
+    .min(1, { message: "وب سایت نمونه الزامی است" })
+    .transform((str) =>
+      str.split(",").map((url) => url.trim())
+    ), // Transform the string into an array of URLs
+});
 
 const CreateOrderForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
-  const { control, handleSubmit, register } = useForm<OrderFormData>();
+
+  const {
+    control,
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<OrderFormData>({
+    resolver: zodResolver(schema),
+  });
+
   const onSubmit = async (data: OrderFormData) => {
     try {
       setIsSuccess(false);
-      if (typeof data.likedWebsiteUrls === "string") {
-        data.likedWebsiteUrls = data.likedWebsiteUrls
-          .split(",")
-          .map((url: any) => url.trim());
-      }
       setIsLoading(true);
       const response = await axiosInstance.post("/api/orders", data);
       setIsLoading(false);
@@ -49,6 +87,7 @@ const CreateOrderForm = () => {
       setIsLoading(false);
     }
   };
+
   return (
     <div className="flex flex-col">
       <Drawer>
@@ -58,19 +97,19 @@ const CreateOrderForm = () => {
           </div>
         </DrawerTrigger>
         <DrawerContent>
-          <div className="mx-auto w-full max-h-[600px] overflow-y-auto  ">
+          <div className="mx-auto w-full max-h-[600px] overflow-y-auto">
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex max-w-[370px] md:max-w-[450px] lg:max-w-[500px] mx-auto  flex-col gap-4  w-full h-full relative my-5 px-4"
+              className="flex max-w-[370px] md:max-w-[450px] lg:max-w-[500px] mx-auto flex-col gap-4 w-full h-full relative my-5 px-4"
             >
-              <div className="flex flex-col gap-2 mb-4 ">
-                <h1 className="  flex items-center gap-2.5">
+              <div className="flex flex-col gap-2 mb-4">
+                <h1 className="flex items-center gap-2.5">
                   <MdOutlineShoppingBag size={25} />
                   <h1 className="lg:text-2xl text-xl font-extrabold text-neutral-200">
                     ثبت سفارش
                   </h1>
                 </h1>
-                <span className=" text-sm lg:text-lg text-neutral-400">
+                <span className="text-sm lg:text-lg text-neutral-400">
                   اطلاعات زیر را برای درک بهتر ما از کسب و کار شما پرکنید
                 </span>
               </div>
@@ -84,8 +123,13 @@ const CreateOrderForm = () => {
                     autoFocus={false}
                     placeholder="نام و نام خانوادگی"
                     className="w-full py-6"
-                    {...register("name", { required: true })}
+                    {...register("name")}
                   />
+                  {errors.name && (
+                    <span className="text-red-500 text-sm">
+                      {errors.name.message}
+                    </span>
+                  )}
                 </div>
                 <div className="flex w-1/2 flex-col gap-3">
                   <label
@@ -94,10 +138,14 @@ const CreateOrderForm = () => {
                   ></label>
                   <Input
                     className="w-full py-6"
-                    {...register("phoneNumber")}
                     placeholder="شماره تماس"
-                    {...register("phoneNumber", { required: true })}
+                    {...register("phoneNumber")}
                   />
+                  {errors.phoneNumber && (
+                    <span className="text-red-500 text-sm">
+                      {errors.phoneNumber.message}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="flex flex-col gap-3">
@@ -108,8 +156,13 @@ const CreateOrderForm = () => {
                 <Input
                   placeholder="نام شرکت"
                   className="w-full py-6"
-                  {...register("companyName", { required: true })}
+                  {...register("companyName")}
                 />
+                {errors.companyName && (
+                  <span className="text-red-500 text-sm">
+                    {errors.companyName.message}
+                  </span>
+                )}
               </div>
               <div className="flex flex-col gap-3">
                 <label
@@ -120,8 +173,13 @@ const CreateOrderForm = () => {
                   rows={4}
                   placeholder="توضیحات را وارد کنید"
                   className="w-full py-3"
-                  {...register("description", { required: true })}
+                  {...register("description")}
                 />
+                {errors.description && (
+                  <span className="text-red-500 text-sm">
+                    {errors.description.message}
+                  </span>
+                )}
               </div>
               <div className="flex flex-col gap-3">
                 <label
@@ -162,8 +220,12 @@ const CreateOrderForm = () => {
                     </div>
                   )}
                 />
+                {errors.typeOfWeb && (
+                  <span className="text-red-500 text-sm">
+                    {errors.typeOfWeb.message}
+                  </span>
+                )}
               </div>
-
               <div className="flex flex-col gap-3">
                 <label
                   className="text-neutral-300 text-[15px] lg:text-md"
@@ -182,7 +244,7 @@ const CreateOrderForm = () => {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectGroup>
-                          <SelectItem value="TEN">کمتر از ۱۰ </SelectItem>
+                          <SelectItem value="TEN">کمتر از ۱۰</SelectItem>
                           <SelectItem value="FIFTY">بیشتر از ۵۰</SelectItem>
                           <SelectItem value="FIVE_HUNDRED">
                             بیشتر از ۱۰۰
@@ -195,8 +257,13 @@ const CreateOrderForm = () => {
                     </Select>
                   )}
                 />
+                {errors.monthlyUsersCount && (
+                  <span className="text-red-500 text-sm">
+                    {errors.monthlyUsersCount.message}
+                  </span>
+                )}
               </div>
-              <div className="flex flex-col gap-3 ">
+              <div className="flex flex-col gap-3">
                 <label
                   className="text-neutral-300 text-[15px] lg:text-md"
                   htmlFor="likedWebsiteUrls"
@@ -208,12 +275,17 @@ const CreateOrderForm = () => {
                   id="likedWebsiteUrls"
                   placeholder="www.example.com"
                   className="w-full py-6"
-                  {...register("likedWebsiteUrls", { required: true })}
+                  {...register("likedWebsiteUrls")}
                 />
+                {errors.likedWebsiteUrls && (
+                  <span className="text-red-500 text-sm">
+                    {errors.likedWebsiteUrls.message}
+                  </span>
+                )}
               </div>
               <ConfettiButton
                 disabled={isLoading}
-                className={` w-full ${isSuccess && ""}`}
+                className={`w-full ${isSuccess && ""}`}
                 type="submit"
                 isSuccess={isSuccess}
               >
@@ -227,8 +299,8 @@ const CreateOrderForm = () => {
                   <span>{!isSuccess && "ثبت سفارش"}</span>
                 )}
                 {isSuccess && (
-                  <div className="flex w-full  items-center justify-between">
-                    <div className="w-[25px] h-[25px] rounded-full flex items-center justify-center  text-green-600">
+                  <div className="flex w-full items-center justify-between">
+                    <div className="w-[25px] h-[25px] rounded-full flex items-center justify-center text-green-600">
                       <MdOutlineDone size={25} />
                     </div>
                     <span className="text-[13px] lg:text-[14px] text-green-600">
@@ -239,12 +311,11 @@ const CreateOrderForm = () => {
                 )}
               </ConfettiButton>
               {message && (
-                <div className=" flex items-center gap-3 w-full rounded-lg bg-red-500 py-3 px-4 text-sm lg:text-md">
+                <div className="flex items-center gap-3 w-full rounded-lg bg-red-500 py-3 px-4 text-sm lg:text-md">
                   <FiAlertTriangle size={17} />
                   <span>{message}</span>
                 </div>
               )}
-
               <div className="flex flex-col gap-2">
                 <p className="text-neutral-400 text-sm lg:text-md leading-6">
                   پس از ثبت سفارش تیم ویکسل در ۴۸ ساعت اینده با شما برای هماهنگی
