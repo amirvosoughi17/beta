@@ -25,10 +25,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Spinner from "../Spinner";
 import * as z from "zod";
 
-// Iranian phone number validation regex
 const iranianPhoneNumberRegex = /^(\+98|0)?9\d{9}$/;
 
-// Zod schema for form validation
 const schema = z.object({
   name: z.string().min(1, { message: "نام و نام خانوادگی الزامی است" }),
   phoneNumber: z
@@ -54,7 +52,7 @@ const schema = z.object({
     .min(1, { message: "وب سایت نمونه الزامی است" })
     .transform((str) =>
       str.split(",").map((url) => url.trim())
-    ), // Transform the string into an array of URLs
+    ), 
 });
 
 const CreateOrderForm = () => {
@@ -80,7 +78,7 @@ const CreateOrderForm = () => {
       setIsSuccess(true);
     } catch (error: any) {
       console.error("Error:", error);
-      setMessage(error.response?.data?.message || "An error occurred");
+      setMessage("مشکلی در ثبت سفارش پیش اماده است !! ");
       setIsLoading(false);
       setIsSuccess(false);
     } finally {
@@ -310,12 +308,6 @@ const CreateOrderForm = () => {
                   </div>
                 )}
               </ConfettiButton>
-              {message && (
-                <div className="flex items-center gap-3 w-full rounded-lg bg-red-500 py-3 px-4 text-sm lg:text-md">
-                  <FiAlertTriangle size={17} />
-                  <span>{message}</span>
-                </div>
-              )}
               <div className="flex flex-col gap-2">
                 <p className="text-neutral-400 text-sm lg:text-md leading-6">
                   پس از ثبت سفارش تیم ویکسل در ۴۸ ساعت اینده با شما برای هماهنگی

@@ -9,15 +9,13 @@ import HamburgerMenu from "./menu/HumbergerMenu";
 import { Button } from "@/components/ui/button";
 import CreateOrderForm from "@/components/forms/CreateOrderForm";
 import { HiMenuAlt2 } from "react-icons/hi";
+import { toast, Toaster } from "sonner";
+import { useUser } from "@/context/UserContext";
+import Link from "next/link";
+import { IoMdNotificationsOutline } from "react-icons/io";
 
 const Navigation = () => {
-const [isAdmin , setIsAdmin] = useState(false)
-  useEffect(() => {
-    const token = localStorage.getItem("auth_token"); 
-    if(token) {
-      setIsAdmin(true)
-    }
-  }, []);
+  const { user, loading } = useUser();
   return (
     <div className=" flex relative items-center justify-center z-50">
       <div className="w-full h-[35px] lg:h-[40px]   bg-indigo-400 text-black absolute top-0 flex items-center gap-5 sm:gap-6 lg:gap-10 justify-center mx-auto ">
@@ -37,6 +35,14 @@ const [isAdmin , setIsAdmin] = useState(false)
                 className="w-[95px] lg:w-[105px] mt-2 mr-[-4px]"
               />
             </div>
+            {/* <div className="z-50">
+              <Button
+                onClick={() => toast.success("شما با موفقیت ثبت نام شدید !")}
+              >
+                gg
+              </Button>
+              <Toaster position="bottom-right" expand={true} richColors />
+            </div> */}
             <nav className="items-center gap-8 h-full juc hidden lg:flex">
               <NavigationLink href="/" label="خانه" />
               <NavigationLink href="/#services" label="خدمات" />
@@ -44,15 +50,28 @@ const [isAdmin , setIsAdmin] = useState(false)
               <NavigationLink href="/#contactUs" label="ارتباط باما" />
             </nav>
             <div className="flex items-center gap-3">
-              {isAdmin ? (
-                <Button> dashbaord</Button>
+              {user ? (
+                <>
+                  <Button> dashbaord</Button>
+                </>
               ) : (
                 <>
-                  <div className=" hidden lg:block">
-                    <CreateOrderForm />
-                  </div>
+                  <Link href="/auth/login">
+                    <Button variant="outline"> Login</Button>
+                  </Link>
                 </>
               )}
+              <div className=" hidden lg:block">
+                <CreateOrderForm />
+              </div>
+              <Button size='icon'>
+                <IoMdNotificationsOutline />
+              {user && user.messages && user.messages.length > 0 && (
+                "1"
+                )}
+                </Button>
+             
+
               <HamburgerMenu />
             </div>
           </div>

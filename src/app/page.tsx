@@ -1,3 +1,4 @@
+"use client"
 import dynamic from "next/dynamic";
 import AppLayout from "@/components/provider/AppLayout";
 import Blogs from "@/components/stracture/Blogs/Blogs";
@@ -6,10 +7,18 @@ import { Grid } from "@/components/stracture/ServicesGrid/Grid";
 import Hero from "@/components/stracture/hero/Hero";
 import ShowCases from "@/components/stracture/showcases/ShowCases";
 import CallWixel from "@/components/CallWixel";
+import { useUser } from "@/context/UserContext";
+
 
 export default function Home() {
+  const { user, loading } = useUser();
   return (
     <div className=" ">
+      {user ? (
+        <p>Welcome back, {user.email}!</p>
+      ) : (
+        <p>Please log in.</p>
+      )}
       <AppLayout>
         <div className="w-full  overflow-hidden">
           <div id="contact">

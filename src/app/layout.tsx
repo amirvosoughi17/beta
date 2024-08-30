@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/provider/theme-provider";
 import { UserProvider } from "@/context/UserContext";
 
 export const metadata: Metadata = {
-  title: "ویکسل",
+  title: "wixel",
   description:
     "طراحی پیکسل به پیکسل وب سایت شما با ویکسل,  طراحی وبسایت اختصاصی و اماده با ظاهری چشم نواز و با بروزترین متد های روز برای کسب و کار شما با تیم ویکسل",
   openGraph: {
