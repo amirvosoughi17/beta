@@ -4,15 +4,14 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axiosInstance from "@/utils/axiosInstance";
+import { useRouter } from "next/navigation";
 
 const registerSchema = yup.object({
   email: yup.string().email("Invalid email address").required("Email is required"),
-  password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
 });
 
 type RegisterFormInputs = {
   email: string;
-  password: string;
 };
 
 const RegisterForm: React.FC = () => {
@@ -24,12 +23,15 @@ const RegisterForm: React.FC = () => {
     resolver: yupResolver(registerSchema),
   });
 
+  const router = useRouter();
+
   const onSubmit = async (data: RegisterFormInputs) => {
-    console.log("Form data:", data); 
+    console.log("Form data:", data);
     try {
       const response = await axiosInstance.post("/api/auth/register", data);
       console.log("Registration successful", response.data);
-    } catch (error : any) {
+      router.push(`/auth/verify/${(data.email)}`);
+    } catch (error: any) {
       console.error("Registration failed", error.response?.data || error.message);
     }
   };
@@ -48,17 +50,6 @@ const RegisterForm: React.FC = () => {
         />
         {errors.email && (
           <span className="text-sm text-red-500">{errors.email.message}</span>
-        )}
-      </div>
-      <div className="flex flex-col gap-3 w-full">
-        <label>Password</label>
-        <input
-          className="py-2 px-4 rounded-lg bg-transparent border-[0.5px] border-neutral-600"
-          type="password"
-          {...register("password")}
-        />
-        {errors.password && (
-          <span className="text-sm text-red-500">{errors.password.message}</span>
         )}
       </div>
       <button
